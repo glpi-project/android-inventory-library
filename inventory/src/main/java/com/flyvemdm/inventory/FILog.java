@@ -35,9 +35,13 @@ package com.flyvemdm.inventory;
 import android.util.Log;
 
 /**
- * This class is a grapper for Log
+ * This is a Utils class grapper for Log
  */
-public class FILog {
+public final class FILog {
+
+    // private constructor to prevent instance of this class
+    private FILog() {
+    }
 
     // This is the tag to search on console
     public static String TAGLOG = "FlyveMDMInventory";
