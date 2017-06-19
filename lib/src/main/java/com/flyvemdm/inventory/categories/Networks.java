@@ -56,9 +56,28 @@ public class Networks extends Categories {
 	private static final long serialVersionUID = 6829495385432791427L;
 
 	// Properties of this component
-	private String mType = "WIFI";
+	private static final String TYPE = "WIFI";
 	private DhcpInfo dhcp;
 	private WifiInfo wifi;
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		return (!super.equals(obj));
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = super.hashCode();
+		hash = 89 * hash + (this.dhcp != null ? this.dhcp.hashCode() : 0);
+		hash = 89 * hash + (this.wifi != null ? this.wifi.hashCode() : 0);
+		return hash;
+	}
 
 	/**
 	 * This constructor load the context and the Networks information
@@ -75,7 +94,7 @@ public class Networks extends Categories {
 			pWM.setWifiEnabled(true);
 		}
 		Category c = new Category("NETWORKS");
-		c.put("TYPE", mType);
+		c.put("TYPE", TYPE);
 
 		dhcp = pWM.getDhcpInfo();
 		wifi = pWM.getConnectionInfo();
