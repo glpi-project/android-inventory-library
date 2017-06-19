@@ -53,9 +53,25 @@ public class Categories extends ArrayList<Category>{
      *  from: https://stackoverflow.com/questions/285793/what-is-a-serialversionuid-and-why-should-i-use-it
      */
     private static final long serialVersionUID = 2278660715848751766L;
+    private Context mCtx;
 
-    public Context mCtx;
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        return (!super.equals(obj));
+    }
 
+    @Override
+    public int hashCode() {
+        int hash = super.hashCode();
+        hash = 89 * hash + (this.mCtx != null ? this.mCtx.hashCode() : 0);
+        return hash;
+    }
 
     /**
      * This constructor load the Context of the instance
