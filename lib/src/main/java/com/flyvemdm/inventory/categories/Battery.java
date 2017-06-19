@@ -57,12 +57,35 @@ public class Battery extends Categories {
 	private static final long serialVersionUID = -4096347994131285426L;
 
 	// Properties of this component
-	private String level = "Unknown";
-	private String voltage = "Unknown";
-	private String temperature = "Unknown";
-	private String status = "Unknown";
-	private String health = "Unknown";
-	private String technology = "Unknown";
+	private String level = "";
+	private String voltage = "";
+	private String temperature = "";
+	private String status = "";
+	private String health = "";
+	private String technology = "";
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		return (!super.equals(obj));
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = super.hashCode();
+		hash = 89 * hash + (this.level != null ? this.level.hashCode() : 0);
+		hash = 89 * hash + (this.voltage != null ? this.voltage.hashCode() : 0);
+		hash = 89 * hash + (this.temperature != null ? this.temperature.hashCode() : 0);
+		hash = 89 * hash + (this.status != null ? this.status.hashCode() : 0);
+		hash = 89 * hash + (this.health != null ? this.health.hashCode() : 0);
+		hash = 89 * hash + (this.technology != null ? this.technology.hashCode() : 0);
+		return hash;
+	}
 
 	/**
 	 * This constructor trigger BroadcastReceiver to get all the information about Battery

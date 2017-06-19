@@ -55,12 +55,6 @@ public class PhoneStatus extends Categories {
      */
     private static final long serialVersionUID = 872718741270132229L;
 
-    private String phonestate = "";
-    private String operator_alpha = "";
-    private String operator_numeric = "";
-    private String roaming = "";
-    private String network_selection = "";
-
     /**
      * This constructor load the context and the PhoneStatus information
      * @param xCtx Context where this class work
@@ -81,27 +75,27 @@ public class PhoneStatus extends Categories {
                 @Override
                 public void onServiceStateChanged(ServiceState serviceState) {
                     super.onServiceStateChanged(serviceState);
-                    String phonestate;
+                    String phoneState;
 
                     switch (serviceState.getState()) {
                         case ServiceState.STATE_EMERGENCY_ONLY:
-                            phonestate = "STATE_EMERGENCY_ONLY";
+                            phoneState = "STATE_EMERGENCY_ONLY";
                             break;
                         case ServiceState.STATE_IN_SERVICE:
-                            phonestate = "STATE_IN_SERVICE";
+                            phoneState = "STATE_IN_SERVICE";
                             break;
                         case ServiceState.STATE_OUT_OF_SERVICE:
-                            phonestate = "STATE_OUT_OF_SERVICE";
+                            phoneState = "STATE_OUT_OF_SERVICE";
                             break;
                         case ServiceState.STATE_POWER_OFF:
-                            phonestate = "STATE_POWER_OFF";
+                            phoneState = "STATE_POWER_OFF";
                             break;
                         default:
-                            phonestate = "Unknown";
+                            phoneState = "Unknown";
                             break;
                     }
 
-                    c.put("STATE", phonestate);
+                    c.put("STATE", phoneState);
                     c.put("OPERATOR_ALPHA", serviceState.getOperatorAlphaLong());
                     c.put("OPERATOR_NUMERIC", serviceState.getOperatorNumeric());
                     c.put("ROAMING", Boolean.valueOf(serviceState.getRoaming()).toString());

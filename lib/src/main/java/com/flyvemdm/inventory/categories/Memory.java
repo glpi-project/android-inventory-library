@@ -79,7 +79,6 @@ public class Memory extends Categories {
         } catch (Exception ex) {
             FILog.e(ex.getMessage());
         }
-
         c.put("CAPACITY", capacity);
 
         this.add(c);
