@@ -100,8 +100,8 @@ public class Networks extends Categories {
 		wifi = pWM.getConnectionInfo();
 
 		FILog.d("<===WIFI DHCP===>");
-		FILog.d("dns1=" + StringUtils.int_to_ip(dhcp.dns1));
-		FILog.d("dns2=" + StringUtils.int_to_ip(dhcp.dns2));
+		FILog.d("dns1=" + StringUtils.intToIp(dhcp.dns1));
+		FILog.d("dns2=" + StringUtils.intToIp(dhcp.dns2));
 		FILog.d("leaseDuration=" + dhcp.leaseDuration);
 
 		c.put("MACADDR", getMacaddr());
@@ -137,18 +137,18 @@ public class Networks extends Categories {
 	}
 
 	public String getIpgateway() {
-		return StringUtils.int_to_ip(dhcp.gateway);
+		return StringUtils.intToIp(dhcp.gateway);
 	}
 
 	public String getIpaddress() {
-		return StringUtils.int_to_ip(dhcp.ipAddress);
+		return StringUtils.intToIp(dhcp.ipAddress);
 	}
 
 	public String getIpmask() {
-		return StringUtils.int_to_ip(dhcp.netmask);
+		return StringUtils.intToIp(dhcp.netmask);
 	}
 
 	public String getIpdhcp() {
-		return StringUtils.int_to_ip(dhcp.serverAddress);
+		return StringUtils.intToIp(dhcp.serverAddress);
 	}
 }
