@@ -58,13 +58,31 @@ public class Softwares extends Categories {
      *  from: https://stackoverflow.com/questions/285793/what-is-a-serialversionuid-and-why-should-i-use-it
      */
     private static final long serialVersionUID = 4846706700566208666L;
-    private PackageManager package_manager;
-    private String mFrom = "Android";
+    private static final String FROM = "Android";
+    private PackageManager packageManager;
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        return (!super.equals(obj));
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = super.hashCode();
+        hash = 89 * hash + (this.packageManager != null ? this.packageManager.hashCode() : 0);
+        return hash;
+    }
 
     public Softwares(Context xCtx) {
         super(xCtx);
-        package_manager = xCtx.getPackageManager();
-        List<ApplicationInfo> packages = package_manager.getInstalledApplications(PackageManager.GET_META_DATA);
+        packageManager = xCtx.getPackageManager();
+        List<ApplicationInfo> packages = packageManager.getInstalledApplications(PackageManager.GET_META_DATA);
 
         for (ApplicationInfo p : packages) {
 
@@ -73,7 +91,7 @@ public class Softwares extends Categories {
             c.put("NAME", getName(p));
             c.put("VERSION", getVersion(p));
             c.put("FILESIZE", getFilesize(p));
-            c.put("FROM", mFrom);
+            c.put("FROM", FROM);
 
             this.add(c);
         }
@@ -96,7 +114,7 @@ public class Softwares extends Categories {
     public String getVersion(ApplicationInfo p) {
         String mVersion = "";
         try {
-            PackageInfo pi = package_manager.getPackageInfo(p.packageName, PackageManager.GET_META_DATA);
+            PackageInfo pi = packageManager.getPackageInfo(p.packageName, PackageManager.GET_META_DATA);
             mVersion = pi.versionName;
         } catch (NameNotFoundException e) {
             FILog.e(e.getMessage());
