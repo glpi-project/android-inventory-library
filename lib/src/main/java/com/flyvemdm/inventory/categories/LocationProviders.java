@@ -55,9 +55,6 @@ public class LocationProviders extends Categories {
      */
     private static final long serialVersionUID = 6066226866162586918L;
 
-    // Properties of this component
-    private String mName = "Unknown";
-
     /**
      * This constructor load the context and the Location Providers information
      * @param xCtx Context where this class work
@@ -73,10 +70,13 @@ public class LocationProviders extends Categories {
             Category c = new Category("LOCATION_PROVIDERS");
 
             LocationProvider lProvider = lLocationMgr.getProvider(p);
-            mName = lProvider.getName();
-            c.put("NAME" , mName);
+            c.put("NAME" , getName(lProvider));
 
             this.add(c);
         }
+    }
+
+    public String getName(LocationProvider lProvider) {
+        return lProvider.getName();
     }
 }
