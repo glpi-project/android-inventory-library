@@ -63,12 +63,6 @@ public class HardwareTest {
     }
 
     @Test
-    public void getOsname() throws Exception {
-        Hardware hardware = new Hardware(appContext);
-        assertNotEquals("", hardware.getOsname());
-    }
-
-    @Test
     public void getOsversion() throws Exception {
         Hardware hardware = new Hardware(appContext);
         assertNotEquals("", hardware.getOsversion());

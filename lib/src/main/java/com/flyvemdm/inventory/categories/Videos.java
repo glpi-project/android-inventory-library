@@ -33,7 +33,8 @@ package com.flyvemdm.inventory.categories;
 
 import android.app.Service;
 import android.content.Context;
-import android.view.Display;
+import android.graphics.Point;
+import android.os.Build;
 import android.view.WindowManager;
 
 /**
@@ -85,9 +86,17 @@ public class Videos extends Categories {
     }
 
     public String getResolution() {
-        WindowManager lWinMgr = (WindowManager) xCtx.getSystemService(Service.WINDOW_SERVICE);
-        Display d = lWinMgr.getDefaultDisplay();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+            WindowManager lWinMgr = (WindowManager) xCtx.getSystemService(Service.WINDOW_SERVICE);
+            Point size = new Point();
+            lWinMgr.getDefaultDisplay().getSize(size);
 
-        return String.format("%dx%d" , d.getWidth(),d.getHeight());
+            int width = size.x;
+            int height = size.y;
+
+            return String.format("%dx%d", width, height);
+        } else {
+            return "";
+        }
     }
 }

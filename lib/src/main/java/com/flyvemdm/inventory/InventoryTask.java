@@ -192,7 +192,6 @@ public class InventoryTask extends AsyncTask<String, Void, String> {
         Class<Categories> catClass;
 
         for(String c : categories) {
-            catClass = null;
             FILog.v(String.format("new INVENTORY of %s", c));
 
             // Loading the class with name of the ArrayList

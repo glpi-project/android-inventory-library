@@ -103,9 +103,6 @@ public class Sensors extends Categories {
 			case Sensor.TYPE_MAGNETIC_FIELD:
 				strtype = "MAGNETIC FIELD";
 				break;
-			case Sensor.TYPE_ORIENTATION:
-				strtype = "ORIENTATION";
-				break;
 			case Sensor.TYPE_PRESSURE:
 				strtype = "PRESSURE";
 				break;
@@ -114,9 +111,6 @@ public class Sensors extends Categories {
 				break;
 			case Sensor.TYPE_ROTATION_VECTOR:
 				strtype = "ROTATION VECTOR";
-				break;
-			case Sensor.TYPE_TEMPERATURE:
-				strtype = "TEMPERATURE";
 				break;
 			default:
 				strtype = "";
