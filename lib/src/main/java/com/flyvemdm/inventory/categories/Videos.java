@@ -54,6 +54,24 @@ public class Videos extends Categories {
     private static final long serialVersionUID = 6953895287405000489L;
     private Context xCtx;
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        return (!super.equals(obj));
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = super.hashCode();
+        hash = 89 * hash + (this.xCtx != null ? this.xCtx.hashCode() : 0);
+        return hash;
+    }
+
     /**
      *  This constructor load the context and the Video information
      * @param xCtx Context where this class work

@@ -54,12 +54,9 @@ import java.util.Date;
 public class InventoryTask extends AsyncTask<String, Void, String> {
 
     private ArrayList<Categories> mContent = null;
-    private Date mStart = null, mEnd = null;
+    private Date mStart = null;
     private Context ctx = null;
-    private static final int OK = 0;
-    private static final int NOK = 1;
-    private String FusionVersion = "";
-    private int progress = 0;
+    private String fusionVersion = "";
     private OnTaskCompleted listener;
 
     /**
@@ -69,7 +66,7 @@ public class InventoryTask extends AsyncTask<String, Void, String> {
      * @param listener Here you will get the data or error information
      */
     public InventoryTask(Context context, String appVersion, OnTaskCompleted listener) {
-        this.FusionVersion = appVersion;
+        this.fusionVersion = appVersion;
         this.listener = listener;
         ctx = context;
         FILog.v("FusionInventoryApp = ");
@@ -80,7 +77,7 @@ public class InventoryTask extends AsyncTask<String, Void, String> {
      * @return String with XML
      * @throws RuntimeException
      */
-    private String createXML() throws RuntimeException {
+    private String createXML() {
         FILog.i("createXML: ");
 
         if (mContent != null) {
@@ -104,7 +101,7 @@ public class InventoryTask extends AsyncTask<String, Void, String> {
                 serializer.endTag(null, "QUERY");
 
                 serializer.startTag(null, "VERSIONCLIENT");
-                serializer.text(FusionVersion);
+                serializer.text(fusionVersion);
                 serializer.endTag(null, "VERSIONCLIENT");
 
                 serializer.startTag(null, "DEVICEID");
@@ -154,7 +151,7 @@ public class InventoryTask extends AsyncTask<String, Void, String> {
                 return writer.toString();
 
             } catch (Exception e) {
-                throw new RuntimeException(e);
+                FILog.e(e.getMessage());
             }
         }
         return "";
@@ -192,24 +189,24 @@ public class InventoryTask extends AsyncTask<String, Void, String> {
                 "Battery"
         };
 
-        Class<Categories> cat_class;
+        Class<Categories> catClass;
 
         for(String c : categories) {
-            cat_class = null;
+            catClass = null;
             FILog.v(String.format("new INVENTORY of %s", c));
 
             // Loading the class with name of the ArrayList
             try {
-                cat_class = (Class <Categories>) Class.forName(String.format("com.flyvemdm.inventory.categories.%s",c));
+                catClass = (Class <Categories>) Class.forName(String.format("com.flyvemdm.inventory.categories.%s",c));
             } catch (ClassNotFoundException e) {
                 FILog.e(e.getMessage());
                 return e.getMessage();
             }
 
             // Instance the class and checking errors
-            if(cat_class!=null) {
+            if(catClass!=null) {
                 try {
-                    Constructor<Categories> co = cat_class.getConstructor(Context.class);
+                    Constructor<Categories> co = catClass.getConstructor(Context.class);
                     mContent.add(co.newInstance(ctx));
                 } catch (NoSuchMethodException e) {
                     FILog.e(e.getMessage());
@@ -233,7 +230,6 @@ public class InventoryTask extends AsyncTask<String, Void, String> {
             }
         }
         FILog.v("end of inventory");
-        mEnd = new Date();
         return "true";
     }
 
