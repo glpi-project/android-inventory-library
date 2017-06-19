@@ -43,13 +43,13 @@ public class BiosTest {
     @Test
     public void getBios_date() throws Exception {
         Bios bios = new Bios(appContext);
-        assertNotEquals("", bios.getBios_date());
+        assertNotEquals("", bios.getBiosDate());
     }
 
     @Test
     public void getBios_manufacturer() throws Exception {
         Bios bios = new Bios(appContext);
-        assertNotEquals("", bios.getBios_manufacturer());
+        assertNotEquals("", bios.getBiosManufacturer());
     }
 
     @Test
@@ -61,19 +61,19 @@ public class BiosTest {
     @Test
     public void getMother_board_manufacturer() throws Exception {
         Bios bios = new Bios(appContext);
-        assertNotEquals("", bios.getMother_board_manufacturer() );
+        assertNotEquals("", bios.getMotherBoardManufacturer() );
     }
 
     @Test
     public void getMother_board_model() throws Exception {
         Bios bios = new Bios(appContext);
-        assertNotEquals("", bios.getMother_board_model() );
+        assertNotEquals("", bios.getMotherBoardModel() );
     }
 
     @Test
     public void getMother_board_serial_number() throws Exception {
         Bios bios = new Bios(appContext);
-        assertNotEquals("", bios.getMother_board_serial_number() );
+        assertNotEquals("", bios.getMotherBoardSerialNumber() );
     }
 
 }

@@ -59,6 +59,7 @@ public class Bios extends Categories {
 	 *  from: https://stackoverflow.com/questions/285793/what-is-a-serialversionuid-and-why-should-i-use-it
 	 */
 	private static final long serialVersionUID = -559572118090134691L;
+	private static final String CPUINFO = "/proc/cpuinfo";
 
 	// <!ELEMENT BIOS (SMODEL, SMANUFACTURER, SSN, BDATE, BVERSION,
 	//	BMANUFACTURER, MMANUFACTURER, MSN, MMODEL, ASSETTAG, ENCLOSURESERIAL,
@@ -73,69 +74,75 @@ public class Bios extends Categories {
 		Category c = new Category(xCtx, "BIOS");
 
 		// Bios Date
-		c.put("BDATE", getBios_date());
+		c.put("BDATE", getBiosDate());
 
 		// Bios Manufacturer
-		c.put("BMANUFACTURER", getBios_manufacturer());
+		c.put("BMANUFACTURER", getBiosManufacturer());
 
 		// Bios version
-		c.put("BVERSION", getBios_version());
+		c.put("BVERSION", getBiosVersion());
 
 		// Mother Board Manufacturer
-		c.put("MMANUFACTURER", getMother_board_manufacturer());
+		c.put("MMANUFACTURER", getMotherBoardManufacturer());
 
 		// Mother Board Model
-		c.put("SMODEL", getMother_board_model());
+		c.put("SMODEL", getMotherBoardModel());
 
 		// Mother Board Serial Number
-		c.put("SSN", getMother_board_serial_number());
+		c.put("SSN", getMotherBoardSerialNumber());
 
 		this.add(c);
 	}
 
-	public String getBios_date() {
+	public String getBiosDate() {
 		SimpleDateFormat format = new SimpleDateFormat("MM/dd/yy");
 		return format.format(Build.TIME);
 	}
 
-	public String getBios_manufacturer() {
+	public String getBiosManufacturer() {
 		return Build.MANUFACTURER;
 	}
 
-	public String getBios_version() {
+	public String getBiosVersion() {
 		return Build.BOOTLOADER;
 	}
 
-	public String getMother_board_manufacturer() {
+	public String getMotherBoardManufacturer() {
 		return Build.MANUFACTURER;
 	}
 
-	public String getMother_board_model() {
+	public String getMotherBoardModel() {
 		return Build.MODEL;
 	}
 
-	public String getMother_board_serial_number() {
-		String mother_board_serial_number = "Unknown";
+	public String getMotherBoardSerialNumber() {
+		String motherBoardSerialNumber = "Unknown";
 
 		if (!Build.SERIAL.equals(Build.UNKNOWN)) {
 			// Mother Board Serial Number
 			// Since in 2.3.3 a.k.a gingerbread
-			mother_board_serial_number = Build.SERIAL;
+			motherBoardSerialNumber = Build.SERIAL;
 		} else {
 			//Try to get the serial by reading /proc/cpuinfo
-			String serial = this.getSerialNumberFromCpuinfo();
+			String serial = "";
+			try {
+				serial = this.getSerialNumberFromCpuinfo();
+			} catch (Exception ex) {
+				FILog.e(ex.getMessage());
+			}
+
 			if (!serial.equals("") && !serial.equals("0000000000000000")) {
-				mother_board_serial_number = serial;
+				motherBoardSerialNumber = serial;
 			} else {
 				//Last try, use the hidden API!
 				serial = getSerialFromPrivateAPI();
 				if (!serial.equals("")) {
-					mother_board_serial_number = serial;
+					motherBoardSerialNumber = serial;
 				}
 			}
 		}
 
-		return mother_board_serial_number;
+		return motherBoardSerialNumber;
 	}
 
 	/**
@@ -158,24 +165,29 @@ public class Bios extends Categories {
 	 * Get the serial by reading /proc/cpuinfo
 	 * @return String
 	 */
-	private String getSerialNumberFromCpuinfo() {
+	private String getSerialNumberFromCpuinfo() throws IOException {
 		String serial = "";
-		File f = new File("/proc/cpuinfo");
+		File f = new File(CPUINFO);
+		FileReader fr = null;
 		try {
-			BufferedReader br = new BufferedReader(new FileReader(f), 8 * 1024);
+			fr = new FileReader(f);
+			BufferedReader br = new BufferedReader(fr, 8 * 1024);
 			String line;
 			while ((line = br.readLine()) != null) {
 				if (line.startsWith("Serial")) {
 					FILog.d(line);
-
 					String[] results = line.split(":");
 					serial = results[1].trim();
 				}
 			}
 			br.close();
-
+			fr.close();
 		} catch (IOException e) {
 			FILog.e(e.getMessage());
+		} finally {
+			if(fr != null) {
+				fr.close();
+			}
 		}
 
 		return serial.trim();

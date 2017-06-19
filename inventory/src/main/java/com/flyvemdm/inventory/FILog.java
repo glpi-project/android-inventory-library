@@ -39,12 +39,12 @@ import android.util.Log;
  */
 public final class FILog {
 
+    // This is the tag to search on console
+    static final String TAGLOG = "FlyveMDMInventory";
+
     // private constructor to prevent instance of this class
     private FILog() {
     }
-
-    // This is the tag to search on console
-    public static String TAGLOG = "FlyveMDMInventory";
 
     /**
      * Create a log for debug
