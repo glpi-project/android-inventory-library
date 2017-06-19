@@ -36,6 +36,8 @@ import android.os.Build;
 import android.provider.Settings.Secure;
 import android.text.format.DateFormat;
 
+import com.flyvemdm.inventory.FILog;
+
 import java.util.Properties;
 
 /**
@@ -105,7 +107,14 @@ public class Hardware extends Categories {
         c.put("OSVERSION", getOsversion());
         c.put("ARCHNAME", getArchname());
         c.put("UUID", getUUID());
-        c.put("MEMORY", memory.getCapacity());
+
+        String vMemory = "";
+        try {
+            vMemory = memory.getCapacity();
+        } catch (Exception ex) {
+            FILog.e(ex.getMessage());
+        }
+        c.put("MEMORY", vMemory);
 
         this.add(c);
 
