@@ -57,6 +57,7 @@ public class Cpus extends Categories {
      *  from: https://stackoverflow.com/questions/285793/what-is-a-serialversionuid-and-why-should-i-use-it
      */
     private static final long serialVersionUID = 4846706700566208666L;
+    private static final String CPUINFO = "/proc/cpuinfo";
 
     /**
      * This constructor trigger get all the information about Cpus
@@ -68,10 +69,22 @@ public class Cpus extends Categories {
         Category c = new Category("CPUS");
 
         // Cpu Name
-        c.put("NAME", getCpuName());
+        String cpuName = "";
+        try {
+            cpuName = getCpuName();
+        } catch (Exception ex) {
+            FILog.e(ex.getMessage());
+        }
+        c.put("NAME", cpuName);
 
         // Cpu Frequency
-        c.put("SPEED", getCpuFrequency());
+        String cpuFrequency = "";
+        try {
+            cpuFrequency = getCpuFrequency();
+        } catch (Exception ex) {
+            FILog.e(ex.getMessage());
+        }
+        c.put("SPEED", cpuFrequency);
 
         this.add(c);
     }
@@ -80,36 +93,47 @@ public class Cpus extends Categories {
      * Get the CPU Name
      * @return String with the name
      */
-    public String getCpuName() {
+    public String getCpuName() throws IOException {
         String cpuname = "";
-
+        FileReader fr = null;
+        BufferedReader br = null;
         try {
-            File f = new File("/proc/cpuinfo");
-
-            BufferedReader br = new BufferedReader(new FileReader(f), 8 * 1024);
+            File f = new File(CPUINFO);
+            fr = new FileReader(f);
+            br = new BufferedReader(fr, 8 * 1024);
             String infos = br.readLine();
             cpuname = infos.replaceAll("(.*):\\ (.*)", "$2");
-            br.close();
         } catch (IOException e) {
             FILog.e(e.getMessage());
+        } finally {
+            if(fr != null) {
+                fr.close();
+            }
+            if(br != null) {
+                br.close();
+            }
         }
-    	return cpuname;
+        return cpuname;
     }
 
     /**
      * Get the CPU Frequency
      * @return String with the Cpu Frequency
      */
-    public String getCpuFrequency() {
+    public String getCpuFrequency() throws IOException {
         String cpuFrequency = "";
-
+        RandomAccessFile reader = null;
         try {
-            RandomAccessFile reader = new RandomAccessFile("/sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_max_freq", "r");
+            reader = new RandomAccessFile("/sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_max_freq", "r");
             cpuFrequency = String.valueOf(Integer.valueOf(reader.readLine()) / 1000);
             reader.close();
         } catch (IOException e) {
             FILog.e(e.getMessage());
+        } finally {
+            if(reader != null) {
+                reader.close();
+            }
         }
-    	return cpuFrequency;
+        return cpuFrequency;
     }
 }
