@@ -60,7 +60,8 @@ public class Memory extends Categories {
 	private static final long serialVersionUID = -494336872000892273L;
 
     // Properties of this component
-    private String mDescription = "Memory";
+    private static final String DESCRIPTION = "Memory";
+    private static final String MEMINFO = "/proc/meminfo";
 
     /**
      * This constructor load the context and the Memory information
@@ -70,8 +71,16 @@ public class Memory extends Categories {
 		super(xCtx);
 		Category c = new Category("MEMORIES");
 
-        c.put("DESCRIPTION", mDescription);
-        c.put("CAPACITY", getCapacity());
+        c.put("DESCRIPTION", DESCRIPTION);
+
+        String capacity = "";
+        try {
+            capacity = getCapacity();
+        } catch (Exception ex) {
+            FILog.e(ex.getMessage());
+        }
+
+        c.put("CAPACITY", capacity);
 
         this.add(c);
 	}
@@ -80,12 +89,14 @@ public class Memory extends Categories {
      *  Get total memory of the device
      * @return String Total Memory
      */
-	public String getCapacity() {
+	public String getCapacity() throws IOException {
 
         String capacity = "";
+        FileReader fr = null;
         try {
-            File f = new File("/proc/meminfo");
-        	BufferedReader br = new BufferedReader(new FileReader(f), 8 * 1024);
+            File f = new File(MEMINFO);
+            fr = new FileReader(f);
+        	BufferedReader br = new BufferedReader(fr, 8 * 1024);
         	String line;
 			while ((line = br.readLine()) != null) {
         		if (line.startsWith("MemTotal")) {
@@ -100,7 +111,11 @@ public class Memory extends Categories {
             br.close();
         } catch (IOException e) {
             FILog.e( e.getMessage());
+        } finally {
+            if(fr!=null) {
+                fr.close();
+            }
         }
-		return capacity;
+        return capacity;
 	}
 }
