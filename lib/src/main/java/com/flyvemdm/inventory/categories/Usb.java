@@ -37,6 +37,7 @@ import android.hardware.usb.UsbManager;
 import android.os.Build;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * This class get all the information of the USB
@@ -67,9 +68,9 @@ public class Usb extends Categories {
 	
 	        UsbManager manager = (UsbManager) xCtx.getSystemService(Context.USB_SERVICE);
 	        HashMap<String, UsbDevice> devices = manager.getDeviceList();
-			for (String key : devices.keySet()) {
+			for (Map.Entry<String, UsbDevice> entry : devices.entrySet()) {
 
-				UsbDevice mydevice = devices.get(key);
+				UsbDevice mydevice = devices.get(entry.getKey());
 				Category c = new Category("USBDEVICES");
 
 				c.put("CLASS", getClass(mydevice));
