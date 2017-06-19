@@ -58,6 +58,7 @@ public class Cpus extends Categories {
      */
     private static final long serialVersionUID = 4846706700566208666L;
     private static final String CPUINFO = "/proc/cpuinfo";
+    private static final String CPUINFO_MAX_FREQ = "/sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_max_freq";
 
     /**
      * This constructor trigger get all the information about Cpus
@@ -124,7 +125,7 @@ public class Cpus extends Categories {
         String cpuFrequency = "";
         RandomAccessFile reader = null;
         try {
-            reader = new RandomAccessFile("/sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_max_freq", "r");
+            reader = new RandomAccessFile(CPUINFO_MAX_FREQ, "r");
             cpuFrequency = String.valueOf(Integer.valueOf(reader.readLine()) / 1000);
             reader.close();
         } catch (IOException e) {
