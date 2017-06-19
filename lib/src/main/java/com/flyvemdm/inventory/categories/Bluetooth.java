@@ -50,9 +50,25 @@ public class Bluetooth extends Categories {
 	 *  from: https://stackoverflow.com/questions/285793/what-is-a-serialversionuid-and-why-should-i-use-it
 	 */
     private static final long serialVersionUID = 3252750764653173048L;
-
     private BluetoothAdapter adapter;
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        return (!super.equals(obj));
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = super.hashCode();
+        hash = 89 * hash + (this.adapter != null ? this.adapter.hashCode() : 0);
+        return hash;
+    }
     /**
      * This constructor get all the information about Bluetooth
      * @param xCtx Context where this class work
@@ -66,7 +82,7 @@ public class Bluetooth extends Categories {
             Category c = new Category(mCtx, "BLUETOOTH_ADAPTER");
 
             // The hardware address of the local Bluetooth adapter.
-            c.put("HMAC", getHardware_address());
+            c.put("HMAC", getHardwareAddress());
 
             // This name is visible to remote Bluetooth devices.
             c.put("NAME", getName());
@@ -74,7 +90,7 @@ public class Bluetooth extends Categories {
         }
     }
 
-    public String getHardware_address() {
+    public String getHardwareAddress() {
         return adapter.getAddress();
     }
 

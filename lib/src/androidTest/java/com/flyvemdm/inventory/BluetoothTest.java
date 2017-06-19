@@ -46,7 +46,7 @@ public class BluetoothTest {
     @Test
     public void getHardware_address() throws Exception {
         Bluetooth bluetooth = new Bluetooth(appContext);
-        assertNotEquals("", bluetooth.getHardware_address());
+        assertNotEquals("", bluetooth.getHardwareAddress());
     }
 
     @Test
