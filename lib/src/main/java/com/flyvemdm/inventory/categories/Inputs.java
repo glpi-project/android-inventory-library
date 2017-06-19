@@ -50,8 +50,26 @@ public class Inputs extends Categories {
      *  from: https://stackoverflow.com/questions/285793/what-is-a-serialversionuid-and-why-should-i-use-it
      */
 	private static final long serialVersionUID = 4846706700566208666L;
-
 	private Configuration config;
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		return (!super.equals(obj));
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = super.hashCode();
+		hash = 89 * hash + (this.config != null ? this.config.hashCode() : 0);
+		return hash;
+	}
+
 	/**
 	 * This constructor load the context and the Inputs information
 	 * @param xCtx Context where this class work
@@ -99,6 +117,7 @@ public class Inputs extends Categories {
 				break;
 			case  Configuration.TOUCHSCREEN_NOTOUCH:
 				val = "NOTOUCH";
+				break;
 			default:
 				break;
 		}
