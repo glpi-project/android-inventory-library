@@ -33,43 +33,185 @@
 package com.flyvemdm.inventory;
 
 import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.format.DateFormat;
 import android.util.Xml;
 
 import com.flyvemdm.inventory.categories.Categories;
 
+import org.json.JSONObject;
 import org.xmlpull.v1.XmlSerializer;
 
 import java.io.StringWriter;
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Date;
 
 /**
  * This class generate the XML file
  */
-public class InventoryTask extends AsyncTask<String, Void, String> {
+public class InventoryTask {
 
-    private ArrayList<Categories> mContent = null;
-    private Date mStart = null;
+    private static Handler UIHandler;
+
+    static {
+        UIHandler = new Handler(Looper.getMainLooper());
+    }
+
+    private static void runOnUI(Runnable runnable) {
+        UIHandler.post(runnable);
+    }
+
     private Context ctx = null;
-    private String fusionVersion = "";
-    private OnTaskCompleted listener;
+    private String appVersion = "";
 
     /**
      * This constructor return a Success XML or Error on asynchronous way
      * @param context The context to be use
      * @param appVersion The name of the agent
-     * @param listener Here you will get the data or error information
      */
-    public InventoryTask(Context context, String appVersion, OnTaskCompleted listener) {
-        this.fusionVersion = appVersion;
-        this.listener = listener;
+    public InventoryTask(Context context, String appVersion) {
+        this.appVersion = appVersion;
         ctx = context;
-        FILog.v("FusionInventoryApp = ");
+    }
+
+    private ArrayList<Categories> loadCategoriesClass() {
+
+        ArrayList<Categories> mContent = new ArrayList<Categories>();
+
+        String[] categories = {
+//                "PhoneStatus",
+                "Hardware",
+                "Bios",
+                "Memory",
+                "Inputs",
+                "Sensors",
+                "Drives",
+                "Cpus",
+                "Simcards",
+                "Videos",
+                "Cameras",
+                "Networks",
+//                "LocationProviders",
+                "Envs",
+                "Jvm",
+                "Softwares",
+                "Usb",
+                "Battery"
+        };
+
+        Class<Categories> catClass = null;
+
+        for(String c : categories) {
+            FILog.v(String.format("new INVENTORY of %s", c));
+
+            // Loading the class with name of the ArrayList
+            try {
+                catClass = (Class <Categories>) Class.forName(String.format("com.flyvemdm.inventory.categories.%s",c));
+            } catch (ClassNotFoundException e) {
+                FILog.e(e.getMessage());
+                return new ArrayList<Categories>();
+            }
+
+            // Instance the class and checking errors
+            if(catClass!=null) {
+                try {
+                    Constructor<Categories> co = catClass.getConstructor(Context.class);
+                    mContent.add(co.newInstance(ctx));
+                } catch ( Exception ex ) {
+                    FILog.e( ex.getMessage() );
+                    return new ArrayList<Categories>();
+                }
+            }
+        }
+
+        return mContent;
+    }
+
+    public void getXML(final OnTaskCompleted listener) {
+
+        Thread t = new Thread(new Runnable()
+        {
+            public void run() {
+
+                try {
+                    ArrayList<Categories> mContent = loadCategoriesClass();
+                    final String xml = createXML(mContent);
+
+                    InventoryTask.runOnUI(new Runnable() {
+                        public void run() {
+                            listener.onTaskSuccess( xml );
+                        }
+                    });
+                } catch (final Exception ex) {
+
+                    InventoryTask.runOnUI(new Runnable() {
+                        public void run() {
+                            listener.onTaskError( ex.getMessage() );
+                        }
+                    });
+
+                }
+            }
+        });
+        t.start();
+    }
+
+    public void getJSON(final OnTaskCompleted listener) {
+
+        Thread t = new Thread(new Runnable()
+        {
+            public void run() {
+
+                try {
+                    ArrayList<Categories> mContent = loadCategoriesClass();
+                    final String json = createJSON(mContent);
+
+                    InventoryTask.runOnUI(new Runnable() {
+                        public void run() {
+                            listener.onTaskSuccess( json );
+                        }
+                    });
+                } catch (final Exception ex) {
+
+                    InventoryTask.runOnUI(new Runnable() {
+                        public void run() {
+                            listener.onTaskError( ex.getMessage() );
+                        }
+                    });
+
+                }
+            }
+        });
+        t.start();
+    }
+
+    private String createJSON(ArrayList<Categories> mContent){
+
+        try {
+
+            JSONObject jsonAccessLog = new JSONObject();
+            jsonAccessLog.put("LOGDATE", DateFormat.format("yyyy-MM-dd H:mm:ss", new Date()).toString());
+            jsonAccessLog.put("USERID", "N/A");
+
+            JSONObject jsonQuery = new JSONObject();
+            jsonQuery.put("QUERY", "INVENTORY");
+            jsonQuery.put("VERSIONCLIENT", this.appVersion);
+            jsonQuery.put("DEVICEID", Build.SERIAL);
+            jsonQuery.put("CONTENT", jsonAccessLog);
+
+            JSONObject jsonRequest = new JSONObject();
+            jsonRequest.put("REQUEST", jsonQuery);
+
+            return jsonRequest.toString();
+
+        } catch (Exception ex) {
+            FILog.e(ex.getMessage());
+        }
+
+        return "";
     }
 
     /**
@@ -77,7 +219,7 @@ public class InventoryTask extends AsyncTask<String, Void, String> {
      * @return String with XML
      * @throws RuntimeException
      */
-    private String createXML() {
+    private String createXML(ArrayList<Categories> mContent) {
         FILog.i("createXML: ");
 
         if (mContent != null) {
@@ -101,7 +243,7 @@ public class InventoryTask extends AsyncTask<String, Void, String> {
                 serializer.endTag(null, "QUERY");
 
                 serializer.startTag(null, "VERSIONCLIENT");
-                serializer.text(fusionVersion);
+                serializer.text(appVersion);
                 serializer.endTag(null, "VERSIONCLIENT");
 
                 serializer.startTag(null, "DEVICEID");
@@ -115,7 +257,7 @@ public class InventoryTask extends AsyncTask<String, Void, String> {
                 serializer.startTag(null, "ACCESSLOG");
 
                 serializer.startTag(null, "LOGDATE");
-                serializer.text(DateFormat.format("yyyy-MM-dd H:mm:ss", mStart).toString());
+                serializer.text(DateFormat.format("yyyy-MM-dd H:mm:ss", new Date()).toString());
                 serializer.endTag(null, "LOGDATE");
 
                 serializer.startTag(null, "USERID");
@@ -154,101 +296,8 @@ public class InventoryTask extends AsyncTask<String, Void, String> {
                 FILog.e(e.getMessage());
             }
         }
+
         return "";
-    }
-
-    /**
-     * This step is used to perform background computation that can take a long time
-     * @param params String params
-     * @return String
-     */
-    @Override
-    protected String doInBackground(String... params) {
-        mStart = new Date();
-
-        mContent = new ArrayList<Categories>();
-
-        String [] categories = {
-//                "PhoneStatus",
-                "Hardware",
-                "Bios",
-                "Memory",
-                "Inputs",
-                "Sensors",
-                "Drives",
-                "Cpus",
-                "Simcards",
-                "Videos",
-                "Cameras",
-                "Networks",
-//                "LocationProviders",
-                "Envs",
-                "Jvm",
-                "Softwares",
-                "Usb",
-                "Battery"
-        };
-
-        Class<Categories> catClass;
-
-        for(String c : categories) {
-            FILog.v(String.format("new INVENTORY of %s", c));
-
-            // Loading the class with name of the ArrayList
-            try {
-                catClass = (Class <Categories>) Class.forName(String.format("com.flyvemdm.inventory.categories.%s",c));
-            } catch (ClassNotFoundException e) {
-                FILog.e(e.getMessage());
-                return e.getMessage();
-            }
-
-            // Instance the class and checking errors
-            if(catClass!=null) {
-                try {
-                    Constructor<Categories> co = catClass.getConstructor(Context.class);
-                    mContent.add(co.newInstance(ctx));
-                } catch (NoSuchMethodException e) {
-                    FILog.e(e.getMessage());
-                    return e.getMessage();
-                } catch (SecurityException e) {
-                    FILog.e(e.getMessage());
-                    return e.getMessage();
-                } catch (IllegalArgumentException e) {
-                    FILog.e(e.getMessage());
-                    return e.getMessage();
-                } catch (InstantiationException e) {
-                    FILog.e(e.getMessage());
-                    return e.getMessage();
-                } catch (InvocationTargetException e) {
-                    FILog.e(e.getMessage());
-                    return e.getMessage();
-                } catch (IllegalAccessException e) {
-                    FILog.e(e.getMessage());
-                    return e.getMessage();
-                }
-            }
-        }
-        FILog.v("end of inventory");
-        return "true";
-    }
-
-    /**
-     * invoked on the UI thread after the background computation finishes.
-     * @param result The result of the background computation is passed to this step as a parameter
-     */
-    @Override
-    protected void onPostExecute(String result) {
-        if(result.equals("true")){
-
-            try {
-                this.listener.onTaskSuccess(createXML());
-            } catch (Exception e) {
-                this.listener.onTaskError(e.getMessage());
-            }
-
-        } else {
-            this.listener.onTaskError( result );
-        }
     }
 
     /**
