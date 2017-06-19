@@ -52,6 +52,7 @@ public class Videos extends Categories {
      *  from: https://stackoverflow.com/questions/285793/what-is-a-serialversionuid-and-why-should-i-use-it
      */
     private static final long serialVersionUID = 6953895287405000489L;
+    private Context xCtx;
 
     /**
      *  This constructor load the context and the Video information
@@ -59,13 +60,14 @@ public class Videos extends Categories {
      */
     public Videos(Context xCtx) {
         super(xCtx);
-        Category c = new Category(mCtx , "VIDEOS");
+        this.xCtx = xCtx;
+        Category c = new Category("VIDEOS");
         c.put("RESOLUTION" ,  getResolution());
         this.add(c);
     }
 
     public String getResolution() {
-        WindowManager lWinMgr = (WindowManager) mCtx.getSystemService(Service.WINDOW_SERVICE);
+        WindowManager lWinMgr = (WindowManager) xCtx.getSystemService(Service.WINDOW_SERVICE);
         Display d = lWinMgr.getDefaultDisplay();
 
         return String.format("%dx%d" , d.getWidth(),d.getHeight());

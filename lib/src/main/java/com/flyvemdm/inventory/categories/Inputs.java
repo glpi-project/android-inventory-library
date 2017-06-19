@@ -59,9 +59,9 @@ public class Inputs extends Categories {
 	public Inputs(Context xCtx) {
 		super(xCtx);
 
-		config = mCtx.getResources().getConfiguration();
+		config = xCtx.getResources().getConfiguration();
 
-		Category c = new Category(mCtx, "INPUTS");
+		Category c = new Category("INPUTS");
 
 		c.put("KEYBOARD", getKeyboard());
 		c.put("TOUCHSCREEN", getTouchscreen());

@@ -31,13 +31,11 @@
 
 package com.flyvemdm.inventory.categories;
 
-import android.content.Context;
-
 public class Processes
         extends Category {
 
-    public Processes(Context xCtx, String xType) {
-        super(xCtx, xType);
+    public Processes(String xType) {
+        super(xType);
         // TODO review how to get all the processes
 /*
         Category c = new Category(mCtx, "PROCESSES");

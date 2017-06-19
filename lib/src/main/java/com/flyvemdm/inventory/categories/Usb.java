@@ -70,7 +70,7 @@ public class Usb extends Categories {
 			for (String key : devices.keySet()) {
 
 				UsbDevice mydevice = devices.get(key);
-				Category c = new Category(mCtx, "USBDEVICES");
+				Category c = new Category("USBDEVICES");
 
 				c.put("CLASS", getClass(mydevice));
 				c.put("PRODUCTID", getProductid(mydevice));

@@ -55,7 +55,7 @@ public class BiosTest {
     @Test
     public void getBios_version() throws Exception {
         Bios bios = new Bios(appContext);
-        assertNotEquals("", bios.getBios_version());
+        assertNotEquals("", bios.getBiosVersion());
     }
 
     @Test

@@ -68,7 +68,7 @@ public class Jvm extends Categories {
 	public Jvm(Context xCtx) {
         super(xCtx);
 
-        Category c = new Category(mCtx,"JVMS");
+        Category c = new Category("JVMS");
         Properties props = System.getProperties();
         /*
         for(Object prop: props.keySet() ) {

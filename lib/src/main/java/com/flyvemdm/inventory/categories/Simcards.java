@@ -60,12 +60,12 @@ public class Simcards extends Categories {
     public Simcards(Context xCtx) {
         super(xCtx);
         
-        mTM = (TelephonyManager) mCtx.getSystemService(Context.TELEPHONY_SERVICE);
+        mTM = (TelephonyManager) xCtx.getSystemService(Context.TELEPHONY_SERVICE);
 
         /*
          * Starting SimCards Informations retrieval
          */
-        Category c = new Category(mCtx , "SIMCARDS");
+        Category c = new Category("SIMCARDS");
 
         c.put("COUNTRY", getCountry());
         c.put("OPERATOR_CODE", getOperator_code());

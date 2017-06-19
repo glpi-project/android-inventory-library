@@ -60,17 +60,17 @@ public class LocationProviders extends Categories {
 
     /**
      * This constructor load the context and the Location Providers information
-     * @param ctx Context where this class work
+     * @param xCtx Context where this class work
      */
-    public LocationProviders(Context ctx) {
-        super(ctx);
+    public LocationProviders(Context xCtx) {
+        super(xCtx);
 
-        LocationManager lLocationMgr = (LocationManager) mCtx.getSystemService(Service.LOCATION_SERVICE);
+        LocationManager lLocationMgr = (LocationManager) xCtx.getSystemService(Service.LOCATION_SERVICE);
         
         List<String> lProvidersName = lLocationMgr.getAllProviders(); 
         
         for (String p : lProvidersName) {
-            Category c = new Category(mCtx,"LOCATION_PROVIDERS");
+            Category c = new Category("LOCATION_PROVIDERS");
 
             LocationProvider lProvider = lLocationMgr.getProvider(p);
             mName = lProvider.getName();

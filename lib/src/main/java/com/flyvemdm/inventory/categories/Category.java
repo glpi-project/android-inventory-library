@@ -31,13 +31,13 @@
 
 package com.flyvemdm.inventory.categories;
 
-import android.content.Context;
 import android.os.Build;
 
 import org.xmlpull.v1.XmlSerializer;
 
 import java.io.IOException;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * This class create a node of the XML
@@ -55,18 +55,31 @@ public class Category extends LinkedHashMap<String, String>{
      *  from: https://stackoverflow.com/questions/285793/what-is-a-serialversionuid-and-why-should-i-use-it
      */
     private static final long serialVersionUID = 6443019125036309325L;
-
-    public Context mCtx;
-
     private String mType;
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        return (!super.equals(obj));
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = super.hashCode();
+        hash = 89 * hash + (this.mType != null ? this.mType.hashCode() : 0);
+        return hash;
+    }
 
     /**
      * This constructor load the Context of the instance and the name of the node in XML
-     * @param xCtx Context where this class work
      * @param xType name of the node
      */
-    public Category(Context xCtx, String xType) {
-        mCtx = xCtx;
+    public Category(String xType) {
         mType = xType;
     }
 
@@ -89,18 +102,15 @@ public class Category extends LinkedHashMap<String, String>{
     /**
      * This is package private function that create a XML node with a XmlSerializer object
      * @param serializer object
-     * @throws IllegalArgumentException
-     * @throws IllegalStateException
      * @throws IOException
      */
-    void toXML(XmlSerializer serializer) throws IllegalArgumentException, IllegalStateException, IOException {
+    void toXML(XmlSerializer serializer) throws  IOException {
         serializer.startTag(null, mType);
 
-        for (String prop : this.keySet()) {
-
-            serializer.startTag(null, prop);
-            serializer.text(String.valueOf(this.get(prop)));
-            serializer.endTag(null, prop);
+        for (Map.Entry<String,String> entry : this.entrySet()) {
+            serializer.startTag(null, entry.getKey());
+            serializer.text(String.valueOf(this.get(entry.getKey())));
+            serializer.endTag(null, entry.getKey());
         }
 
         serializer.endTag(null, mType);

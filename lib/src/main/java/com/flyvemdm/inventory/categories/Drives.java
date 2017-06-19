@@ -80,7 +80,7 @@ public class Drives extends Categories {
      */
     private void addStorage(Context xCtx, File f) {
 
-    	Category c = new Category(xCtx, "DRIVES");
+    	Category c = new Category("DRIVES");
 
         c.put("VOLUMN", getVolumn(f));
         c.put("TOTAL", getTotal(f));

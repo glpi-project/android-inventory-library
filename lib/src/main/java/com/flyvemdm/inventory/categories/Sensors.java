@@ -60,11 +60,11 @@ public class Sensors extends Categories {
 	 */
 	public Sensors(Context xCtx) {
 		super(xCtx);
-		SensorManager sensorManager = (SensorManager) mCtx.getSystemService(Context.SENSOR_SERVICE);
+		SensorManager sensorManager = (SensorManager) xCtx.getSystemService(Context.SENSOR_SERVICE);
 		List<Sensor> sensors = sensorManager.getSensorList(Sensor.TYPE_ALL);
 
 		for (Sensor s : sensors) {
-			Category c = new Category(mCtx, "SENSORS");
+			Category c = new Category("SENSORS");
 
 			c.put("NAME", getName(s));
 			c.put("MANUFACTURER", getManufacturer(s));

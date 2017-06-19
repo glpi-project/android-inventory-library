@@ -74,7 +74,7 @@ public class Networks extends Categories {
 		if (!wasWifiEnabled) {
 			pWM.setWifiEnabled(true);
 		}
-		Category c = new Category(xCtx, "NETWORKS");
+		Category c = new Category("NETWORKS");
 		c.put("TYPE", mType);
 
 		dhcp = pWM.getDhcpInfo();

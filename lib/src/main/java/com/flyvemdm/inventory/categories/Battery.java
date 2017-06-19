@@ -76,7 +76,7 @@ public class Battery extends Categories {
 		this.myBatteryReceiver.onReceive(xCtx, new Intent(Intent.ACTION_BATTERY_CHANGED));
 
 		// Load the information
-		Category c  = new Category(xCtx, "BATTERIES");
+		Category c  = new Category("BATTERIES");
 		c.put("CHEMISTRY", technology);
 		c.put("TEMPERATURE", temperature);
 		c.put("VOLTAGE", voltage);

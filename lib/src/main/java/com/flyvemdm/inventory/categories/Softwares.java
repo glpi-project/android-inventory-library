@@ -63,12 +63,12 @@ public class Softwares extends Categories {
 
     public Softwares(Context xCtx) {
         super(xCtx);
-        package_manager = mCtx.getPackageManager();
+        package_manager = xCtx.getPackageManager();
         List<ApplicationInfo> packages = package_manager.getInstalledApplications(PackageManager.GET_META_DATA);
 
         for (ApplicationInfo p : packages) {
 
-            Category c = new Category(mCtx, "SOFTWARES");
+            Category c = new Category("SOFTWARES");
 
             c.put("NAME", getName(p));
             c.put("VERSION", getVersion(p));

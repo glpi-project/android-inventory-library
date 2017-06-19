@@ -68,7 +68,7 @@ public class Memory extends Categories {
      */
 	public Memory(Context xCtx) {
 		super(xCtx);
-		Category c = new Category(xCtx, "MEMORIES");
+		Category c = new Category("MEMORIES");
 
         c.put("DESCRIPTION", mDescription);
         c.put("CAPACITY", getCapacity());
