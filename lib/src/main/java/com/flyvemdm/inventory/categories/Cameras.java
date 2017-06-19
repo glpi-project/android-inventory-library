@@ -80,7 +80,8 @@ public class Cameras
             List<Camera.Size> list;
 
             list = params.getSupportedPictureSizes();
-            int width = 0, height = 0;
+            int width = 0;
+            int height = 0;
             for (Camera.Size size : list) {
                 if ((size.width * size.height) > (width * height)) {
                     width = size.width;
