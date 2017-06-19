@@ -64,6 +64,26 @@ public class Hardware extends Categories {
 
     private Properties props;
     private Context xCtx;
+    private static final String OSNAME = "Android";
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        return (!super.equals(obj));
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = super.hashCode();
+        hash = 89 * hash + (this.xCtx != null ? this.xCtx.hashCode() : 0);
+        hash = 89 * hash + (this.props != null ? this.props.hashCode() : 0);
+        return hash;
+    }
 
     /**
      * This constructor load the context and the Hardware information
@@ -81,7 +101,7 @@ public class Hardware extends Categories {
         c.put("DATELASTLOGGEDUSER", getDatelastloggeduser() );
         c.put("LASTLOGGEDUSER", getLastloggeduser());
         c.put("NAME", getName());
-        c.put("OSNAME", getOsname());
+        c.put("OSNAME", OSNAME);
         c.put("OSVERSION", getOsversion());
         c.put("ARCHNAME", getArchname());
         c.put("UUID", getUUID());
@@ -111,10 +131,6 @@ public class Hardware extends Categories {
 
     public String getName() {
         return Build.MODEL;
-    }
-
-    public String getOsname() {
-        return "Android";
     }
 
     public String getOsversion() {
