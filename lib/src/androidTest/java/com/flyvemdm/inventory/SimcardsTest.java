@@ -52,13 +52,13 @@ public class SimcardsTest {
     @Test
     public void getOperator_code() throws Exception {
         Simcards simcards = new Simcards(appContext);
-        assertNotEquals("", simcards.getOperator_code());
+        assertNotEquals("", simcards.getOperatorCode());
     }
 
     @Test
     public void getOperator_name() throws Exception {
         Simcards simcards = new Simcards(appContext);
-        assertNotEquals("", simcards.getOperator_name());
+        assertNotEquals("", simcards.getOperatorName());
     }
 
     @Test
@@ -76,13 +76,13 @@ public class SimcardsTest {
     @Test
     public void getLine_number() throws Exception {
         Simcards simcards = new Simcards(appContext);
-        assertNotEquals("", simcards.getLine_number());
+        assertNotEquals("", simcards.getLineNumber());
     }
 
     @Test
     public void getSubscriber_id() throws Exception {
         Simcards simcards = new Simcards(appContext);
-        assertNotEquals("", simcards.getSubscriber_id());
+        assertNotEquals("", simcards.getSubscriberId());
     }
 
 }

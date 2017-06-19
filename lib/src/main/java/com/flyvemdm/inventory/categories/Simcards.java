@@ -53,6 +53,24 @@ public class Simcards extends Categories {
 
     private TelephonyManager mTM;
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        return (!super.equals(obj));
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = super.hashCode();
+        hash = 89 * hash + (this.mTM != null ? this.mTM.hashCode() : 0);
+        return hash;
+    }
+
     /**
      * This constructor load the context and the Simcards information
      * @param xCtx Context where this class work
@@ -68,12 +86,12 @@ public class Simcards extends Categories {
         Category c = new Category("SIMCARDS");
 
         c.put("COUNTRY", getCountry());
-        c.put("OPERATOR_CODE", getOperator_code());
-        c.put("OPERATOR_NAME", getOperator_name());
+        c.put("OPERATOR_CODE", getOperatorCode());
+        c.put("OPERATOR_NAME", getOperatorName());
         c.put("SERIAL", getSerial());
         c.put("STATE", getState());
-        c.put("LINE_NUMBER", getLine_number());
-        c.put("SUBSCRIBER_ID", getSubscriber_id());
+        c.put("LINE_NUMBER", getLineNumber());
+        c.put("SUBSCRIBER_ID", getSubscriberId());
         
         this.add(c);
     }
@@ -82,11 +100,11 @@ public class Simcards extends Categories {
         return mTM.getSimCountryIso();
     }
 
-    public String getOperator_code() {
+    public String getOperatorCode() {
         return mTM.getSimOperator();
     }
 
-    public String getOperator_name() {
+    public String getOperatorName() {
         return mTM.getSimOperatorName();
     }
 
@@ -115,15 +133,18 @@ public class Simcards extends Categories {
             case TelephonyManager.SIM_STATE_UNKNOWN:
                 mState = "SIM_STATE_UNKNOWN";
                 break;
+            default:
+                mState = "Unknow";
+                break;
         }
         return mState;
     }
 
-    public String getLine_number() {
+    public String getLineNumber() {
         return mTM.getLine1Number();
     }
 
-    public String getSubscriber_id() {
+    public String getSubscriberId() {
         return mTM.getSubscriberId();
     }
 }
