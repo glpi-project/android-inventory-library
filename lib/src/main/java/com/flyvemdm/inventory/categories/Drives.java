@@ -57,7 +57,7 @@ public class Drives extends Categories {
 	private static final long serialVersionUID = 6073387379988815108L;
 
     // Properties of this component
-    private int toMega = 1048576;
+    private static int toMega = 1048576;
 
     /**
      * This constructor load the context and load the Drivers information
@@ -67,18 +67,17 @@ public class Drives extends Categories {
 	public Drives(Context xCtx) {
         super(xCtx);
         
-        this.addStorage(xCtx, Environment.getRootDirectory());
-        this.addStorage(xCtx, Environment.getExternalStorageDirectory());
-	    this.addStorage(xCtx, Environment.getDataDirectory());
-	    this.addStorage(xCtx, Environment.getDownloadCacheDirectory());
+        this.addStorage(Environment.getRootDirectory());
+        this.addStorage(Environment.getExternalStorageDirectory());
+	    this.addStorage(Environment.getDataDirectory());
+	    this.addStorage(Environment.getDownloadCacheDirectory());
     }
     
     /**
      * Add a storage to inventory
-     * @param xCtx the Context
      * @param f the partition to inventory
      */
-    private void addStorage(Context xCtx, File f) {
+    private void addStorage(File f) {
 
     	Category c = new Category("DRIVES");
 

@@ -62,10 +62,10 @@ public class Envs extends Categories {
 
         //get all envs vars
         Map<String,String> envs = System.getenv();
-        for( String env : envs.keySet()) {
+        for( Map.Entry<String,String> entry : envs.entrySet()) {
            Category c = new Category("ENVS");
-           c.put("KEY", env);
-           c.put("VAL", envs.get(env));
+           c.put("KEY", entry.getKey());
+           c.put("VAL", envs.get(entry.getKey()));
            this.add(c);
         }
     }
