@@ -52,15 +52,6 @@ public class Jvm extends Categories {
      */
 	private static final long serialVersionUID = 3291981487537599599L;
 
-    // Properties of this component
-    private String mName = "Unknown";
-    private String mVendor = "Unknown";
-    private String mLanguage = "Unknown";
-    private String mRuntime = "Unknown";
-    private String mHome = "Unknown";
-    private String mVersion = "Unknown";
-    private String mClasspath = "Unknown";
-
     /**
      * This constructor load the context and the Java Virtual Machine information
      * @param xCtx Context where this class work
@@ -70,34 +61,48 @@ public class Jvm extends Categories {
 
         Category c = new Category("JVMS");
         Properties props = System.getProperties();
-        /*
-        for(Object prop: props.keySet() ) {
-            FILog.d(this, String.format("PROP %s = %s" , (String)prop, props.get(prop) ) , Log.VERBOSE);
-        }
-         */
-        mName = (String)props.getProperty("java.vm.name");
-        c.put("NAME", mName);
 
-        String language = (String)props.getProperty("user.language");
-        language += '_';
-        language += (String)props.getProperty("user.region");
-        mLanguage = language;
-        c.put("LANGUAGE", mLanguage);
+            c.put("NAME", getName(props));
+            c.put("LANGUAGE", getLanguage(props));
+            c.put("VENDOR", getVendor(props));
+            c.put("RUNTIME", getRuntime(props));
+            c.put("HOME", getHome(props));
+            c.put("VERSION", getVersion(props));
+            c.put("CLASSPATH", getmClasspath(props));
 
-        mVendor = (String)props.getProperty("java.vm.vendor");
-        c.put("VENDOR", mVendor);
-
-        mRuntime = (String)props.getProperty("java.runtime.version");
-        c.put("RUNTIME", mRuntime);
-
-        mHome = (String)props.getProperty("java.home");
-        c.put("HOME", mHome);
-
-        mVersion = (String)props.getProperty("java.vm.version");
-        c.put("VERSION", mVersion);
-
-        mClasspath = (String)props.getProperty("java.class.path");
-        c.put("CLASSPATH", mClasspath);
         this.add(c);
+    }
+
+    public String getName(Properties props) {
+        return props.getProperty("java.vm.name");
+    }
+
+    public String getVendor(Properties props) {
+        return props.getProperty("java.vm.vendor");
+    }
+
+    public String getLanguage(Properties props) {
+
+        String language = props.getProperty("user.language");
+        language += "_";
+        language += props.getProperty("user.region");
+
+        return language;
+    }
+
+    public String getRuntime(Properties props) {
+        return props.getProperty("java.runtime.version");
+    }
+
+    public String getHome(Properties props) {
+        return props.getProperty("java.home");
+    }
+
+    public String getVersion(Properties props) {
+        return props.getProperty("java.vm.version");
+    }
+
+    public String getmClasspath(Properties props) {
+        return props.getProperty("java.class.path");
     }
 }
