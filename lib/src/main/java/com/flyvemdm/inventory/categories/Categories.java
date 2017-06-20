@@ -35,6 +35,7 @@ import android.content.Context;
 
 import com.flyvemdm.inventory.FILog;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.xmlpull.v1.XmlSerializer;
 
@@ -101,16 +102,18 @@ public class Categories extends ArrayList<Category>{
     }
 
     public void toJSON(JSONObject json) {
-        for( Category c : this) {
-            try {
-                c.toJSON(json);
-            } catch (IOException e) {
-                FILog.e(e.getMessage());
-            } catch (IllegalArgumentException e) {
-                FILog.e(e.getMessage());
-            } catch (IllegalStateException e) {
-                FILog.e(e.getMessage());
+
+        JSONArray jsonArr = new JSONArray();
+        String mType = "";
+        try {
+            for( Category c : this) {
+                mType = c.mType;
+                jsonArr.put(c.toJSON());
             }
+
+            json.put(mType, jsonArr);
+        } catch (Exception e) {
+            FILog.e(e.getMessage());
         }
     }
 }

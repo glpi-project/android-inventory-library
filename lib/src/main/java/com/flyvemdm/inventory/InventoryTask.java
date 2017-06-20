@@ -210,6 +210,7 @@ public class InventoryTask {
             JSONObject content = new JSONObject();
             content.put("ACCESSLOG", jsonAccessLog);
             content.put("ACCOUNTINFO", jsonAccessLog);
+
             for (Categories cat : mContent) {
                 cat.toJSON(content);
             }

@@ -58,7 +58,7 @@ public class Category extends LinkedHashMap<String, String>{
      *  from: https://stackoverflow.com/questions/285793/what-is-a-serialversionuid-and-why-should-i-use-it
      */
     private static final long serialVersionUID = 6443019125036309325L;
-    private String mType;
+    public String mType;
 
     @Override
     public boolean equals(Object obj) {
@@ -119,18 +119,18 @@ public class Category extends LinkedHashMap<String, String>{
         serializer.endTag(null, mType);
     }
 
-    void toJSON(JSONObject json) throws  IOException {
+    JSONObject toJSON() throws  IOException {
         try {
-
             JSONObject jsonCategories = new JSONObject();
             for (Map.Entry<String,String> entry : this.entrySet()) {
                 jsonCategories.put(entry.getKey(), String.valueOf(this.get(entry.getKey())));
             }
 
-            json.put(mType, jsonCategories);
+            return jsonCategories;
         } catch ( Exception ex ) {
             FILog.e( ex.getMessage() );
         }
 
+        return null;
     }
 }
