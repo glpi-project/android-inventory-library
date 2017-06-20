@@ -77,6 +77,7 @@ public class InventoryTask {
         ctx = context;
     }
 
+    @SuppressWarnings("unchecked")
     private ArrayList<Categories> loadCategoriesClass() {
 
         ArrayList<Categories> mContent = new ArrayList<Categories>();
@@ -109,9 +110,15 @@ public class InventoryTask {
 
             // Loading the class with name of the ArrayList
             try {
-                catClass = (Class <Categories>) Class.forName(String.format("com.flyvemdm.inventory.categories.%s",c));
-            } catch (ClassNotFoundException e) {
-                FILog.e(e.getMessage());
+                Class cCat = Class.forName(String.format("com.flyvemdm.inventory.categories.%s", c));
+                catClass = (Class<Categories>)cCat;
+
+            }
+            catch (NullPointerException ex) {
+                FILog.e(ex.getMessage());
+            }
+            catch (ClassNotFoundException ex) {
+                FILog.e(ex.getMessage());
                 return new ArrayList<Categories>();
             }
 
@@ -192,15 +199,26 @@ public class InventoryTask {
 
         try {
 
+            JSONObject accountInfo = new JSONObject();
+            accountInfo.put("KEYNAME", "TAG");
+            accountInfo.put("KEYVALUE", "N/A");
+
             JSONObject jsonAccessLog = new JSONObject();
             jsonAccessLog.put("LOGDATE", DateFormat.format("yyyy-MM-dd H:mm:ss", new Date()).toString());
             jsonAccessLog.put("USERID", "N/A");
+
+            JSONObject content = new JSONObject();
+            content.put("ACCESSLOG", jsonAccessLog);
+            content.put("ACCOUNTINFO", jsonAccessLog);
+            for (Categories cat : mContent) {
+                cat.toJSON(content);
+            }
 
             JSONObject jsonQuery = new JSONObject();
             jsonQuery.put("QUERY", "INVENTORY");
             jsonQuery.put("VERSIONCLIENT", this.appVersion);
             jsonQuery.put("DEVICEID", Build.SERIAL);
-            jsonQuery.put("CONTENT", jsonAccessLog);
+            jsonQuery.put("CONTENT", content);
 
             JSONObject jsonRequest = new JSONObject();
             jsonRequest.put("REQUEST", jsonQuery);

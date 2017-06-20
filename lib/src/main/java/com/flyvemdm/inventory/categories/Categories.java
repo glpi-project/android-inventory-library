@@ -35,6 +35,7 @@ import android.content.Context;
 
 import com.flyvemdm.inventory.FILog;
 
+import org.json.JSONObject;
 import org.xmlpull.v1.XmlSerializer;
 
 import java.io.IOException;
@@ -89,6 +90,20 @@ public class Categories extends ArrayList<Category>{
         for( Category c : this) {
             try {
                 c.toXML(xSerializer);
+            } catch (IOException e) {
+                FILog.e(e.getMessage());
+            } catch (IllegalArgumentException e) {
+                FILog.e(e.getMessage());
+            } catch (IllegalStateException e) {
+                FILog.e(e.getMessage());
+            }
+        }
+    }
+
+    public void toJSON(JSONObject json) {
+        for( Category c : this) {
+            try {
+                c.toJSON(json);
             } catch (IOException e) {
                 FILog.e(e.getMessage());
             } catch (IllegalArgumentException e) {

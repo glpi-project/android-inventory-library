@@ -33,6 +33,9 @@ package com.flyvemdm.inventory.categories;
 
 import android.os.Build;
 
+import com.flyvemdm.inventory.FILog;
+
+import org.json.JSONObject;
 import org.xmlpull.v1.XmlSerializer;
 
 import java.io.IOException;
@@ -114,5 +117,20 @@ public class Category extends LinkedHashMap<String, String>{
         }
 
         serializer.endTag(null, mType);
+    }
+
+    void toJSON(JSONObject json) throws  IOException {
+        try {
+
+            JSONObject jsonCategories = new JSONObject();
+            for (Map.Entry<String,String> entry : this.entrySet()) {
+                jsonCategories.put(entry.getKey(), String.valueOf(this.get(entry.getKey())));
+            }
+
+            json.put(mType, jsonCategories);
+        } catch ( Exception ex ) {
+            FILog.e( ex.getMessage() );
+        }
+
     }
 }
