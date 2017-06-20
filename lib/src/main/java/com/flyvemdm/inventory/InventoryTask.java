@@ -78,7 +78,7 @@ public class InventoryTask {
     }
 
     @SuppressWarnings("unchecked")
-    private ArrayList<Categories> loadCategoriesClass() {
+    private ArrayList<Categories> loadCategoriesClass() throws Exception {
 
         ArrayList<Categories> mContent = new ArrayList<Categories>();
 
@@ -115,11 +115,11 @@ public class InventoryTask {
 
             }
             catch (NullPointerException ex) {
-                FILog.e(ex.getMessage());
+                throw new Exception(ex.getMessage());
             }
             catch (ClassNotFoundException ex) {
                 FILog.e(ex.getMessage());
-                return new ArrayList<Categories>();
+                throw new Exception(ex.getMessage());
             }
 
             // Instance the class and checking errors
@@ -129,7 +129,7 @@ public class InventoryTask {
                     mContent.add(co.newInstance(ctx));
                 } catch ( Exception ex ) {
                     FILog.e( ex.getMessage() );
-                    return new ArrayList<Categories>();
+                    throw new Exception(ex.getMessage());
                 }
             }
         }
@@ -195,7 +195,7 @@ public class InventoryTask {
         t.start();
     }
 
-    private String createJSON(ArrayList<Categories> mContent){
+    private String createJSON(ArrayList<Categories> mContent) throws Exception {
 
         try {
 
@@ -228,9 +228,8 @@ public class InventoryTask {
 
         } catch (Exception ex) {
             FILog.e(ex.getMessage());
+            throw new Exception(ex.getMessage());
         }
-
-        return "";
     }
 
     /**
@@ -238,11 +237,10 @@ public class InventoryTask {
      * @return String with XML
      * @throws RuntimeException
      */
-    private String createXML(ArrayList<Categories> mContent) {
+    private String createXML(ArrayList<Categories> mContent) throws Exception {
         FILog.i("createXML: ");
 
         if (mContent != null) {
-
             XmlSerializer serializer = Xml.newSerializer();
             StringWriter writer = new StringWriter();
 
@@ -311,8 +309,9 @@ public class InventoryTask {
                 // Return XML String
                 return writer.toString();
 
-            } catch (Exception e) {
-                FILog.e(e.getMessage());
+            } catch (Exception ex) {
+                FILog.e(ex.getMessage());
+                throw new Exception(ex.getMessage());
             }
         }
 
