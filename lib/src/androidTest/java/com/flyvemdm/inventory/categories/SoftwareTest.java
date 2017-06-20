@@ -41,43 +41,43 @@ import static org.junit.Assert.assertNotEquals;
  */
 
 @RunWith(AndroidJUnit4.class)
-public class SoftwaresTest {
+public class SoftwareTest {
 
     Context appContext = InstrumentationRegistry.getTargetContext();
 
     @Test
     public void getName() throws Exception {
-        Softwares softwares = new Softwares(appContext);
+        Software software = new Software(appContext);
 
         PackageManager package_manager = appContext.getPackageManager();
         List<ApplicationInfo> packages = package_manager.getInstalledApplications(PackageManager.GET_META_DATA);
 
         for (ApplicationInfo p : packages) {
-            assertNotEquals("", softwares.getName(p));
+            assertNotEquals("", software.getName(p));
         }
     }
 
     @Test
     public void getVersion() throws Exception {
-        Softwares softwares = new Softwares(appContext);
+        Software software = new Software(appContext);
 
         PackageManager package_manager = appContext.getPackageManager();
         List<ApplicationInfo> packages = package_manager.getInstalledApplications(PackageManager.GET_META_DATA);
 
         for (ApplicationInfo p : packages) {
-            assertNotEquals("", softwares.getVersion(p));
+            assertNotEquals("", software.getVersion(p));
         }
     }
 
     @Test
     public void getFilesize() throws Exception {
-        Softwares softwares = new Softwares(appContext);
+        Software software = new Software(appContext);
 
         PackageManager package_manager = appContext.getPackageManager();
         List<ApplicationInfo> packages = package_manager.getInstalledApplications(PackageManager.GET_META_DATA);
 
         for (ApplicationInfo p : packages) {
-            assertNotEquals("", softwares.getFilesize(p));
+            assertNotEquals("", software.getFilesize(p));
         }
     }
 

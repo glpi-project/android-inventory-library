@@ -45,7 +45,7 @@ import java.util.List;
 /**
  * This class get all the information of the Softwate
  */
-public class Softwares extends Categories {
+public class Software extends Categories {
 
     /*
      * The serialization runtime associates with each serializable class a version number,
@@ -79,7 +79,7 @@ public class Softwares extends Categories {
         return hash;
     }
 
-    public Softwares(Context xCtx) {
+    public Software(Context xCtx) {
         super(xCtx);
         packageManager = xCtx.getPackageManager();
         List<ApplicationInfo> packages = packageManager.getInstalledApplications(PackageManager.GET_META_DATA);

@@ -98,7 +98,7 @@ public class InventoryTask {
 //                "LocationProviders",
                 "Envs",
                 "Jvm",
-                "Softwares",
+                "Software",
                 "Usb",
                 "Battery"
         };
