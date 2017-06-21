@@ -51,6 +51,10 @@ public final class FILog {
      * @param msg String message
      */
     public static void d(String msg) {
+        if(msg == null) {
+            return;
+        }
+
         Log.d(TAGLOG, msg);
     }
 
@@ -59,6 +63,10 @@ public final class FILog {
      * @param msg String message
      */
     public static void e(String msg) {
+        if(msg == null) {
+            return;
+        }
+
         Log.e(TAGLOG, msg);
     }
 
@@ -67,6 +75,9 @@ public final class FILog {
      * @param msg String message
      */
     public static void i(String msg) {
+        if(msg == null) {
+            return;
+        }
         Log.i(TAGLOG, msg);
     }
 
@@ -75,6 +86,10 @@ public final class FILog {
      * @param msg String message
      */
     public static void v(String msg) {
+        if(msg == null) {
+            return;
+        }
+
         Log.v(TAGLOG, msg);
     }
 

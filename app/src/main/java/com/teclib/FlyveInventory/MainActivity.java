@@ -1,6 +1,5 @@
 package com.teclib.FlyveInventory;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -33,14 +32,14 @@ public class MainActivity extends AppCompatActivity {
         task = new InventoryTask(MainActivity.this, "Agent");
         pb = (ProgressBar) findViewById(R.id.progressBar);
 
-        // The request code used in ActivityCompat.requestPermissions()
-        // and returned in the Activity's onRequestPermissionsResult()
-        int PERMISSION_ALL = 1;
-        String[] PERMISSIONS = { Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
-
-        if(!hasPermissions(this, PERMISSIONS)){
-            ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
-        }
+//        // The request code used in ActivityCompat.requestPermissions()
+//        // and returned in the Activity's onRequestPermissionsResult()
+//        int PERMISSION_ALL = 1;
+//        String[] PERMISSIONS = { Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
+//
+//        if(!hasPermissions(this, PERMISSIONS)){
+//            ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
+//        }
 
         Button btnXML = (Button) findViewById(R.id.btnXML);
         btnXML.setOnClickListener(new View.OnClickListener() {
@@ -64,10 +63,10 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onTaskError(String error) {
+                    public void onTaskError(Throwable error) {
                         pb.setVisibility(View.GONE);
-                        Toast.makeText( MainActivity.this, error, Toast.LENGTH_LONG ).show();
-                        Log.d("Error XML", error);
+                        Toast.makeText( MainActivity.this, error.getMessage(), Toast.LENGTH_LONG ).show();
+                        Log.d("Error XML", error.getMessage());
                     }
                 });
             }
@@ -95,10 +94,10 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onTaskError(String error) {
+                    public void onTaskError(Throwable error) {
                         pb.setVisibility(View.GONE);
-                        Toast.makeText( MainActivity.this, error, Toast.LENGTH_LONG ).show();
-                        Log.d("Error JSON", error);
+                        Toast.makeText( MainActivity.this, error.getMessage(), Toast.LENGTH_LONG ).show();
+                        Log.d("Error JSON", error.getMessage());
                     }
                 });
             }

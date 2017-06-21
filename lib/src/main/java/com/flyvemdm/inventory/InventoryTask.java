@@ -78,7 +78,7 @@ public class InventoryTask {
     }
 
     @SuppressWarnings("unchecked")
-    private ArrayList<Categories> loadCategoriesClass() throws Exception {
+    private ArrayList<Categories> loadCategoriesClass() throws FlyveException {
 
         ArrayList<Categories> mContent = new ArrayList<Categories>();
 
@@ -115,7 +115,8 @@ public class InventoryTask {
 
             }
             catch (Exception ex) {
-                throw new Exception(ex.getMessage());
+                FILog.e( ex.getCause().toString() );
+                throw new FlyveException(ex.getMessage(), ex.getCause());
             }
 
             // Instance the class and checking errors
@@ -124,8 +125,8 @@ public class InventoryTask {
                     Constructor<Categories> co = catClass.getConstructor(Context.class);
                     mContent.add(co.newInstance(ctx));
                 } catch ( Exception ex ) {
-                    FILog.e( ex.getMessage() );
-                    throw new Exception(ex.getMessage());
+                    FILog.e( ex.getCause().toString() );
+                    throw new FlyveException(ex.getMessage(), ex.getCause());
                 }
             }
         }
@@ -152,7 +153,7 @@ public class InventoryTask {
 
                     InventoryTask.runOnUI(new Runnable() {
                         public void run() {
-                            listener.onTaskError( ex.getMessage() );
+                            listener.onTaskError( ex.getCause() );
                         }
                     });
 
@@ -181,7 +182,7 @@ public class InventoryTask {
 
                     InventoryTask.runOnUI(new Runnable() {
                         public void run() {
-                            listener.onTaskError( ex.getMessage() );
+                            listener.onTaskError( ex.getCause() );
                         }
                     });
 
@@ -224,7 +225,7 @@ public class InventoryTask {
 
         } catch (Exception ex) {
             FILog.e(ex.getMessage());
-            throw new Exception(ex.getMessage());
+            throw new FlyveException(ex.getMessage(), ex.getCause());
         }
     }
 
@@ -233,7 +234,7 @@ public class InventoryTask {
      * @return String with XML
      * @throws RuntimeException
      */
-    private String createXML(ArrayList<Categories> mContent) throws Exception {
+    private String createXML(ArrayList<Categories> mContent) throws FlyveException {
         FILog.i("createXML: ");
 
         if (mContent != null) {
@@ -307,7 +308,7 @@ public class InventoryTask {
 
             } catch (Exception ex) {
                 FILog.e(ex.getMessage());
-                throw new Exception(ex.getMessage());
+                throw new FlyveException(ex.getMessage(), ex.getCause());
             }
         }
 
@@ -329,7 +330,10 @@ public class InventoryTask {
          * if something wrong
          * @param error String
          */
-        void onTaskError(String error);
+        void onTaskError(Throwable error);
 
     }
+
+
+
 }

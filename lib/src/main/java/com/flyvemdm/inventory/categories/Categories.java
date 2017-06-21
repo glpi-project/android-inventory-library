@@ -39,7 +39,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.xmlpull.v1.XmlSerializer;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class Categories extends ArrayList<Category>{
@@ -88,16 +87,12 @@ public class Categories extends ArrayList<Category>{
      * @param xSerializer object to create XML
      */
     public void toXML(XmlSerializer xSerializer) {
-        for( Category c : this) {
-            try {
+        try {
+            for( Category c : this) {
                 c.toXML(xSerializer);
-            } catch (IOException e) {
-                FILog.e(e.getMessage());
-            } catch (IllegalArgumentException e) {
-                FILog.e(e.getMessage());
-            } catch (IllegalStateException e) {
-                FILog.e(e.getMessage());
             }
+        } catch (Exception e) {
+            FILog.e(e.getMessage());
         }
     }
 

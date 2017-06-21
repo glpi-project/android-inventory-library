@@ -34,11 +34,11 @@ package com.flyvemdm.inventory.categories;
 import android.os.Build;
 
 import com.flyvemdm.inventory.FILog;
+import com.flyvemdm.inventory.FlyveException;
 
 import org.json.JSONObject;
 import org.xmlpull.v1.XmlSerializer;
 
-import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -105,21 +105,25 @@ public class Category extends LinkedHashMap<String, String>{
     /**
      * This is package private function that create a XML node with a XmlSerializer object
      * @param serializer object
-     * @throws IOException
      */
-    void toXML(XmlSerializer serializer) throws  IOException {
-        serializer.startTag(null, mType);
+    void toXML(XmlSerializer serializer) throws FlyveException {
 
-        for (Map.Entry<String,String> entry : this.entrySet()) {
-            serializer.startTag(null, entry.getKey());
-            serializer.text(String.valueOf(this.get(entry.getKey())));
-            serializer.endTag(null, entry.getKey());
+        try {
+            serializer.startTag(null, mType);
+
+            for (Map.Entry<String, String> entry : this.entrySet()) {
+                serializer.startTag(null, entry.getKey());
+                serializer.text(String.valueOf(this.get(entry.getKey())));
+                serializer.endTag(null, entry.getKey());
+            }
+
+            serializer.endTag(null, mType);
+        } catch (Exception ex) {
+            throw new FlyveException(ex.getMessage(), ex.getCause());
         }
-
-        serializer.endTag(null, mType);
     }
 
-    JSONObject toJSON() throws  IOException {
+    JSONObject toJSON() throws FlyveException {
         try {
             JSONObject jsonCategories = new JSONObject();
             for (Map.Entry<String,String> entry : this.entrySet()) {
@@ -129,8 +133,7 @@ public class Category extends LinkedHashMap<String, String>{
             return jsonCategories;
         } catch ( Exception ex ) {
             FILog.e( ex.getMessage() );
+            throw new FlyveException(ex.getMessage(), ex.getCause());
         }
-
-        return null;
     }
 }
