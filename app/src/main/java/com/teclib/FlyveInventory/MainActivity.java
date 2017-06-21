@@ -1,8 +1,12 @@
 package com.teclib.FlyveInventory;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -28,6 +32,15 @@ public class MainActivity extends AppCompatActivity {
 
         task = new InventoryTask(MainActivity.this, "Agent");
         pb = (ProgressBar) findViewById(R.id.progressBar);
+
+        // The request code used in ActivityCompat.requestPermissions()
+        // and returned in the Activity's onRequestPermissionsResult()
+        int PERMISSION_ALL = 1;
+        String[] PERMISSIONS = { Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
+
+        if(!hasPermissions(this, PERMISSIONS)){
+            ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
+        }
 
         Button btnXML = (Button) findViewById(R.id.btnXML);
         btnXML.setOnClickListener(new View.OnClickListener() {
@@ -90,6 +103,17 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         });
+    }
+
+    public static boolean hasPermissions(Context context, String... permissions) {
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null && permissions != null) {
+            for (String permission : permissions) {
+                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     public void generateFileOnSD(Context context, String sFileName, String sBody) throws IOException {

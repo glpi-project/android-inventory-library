@@ -54,14 +54,14 @@ import java.util.Date;
  */
 public class InventoryTask {
 
-    private static Handler UIHandler;
+    private static Handler uiHandler;
 
     static {
-        UIHandler = new Handler(Looper.getMainLooper());
+        uiHandler = new Handler(Looper.getMainLooper());
     }
 
     private static void runOnUI(Runnable runnable) {
-        UIHandler.post(runnable);
+        uiHandler.post(runnable);
     }
 
     private Context ctx = null;
@@ -114,11 +114,7 @@ public class InventoryTask {
                 catClass = (Class<Categories>)cCat;
 
             }
-            catch (NullPointerException ex) {
-                throw new Exception(ex.getMessage());
-            }
-            catch (ClassNotFoundException ex) {
-                FILog.e(ex.getMessage());
+            catch (Exception ex) {
                 throw new Exception(ex.getMessage());
             }
 
