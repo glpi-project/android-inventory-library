@@ -97,18 +97,7 @@ public class Battery extends Categories {
 		// Trigger BroadcastReceiver
 		xCtx.registerReceiver(this.myBatteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
 		this.myBatteryReceiver.onReceive(xCtx, new Intent(Intent.ACTION_BATTERY_CHANGED));
-
-		// Load the information
-		Category c  = new Category("BATTERIES");
-		c.put("CHEMISTRY", technology);
-		c.put("TEMPERATURE", temperature);
-		c.put("VOLTAGE", voltage);
-		c.put("LEVEL", level);
-		c.put("HEALTH", health);
-		c.put("STATUS", status);
-		this.add(c);
 	}
-
 
 	/**
 	 *  This BroadcastReceiver load the information of the component
@@ -162,6 +151,18 @@ public class Battery extends Categories {
 					health = "Unspecified Failure";
 				} else {
 					health = "Unknown";
+				}
+
+				if(!level.equals("0%")) {
+					// Load the information
+					Category c = new Category("BATTERIES");
+					c.put("CHEMISTRY", technology);
+					c.put("TEMPERATURE", temperature);
+					c.put("VOLTAGE", voltage);
+					c.put("LEVEL", level);
+					c.put("HEALTH", health);
+					c.put("STATUS", status);
+					Battery.this.add(c);
 				}
 
 			}

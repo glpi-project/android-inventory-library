@@ -1,8 +1,14 @@
 package com.teclib.FlyveInventory;
 
 import android.Manifest;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.hardware.usb.UsbDevice;
+import android.hardware.usb.UsbManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -24,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
 
     private InventoryTask task;
     private ProgressBar pb;
+    private static final String ACTION_USB_PERMISSION = "com.teclib.FlyveInventory.USB_PERMISSION";
+    PendingIntent mPermissionIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +51,17 @@ public class MainActivity extends AppCompatActivity {
         if(!hasPermissions(this, permissions)){
             ActivityCompat.requestPermissions(this, permissions, permissionAll);
         }
+
+        /*
+         * this block required if you need to communicate to USB devices it's
+         * take permission to device
+         * if you want than you can set this to which device you want to communicate
+         */
+        // ------------------------------------------------------------------
+        mPermissionIntent = PendingIntent.getBroadcast(MainActivity.this, 0, new Intent(
+                ACTION_USB_PERMISSION), 0);
+        IntentFilter filter = new IntentFilter(ACTION_USB_PERMISSION);
+        registerReceiver(mUsbReceiver, filter);
 
         // create XML file
         Button btnXML = (Button) findViewById(R.id.btnXML);
@@ -110,6 +129,27 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    private final BroadcastReceiver mUsbReceiver = new BroadcastReceiver() {
+
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (ACTION_USB_PERMISSION.equals(action)) {
+                synchronized (this) {
+                    UsbDevice device = (UsbDevice) intent
+                            .getParcelableExtra(UsbManager.EXTRA_DEVICE);
+                    if (intent.getBooleanExtra(
+                            UsbManager.EXTRA_PERMISSION_GRANTED, false)) {
+                        if (device != null) {
+                            // call method to set up device communication
+                        }
+                    } else {
+                        Log.d("ERROR", "permission denied for device " + device);
+                    }
+                }
+            }
+        }
+    };
 
     /**
      * This function request the permission needed on Android 6.0 and above

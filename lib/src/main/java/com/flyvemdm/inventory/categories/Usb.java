@@ -65,7 +65,7 @@ public class Usb extends Categories {
         
         //USB inventory comes with SDK level 12 !
         if(Build.VERSION.SDK_INT > 12) {
-	
+
 	        UsbManager manager = (UsbManager) xCtx.getSystemService(Context.USB_SERVICE);
 	        HashMap<String, UsbDevice> devices = manager.getDeviceList();
 			for (Map.Entry<String, UsbDevice> entry : devices.entrySet()) {
