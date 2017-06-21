@@ -207,7 +207,7 @@ public class InventoryTask {
      * @param mContent ArrayList<Categories> with the categories
      * @return String with JSON
      */
-    private String createJSON(ArrayList<Categories> mContent) throws Exception {
+    private String createJSON(ArrayList<Categories> mContent) throws FlyveException {
 
         try {
 
