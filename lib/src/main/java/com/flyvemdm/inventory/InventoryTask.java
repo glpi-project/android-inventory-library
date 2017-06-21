@@ -77,6 +77,10 @@ public class InventoryTask {
         ctx = context;
     }
 
+    /**
+     * This function load all the categories class dynamically
+     * @return ArrayList<Categories>
+     */
     @SuppressWarnings("unchecked")
     private ArrayList<Categories> loadCategoriesClass() throws FlyveException {
 
@@ -134,6 +138,10 @@ public class InventoryTask {
         return mContent;
     }
 
+    /**
+     * Return a XML String or Error OnTaskCompleted interface
+     * @param listener the interface OnTaskCompleted
+     */
     public void getXML(final OnTaskCompleted listener) {
 
         Thread t = new Thread(new Runnable()
@@ -163,6 +171,10 @@ public class InventoryTask {
         t.start();
     }
 
+    /**
+     * Return a JSON String or Error OnTaskCompleted interface
+     * @param listener the interface OnTaskCompleted
+     */
     public void getJSON(final OnTaskCompleted listener) {
 
         Thread t = new Thread(new Runnable()
@@ -192,6 +204,11 @@ public class InventoryTask {
         t.start();
     }
 
+    /**
+     * Create a JSON String with al the Categories available
+     * @param mContent ArrayList<Categories> with the categories
+     * @return String with JSON
+     */
     private String createJSON(ArrayList<Categories> mContent) throws Exception {
 
         try {
@@ -230,9 +247,9 @@ public class InventoryTask {
     }
 
     /**
-     * This function create and return the XML
+     * Create a XML String with al the Categories available
+     * @param mContent ArrayList<Categories> with the categories
      * @return String with XML
-     * @throws RuntimeException
      */
     private String createXML(ArrayList<Categories> mContent) throws FlyveException {
         FILog.i("createXML: ");
@@ -333,7 +350,4 @@ public class InventoryTask {
         void onTaskError(Throwable error);
 
     }
-
-
-
 }
