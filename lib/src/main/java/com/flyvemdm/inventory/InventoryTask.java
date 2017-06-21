@@ -38,12 +38,9 @@ import android.os.Handler;
 import android.os.Looper;
 import android.text.format.DateFormat;
 import android.util.Xml;
-
 import com.flyvemdm.inventory.categories.Categories;
-
 import org.json.JSONObject;
 import org.xmlpull.v1.XmlSerializer;
-
 import java.io.StringWriter;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;

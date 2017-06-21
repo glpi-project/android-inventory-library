@@ -116,24 +116,24 @@ public class Battery extends Categories {
 	private BroadcastReceiver myBatteryReceiver = new BroadcastReceiver() {
 
 		@Override
-		public void onReceive(Context arg0, Intent arg1) {
+		public void onReceive(Context context, Intent intent) {
 
-			if (arg1.getAction().equals(Intent.ACTION_BATTERY_CHANGED)) {
+			if (intent.getAction().equals(Intent.ACTION_BATTERY_CHANGED)) {
 
-				level = String.valueOf(arg1.getIntExtra("level", 0)) + "%";
+				level = String.valueOf(intent.getIntExtra("level", 0)) + "%";
 
 				voltage = String
-						.valueOf((float) arg1.getIntExtra("voltage", 0) / 1000)
+						.valueOf((float) intent.getIntExtra("voltage", 0) / 1000)
 						+ "V";
 
-				temperature = String.valueOf((float) arg1.getIntExtra(
+				temperature = String.valueOf((float) intent.getIntExtra(
 						"temperature", 0) / 10)
 						+ "c";
 
-				technology = arg1.getStringExtra("technology");
+				technology = intent.getStringExtra("technology");
 
 				// get battery status
-				int intstatus = arg1.getIntExtra("status",
+				int intstatus = intent.getIntExtra("status",
 						BatteryManager.BATTERY_STATUS_UNKNOWN);
 				if (intstatus == BatteryManager.BATTERY_STATUS_CHARGING) {
 					status = "Charging";
@@ -148,7 +148,7 @@ public class Battery extends Categories {
 				}
 
 				// get battery health
-				int inthealth = arg1.getIntExtra("health",
+				int inthealth = intent.getIntExtra("health",
 						BatteryManager.BATTERY_HEALTH_UNKNOWN);
 				if (inthealth == BatteryManager.BATTERY_HEALTH_GOOD) {
 					health = "Good";
