@@ -1,4 +1,4 @@
-# Flyve MDM
+# Inventory Library for Android
 
 ![Flyve MDM banner](https://user-images.githubusercontent.com/663460/26935464-54267e9c-4c6c-11e7-86df-8cfa6658133e.png)
 
@@ -9,7 +9,7 @@
 [![GitHub release](https://img.shields.io/github/release/flyve-mdm/flyve-mdm-android-inventory.svg)](https://github.com/flyve-mdm/flyve-mdm-android-inventory/releases)
 [![Maven Central](https://img.shields.io/maven-central/v/com.flyvemdm/inventory.svg)](https://bintray.com/flyve-mdm/inventory/flyve-mdm-android-inventory/)
 
-Mobile device management software that enables you to secure and manage all the mobile devices of your business or family via a web-based console.
+Flyve MDM is a Mobile device management software that enables you to secure and manage all the mobile devices of your business or family via a web-based console.
 
 To get started, check out <https://flyve-mdm.com/>!
 
@@ -65,7 +65,7 @@ Download the latest JAR, grab via Maven or insert on `build.gradle` at app level
 <dependency>
   <groupId>com.flyvemdm</groupId>
   <artifactId>inventory</artifactId>
-  <version>1.0.1</version>
+  <version>1.0.0</version>
   <type>pom</type>
 </dependency>
 ```
@@ -73,7 +73,7 @@ Download the latest JAR, grab via Maven or insert on `build.gradle` at app level
 ### Gradle
 
 ```groovy
-compile 'com.flyvemdm:inventory:1.0.1'
+compile 'com.flyvemdm:inventory:1.0.0'
 ```
 
 ## Code Example
