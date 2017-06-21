@@ -102,7 +102,7 @@ public class Categories extends ArrayList<Category>{
         String mType = "";
         try {
             for( Category c : this) {
-                mType = c.mType;
+                mType = c.getType();
                 jsonArr.put(c.toJSON());
             }
 

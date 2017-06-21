@@ -29,8 +29,6 @@ package com.flyvemdm.inventory;
 
 public class FlyveException extends Exception
 {
-    String message;
-    Throwable cause;
 
     public FlyveException() {
         super();
@@ -39,17 +37,5 @@ public class FlyveException extends Exception
     public FlyveException(String message, Throwable cause)
     {
         super(message, cause);
-
-        this.cause = cause;
-
-        if(message==null) {
-            message = cause.toString();
-        }
-
-        if(message==null) {
-            message = "Unknow error";
-        }
-
-        this.message = message;
     }
 }
