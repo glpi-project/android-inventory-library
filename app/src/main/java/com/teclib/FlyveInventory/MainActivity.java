@@ -1,5 +1,6 @@
 package com.teclib.FlyveInventory;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -29,18 +30,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Instance of FlyveInventory Library
         task = new InventoryTask(MainActivity.this, "Agent");
+
+        // A Progressbar to wait for a Thread
         pb = (ProgressBar) findViewById(R.id.progressBar);
 
-//        // The request code used in ActivityCompat.requestPermissions()
-//        // and returned in the Activity's onRequestPermissionsResult()
-//        int PERMISSION_ALL = 1;
-//        String[] PERMISSIONS = { Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
-//
-//        if(!hasPermissions(this, PERMISSIONS)){
-//            ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
-//        }
+        // Request all the permissions that the library need
+        int permissionAll = 1;
+        String[] permissions = { Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
 
+        if(!hasPermissions(this, permissions)){
+            ActivityCompat.requestPermissions(this, permissions, permissionAll);
+        }
+
+        // create XML file
         Button btnXML = (Button) findViewById(R.id.btnXML);
         btnXML.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
                 pb.setVisibility(View.VISIBLE);
 
+                // Get XML format and Write it on a file
                 task.getXML(new InventoryTask.OnTaskCompleted() {
                     @Override
                     public void onTaskSuccess(String data) {
@@ -72,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // create JSON file
         Button btnJSON = (Button) findViewById(R.id.btnJSON);
         btnJSON.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
 
                 pb.setVisibility(View.VISIBLE);
 
+                // Get JSON format and Write it on a file
                 task.getJSON(new InventoryTask.OnTaskCompleted() {
                     @Override
                     public void onTaskSuccess(String data) {
@@ -104,6 +111,12 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * This function request the permission needed on Android 6.0 and above
+     * @param context The context of the app
+     * @param permissions The list of permissions needed
+     * @return true or false
+     */
     public static boolean hasPermissions(Context context, String... permissions) {
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null && permissions != null) {
             for (String permission : permissions) {
@@ -115,6 +128,12 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Simple function to generate a file on SD card
+     * @param context The context of the app
+     * @param sFileName Name of the File
+     * @param sBody What do you want to be in the file
+     */
     public void generateFileOnSD(Context context, String sFileName, String sBody) throws IOException {
         FileWriter writer = null;
         try {
@@ -128,9 +147,9 @@ public class MainActivity extends AppCompatActivity {
             writer.flush();
             writer.close();
             Toast.makeText(context, "Saved", Toast.LENGTH_SHORT).show();
-        } catch (IOException e) {
-            Toast.makeText( MainActivity.this, e.getMessage(), Toast.LENGTH_LONG ).show();
-            Log.d("Error FILE", e.getMessage());
+        } catch (Exception ex) {
+            Toast.makeText( MainActivity.this, ex.getMessage(), Toast.LENGTH_LONG ).show();
+            Log.d("Error FILE", ex.getMessage());
         }
         finally {
             if(writer != null) {
