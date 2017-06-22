@@ -147,17 +147,18 @@ public class InventoryTask {
                 try {
                     ArrayList<Categories> mContent = loadCategoriesClass();
                     final String xml = Utils.createXML(mContent, InventoryTask.this.appVersion);
-                    running = false;
 
                     InventoryTask.runOnUI(new Runnable() {
                         public void run() {
+                            running = false;
                             listener.onTaskSuccess( xml );
                         }
                     });
                 } catch (final Exception ex) {
-                    running = false;
+
                     InventoryTask.runOnUI(new Runnable() {
                         public void run() {
+                            running = false;
                             listener.onTaskError( ex.getCause() );
                         }
                     });
@@ -182,19 +183,21 @@ public class InventoryTask {
                 try {
                     ArrayList<Categories> mContent = loadCategoriesClass();
                     final String json = Utils.createJSON(mContent, InventoryTask.this.appVersion);
-                    running = false;
+
 
                     InventoryTask.runOnUI(new Runnable() {
                         public void run() {
+                            running = false;
                             listener.onTaskSuccess( json );
                         }
                     });
 
                 } catch (final Exception ex) {
-                    running = false;
+
 
                     InventoryTask.runOnUI(new Runnable() {
                         public void run() {
+                            running = false;
                             listener.onTaskError( ex.getCause() );
                         }
                     });
