@@ -45,7 +45,7 @@ apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
 ext {
-    bintrayRepo = 'java-libraries'
+    bintrayRepo = 'inventory'
     bintrayName = 'flyve-mdm-android-inventory'
 
     publishedGroupId = 'com.flyvemdm'
@@ -57,15 +57,15 @@ ext {
     siteUrl = 'https://flyve-mdm.com'
     gitUrl = 'https://github.com/flyve-mdm/flyve-mdm-android-inventory'
 
-    libraryVersion = '1.0.5'
+    libraryVersion = '1.0.0'
 
     developerId = 'rafaelje'
     developerName = 'Rafael Hernandez'
     developerEmail = 'rhernandez@teclib.com'
 
-    licenseName = 'GLPI, Version 3.0'
+    licenseName = 'GPL, Version 3.0'
     licenseUrl = 'http://www.opensource.org/licenses/gpl-3.0.html'
-    allLicenses = ["GLPI-3.0"]
+    allLicenses = ["GPL-3.0"]
 }
 
 group = publishedGroupId                               // Maven Group ID for the artifact
@@ -102,7 +102,6 @@ install {
                     connection gitUrl
                     developerConnection gitUrl
                     url siteUrl
-
                 }
             }
         }
@@ -147,6 +146,7 @@ bintray {
     key = properties.getProperty("bintray.apikey")
 
     configurations = ['archives']
+
     pkg {
         repo = bintrayRepo
         name = bintrayName
