@@ -48,9 +48,12 @@ public class Utils {
 
     /**
      * Create a JSON String with al the Categories available
-     * @param mContent ArrayList<Categories> with the categories
+     * @param mContent ArrayList with the categories
+     * @param appVersion Name of the agent
      * @return String with JSON
+     * @throws FlyveException Exception
      */
+
     protected static String createJSON(ArrayList<Categories> mContent, String appVersion) throws FlyveException {
 
         try {
@@ -90,8 +93,10 @@ public class Utils {
 
     /**
      * Create a XML String with al the Categories available
-     * @param mContent ArrayList<Categories> with the categories
+     * @param mContent ArrayList with the categories
+     * @param appVersion Name of the agent
      * @return String with XML
+     * @throws FlyveException Exception
      */
     protected static String createXML(ArrayList<Categories> mContent, String appVersion) throws FlyveException {
         FILog.i("createXML: ");
