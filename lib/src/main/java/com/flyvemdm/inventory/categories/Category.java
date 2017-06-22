@@ -63,7 +63,7 @@ public class Category extends LinkedHashMap<String, String>{
     /**
      * Indicates whether some other object is "equal to" this one.
      * @param obj Object the reference object with which to compare.
-     * @return
+     * @return boolean True or false
      */
     @Override
     public boolean equals(Object obj) {
