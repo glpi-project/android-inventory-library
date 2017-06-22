@@ -1,5 +1,15 @@
+
+# Android Studio
 .idea
 .idea/libraries
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/datasources.xml
+.idea/dataSources.ids
+.idea/.name
+.idea/gradle.xml
+.idea/modules.xml
+.idea/vcs.xml
 app/app.iml
 
 *.apk
@@ -38,22 +48,10 @@ proguard/
 # Windows clutter
 Thumbs.db
 
-.idea/workspace.xml
-.idea/tasks.xml
-.idea/datasources.xml
-.idea/dataSources.ids
-.idea/.name
-.idea/gradle.xml
-.idea/modules.xml
-.idea/vcs.xml
-
-
 # Node.js
-
 node_modules
 
 # Miscellaneous
-
 *.iml
 .gradle
 /local.properties
