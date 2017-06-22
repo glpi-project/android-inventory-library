@@ -45,7 +45,7 @@ apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
 ext {
-    bintrayRepo = 'inventory'
+    bintrayRepo = 'java-libraries'
     bintrayName = 'flyve-mdm-android-inventory'
 
     publishedGroupId = 'com.flyvemdm'
