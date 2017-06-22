@@ -1,19 +1,19 @@
 package com.flyvemdm.inventory;
 
 import android.content.Context;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.flyvemdm.inventory.categories.Software;
+import com.flyvemdm.inventory.categories.Categories;
+import com.flyvemdm.inventory.categories.Category;
 
+import org.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.List;
+import java.util.ArrayList;
 
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 
 /*
  *   Copyright © 2017 Teclib. All rights reserved.
@@ -34,7 +34,7 @@ import static org.junit.Assert.assertNotEquals;
  * GNU General Public License for more details.
  * ------------------------------------------------------------------------------
  * @author    Rafael Hernandez
- * @date      16/6/17
+ * @date      15/6/17
  * @copyright Copyright © 2017 Teclib. All rights reserved.
  * @license   GPLv3 https://www.gnu.org/licenses/gpl-3.0.html
  * @link      https://github.com/flyve-mdm/flyve-mdm-android
@@ -43,43 +43,47 @@ import static org.junit.Assert.assertNotEquals;
  */
 
 @RunWith(AndroidJUnit4.class)
-public class SoftwareTest {
+public class CreateFileTest {
 
     Context appContext = InstrumentationRegistry.getTargetContext();
 
     @Test
-    public void getName() throws Exception {
-        Software software = new Software(appContext);
+    public void createXMLTest() throws Exception {
+        ArrayList<Categories> mContent = new ArrayList<Categories>();
+        Category category = new Category("CAMERAS");
+        category.put("RESOLUTION","3264x2448");
 
-        PackageManager package_manager = appContext.getPackageManager();
-        List<ApplicationInfo> packages = package_manager.getInstalledApplications(PackageManager.GET_META_DATA);
+        Categories categories = new Categories(appContext);
+        categories.add(category);
 
-        for (ApplicationInfo p : packages) {
-            assertNotEquals("", software.getName(p));
+        mContent.add(categories);
+
+        try {
+            String xml = Utils.createXML( mContent, "Agent" );
+            assertTrue(true);
+        } catch (Exception ex) {
+            assertTrue(false);
         }
     }
 
     @Test
-    public void getVersion() throws Exception {
-        Software software = new Software(appContext);
+    public void createJSONTest() throws Exception {
+        ArrayList<Categories> mContent = new ArrayList<Categories>();
+        Category category = new Category("CAMERAS");
+        category.put("RESOLUTION","3264x2448");
 
-        PackageManager package_manager = appContext.getPackageManager();
-        List<ApplicationInfo> packages = package_manager.getInstalledApplications(PackageManager.GET_META_DATA);
+        Categories categories = new Categories(appContext);
+        categories.add(category);
 
-        for (ApplicationInfo p : packages) {
-            assertNotEquals("", software.getVersion(p));
-        }
-    }
+        mContent.add(categories);
 
-    @Test
-    public void getFilesize() throws Exception {
-        Software software = new Software(appContext);
+        String json = Utils.createJSON( mContent, "Agent" );
 
-        PackageManager package_manager = appContext.getPackageManager();
-        List<ApplicationInfo> packages = package_manager.getInstalledApplications(PackageManager.GET_META_DATA);
-
-        for (ApplicationInfo p : packages) {
-            assertNotEquals("", software.getFilesize(p));
+        try {
+            JSONObject objJson = new JSONObject(json);
+            assertTrue(true);
+        } catch (Exception ex) {
+            assertTrue(false);
         }
     }
 
