@@ -48,6 +48,8 @@ public class InventoryTask {
 
     private static Handler uiHandler;
 
+    public Boolean running = false;
+
     static {
         uiHandler = new Handler(Looper.getMainLooper());
     }
@@ -137,6 +139,7 @@ public class InventoryTask {
      */
     public void getXML(final OnTaskCompleted listener) {
 
+        running = true;
         Thread t = new Thread(new Runnable()
         {
             public void run() {
@@ -144,6 +147,7 @@ public class InventoryTask {
                 try {
                     ArrayList<Categories> mContent = loadCategoriesClass();
                     final String xml = Utils.createXML(mContent, InventoryTask.this.appVersion);
+                    running = false;
 
                     InventoryTask.runOnUI(new Runnable() {
                         public void run() {
@@ -151,7 +155,7 @@ public class InventoryTask {
                         }
                     });
                 } catch (final Exception ex) {
-
+                    running = false;
                     InventoryTask.runOnUI(new Runnable() {
                         public void run() {
                             listener.onTaskError( ex.getCause() );
@@ -170,6 +174,7 @@ public class InventoryTask {
      */
     public void getJSON(final OnTaskCompleted listener) {
 
+        running = true;
         Thread t = new Thread(new Runnable()
         {
             public void run() {
@@ -177,20 +182,22 @@ public class InventoryTask {
                 try {
                     ArrayList<Categories> mContent = loadCategoriesClass();
                     final String json = Utils.createJSON(mContent, InventoryTask.this.appVersion);
+                    running = false;
 
                     InventoryTask.runOnUI(new Runnable() {
                         public void run() {
                             listener.onTaskSuccess( json );
                         }
                     });
+
                 } catch (final Exception ex) {
+                    running = false;
 
                     InventoryTask.runOnUI(new Runnable() {
                         public void run() {
                             listener.onTaskError( ex.getCause() );
                         }
                     });
-
                 }
             }
         });
