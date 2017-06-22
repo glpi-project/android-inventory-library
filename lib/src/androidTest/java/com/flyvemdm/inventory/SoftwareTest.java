@@ -1,10 +1,12 @@
-package com.flyvemdm.inventory.categories;
+package com.flyvemdm.inventory;
 
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
+
+import com.flyvemdm.inventory.categories.Software;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,7 +33,7 @@ import static org.junit.Assert.assertNotEquals;
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  * ------------------------------------------------------------------------------
- * @author    rafaelhernandez
+ * @author    Rafael Hernandez
  * @date      16/6/17
  * @copyright Copyright © 2017 Teclib. All rights reserved.
  * @license   GPLv3 https://www.gnu.org/licenses/gpl-3.0.html
