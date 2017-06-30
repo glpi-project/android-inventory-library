@@ -51,7 +51,7 @@ public class CreateFileTest {
     public void createXMLTest() throws Exception {
         ArrayList<Categories> mContent = new ArrayList<Categories>();
         Category category = new Category("CAMERAS");
-        category.put("RESOLUTION","3264x2448");
+        category.put("RESOLUTION", "3264x2448");
 
         Categories categories = new Categories(appContext);
         categories.add(category);
@@ -59,7 +59,7 @@ public class CreateFileTest {
         mContent.add(categories);
 
         try {
-            String xml = Utils.createXML( mContent, "Agent" );
+            String xml = Utils.createXML(mContent, "Agent");
             assertTrue(true);
         } catch (Exception ex) {
             assertTrue(false);
@@ -70,14 +70,14 @@ public class CreateFileTest {
     public void createJSONTest() throws Exception {
         ArrayList<Categories> mContent = new ArrayList<Categories>();
         Category category = new Category("CAMERAS");
-        category.put("RESOLUTION","3264x2448");
+        category.put("RESOLUTION", "3264x2448");
 
         Categories categories = new Categories(appContext);
         categories.add(category);
 
         mContent.add(categories);
 
-        String json = Utils.createJSON( mContent, "Agent" );
+        String json = Utils.createJSON(mContent, "Agent");
 
         try {
             JSONObject objJson = new JSONObject(json);

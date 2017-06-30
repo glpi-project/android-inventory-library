@@ -45,7 +45,7 @@ public class InventoryTask {
 
     private static Handler uiHandler;
 
-    public Boolean running = false;
+    private Boolean running = false;
 
     static {
         uiHandler = new Handler(Looper.getMainLooper());
@@ -57,6 +57,10 @@ public class InventoryTask {
 
     private Context ctx = null;
     private String appVersion = "";
+
+    public Boolean isRunning() {
+        return running;
+    }
 
     /**
      * This constructor return a Success XML or Error on asynchronous way

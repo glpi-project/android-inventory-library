@@ -51,8 +51,8 @@ public class SoftwareTest {
     public void getName() throws Exception {
         Software software = new Software(appContext);
 
-        PackageManager package_manager = appContext.getPackageManager();
-        List<ApplicationInfo> packages = package_manager.getInstalledApplications(PackageManager.GET_META_DATA);
+        PackageManager packageManager = appContext.getPackageManager();
+        List<ApplicationInfo> packages = packageManager.getInstalledApplications(PackageManager.GET_META_DATA);
 
         for (ApplicationInfo p : packages) {
             assertNotEquals("", software.getName(p));
@@ -63,8 +63,8 @@ public class SoftwareTest {
     public void getVersion() throws Exception {
         Software software = new Software(appContext);
 
-        PackageManager package_manager = appContext.getPackageManager();
-        List<ApplicationInfo> packages = package_manager.getInstalledApplications(PackageManager.GET_META_DATA);
+        PackageManager packageManager = appContext.getPackageManager();
+        List<ApplicationInfo> packages = packageManager.getInstalledApplications(PackageManager.GET_META_DATA);
 
         for (ApplicationInfo p : packages) {
             assertNotEquals("", software.getVersion(p));
@@ -75,8 +75,8 @@ public class SoftwareTest {
     public void getFilesize() throws Exception {
         Software software = new Software(appContext);
 
-        PackageManager package_manager = appContext.getPackageManager();
-        List<ApplicationInfo> packages = package_manager.getInstalledApplications(PackageManager.GET_META_DATA);
+        PackageManager packageManager = appContext.getPackageManager();
+        List<ApplicationInfo> packages = packageManager.getInstalledApplications(PackageManager.GET_META_DATA);
 
         for (ApplicationInfo p : packages) {
             assertNotEquals("", software.getFilesize(p));
