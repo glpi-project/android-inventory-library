@@ -35,18 +35,17 @@ package com.flyvemdm.inventory;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
-
 import com.flyvemdm.inventory.categories.Categories;
-
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
-
 /**
  * This class generate the XML file
  */
 public class InventoryTask {
 
     private static Handler uiHandler;
+
+    private Boolean running = false;
 
     static {
         uiHandler = new Handler(Looper.getMainLooper());
@@ -58,6 +57,10 @@ public class InventoryTask {
 
     private Context ctx = null;
     private String appVersion = "";
+
+    public Boolean isRunning() {
+        return running;
+    }
 
     /**
      * This constructor return a Success XML or Error on asynchronous way
@@ -80,7 +83,6 @@ public class InventoryTask {
 
         String[] categories = {
 //                "PhoneStatus",
-                "Battery",
                 "Hardware",
                 "Bios",
                 "Memory",
@@ -96,8 +98,8 @@ public class InventoryTask {
                 "Envs",
                 "Jvm",
                 "Software",
-                "Usb"
-
+                "Usb",
+                "Battery"
         };
 
         Class<Categories> catClass = null;
@@ -137,6 +139,7 @@ public class InventoryTask {
      */
     public void getXML(final OnTaskCompleted listener) {
 
+        running = true;
         Thread t = new Thread(new Runnable()
         {
             public void run() {
@@ -147,6 +150,7 @@ public class InventoryTask {
 
                     InventoryTask.runOnUI(new Runnable() {
                         public void run() {
+                            running = false;
                             listener.onTaskSuccess( xml );
                         }
                     });
@@ -154,6 +158,7 @@ public class InventoryTask {
 
                     InventoryTask.runOnUI(new Runnable() {
                         public void run() {
+                            running = false;
                             listener.onTaskError( ex.getCause() );
                         }
                     });
@@ -170,6 +175,7 @@ public class InventoryTask {
      */
     public void getJSON(final OnTaskCompleted listener) {
 
+        running = true;
         Thread t = new Thread(new Runnable()
         {
             public void run() {
@@ -177,20 +183,22 @@ public class InventoryTask {
                 try {
                     ArrayList<Categories> mContent = loadCategoriesClass();
                     final String json = Utils.createJSON(mContent, InventoryTask.this.appVersion);
-
                     InventoryTask.runOnUI(new Runnable() {
                         public void run() {
+                            running = false;
                             listener.onTaskSuccess( json );
                         }
                     });
+
                 } catch (final Exception ex) {
+
 
                     InventoryTask.runOnUI(new Runnable() {
                         public void run() {
+                            running = false;
                             listener.onTaskError( ex.getCause() );
                         }
                     });
-
                 }
             }
         });
