@@ -35,12 +35,9 @@ package com.flyvemdm.inventory;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
-
 import com.flyvemdm.inventory.categories.Categories;
-
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
-
 /**
  * This class generate the XML file
  */
@@ -182,8 +179,6 @@ public class InventoryTask {
                 try {
                     ArrayList<Categories> mContent = loadCategoriesClass();
                     final String json = Utils.createJSON(mContent, InventoryTask.this.appVersion);
-
-
                     InventoryTask.runOnUI(new Runnable() {
                         public void run() {
                             running = false;
