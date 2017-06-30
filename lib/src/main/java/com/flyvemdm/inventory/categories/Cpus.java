@@ -93,6 +93,7 @@ public class Cpus extends Categories {
     /**
      * Get the CPU Name
      * @return String with the name
+     * @throws IOException return exception
      */
     public String getCpuName() throws IOException {
         String cpuname = "";
@@ -120,6 +121,7 @@ public class Cpus extends Categories {
     /**
      * Get the CPU Frequency
      * @return String with the Cpu Frequency
+     * @throws IOException return exception
      */
     public String getCpuFrequency() throws IOException {
         String cpuFrequency = "";

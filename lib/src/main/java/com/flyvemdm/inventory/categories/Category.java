@@ -58,8 +58,13 @@ public class Category extends LinkedHashMap<String, String>{
      *  from: https://stackoverflow.com/questions/285793/what-is-a-serialversionuid-and-why-should-i-use-it
      */
     private static final long serialVersionUID = 6443019125036309325L;
-    public String mType;
+    private String mType;
 
+    /**
+     * Indicates whether some other object is "equal to" this one.
+     * @param obj Object the reference object with which to compare.
+     * @return boolean True or false
+     */
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -71,6 +76,10 @@ public class Category extends LinkedHashMap<String, String>{
         return (!super.equals(obj));
     }
 
+    /**
+     * Returns a hash code value for the object.
+     * @return int a hash code value for this object.
+     */
     @Override
     public int hashCode() {
         int hash = super.hashCode();
@@ -84,6 +93,14 @@ public class Category extends LinkedHashMap<String, String>{
      */
     public Category(String xType) {
         mType = xType;
+    }
+
+    /**
+     * Return the type of category
+     * @return String with the category
+     */
+    public String getType() {
+        return mType;
     }
 
     /**
@@ -103,7 +120,7 @@ public class Category extends LinkedHashMap<String, String>{
     }
 
     /**
-     * This is package private function that create a XML node with a XmlSerializer object
+     * This is a private function that create a XML node with a XmlSerializer object
      * @param serializer object
      */
     void toXML(XmlSerializer serializer) throws FlyveException {
@@ -123,6 +140,9 @@ public class Category extends LinkedHashMap<String, String>{
         }
     }
 
+    /**
+     * This is a private function that create a JSON
+     */
     JSONObject toJSON() throws FlyveException {
         try {
             JSONObject jsonCategories = new JSONObject();
