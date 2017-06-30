@@ -82,7 +82,6 @@ public class InventoryTask {
 
         String[] categories = {
 //                "PhoneStatus",
-                "Battery",
                 "Hardware",
                 "Bios",
                 "Memory",
@@ -98,8 +97,8 @@ public class InventoryTask {
                 "Envs",
                 "Jvm",
                 "Software",
-                "Usb"
-
+                "Usb",
+                "Battery"
         };
 
         Class<Categories> catClass = null;
