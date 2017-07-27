@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 
 /*
  *   Copyright © 2017 Teclib. All rights reserved.
@@ -52,7 +53,11 @@ public class CpusTest {
     @Test
     public void getCpuFrequency() throws Exception {
         // work on real device
-        Cpus cpus = new Cpus(appContext);
-        assertNotEquals("", cpus.getCpuFrequency());
+        if(!Utils.isEmulator()) {
+            Cpus cpus = new Cpus(appContext);
+            assertNotEquals("", cpus.getCpuFrequency());
+        } else {
+            assertTrue(true);
+        }
     }
 }
