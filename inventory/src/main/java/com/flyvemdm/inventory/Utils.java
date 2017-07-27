@@ -45,6 +45,9 @@ public class Utils {
 
     }
 
+    public static boolean isEmulator() {
+        return Build.HARDWARE.contains("golfdish");
+    }
 
     /**
      * Create a JSON String with al the Categories available
