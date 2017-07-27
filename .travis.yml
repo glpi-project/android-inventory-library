@@ -1,25 +1,12 @@
 language: android
-jdk:
-- oraclejdk8
-before_cache:
-- rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-- rm -fr $HOME/.gradle/caches/*/plugin-resolution/
-cache:
-  directories:
-  - $HOME/.gradle/caches/
-  - $HOME/.gradle/wrapper/
-  - $HOME/.android/build-cache
 android:
   components:
-  - build-tools-22.0.1
+  - build-tools-$BUILD_TOOL
+  - android-$ANDROID_API
   - extra-android-m2repository
-  - extra-google-m2repository
-before_install:
-- gradle dependencies || true
-script:
-- ./travis-build.sh
 notifications:
   webhooks: https://fathomless-fjord-24024.herokuapp.com/notify
 env:
-  matrix:
-  - secure: K7GuzVVkZEt23PZfbIxAZpM2WFzNdiS8CSPNatZVt8iB0lEg2B9poHRKo63hVt9yhksh6md9P/hHFAxC8gVw/wNwdRd7GDOHAGjid0qLk7p4rCUoq7zLMyMt10TQ7saOz4/+FYDOqnv9gHWXzszW3uDlB70kqidx325xizh3QsJtenpWT3Jcbsoc+0Ryo2XCkULqwtCj5h6XMyRCpf5Tr/4dZhAqsw2h7rL4jqZ6J/f58IFbxnP+nV+LCtkelbQlrnFOdVfUb6NvcE0F7jsSBT3q5C8tWStJ1ICbFFcBnQFx2qo9wNynf8DY8kviHgLBY5N/yX7hbvS3iwU1Lusqc4Wx2BAPPFvVxn1PkJl433XaNSmVlAEPV6mxvDt/8pqnfBceJp0QCQyXS0pLz+kL07mgTW/TVsnEiEJSIfMJPRWnhwJ4wc56RgxrfeSfLmyjj7TdlUyNZtnTbruCZ2bWSPHvyhTTRPlSILn3+JBaZwE2K9jGwJy6gqqdBVG7S5fn/8XQPrVWedaz/SDrfeMO3aDyGMXRXiXr5Bm81pQfb4qtiIctibm7F51190GO+5j9oNBuSB9inCFMCIc8rz3jOKSyB0HnPOgv6XYjzzEG4LFGeW/O0bl+6LsrlAR6y/UPepIag0bgg2FIAWQzI+7+npsEVeGwiYOOl6cOtDV4muU=
+  global:
+  - BUILD_TOOL=22.0.1
+  - ANDROID_API=22
