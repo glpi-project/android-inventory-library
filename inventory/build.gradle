@@ -1,12 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'gnag'
-
-gnag {
-    failOnError false
-    github {
-        repoName 'flyve-mdm/flyve-mdm-android-inventory'
-    }
-}
 
 android {
     compileSdkVersion 15
