@@ -62,8 +62,6 @@ public class BluetoothTest {
         } else {
             assertTrue(true);
         }
-
-
     }
 
 }
