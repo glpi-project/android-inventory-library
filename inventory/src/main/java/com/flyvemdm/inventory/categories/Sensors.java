@@ -113,7 +113,7 @@ public class Sensors extends Categories {
 				strtype = "ROTATION VECTOR";
 				break;
 			default:
-				strtype = "";
+				strtype = "Unknow";
 				break;
 		}
 		return strtype;
