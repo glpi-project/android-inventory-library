@@ -48,7 +48,6 @@ public class Utils {
     }
 
     public static boolean isEmulator() {
-<<<<<<< HEAD
         int newRating = 0;
         if(rating < 0) {
             if (Build.PRODUCT.contains("sdk") ||
@@ -121,9 +120,6 @@ public class Utils {
             rating = newRating;
         }
         return rating > 3;
-=======
-        return Build.HARDWARE.contains("golfdish");
->>>>>>> cfb9832... fix(test): check if the test is running on emulator for bluetooth
     }
 
     /**
