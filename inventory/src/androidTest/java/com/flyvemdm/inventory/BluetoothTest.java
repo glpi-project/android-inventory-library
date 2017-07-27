@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 
 /*
  *   Copyright © 2017 Teclib. All rights reserved.
@@ -45,14 +46,22 @@ public class BluetoothTest {
 
     @Test
     public void getHardware_address() throws Exception {
-        Bluetooth bluetooth = new Bluetooth(appContext);
-        assertNotEquals("", bluetooth.getHardwareAddress());
+        if(!Utils.isEmulator()) {
+            Bluetooth bluetooth = new Bluetooth(appContext);
+            assertNotEquals("", bluetooth.getHardwareAddress());
+        } else {
+            assertTrue(true);
+        }
     }
 
     @Test
     public void getName() throws Exception {
-        Bluetooth bluetooth = new Bluetooth(appContext);
-        assertNotEquals("", bluetooth.getName());
+        if(!Utils.isEmulator()) {
+            Bluetooth bluetooth = new Bluetooth(appContext);
+            assertNotEquals("", bluetooth.getName());
+        } else {
+            assertTrue(true);
+        }
     }
 
 }
