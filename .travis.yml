@@ -11,6 +11,8 @@ before_script:
 - emulator -avd test -no-skin -no-audio -no-window &
 - android-wait-for-emulator
 - adb shell input keyevent 82 &
+- echo bintray.user=$BT_USER >> local.properties
+- echo bintray.apikey=BT_APIKEY >> local.properties
 script:
 - "./ci/deploy.sh"
 notifications:
