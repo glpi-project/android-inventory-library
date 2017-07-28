@@ -13,7 +13,6 @@ fi
 
 if [[ "$TRAVIS_BRANCH" == "feature/package" ]];
 then
-    ls -la
     ./gradlew install
     ./gradlew bintrayUpload
 fi

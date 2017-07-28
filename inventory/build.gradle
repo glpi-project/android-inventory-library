@@ -43,7 +43,7 @@ ext {
     siteUrl = 'https://github.com/flyve-mdm/flyve-mdm-android-inventory'
     gitUrl = 'https://github.com/flyve-mdm/flyve-mdm-android-inventory.git'
 
-    libraryVersion = '1.0.3'
+    libraryVersion = '1.0.4'
 
     developerId = 'rafaelje'
     developerName = 'Rafael Hernandez'
