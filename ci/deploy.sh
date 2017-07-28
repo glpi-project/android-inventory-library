@@ -1,3 +1,4 @@
+#!/bin/bash
 echo $TRAVIS_BRANCH
 
 # always run unit test
