@@ -2,7 +2,7 @@
 echo $TRAVIS_BRANCH
 
 # always run unit test
-gradle connectedAndroidTest
+./gradlew connectedAndroidTest
 
 if [[ "$TRAVIS_BRANCH" == "develop" && "$TRAVIS_PULL_REQUEST" == "false" ]];
 then
@@ -14,6 +14,6 @@ fi
 if [[ "$TRAVIS_BRANCH" == "feature/package" ]];
 then
     ls -la
-    gradle install
-    gradle bintrayUpload
+    ./gradlew install
+    ./gradlew bintrayUpload
 fi
