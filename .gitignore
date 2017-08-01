@@ -64,8 +64,8 @@ node_modules
 .externalNativeBuild
 
 # Gradle
-#gradlew
+gradlew
 gradlew.bat
-#gradlew/
-#gradle/
-#gradle.properties
+gradlew/
+gradle/
+gradle.properties
