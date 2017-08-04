@@ -1,0 +1,546 @@
+---
+layout: default
+---
+<section class="section">
+  <div class="container">
+    <h1>Synopsis</h1> 
+    <p>Flyve MDM is a Mobile device management software that enables you to secure and manage all the mobile devices of your business or family via a web-based console.</p>
+    <p>To get started, check out <a href="https://flyve-mdm.com/">https://flyve-mdm.com/</a>!</p>
+    <p>his library help you to create a complete inventory of your Android devices: both hardware and software informations are collected. You get the data about processor, memory, drives, sensors, etc. and also the list and description of installed application on any devices in a beautifull XML as protocol compatible with FusionInventory for GLPI.</p>
+    <p>You can find more information here: </p> 
+    <a href="http://fusioninventory.org/documentation/dev/spec/protocol/inventory.html">http://fusioninventory.org/documentation/dev/spec/protocol/inventory.html</a>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+  <h2>What's included?</h2>
+
+  <ol class="list-items">
+            <!-- USB -->
+            <li class="list-items-row">
+              <div class="row" data-toggle="collapse" aria-expanded="false" data-target="#list-item-usb">
+                <i class="glyph glyph-add"></i>
+                <i class="glyph glyph-remove"></i>
+                <strong>USB</strong>
+              </div>
+              <div class="collapse" id="list-item-usb">
+                <div class="row">
+                  <div class="col-md-24">
+                    - Class
+                  </div>
+                  <div class="col-md-24">
+                    - Product ID
+                  </div>
+                  <div class="col-md-24">
+                    - Vendor ID
+                  </div>
+                  <div class="col-md-24">
+                    - Subclass
+                  </div>
+                </div>
+              </div>
+            </li>
+            <!-- Sensors -->
+            <li class="list-items-row">
+              <div class="row" data-toggle="collapse" aria-expanded="false" data-target="#list-item-sensors">
+                <i class="glyph glyph-add"></i>
+                <i class="glyph glyph-remove"></i>
+                <strong>Sensors</strong>
+              </div>
+              <div class="collapse" id="list-item-sensors">
+                <div class="row">
+                  <div class="col-md-24">
+                    - Name
+                  </div>
+                  <div class="col-md-24">
+                    - Manufacturer
+                  </div>
+                  <div class="col-md-24">
+                    - Type
+                  </div>
+                  <div class="col-md-24">
+                    - Power
+                  </div>
+                  <div class="col-md-24">
+                    - Version
+                  </div>
+                </div>
+              </div>
+            </li>
+            <!-- Software -->
+            <li class="list-items-row">
+              <div class="row" data-toggle="collapse" aria-expanded="false" data-target="#list-item-software">
+                <i class="glyph glyph-add"></i>
+                <i class="glyph glyph-remove"></i>
+                <strong>Software</strong>
+              </div>
+              <div class="collapse" id="list-item-software">
+                <div class="row">
+                  <div class="col-md-24">
+                    - Name
+                  </div>
+                  <div class="col-md-24">
+                    - Version
+                  </div>
+                  <div class="col-md-24">
+                    - Filesize
+                  </div>
+                  <div class="col-md-24">
+                    - From
+                  </div>
+                </div>
+              </div>
+            </li>
+            <!-- Memory -->
+            <li class="list-items-row">
+              <div class="row" data-toggle="collapse" aria-expanded="false" data-target="#list-item-memory">
+                <i class="glyph glyph-add"></i>
+                <i class="glyph glyph-remove"></i>
+                <strong>Memories</strong>
+              </div>
+              <div class="collapse" id="list-item-memory">
+                <div class="row">
+                  <div class="col-md-24">
+                    - Description
+                  </div>
+                  <div class="col-md-24">
+                    - Capacity
+                  </div>
+                </div>
+              </div>
+            </li>
+            <!-- Cameras -->
+            <li class="list-items-row">
+              <div class="row" data-toggle="collapse" aria-expanded="false" data-target="#list-item-camera">
+                <i class="glyph glyph-add"></i>
+                <i class="glyph glyph-remove"></i>
+                <strong>Cameras</strong>
+              </div>
+              <div class="collapse" id="list-item-camera">
+                <div class="row">
+                  <div class="col-md-24">
+                    - Resolutions
+                  </div>
+                </div>
+              </div>
+            </li>
+            <!-- Networks -->
+            <li class="list-items-row">
+              <div class="row" data-toggle="collapse" aria-expanded="false" data-target="#list-item-networks">
+                <i class="glyph glyph-add"></i>
+                <i class="glyph glyph-remove"></i>
+                <strong>Networks</strong>
+              </div>
+              <div class="collapse" id="list-item-networks">
+                <div class="row">
+                  <div class="col-md-24">
+                    - Type
+                  </div>
+                  <div class="col-md-24">
+                    - Speed
+                  </div>
+                  <div class="col-md-24">
+                    - BSSID
+                  </div>
+                  <div class="col-md-24">
+                    - SSID
+                  </div>
+                  <div class="col-md-24">
+                    - IP Gateway
+                  </div>
+                  <div class="col-md-24">
+                    - IP Address
+                  </div>
+                  <div class="col-md-24">
+                    - IP Mask
+                  </div>
+                  <div class="col-md-24">
+                    - IP DHCP
+                  </div>
+                </div>
+              </div>
+            </li>
+            <!-- Battery -->
+            <li class="list-items-row">
+              <div class="row" data-toggle="collapse" aria-expanded="false" data-target="#list-item-battery">
+                <i class="glyph glyph-add"></i>
+                <i class="glyph glyph-remove"></i>
+                <strong>Battery</strong>
+              </div>
+              <div class="collapse" id="list-item-battery">
+                <div class="row">
+                  <div class="col-md-24">
+                    - Chemistry
+                  </div>
+                  <div class="col-md-24">
+                    - Temperature
+                  </div>
+                  <div class="col-md-24">
+                    - Voltage
+                  </div>
+                  <div class="col-md-24">
+                    - Level
+                  </div>
+                  <div class="col-md-24">
+                    - Health
+                  </div>
+                  <div class="col-md-24">
+                    - Status
+                  </div>
+                </div>
+              </div>
+            </li>
+            <!-- CPUs -->
+            <li class="list-items-row">
+              <div class="row" data-toggle="collapse" aria-expanded="false" data-target="#list-item-cpu">
+                <i class="glyph glyph-add"></i>
+                <i class="glyph glyph-remove"></i>
+                <strong>CPUs</strong>
+              </div>
+              <div class="collapse" id="list-item-cpu">
+                <div class="row">
+                  <div class="col-md-24">
+                    - Name
+                  </div>
+                </div>
+              </div>
+            </li>
+            <!-- BIOS -->
+            <li class="list-items-row">
+              <div class="row" data-toggle="collapse" aria-expanded="false" data-target="#list-item-bios">
+                <i class="glyph glyph-add"></i>
+                <i class="glyph glyph-remove"></i>
+                <strong>BIOS</strong>
+              </div>
+              <div class="collapse" id="list-item-bios">
+                <div class="row">
+                  <div class="col-md-24">
+                    - BIOS release date
+                  </div>
+                  <div class="col-md-24">
+                    - System Model
+                  </div>
+                  <div class="col-md-24">
+                    - SSN
+                  </div>
+                </div>
+              </div>
+            </li>
+            <!-- Inputs -->
+            <li class="list-items-row">
+              <div class="row" data-toggle="collapse" aria-expanded="false" data-target="#list-item-inputs">
+                <i class="glyph glyph-add"></i>
+                <i class="glyph glyph-remove"></i>
+                <strong>Inputs</strong>
+              </div>
+              <div class="collapse" id="list-item-inputs">
+                <div class="row">
+                  <div class="col-md-24">
+                    - Keyboard
+                  </div>
+                  <div class="col-md-24">
+                    - Touchscreen
+                  </div>
+                </div>
+              </div>
+            </li>
+            <!-- Drives -->
+            <li class="list-items-row">
+              <div class="row" data-toggle="collapse" aria-expanded="false" data-target="#list-item-drives">
+                <i class="glyph glyph-add"></i>
+                <i class="glyph glyph-remove"></i>
+                <strong>Drives</strong>
+              </div>
+              <div class="collapse" id="list-item-drives">
+                <div class="row">
+                  <div class="col-md-24">
+                    - Volumn
+                  </div>
+                  <div class="col-md-24">
+                    - Total 
+                  </div>
+                  <div class="col-md-24">
+                    - Free
+                  </div>
+                </div>
+              </div>
+            </li>
+            <!-- Accesslog -->
+            <li class="list-items-row">
+              <div class="row" data-toggle="collapse" aria-expanded="false" data-target="#list-item-accesslog">
+                <i class="glyph glyph-add"></i>
+                <i class="glyph glyph-remove"></i>
+                <strong>Accesslog</strong>
+              </div>
+              <div class="collapse" id="list-item-accesslog">
+                <div class="row">
+                  <div class="col-md-24">
+                    - Log date 
+                  </div>
+                  <div class="col-md-24">
+                    - User ID 
+                  </div>
+                </div>
+              </div>
+            </li>
+            <!-- SIM Cards -->
+            <li class="list-items-row">
+              <div class="row" data-toggle="collapse" aria-expanded="false" data-target="#list-item-simcards">
+                <i class="glyph glyph-add"></i>
+                <i class="glyph glyph-remove"></i>
+                <strong>SIM Cards</strong>
+              </div>
+              <div class="collapse" id="list-item-simcards">
+                <div class="row">
+                  <div class="col-md-24">
+                    - Country
+                  </div>
+                  <div class="col-md-24">
+                    - Operator code
+                  </div>
+                  <div class="col-md-24">
+                    - Operator Name
+                  </div>
+                  <div class="col-md-24">
+                    - Serial SERIAL
+                  </div>
+                  <div class="col-md-24">
+                    - State
+                  </div>
+                  <div class="col-md-24">
+                    - Line number
+                  </div>
+                  <div class="col-md-24">
+                    - Subscriber ID
+                  </div>
+                </div>
+              </div>
+            </li>
+            <!-- Environments vars -->
+            <li class="list-items-row">
+              <div class="row" data-toggle="collapse" aria-expanded="false" data-target="#list-item-envs">
+                <i class="glyph glyph-add"></i>
+                <i class="glyph glyph-remove"></i>
+                <strong>Environments variables</strong>
+              </div>
+              <div class="collapse" id="list-item-envs">
+                <div class="row">
+                  <div class="col-md-24">
+                    - Key
+                  </div>
+                  <div class="col-md-24">
+                    - Value
+                  </div>
+                </div>
+              </div>
+            </li>
+            <!-- JVM -->
+            <li class="list-items-row">
+              <div class="row" data-toggle="collapse" aria-expanded="false" data-target="#list-item-jvm">
+                <i class="glyph glyph-add"></i>
+                <i class="glyph glyph-remove"></i>
+                <strong>JVM</strong>
+              </div>
+              <div class="collapse" id="list-item-jvm">
+                <div class="row">
+                  <div class="col-md-24">
+                    - Name
+                  </div>
+                  <div class="col-md-24">
+                    - Language
+                  </div>
+                  <div class="col-md-24">
+                    - Vendor
+                  </div>
+                  <div class="col-md-24">
+                    - Runtime
+                  </div>
+                  <div class="col-md-24">
+                    - Home
+                  </div>
+                  <div class="col-md-24">
+                    - Version
+                  </div>
+                  <div class="col-md-24">
+                    - Classpath
+                  </div>
+                </div>
+              </div>
+            </li>
+            <!-- Videos -->
+            <li class="list-items-row">
+              <div class="row" data-toggle="collapse" aria-expanded="false" data-target="#list-item-videos">
+                <i class="glyph glyph-add"></i>
+                <i class="glyph glyph-remove"></i>
+                <strong>Videos</strong>
+              </div>
+              <div class="collapse" id="list-item-videos">
+                <div class="row">
+                  <div class="col-md-24">
+                    - Resolution
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ol>
+  </div>
+</section>
+
+<section class="section">
+  <div class="jumbotron theme-dark">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-24 text-center">
+          <h3>Installation</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <h4>Download the latest JAR, grab via Maven or insert on build.gradle at app level.</h4>
+    <div class="row">
+      <div class="col-md-12">
+        <h3>Maven</h3> 
+        {% highlight xml %}
+          <dependency>
+            <groupId>com.flyvemdm</groupId>
+            <artifactId>inventory</artifactId>
+            <version>1.0.0</version>
+            <type>pom</type>
+          </dependency>
+        {% endhighlight %}
+      </div>
+      <div class="col-md-12 visible-md visible-lg">
+        <img src="images/maven.png" /> 
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <h3>Gradle</h3> 
+        {% highlight groovy %}
+          compile 'com.flyvemdm:inventory:1.0.0'
+        {% endhighlight %}
+      </div>
+      <div class="col-md-12 visible-md visible-lg">
+        <img src="images/gradle.png" /> 
+      </div>
+    </div>
+  </div>
+
+
+</section>
+
+<section class="section">
+  <div class="jumbotron theme-dark">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-24 text-center">
+          <h3>Code Example</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <h4>Download the latest JAR, grab via Maven or insert on build.gradle at app level.</h4>
+    <div class="row theme-default">
+      <div class="col-md-12 visible-md visible-lg">
+        <img src="images/maven.png" /> 
+      </div>
+      <div class="col-md-12">
+        <h3>Maven</h3>
+        {% highlight xml %}
+          <dependency>
+            <groupId>com.flyvemdm</groupId>
+            <artifactId>inventory</artifactId>
+            <version>1.0.0</version>
+            <type>pom</type>
+          </dependency>
+        {% endhighlight %}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 visible-md visible-lg">
+        <img src="images/gradle.png" /> 
+      </div>
+      <div class="col-md-12">
+        <h3>Gradle</h3> 
+        {% highlight groovy %}
+          compile 'com.flyvemdm:inventory:1.0.0'
+        {% endhighlight %}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <h3>It's easy to implement in your code</h3>
+        {% highlight java %}
+          InventoryTask inventoryTask = new InventoryTask(MainActivity.this, "Agent_v1.0", new InventoryTask.OnTaskCompleted() {
+            @Override
+            public void onTaskCompleted(String data) {
+              Log.d("XML", data);
+              }
+            });
+
+          inventoryTask.execute();
+        {% endhighlight %}
+      </div>
+      <div class="col-md-12 visible-md visible-lg">
+        <img src="images/java.png" /> 
+      </div>
+    </div>
+    
+    
+    
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2 id="documentation">Documentation</h2>
+
+    <p>We share long-form content about the project in the <a href="https://github.com/flyve-mdm/flyve-mdm-android-inventory/wiki">wiki</a>.</p>
+
+    <h2 id="versioning">Versioning</h2>
+
+    <p>In order to provide transparency on our release cycle and to maintain backward compatibility, Flyve MDM is maintained under <a href="http://semver.org/">the Semantic Versioning guidelines</a>. We are committed to following and complying with the rules, the best we can.</p>
+
+    <p>See <a href="http://github.com/flyve-mdm/flyve-mdm-blackberry-admin-dashboard/tags">the tags section of our GitHub project</a> for changelogs for each release version of Flyve MDM. Release announcement posts on <a href="http://www.teclib-edition.com/en/communities/blog-posts/">the official Teclib’ blog</a> contain summaries of the most noteworthy changes made in each release.</p>
+
+    <h2 id="contribute">Contribute</h2>
+
+    <p>Want to file a bug, contribute some code, or improve documentation? Excellent! Read up on our
+    guidelines for <a href="./CONTRIBUTING.md">contributing</a> and then check out one of our issues in the <a href="https://github.com/flyve-mdm/flyve-mdm-android-inventory/issues">Issues Dashboard</a>.</p>
+
+    <h2 id="contact">Contact</h2>
+
+    <p>For notices about major changes and general discussion of Flyve MDM development, subscribe to the <a href="http://www.reddit.com/r/FlyveMDM">/r/FlyveMDM</a> subreddit. 
+    You can also chat with us via IRC in <a href="http://webchat.freenode.net/?channels=flyve-mdm]">#flyve-mdm on freenode</a>.
+    Ping me @rafaelje in the IRC chatroom if you get stuck.</p>
+
+    <h2 id="copying">Copying</h2>
+
+    <ul>
+      <li><strong>Name</strong>: <a href="https://flyve-mdm.com/">Flyve MDM</a> is a registered trademark of <a href="http://www.teclib-edition.com/en/">Teclib’</a>.</li>
+      <li><strong>Code</strong>: you can redistribute it and/or modify
+      it under the terms of the GNU General Public License (<a href="https://www.gnu.org/licenses/gpl-3.0.en.html">GPLv3</a>).</li>
+      <li><strong>Documentation</strong>: released under Attribution 4.0 International (<a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>).</li>
+    </ul>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h3>Build Status</h3>
+    <br/>
+    <div class="row">
+      <div class="col-md-3">
+        <strong>Release channel</strong><br/>
+        <a href="https://travis-ci.org/flyve-mdm/flyve-mdm-android-inventory"><img src="https://travis-ci.org/flyve-mdm/flyve-mdm-android-inventory.svg?branch=master" alt="Build Status" /></a>
+      </div>
+      <div class="col-md-3">
+        <strong>Beta channel</strong><br/>
+        <a href="https://travis-ci.org/flyve-mdm/flyve-mdm-android-inventory"><img src="https://travis-ci.org/flyve-mdm/flyve-mdm-android-inventory.svg?branch=develop" alt="Build Status" /></a>
+      </div>
+    </div>
+  </div>
+</section>
