@@ -7,8 +7,8 @@
         <div class="navbar-global theme-default">
             <div class="container">
                 <div class="navbar-header">
-                    <a href="http://www.teclib-edition.com/">
-                        <img src="{{ "images/logo-teclib.png" | relative_url }}" class="logo">
+                    <a href="{{ '/' | relative_url }}" class="navbar-brand">
+                        <img src="{{ "images/inventory-agent.svg" | relative_url }}" alt="Microsoft" height="23" />
                     </a>
                 </div>
             </div>
@@ -25,10 +25,8 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
                     <ul class="nav navbar-nav">
 
-                        <li class="logo">
-                            <a class="color-type-secondary" href="{{ site.baseurl }} /">
-                                <img src="{{ 'images/inventory-agent.svg' | relative_url }}" alt="Home"> 
-                            </a>
+                        <li>
+                            <a class="color-type-secondary" href="{{ site.baseurl }} /">Home</a>
                         </li>
 
                         <li>

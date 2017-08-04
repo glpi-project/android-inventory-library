@@ -9,7 +9,7 @@ html {
     margin: 10px 0;
 }
 .logo {
-    max-width: 100px;
+    max-width: 30px;
 }
 img {
     max-width: 100%;
@@ -22,19 +22,14 @@ img {
         padding-bottom: 20px;
     }
 }
-.navbar-nav {
-    .logo {
-        a {
-            padding: 0 !important;
-            height: 71.22px;
-            display: flex;
-            justify-content:center;
-            align-content:center;
-            flex-direction:column;
-        }
-        img {
-            width: 50px;
-            vertical-align: middle;
+.navbar-global {
+    .navbar-header {
+        .navbar-brand {
+            padding: 0;
+            img {
+                width: 60px;
+                height: 100%;
+            }
         }
     }
 }
