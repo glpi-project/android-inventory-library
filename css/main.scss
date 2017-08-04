@@ -8,9 +8,6 @@ html {
     font-size: 3rem;
     margin: 10px 0;
 }
-.logo {
-    max-width: 30px;
-}
 img {
     max-width: 100%;
 }
@@ -22,14 +19,11 @@ img {
         padding-bottom: 20px;
     }
 }
-.navbar-global {
-    .navbar-header {
-        .navbar-brand {
-            padding: 0;
-            img {
-                width: 60px;
-                height: 100%;
-            }
-        }
+.navbar-nav {
+    a {
+       line-height: 30px !important;
+    }
+    img {
+        width: 30px;
     }
 }
