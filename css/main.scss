@@ -4,13 +4,6 @@
 html {
     width: 100% !important;
 }
-.navbar-header {
-    font-size: 3rem;
-    margin: 10px 0;
-}
-img {
-    max-width: 100%;
-}
 .list-products {
     font-size: 2rem;
     p {
@@ -20,15 +13,11 @@ img {
     }
 }
 .navbar-nav {
-    a {
-       line-height: 30px !important;
-    }
     img {
-        width: 30px;
+        width: 70px;
+        vertical-align: middle;
     }
-}
-.jumbotron {
-    h1, h2, h3, h4, h5, h6 {
-        padding: 0;
+    .logo {
+        padding: 0 !important;
     }
 }
