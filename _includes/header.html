@@ -56,7 +56,7 @@
                         <div class="col-xs-24 col-sm-16">
                             {% assign name = site.github.project_title | replace: "flyve-mdm-", "" | capitalize %}
                             {% assign name = name | replace: "-", " " %}
-                            <h2><span class="color-type-primary">{{ name }}</span> <span class="color-type-secondary">  </span></h2>
+                            <h2><span class="color-type-primary">{{ name }}</span> <span class="color-type-secondary"> {{ site.github.latest_release.tag_name }} </span></h2>
                             <div class="type-sh2">{{ site.github.project_tagline }}</div>
                             <div class="m-t-xs m-b-md"><a href="{{ site.github.repository_url }}" class="btn btn-primary">{{ name }}</a></div>
                         </div>
