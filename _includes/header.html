@@ -45,6 +45,30 @@
                             <a class="color-type-secondary" href="{{ '/products' | relative_url }}">Projects</a>
                         </li>
 
+                        {% for page in site.pages %}
+                            {% if page.title == 'changelog' %}
+
+                            <li>
+                                <a class="color-type-secondary" href="#" data-toggle="modal" data-target="#myModal">{{ page.title }}</a>
+                            </li>
+
+                            <!-- Modal -->
+                            <div id="myModal" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                    {{ page.content }}
+                                    </div>
+                                </div>
+
+                                </div>
+                            </div>
+
+                            {% endif %}
+                        {% endfor %}
+                        
                     </ul>
                 </div>
             </div>
