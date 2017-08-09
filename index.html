@@ -478,14 +478,19 @@ layout: home
           </div>
           
 {% highlight java %}
-InventoryTask inventoryTask = new InventoryTask(MainActivity.this, "Agent_v1.0", new InventoryTask.OnTaskCompleted() {
-    @Override
-    public void onTaskCompleted(String data) { 
-      Log.d("XML", data);
-    }
-  });
+InventoryTask inventoryTask = new InventoryTask(this.context, "FlyveMDM-Agent_v1.0");
 
-  inventoryTask.execute();
+inventoryTask.getXML(new InventoryTask.OnTaskCompleted() {
+  @Override
+  public void onTaskSuccess(String data) {
+      Log.d("mdm", data);
+  }
+
+  @Override
+  public void onTaskError(Throwable error) {
+    Log.e("mdm", error.getMessage());
+  }
+});
 {% endhighlight %}
 
           <div class="btn-group">
@@ -512,14 +517,19 @@ InventoryTask inventoryTask = new InventoryTask(MainActivity.this, "Agent_v1.0",
           </div>
 
 {% highlight java %}
-InventoryTask inventoryTask = new InventoryTask(MainActivity.this, "Agent_v1.0", new InventoryTask.OnTaskCompleted() {
-    @Override
-    public void onTaskCompleted(String data) { 
-      Log.d("XML", data);
-    }
-  });
+InventoryTask inventoryTask = new InventoryTask(this.context, "FlyveMDM-Agent_v1.0");
 
-  inventoryTask.execute();
+inventoryTask.getXML(new InventoryTask.OnTaskCompleted() {
+  @Override
+  public void onTaskSuccess(String data) {
+      Log.d("mdm", data);
+  }
+
+  @Override
+  public void onTaskError(Throwable error) {
+    Log.e("mdm", error.getMessage());
+  }
+});
 {% endhighlight %}
 
 
@@ -595,10 +605,10 @@ dependencies {
 
 {% highlight java %}
 <dependency>
-    <groupId>com.flyvemdm</groupId>
-    <artifactId>inventory</artifactId>
-    <version>x.x.x</version>
-    <type>pom</type>
+  <groupId>com.flyvemdm</groupId>
+  <artifactId>inventory</artifactId>
+  <version>1.0.5</version>
+  <type>pom</type>
 </dependency>
 {% endhighlight %}
 
