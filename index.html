@@ -476,28 +476,18 @@ layout: home
           <div class="type-sh3">
             It's easy to implement in your code
           </div>
-          <div class="listingblock">
-            <div class="content">
-              <pre class="CodeRay highlight"><code data-lang="java"><span title="Ident">InventoryTask</span><span title="Space"> </span><span title="Ident">inventoryTask</span><span title="Space"> </span><span title="Operator">=</span><span title="Space"> </span><span title="Keyword" class="keyword">new</span><span title="Space"> </span><span title="Ident">InventoryTask</span><span title="Operator">(</span><span title="Ident">MainActivity</span><span title="Operator">.</span><span title="Ident">this</span><span title="Operator">,</span><span title="Space"> </span><span title="String" class="string"><span title="String" class="delimiter">"</span><span title="String" class="content">Agent_v1.0</span><span title="String" class="delimiter">"</span></span><span title="Operator">,</span><span title="Space"> </span><span title="Keyword" class="keyword">new</span><span title="Space"> </span><span title="Ident">InventoryTask</span><span title="Operator">.</span><span title="Ident">OnTaskCompleted</span><span title="Operator">(</span><span title="Operator">)</span><span title="Space"> </span><span title="Operator">{</span><span title="Space">
-    </span><span title="Annotation" class="annotation">@Override</span><span title="Space">
-    </span><span title="Directive" class="directive">public</span><span title="Space"> </span><span title="Type" class="type">void</span><span title="Space"> </span><span title="Ident">onTaskCompleted</span><span title="Operator">(</span><span title="Predefined Type" class="predefined-type">String</span><span title="Space"> </span><span title="Ident">data</span><span title="Operator">)</span><span title="Space"> </span><span title="Operator">{</span><span title="Space"> <i class="conum" data-value="1"></i><b>(1)</b>
-      </span><span title="Ident">Log</span><span title="Operator">.</span><span title="Ident">d</span><span title="Operator">(</span><span title="String" class="string"><span title="String" class="delimiter">"</span><span title="String" class="content">XML</span><span title="String" class="delimiter">"</span></span><span title="Operator">,</span><span title="Space"> </span><span title="Ident">data</span><span title="Operator">)</span><span title="Operator">;</span><span title="Space">
-    </span><span title="Operator">}</span><span title="Space">
-  </span><span title="Operator">}</span><span title="Operator">)</span><span title="Operator">;</span><span title="Space">
+          
+{% highlight java %}
+InventoryTask inventoryTask = new InventoryTask(MainActivity.this, "Agent_v1.0", new InventoryTask.OnTaskCompleted() {
+    @Override
+    public void onTaskCompleted(String data) { 
+      Log.d("XML", data);
+    }
+  });
 
-  </span><span title="Ident">inventoryTask</span><span title="Operator">.</span><span title="Ident">execute</span><span title="Operator">(</span><span title="Operator">)</span><span title="Operator">;</span></code></pre>
-            </div>
-          </div>
-          <div class="colist arabic">
-            <table>
-              <tbody>
-                <tr>
-                  <td><i class="conum" data-value="1"></i><b>1</b></td>
-                  <td>Called by Application plugin "run" task</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+  inventoryTask.execute();
+{% endhighlight %}
+
           <div class="btn-group">
             <button class="btn btn-primary" href="#">Download demo</button>
             <a class="btn btn-secondary" href="{{ site.github.wiki_url }}">Read more</a>
@@ -520,28 +510,20 @@ layout: home
           <div class="type-sh3">
             It's easy to implement in your code
           </div>
-          <div class="listingblock">
-            <div class="content">
-              <pre class="CodeRay highlight"><code data-lang="kotlin"><span title="Ident">InventoryTask</span><span title="Space"> </span><span title="Ident">inventoryTask</span><span title="Space"> </span><span title="Operator">=</span><span title="Space"> </span><span title="Keyword" class="keyword">new</span><span title="Space"> </span><span title="Ident">InventoryTask</span><span title="Operator">(</span><span title="Ident">MainActivity</span><span title="Operator">.</span><span title="Ident">this</span><span title="Operator">,</span><span title="Space"> </span><span title="String" class="string"><span title="String" class="delimiter">"</span><span title="String" class="content">Agent_v1.0</span><span title="String" class="delimiter">"</span></span><span title="Operator">,</span><span title="Space"> </span><span title="Keyword" class="keyword">new</span><span title="Space"> </span><span title="Ident">InventoryTask</span><span title="Operator">.</span><span title="Ident">OnTaskCompleted</span><span title="Operator">(</span><span title="Operator">)</span><span title="Space"> </span><span title="Operator">{</span><span title="Space">
-    </span><span title="Annotation" class="annotation">@Override</span><span title="Space">
-    </span><span title="Directive" class="directive">public</span><span title="Space"> </span><span title="Type" class="type">void</span><span title="Space"> </span><span title="Ident">onTaskCompleted</span><span title="Operator">(</span><span title="Predefined Type" class="predefined-type">String</span><span title="Space"> </span><span title="Ident">data</span><span title="Operator">)</span><span title="Space"> </span><span title="Operator">{</span><span title="Space"> <i class="conum" data-value="1"></i><b>(1)</b>
-      </span><span title="Ident">Log</span><span title="Operator">.</span><span title="Ident">d</span><span title="Operator">(</span><span title="String" class="string"><span title="String" class="delimiter">"</span><span title="String" class="content">XML</span><span title="String" class="delimiter">"</span></span><span title="Operator">,</span><span title="Space"> </span><span title="Ident">data</span><span title="Operator">)</span><span title="Operator">;</span><span title="Space">
-    </span><span title="Operator">}</span><span title="Space">
-  </span><span title="Operator">}</span><span title="Operator">)</span><span title="Operator">;</span><span title="Space">
 
-  </span><span title="Ident">inventoryTask</span><span title="Operator">.</span><span title="Ident">execute</span><span title="Operator">(</span><span title="Operator">)</span><span title="Operator">;</span></code></pre>
-            </div>
-          </div>
-          <div class="colist arabic">
-            <table>
-              <tbody>
-                <tr>
-                  <td><i class="conum" data-value="1"></i><b>1</b></td>
-                  <td>Called by Application plugin "run" task</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+{% highlight java %}
+InventoryTask inventoryTask = new InventoryTask(MainActivity.this, "Agent_v1.0", new InventoryTask.OnTaskCompleted() {
+    @Override
+    public void onTaskCompleted(String data) { 
+      Log.d("XML", data);
+    }
+  });
+
+  inventoryTask.execute();
+{% endhighlight %}
+
+
+
           <div class="btn-group">
             <button class="btn btn-primary" href="#">Download demo</button>
             <a class="btn btn-secondary" href="{{ site.github.wiki_url }}">Read more</a>
@@ -580,24 +562,14 @@ layout: home
             After the <code>android</code> block, there is a block that shows the libraries used for the app.<br/> The dependencies
             section shows values for the <code>compile</code>, <code>testCompile</code>, and <code>androidTestCompile</code>            configurations.<br/> The project <code>build.gradle</code> file should have contents similar to
           </div>
-          <div class="listingblock">
-            <div class="content">
-              <pre class="CodeRay highlight"><code data-lang="groovy">dependencies {
-	<span class="comment">// ...</span>
-    compile <span class="string"><span class="delimiter">'</span><span class="content">org.flyvemdm:inventory:x.x.x</span><span class="delimiter">'</span></span><span title="Space"> </span><i class="conum" data-value="1"></i><b>(1)</b>
-}</code></pre>
-            </div>
-          </div>
-          <div class="colist arabic">
-            <table>
-              <tbody>
-                <tr>
-                  <td><i class="conum" data-value="1"></i><b>1</b></td>
-                  <td>Flyve MDM Inventory library</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+
+{% highlight java %}
+dependencies {
+	// ...
+    compile "org.flyvemdm:inventory:x.x.x"
+}
+{% endhighlight %}
+
           <div class="btn-group">
             <a class="btn btn-primary" href="https://bintray.com/flyve-mdm/inventory/flyve-mdm-android-inventory">Bintray repository</a>
             <a class="btn btn-secondary" href="https://bintray.com/bintray/jcenter?filterByPkgName=flyve-mdm-android-inventory">JCenter</a>
@@ -620,16 +592,16 @@ layout: home
           <div class="type-sh3">
             Dependency snippet for Maven build settings (ver: x.x.x) <strong>inventory-x.x.x.pom</strong>
           </div>
-          <div class="listingblock">
-            <div class="content">
-              <pre class="CodeRay highlight"><code data-lang="xml"><span title="Tag" class="tag">&lt;dependency&gt;</span><span title="Space">
-    </span><span title="Tag" class="tag">&lt;groupId&gt;</span><span title="Plain">com.flyvemdm</span><span title="Tag" class="tag">&lt;/groupId&gt;</span><span title="Space">
-    </span><span title="Tag" class="tag">&lt;artifactId&gt;</span><span title="Plain">inventory</span><span title="Tag" class="tag">&lt;/artifactId&gt;</span><span title="Space">
-    </span><span title="Tag" class="tag">&lt;version&gt;</span><span title="Plain">x.x.x</span><span title="Tag" class="tag">&lt;/version&gt;</span><span title="Space">
-    </span><span title="Tag" class="tag">&lt;type&gt;</span><span title="Plain">pom</span><span title="Tag" class="tag">&lt;/type&gt;</span><span title="Space">
-</span><span title="Tag" class="tag">&lt;/dependency&gt;</span></code></pre>
-            </div>
-          </div>
+
+{% highlight java %}
+<dependency>
+    <groupId>com.flyvemdm</groupId>
+    <artifactId>inventory</artifactId>
+    <version>x.x.x</version>
+    <type>pom</type>
+</dependency>
+{% endhighlight %}
+
           <div class="btn-group">
             <a class="btn btn-primary" href="https://bintray.com/flyve-mdm/inventory/flyve-mdm-android-inventory">Bintray repository</a>
             <a class="btn btn-secondary" href="https://bintray.com/bintray/jcenter?filterByPkgName=flyve-mdm-android-inventory">JCenter</a>
@@ -652,13 +624,13 @@ layout: home
           </div>
           <div class="type-sh3">Ivy is an Ant extension for managing external libraries during the development process.
           </div>
-          <div class="listingblock">
-            <div class="content">
-              <pre class="CodeRay highlight"><code data-lang="xml"><span title="Tag" class="tag">&lt;dependency</span><span title="Space"> </span><span title="Attribute Name" class="attribute-name">org</span><span title="Operator">=</span><span title="String" class="string"><span title="String" class="delimiter">"</span><span title="String" class="content">com.flyvemdm</span><span title="String" class="delimiter">"</span></span><span title="Space"> </span><span title="Attribute Name" class="attribute-name">name</span><span title="Operator">=</span><span title="String" class="string"><span title="String" class="delimiter">"</span><span title="String" class="content">inventory</span><span title="String" class="delimiter">"</span></span><span title="Space"> </span><span title="Attribute Name" class="attribute-name">rev</span><span title="Operator">=</span><span title="String" class="string"><span title="String" class="delimiter">"</span><span title="String" class="content">x.x.x</span><span title="String" class="delimiter">"</span></span><span title="Tag" class="tag">&gt;</span><span title="Space">
-    </span><span title="Tag" class="tag">&lt;artifact</span><span title="Space"> </span><span title="Attribute Name" class="attribute-name">name</span><span title="Operator">=</span><span title="String" class="string"><span title="String" class="delimiter">"</span><span title="String" class="content">inventory</span><span title="String" class="delimiter">"</span></span><span title="Space"> </span><span title="Attribute Name" class="attribute-name">ext</span><span title="Operator">=</span><span title="String" class="string"><span title="String" class="delimiter">"</span><span title="String" class="content">pom</span><span title="String" class="delimiter">"</span></span><span title="Tag" class="tag">&gt;</span><span title="Tag" class="tag">&lt;/artifact&gt;</span><span title="Space">
-</span><span title="Tag" class="tag">&lt;/dependency&gt;</span></code></pre>
-            </div>
-          </div>
+
+{% highlight java %}
+<dependency org="com.flyvemdm" name="inventory" rev="x.x.x">
+    <artifact name="inventory" ext="pom"></artifact>
+</dependency>
+{% endhighlight %}
+
           <div class="btn-group">
             <a class="btn btn-primary" href="https://bintray.com/flyve-mdm/inventory/flyve-mdm-android-inventory">Bintray repository</a>
           </div>
