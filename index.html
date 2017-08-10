@@ -573,7 +573,7 @@ inventoryTask.getXML(new InventoryTask.OnTaskCompleted() {
             section shows values for the <code>compile</code>, <code>testCompile</code>, and <code>androidTestCompile</code>            configurations.<br/> The project <code>build.gradle</code> file should have contents similar to
           </div>
 
-{% highlight java %}
+{% highlight gradle %}
 dependencies {
 	// ...
     compile 'com.flyvemdm:inventory:1.0.5'
@@ -603,7 +603,7 @@ dependencies {
             Dependency snippet for Maven build settings (ver: x.x.x) <strong>inventory-x.x.x.pom</strong>
           </div>
 
-{% highlight java %}
+{% highlight html %}
 <dependency>
   <groupId>com.flyvemdm</groupId>
   <artifactId>inventory</artifactId>
@@ -635,7 +635,7 @@ dependencies {
           <div class="type-sh3">Ivy is an Ant extension for managing external libraries during the development process.
           </div>
 
-{% highlight java %}
+{% highlight html %}
 <dependency org='com.flyvemdm' name='inventory' rev='1.0.5'>
   <artifact name='inventory' ext='pom' ></artifact>
 </dependency>
