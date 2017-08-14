@@ -29,7 +29,7 @@
       "type": "image/png"
     }
   ],
-  "start_url": "/?utm_source=homescreen",
+  "start_url": "{{ site.baseurl }}/?utm_source=homescreen",
   "background_color": "#FFF",
   "theme_color": "#158784",
   "display": "standalone"
