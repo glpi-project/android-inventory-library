@@ -20,4 +20,13 @@
   </body>
   <script src="{{ "/js/bootstrap.min.js" | relative_url }}"></script>
   <script src="{{ "/js/app.js" | relative_url }}"></script>
+
+  <script>
+        if('serviceWorker' in navigator) {
+          navigator.serviceWorker
+            .register('{{ "/sw.js" | relative_url }}')
+            .then(function() { console.log("Service Worker Registered") })
+        }
+  </script>
+  
 </html>
