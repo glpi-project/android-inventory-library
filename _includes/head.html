@@ -24,6 +24,8 @@
   <meta name="description" content="{{ page.excerpt | default: site.description | strip_html | normalize_whitespace | truncate: 160 | escape }}">
   <meta name="og:description" content="{{ page.excerpt | default: site.description | strip_html | normalize_whitespace | truncate: 160 | escape }}">
 
+  <meta name="theme-color" content="#158784">
+
   <link rel="stylesheet" href="{{ "/css/flyve-mdm.min.css" | relative_url }}">
   <link rel="stylesheet" href="{{ "/css/main.css" | relative_url }}">
   <link rel="stylesheet" href="{{ 'css/syntax.css' | relative_url }}" /> 
@@ -31,6 +33,8 @@
 
   <link rel="canonical" href="{{ page.url | replace:'index.html','' | absolute_url }}">
   <link rel="alternate" type="application/rss+xml" title="{{ site.title | escape }}" href="{{ "/feed.xml" | relative_url }}">
+  
+  <link rel="manifest" href="{{ "/manifest.json" | relative_url }}">
   
   {% if jekyll.environment == 'production' and site.google_analytics %}
   {% include google-analytics.html %}
@@ -40,13 +44,15 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', function() {
-        navigator.serviceWorker.register('{{ "/js/sw.js" | relative_url }}').then(function(registration) {
-          // Registration was successful
-          console.log('ServiceWorker registration successful with scope: ', registration.scope)
-        }, function(err) {
-          // registration failed :(
-          console.log('ServiceWorker registration failed: ', err)
-        })
+        if ('serviceWorker' in navigator) {
+          console.log("Will the service worker register?");
+          navigator.serviceWorker.register('{{ "/sw.js" | relative_url }}')
+            .then(function(reg){
+              console.log("Yes, it did.");
+            }).catch(function(err) {
+              console.log("No it didn't. This happened: ", err)
+            });
+        }
       })
     }
   </script>
