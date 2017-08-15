@@ -1,10 +1,8 @@
 ---
 layout: page
+namePage: products
 ---
 
-<div class="container">
-    <h1>More products of Flyve-MDM</h1>
-</div>
     {% assign my_counter = 0 %}
     {% for repositorie in site.github.public_repositories %}
         {% if repositorie.name != "flyve-mdm.github.io" %}
