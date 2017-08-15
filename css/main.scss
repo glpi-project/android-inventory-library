@@ -1,21 +1,6 @@
 ---
 ---
 
-html {
-    $size: 15px;
-    
-    width: 100% !important;
-    font-size: $size !important;
-    h1, h2, h3, h4, h5, h6 {
-        font-size: $size * 1.3;
-        padding: 10px 0;
-        font-weight: bold;
-    }
-    h1 {
-        font-size: $size * 1.8;
-    }
-}
-
 .jumbotron.theme-default, .theme-default.hero {
     color: #3e3e3e;
     background-color: #fff;
@@ -71,6 +56,18 @@ footer {
     text-align: right;
     img {
         width: 70px;
+    }
+}
+.modal-body {
+    $size: 15px;
+    font-size: $size !important;
+    h1, h2, h3, h4, h5, h6 {
+        font-size: $size * 1.3;
+        padding: 10px 0;
+        font-weight: bold;
+    }
+    h1 {
+        font-size: $size * 1.8;
     }
 }
 .product {
