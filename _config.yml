@@ -33,7 +33,7 @@ repository: flyve-mdm/flyve-mdm-android-inventory
 
 sass:
     style: compressed
-    
+
 prose:
 
   ignore: 
@@ -47,6 +47,15 @@ prose:
     - css
     - images
     - js
+    - apple-touch-icon.png
+    - CHANGELOG.md
+    - 404.html
+    - index.html
+    - manifest.json
+    - news.html
+    - sw.js
+    - products.html
+    - assets
 
   media: "images"
 
