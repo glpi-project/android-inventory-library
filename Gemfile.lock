@@ -19,6 +19,8 @@ GEM
       pathutil (~> 0.9)
       rouge (~> 1.7)
       safe_yaml (~> 1.0)
+    jekyll-feed (0.9.2)
+      jekyll (~> 3.3)
     jekyll-github-metadata (2.5.1)
       jekyll (~> 3.1)
       octokit (~> 4.0, != 4.4.0)
@@ -57,6 +59,7 @@ PLATFORMS
 
 DEPENDENCIES
   jekyll (= 3.5.1)
+  jekyll-feed
   jekyll-github-metadata
   tzinfo-data
 
