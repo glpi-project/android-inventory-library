@@ -27,6 +27,7 @@ markdown: kramdown
 plugins:
   - jekyll-github-metadata
   - jekyll-feed
+  - jekyll-sitemap
 
 repository: flyve-mdm/flyve-mdm-android-inventory
 
