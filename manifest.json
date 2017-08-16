@@ -3,6 +3,10 @@
 
 {% assign name = site.github.project_title | replace: "flyve-mdm-", "" %}   
 {% assign name = name | replace: "-", " " %} 
+{% assign name = name | replace: "android", " " %} 
+{% assign name = name | replace: "ios", " " %} 
+{% assign name = name | replace: "blackberry", " " %} 
+{% assign name = name | replace: "windows", " " %} 
 
 {
   "short_name": "{{ name }}",
