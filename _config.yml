@@ -31,6 +31,9 @@ plugins:
 
 repository: flyve-mdm/flyve-mdm-android-inventory
 
+sass:
+    style: compressed
+    
 prose:
 
   ignore: 
