@@ -1,6 +1,18 @@
 ---
 ---
 
+html
+{
+    position: relative; 
+    min-height: 100%;
+}
+
+body
+{
+    margin: 0 0 45px;
+}
+
+
 .jumbotron.theme-default, .theme-default.hero {
     color: #3e3e3e;
     background-color: #fff;
@@ -54,8 +66,14 @@ img {
 }
 
 footer {
-    padding: 10px 0;
+    width: 100%;
+    bottom: 0;
+    position: absolute;
+    height: 45px;
     text-align: right;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
     img {
         width: 70px;
     }
@@ -85,15 +103,10 @@ footer {
 
 .contactPage {
 
-    ul {
-        list-style: none;
-        display: block;
-        margin-bottom: 40px;
+    .social {
+        text-align: center;
         img {
             margin: 0 20px;
-        }
-        li {
-            float: left;
         }
     }
 
