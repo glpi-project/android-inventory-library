@@ -82,3 +82,29 @@ footer {
         padding: 24px 0;        
     }
 }
+
+.contactPage {
+
+    ul {
+        list-style: none;
+        display: block;
+        margin-bottom: 40px;
+        img {
+            margin: 0 20px;
+        }
+        li {
+            float: left;
+        }
+    }
+
+    .row {
+        text-align: center;
+        a {
+            margin-top: 15px;
+        }
+    }
+
+    img {
+        width: 30px;
+    }
+}
