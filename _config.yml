@@ -25,6 +25,7 @@ prose:
     - Gemfile.lock
     - _layouts
     - _includes
+    - _sass
     - fonts
     - css
     - images
@@ -38,6 +39,10 @@ prose:
     - sw.js
     - products.html
     - assets
+    - apple-touch-icon.png
+    - README.md
+    - robots.txt
+    - contact.html
 
   media: "images"
 
