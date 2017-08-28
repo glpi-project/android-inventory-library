@@ -94,6 +94,10 @@ public class Bluetooth extends Categories {
         return adapter.getAddress();
     }
 
+    /**
+     * Get the adapter name
+     * @return string the name of the adapter
+     */
     public String getName() {
         return adapter.getName();
     }
