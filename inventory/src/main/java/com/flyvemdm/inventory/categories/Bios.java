@@ -107,6 +107,10 @@ public class Bios extends Categories {
 		return Build.MANUFACTURER;
 	}
 
+	/**
+	 * Get the Bios Version
+	 * @return string with the bootloader version
+	 */
 	public String getBiosVersion() {
 		return Build.BOOTLOADER;
 	}
