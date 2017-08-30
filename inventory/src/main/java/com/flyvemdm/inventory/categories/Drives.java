@@ -106,6 +106,11 @@ public class Drives extends Categories {
         return val;
     }
 
+    /**
+     * Get the total space of the drive
+     * @param File f
+     * @return string the total space
+     */
     public String getTotal(File f) {
         String val = "";
 
