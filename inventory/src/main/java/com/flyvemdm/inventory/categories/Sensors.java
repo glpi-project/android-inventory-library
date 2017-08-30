@@ -94,6 +94,11 @@ public class Sensors extends Categories {
 		return s.getVendor();
 	}
 
+	/**
+	 * Get the type of the sensor
+	 * @param Sensor s
+	 * @return string the sensor type
+	 */
 	public String getType(Sensor s) {
 		String strtype;
 		int type = s.getType();
