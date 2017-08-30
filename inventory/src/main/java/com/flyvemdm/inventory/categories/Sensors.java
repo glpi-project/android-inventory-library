@@ -143,6 +143,11 @@ public class Sensors extends Categories {
 		return String.valueOf(s.getPower());
 	}
 
+	/**
+	 * Get the version of the sensor's module
+	 * @param Sensor s
+	 * @return string the version
+	 */
 	public String getVersion(Sensor s) {
 		return String.valueOf(s.getVersion());
 	}
