@@ -87,6 +87,10 @@ public class Inputs extends Categories {
 		this.add(c);
 	}
 
+	/**
+	 * Get the keyboard
+	 * @return string if the device has a hardware keyboard
+	 */
 	public String getKeyboard() {
 
 		String val;
