@@ -134,6 +134,11 @@ public class Sensors extends Categories {
 		return strtype;
 	}
 
+	/**
+	 * Get the power of the sensor
+	 * @param Sensor s
+	 * @return string the power used by the sensor while in use
+	 */
 	public String getPower(Sensor s) {
 		return String.valueOf(s.getPower());
 	}
