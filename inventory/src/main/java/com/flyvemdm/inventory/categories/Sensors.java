@@ -85,6 +85,11 @@ public class Sensors extends Categories {
 		return s.getName();
 	}
 
+	/**
+	 * Get the Manufacturer of the sensor
+	 * @param Sensor s
+	 * @return string the vendor of the sensor
+	 */
 	public String getManufacturer(Sensor s) {
 		return s.getVendor();
 	}
