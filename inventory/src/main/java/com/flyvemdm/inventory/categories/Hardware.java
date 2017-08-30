@@ -138,6 +138,10 @@ public class Hardware extends Categories {
         return mLastloggeduser;
     }
 
+    /**
+     * Get the hardware name
+     * @return string with the model
+     */
     public String getName() {
         return Build.MODEL;
     }
