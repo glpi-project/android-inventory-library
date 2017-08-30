@@ -76,6 +76,11 @@ public class Sensors extends Categories {
 		}
 	}
 
+	/**
+	 * Get the name of the sensor
+	 * @param Sensor s
+	 * @return string the sensor name
+	 */
 	public String getName(Sensor s) {
 		return s.getName();
 	}
