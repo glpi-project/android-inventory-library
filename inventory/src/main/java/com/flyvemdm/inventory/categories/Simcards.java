@@ -164,6 +164,10 @@ public class Simcards extends Categories {
         return mTM.getLine1Number();
     }
 
+    /**
+     * Get the subscriber ID
+     * @return string the unique subscriber ID
+     */
     public String getSubscriberId() {
         return mTM.getSubscriberId();
     }
