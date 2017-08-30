@@ -128,6 +128,10 @@ public class Simcards extends Categories {
         return mTM.getSimSerialNumber();
     }
 
+    /**
+     * Get state of the Simcard
+     * @return string the Simcard state
+     */
     public String getState() {
         String mState = "";
         switch(mTM.getSimState()) {
