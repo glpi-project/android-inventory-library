@@ -96,6 +96,10 @@ public class Simcards extends Categories {
         this.add(c);
     }
 
+    /**
+     * Get the country
+     * @return string the ISO country code
+     */
     public String getCountry() {
         return mTM.getSimCountryIso();
     }
