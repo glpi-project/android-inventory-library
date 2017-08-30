@@ -125,6 +125,11 @@ public class Drives extends Categories {
         return val;
     }
 
+    /**
+     * Get the free space of the drive
+     * @param File f
+     * @return string the free space
+     */
     public String getFree(File f) {
         String val = "";
         try {
