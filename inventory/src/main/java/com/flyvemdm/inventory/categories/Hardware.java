@@ -146,6 +146,10 @@ public class Hardware extends Categories {
         return Build.MODEL;
     }
 
+    /**
+     * Get the OS version
+     * @return string the version
+     */
     public String getOsversion() {
         return Build.VERSION.RELEASE;
     }
