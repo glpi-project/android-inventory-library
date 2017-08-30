@@ -94,6 +94,10 @@ public class Bios extends Categories {
 		this.add(c);
 	}
 
+	/**
+	 * Get the Bios Date
+	 * @return string with the date in simple format
+	 */
 	public String getBiosDate() {
 		SimpleDateFormat format = new SimpleDateFormat("MM/dd/yy");
 		return format.format(Build.TIME);
