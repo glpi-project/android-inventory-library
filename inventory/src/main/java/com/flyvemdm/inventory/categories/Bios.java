@@ -99,6 +99,10 @@ public class Bios extends Categories {
 		return format.format(Build.TIME);
 	}
 
+	/**
+	 * Get the Bios Manufacturer
+	 * @return string with the manufacturer
+	 */
 	public String getBiosManufacturer() {
 		return Build.MANUFACTURER;
 	}
