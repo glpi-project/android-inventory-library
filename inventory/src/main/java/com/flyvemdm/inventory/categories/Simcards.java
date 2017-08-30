@@ -112,6 +112,10 @@ public class Simcards extends Categories {
         return mTM.getSimOperator();
     }
 
+    /**
+     * Get the operator name
+     * @return string the Service Provider Name
+     */
     public String getOperatorName() {
         return mTM.getSimOperatorName();
     }
