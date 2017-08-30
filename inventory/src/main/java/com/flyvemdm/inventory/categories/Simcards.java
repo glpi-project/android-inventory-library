@@ -104,6 +104,10 @@ public class Simcards extends Categories {
         return mTM.getSimCountryIso();
     }
 
+    /**
+     * Get the operator code
+     * @return the Mobile Country Code and Mobile Network Code of the provider of the sim
+     */
     public String getOperatorCode() {
         return mTM.getSimOperator();
     }
