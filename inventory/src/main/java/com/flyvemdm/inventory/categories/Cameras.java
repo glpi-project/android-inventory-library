@@ -73,6 +73,11 @@ public class Cameras
         }
     }
 
+    /**
+     * Get the camera resolutions
+     * @param int index
+     * @return string with the width and height
+     */
     public String getResolutions(int index) {
         Camera cam = Camera.open(index);
         if(cam != null) {
