@@ -115,6 +115,10 @@ public class Bios extends Categories {
 		return Build.BOOTLOADER;
 	}
 
+	/**
+	 * Get the Mother Board Manufacturer
+	 * @return string with the manufacturer
+	 */
 	public String getMotherBoardManufacturer() {
 		return Build.MANUFACTURER;
 	}
