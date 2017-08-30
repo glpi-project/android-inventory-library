@@ -88,6 +88,11 @@ public class Drives extends Categories {
         this.add(c);
     }
 
+    /**
+     * Get the volume of the storage
+     * @param File f
+     * @return string with the volume
+     */
     public String getVolumn(File f) {
         // Size of storage
         String val = "";
