@@ -124,6 +124,10 @@ public class Networks extends Categories {
 		return wifi.getMacAddress();
 	}
 
+	/**
+	 * Get the speed of the Wifi connection
+	 * @return string the current speed in Mbps
+	 */
 	public String getSpeed() {
 		return String.valueOf(wifi.getLinkSpeed());
 	}
