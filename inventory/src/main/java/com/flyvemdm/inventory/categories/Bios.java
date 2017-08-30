@@ -131,6 +131,10 @@ public class Bios extends Categories {
 		return Build.MODEL;
 	}
 
+	/**
+	 * Get the Mother Board serial number
+	 * @return string with the serial number
+	 */
 	public String getMotherBoardSerialNumber() {
 		String motherBoardSerialNumber = "Unknown";
 
