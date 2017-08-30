@@ -120,6 +120,10 @@ public class Simcards extends Categories {
         return mTM.getSimOperatorName();
     }
 
+    /**
+     * Get the serial number of the Sim
+     * @return string the serial number
+     */
     public String getSerial() {
         return mTM.getSimSerialNumber();
     }
