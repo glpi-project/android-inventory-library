@@ -123,6 +123,10 @@ public class Bios extends Categories {
 		return Build.MANUFACTURER;
 	}
 
+	/**
+	 * Get the Mother Board Model
+	 * @return string with the model
+	 */
 	public String getMotherBoardModel() {
 		return Build.MODEL;
 	}
