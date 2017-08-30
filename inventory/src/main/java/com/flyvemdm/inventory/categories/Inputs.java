@@ -109,6 +109,10 @@ public class Inputs extends Categories {
 		return val;
 	}
 
+	/**
+	 * Get the touchscreen
+	 * @return string the type of screen the device has
+	 */
 	public String getTouchscreen() {
 
 		String val = "";
