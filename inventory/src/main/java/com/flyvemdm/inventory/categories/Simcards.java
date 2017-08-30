@@ -156,6 +156,10 @@ public class Simcards extends Categories {
         return mState;
     }
 
+    /**
+     * Get the line number
+     * @return string the phone number for line 1
+     */
     public String getLineNumber() {
         return mTM.getLine1Number();
     }
