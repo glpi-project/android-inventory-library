@@ -76,6 +76,11 @@ public class LocationProviders extends Categories {
         }
     }
 
+    /**
+     * Get the provider name
+     * @param LocationProvider lProvider
+     * @return string the name of the provider
+     */
     public String getName(LocationProvider lProvider) {
         return lProvider.getName();
     }
