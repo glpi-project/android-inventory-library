@@ -90,6 +90,10 @@ public class Bluetooth extends Categories {
         }
     }
 
+    /**
+     * Get the hardware address of the local bluetooth adapter
+     * @return string with the hardware address
+     */
     public String getHardwareAddress() {
         return adapter.getAddress();
     }
