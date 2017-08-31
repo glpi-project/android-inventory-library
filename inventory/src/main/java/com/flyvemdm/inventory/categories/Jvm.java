@@ -118,6 +118,11 @@ public class Jvm extends Categories {
         return props.getProperty("java.home");
     }
 
+    /**
+     * Get the JVM version
+     * @param Properties props
+     * @return string the JVM implementation version
+     */
     public String getVersion(Properties props) {
         return props.getProperty("java.vm.version");
     }
