@@ -96,6 +96,11 @@ public class Usb extends Categories {
 		return Integer.toString(mydevice.getProductId());
 	}
 
+	/**
+	 * Get the vendor ID
+	 * @param UsbDevice mydevice
+	 * @return string the vendor ID for the device
+	 */
 	public String getVendorid(UsbDevice mydevice) {
 		return Integer.toString(mydevice.getVendorId());
 	}
