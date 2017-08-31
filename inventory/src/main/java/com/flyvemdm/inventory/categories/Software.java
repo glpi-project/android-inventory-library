@@ -61,6 +61,11 @@ public class Software extends Categories {
     private static final String FROM = "Android";
     private PackageManager packageManager;
 
+    /**
+     * Indicates whether some other object is "equal to" this one
+     * @param Object obj the reference object with which to compare
+     * @return boolean true if the object is the same as the one given in argument
+     */
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
