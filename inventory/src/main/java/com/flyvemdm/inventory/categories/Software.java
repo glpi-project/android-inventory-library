@@ -79,6 +79,10 @@ public class Software extends Categories {
         return hash;
     }
 
+    /**
+    * This constructor get the information about Software
+    * @param xCtx Context where this class work
+    */
     public Software(Context xCtx) {
         super(xCtx);
         packageManager = xCtx.getPackageManager();
