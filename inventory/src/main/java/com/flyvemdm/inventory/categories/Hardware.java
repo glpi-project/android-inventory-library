@@ -128,6 +128,10 @@ public class Hardware extends Categories {
         return String.valueOf(DateFormat.format("MM/dd/yy", Build.TIME));
     }
 
+    /**
+     * Get the name of the last logged user
+     * @return string the user name
+     */
     public String getLastloggeduser() {
         String mLastloggeduser = "";
         if (!Build.USER.equals(Build.UNKNOWN)) {
