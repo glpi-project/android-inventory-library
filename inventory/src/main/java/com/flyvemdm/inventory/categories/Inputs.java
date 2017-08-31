@@ -68,6 +68,10 @@ public class Inputs extends Categories {
 		return (!super.equals(obj));
 	}
 
+	/**
+     * Returns a hash code value for the object
+     * @return int a hash code value for the object
+     */
 	@Override
 	public int hashCode() {
 		int hash = super.hashCode();
