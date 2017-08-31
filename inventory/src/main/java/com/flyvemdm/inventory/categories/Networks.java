@@ -153,6 +153,10 @@ public class Networks extends Categories {
 		return StringUtils.intToIp(dhcp.gateway);
 	}
 
+	/**
+	 * Get the IP address
+	 * @return string the current IP address
+	 */
 	public String getIpaddress() {
 		return StringUtils.intToIp(dhcp.ipAddress);
 	}
