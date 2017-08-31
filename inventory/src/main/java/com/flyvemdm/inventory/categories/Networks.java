@@ -149,6 +149,10 @@ public class Networks extends Categories {
 		return String.valueOf(wifi.getBSSID());
 	}
 
+	/**
+	 * Get the IP address of the gateway
+	 * @return string the gateway IP address
+	 */
 	public String getIpgateway() {
 		return StringUtils.intToIp(dhcp.gateway);
 	}
