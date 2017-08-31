@@ -120,6 +120,10 @@ public class Hardware extends Categories {
 
     }
 
+    /**
+     * Get the date of the last time the user logged
+     * @return string the date in simple format
+     */
     public String getDatelastloggeduser() {
         return String.valueOf(DateFormat.format("MM/dd/yy", Build.TIME));
     }
