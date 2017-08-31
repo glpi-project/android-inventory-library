@@ -85,6 +85,10 @@ public class Videos extends Categories {
         this.add(c);
     }
 
+    /**
+     * Get the video resolutions
+     * @return string the width and height
+     */
     public String getResolution() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
             WindowManager lWinMgr = (WindowManager) xCtx.getSystemService(Service.WINDOW_SERVICE);
