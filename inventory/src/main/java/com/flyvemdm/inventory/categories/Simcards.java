@@ -53,6 +53,11 @@ public class Simcards extends Categories {
 
     private TelephonyManager mTM;
 
+    /**
+     * Indicates whether some other object is "equal to" this one
+     * @param Object obj the reference object with which to compare
+     * @return boolean true if the object is the same as the one given in argument
+     */
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
