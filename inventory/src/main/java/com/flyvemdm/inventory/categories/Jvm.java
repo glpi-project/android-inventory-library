@@ -105,6 +105,11 @@ public class Jvm extends Categories {
         return language;
     }
 
+    /**
+     * Get the runtime version
+     * @param Properties props
+     * @return string the java runtime version
+     */
     public String getRuntime(Properties props) {
         return props.getProperty("java.runtime.version");
     }
