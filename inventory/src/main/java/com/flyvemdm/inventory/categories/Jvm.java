@@ -82,6 +82,11 @@ public class Jvm extends Categories {
         return props.getProperty("java.vm.name");
     }
 
+    /**
+     * Get the vendor of the JVM
+     * @param Properties props
+     * @return string the JVM vendor
+     */
     public String getVendor(Properties props) {
         return props.getProperty("java.vm.vendor");
     }
