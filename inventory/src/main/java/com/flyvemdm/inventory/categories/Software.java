@@ -43,7 +43,7 @@ import com.flyvemdm.inventory.FILog;
 import java.util.List;
 
 /**
- * This class get all the information of the Softwate
+ * This class get all the information of the Software
  */
 public class Software extends Categories {
 
