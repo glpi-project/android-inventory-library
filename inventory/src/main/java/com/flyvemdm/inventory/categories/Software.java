@@ -101,6 +101,11 @@ public class Software extends Categories {
         }
     }
 
+    /**
+     * Get the name of the application
+     * @param ApplicationInfo p
+     * @return string the application name
+     */
     public String getName(ApplicationInfo p) {
         String mName = "";
 
