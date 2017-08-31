@@ -137,6 +137,11 @@ public class Software extends Categories {
         return mVersion;
     }
 
+    /**
+     * Get the size of the application
+     * @param ApplicationInfo p
+     * @return string the sum of the cache, code and data size of the application
+     */
     public String getFilesize(ApplicationInfo p) {
         PackageStats stats = new PackageStats(p.packageName);
         return String.valueOf(stats.cacheSize + stats.codeSize + stats.dataSize);
