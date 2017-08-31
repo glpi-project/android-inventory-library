@@ -170,6 +170,10 @@ public class Hardware extends Categories {
         return props.getProperty("os.arch");
     }
 
+    /**
+     * Get the Universal Unique Identifier (UUID)
+     * @return string the Android ID
+     */
     public String getUUID() {
         return Secure.getString(xCtx.getContentResolver(), Secure.ANDROID_ID);
     }
