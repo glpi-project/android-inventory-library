@@ -52,6 +52,11 @@ public class Inputs extends Categories {
 	private static final long serialVersionUID = 4846706700566208666L;
 	private Configuration config;
 
+	/**
+     * Indicates whether some other object is "equal to" this one
+     * @param Object obj the reference object with which to compare
+     * @return boolean true if the object is the same as the one given in argument
+     */
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == null) {
