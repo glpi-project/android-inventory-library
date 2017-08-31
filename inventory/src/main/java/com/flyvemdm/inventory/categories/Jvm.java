@@ -91,6 +91,11 @@ public class Jvm extends Categories {
         return props.getProperty("java.vm.vendor");
     }
 
+    /**
+     * Get the language
+     * @param Properties props
+     * @return string the JVM locale language
+     */
     public String getLanguage(Properties props) {
 
         String language = props.getProperty("user.language");
