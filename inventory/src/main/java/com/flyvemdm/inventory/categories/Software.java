@@ -120,6 +120,11 @@ public class Software extends Categories {
         return mName;
     }
 
+    /**
+     * Get the version of the application
+     * @param ApplicationInfo p
+     * @return string the application version
+     */
     public String getVersion(ApplicationInfo p) {
         String mVersion = "";
         try {
