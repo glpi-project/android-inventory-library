@@ -120,6 +120,10 @@ public class Networks extends Categories {
 		}
 	}
 
+	/**
+	 * Get the Media Access Control address
+	 * @return string the MAC address
+	 */
 	public String getMacaddr() {
 		return wifi.getMacAddress();
 	}
