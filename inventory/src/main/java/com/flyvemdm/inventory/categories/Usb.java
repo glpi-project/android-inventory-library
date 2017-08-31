@@ -83,6 +83,11 @@ public class Usb extends Categories {
         }
     }
 
+	/**
+	 * Get the device's class field
+	 * @param UsbDevice mydevice
+	 * @return string the device's class
+	 */
 	public String getClass(UsbDevice mydevice) {
 		return Integer.toString(mydevice.getDeviceClass());
 	}
