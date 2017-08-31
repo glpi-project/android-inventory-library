@@ -127,6 +127,11 @@ public class Jvm extends Categories {
         return props.getProperty("java.vm.version");
     }
 
+    /**
+     * Get the java class path
+     * @param Properties props
+     * @return string the class path
+     */
     public String getmClasspath(Properties props) {
         return props.getProperty("java.class.path");
     }
