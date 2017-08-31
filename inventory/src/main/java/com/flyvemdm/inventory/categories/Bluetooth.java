@@ -52,6 +52,11 @@ public class Bluetooth extends Categories {
     private static final long serialVersionUID = 3252750764653173048L;
     private BluetoothAdapter adapter;
 
+    /**
+     * Indicates whether some other object is "equal to" this one
+     * @param Object obj the reference object with which to compare
+     * @return boolean true if the object is the same as the one given in argument
+     */
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
