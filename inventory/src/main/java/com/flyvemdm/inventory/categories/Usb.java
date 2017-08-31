@@ -105,6 +105,11 @@ public class Usb extends Categories {
 		return Integer.toString(mydevice.getVendorId());
 	}
 
+	/**
+	 * Get the device's subclass field
+	 * @param UsbDevice mydevice
+	 * @return string the device's subclass
+	 */
 	public String getSubclass(UsbDevice mydevice) {
 		return Integer.toString(mydevice.getDeviceSubclass());
 	}
