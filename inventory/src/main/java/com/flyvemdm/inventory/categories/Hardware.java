@@ -162,6 +162,10 @@ public class Hardware extends Categories {
         return Build.VERSION.RELEASE;
     }
 
+    /**
+     * Get the name of the architecture
+     * @return string the OS architecture
+     */
     public String getArchname() {
         return props.getProperty("os.arch");
     }
