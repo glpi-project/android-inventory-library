@@ -132,10 +132,19 @@ public class Networks extends Categories {
 		return String.valueOf(wifi.getLinkSpeed());
 	}
 
+	/**
+	 * Get the Basic Service Set Identifier (BSSID)
+	 * @return string the BSSID of the current access point
+	 */
 	public String getBSSID() {
 		return String.valueOf(wifi.getBSSID());
 	}
 
+	/**
+	 * Get the Service Set Identifier (SSID)
+	 * @return string the SSID of the current network
+	 * 
+	 */
 	public String getSSID() {
 		return String.valueOf(wifi.getBSSID());
 	}
