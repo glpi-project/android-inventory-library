@@ -109,6 +109,11 @@ public class Jvm extends Categories {
         return props.getProperty("java.runtime.version");
     }
 
+    /**
+     * Get the java directory
+     * @param Properties props
+     * @return string the installation directory
+     */
     public String getHome(Properties props) {
         return props.getProperty("java.home");
     }
