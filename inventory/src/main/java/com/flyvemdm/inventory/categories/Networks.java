@@ -173,6 +173,10 @@ public class Networks extends Categories {
 		return StringUtils.intToIp(dhcp.netmask);
 	}
 
+	/**
+	 * Get the IP address of the DHCP
+	 * @return string the server address
+	 */
 	public String getIpdhcp() {
 		return StringUtils.intToIp(dhcp.serverAddress);
 	}
