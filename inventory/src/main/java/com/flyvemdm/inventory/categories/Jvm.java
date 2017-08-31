@@ -73,6 +73,11 @@ public class Jvm extends Categories {
         this.add(c);
     }
 
+    /**
+     * Get the name of the Java Virtual Machine (JVM)
+     * @param Properties props
+     * @return string the JVM implementation name
+     */
     public String getName(Properties props) {
         return props.getProperty("java.vm.name");
     }
