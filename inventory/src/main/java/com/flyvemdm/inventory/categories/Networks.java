@@ -165,6 +165,10 @@ public class Networks extends Categories {
 		return StringUtils.intToIp(dhcp.ipAddress);
 	}
 
+	/**
+	 * Get the IP address of the netmask
+	 * @return string the netmask
+	 */
 	public String getIpmask() {
 		return StringUtils.intToIp(dhcp.netmask);
 	}
