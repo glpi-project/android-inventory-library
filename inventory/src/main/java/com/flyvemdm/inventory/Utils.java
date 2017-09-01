@@ -47,6 +47,10 @@ public class Utils {
 
     }
 
+    /**
+     * Detects if it is an emulator or a real dvice
+     * @return true for emulator, false for real device
+     */
     public static boolean isEmulator() {
         int newRating = 0;
         if(rating < 0) {
