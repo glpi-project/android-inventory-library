@@ -38,6 +38,11 @@ public class FlyveException extends Exception
         super();
     }
 
+    /**
+     * The superclass constructor with a matching argument is called
+     * @param string message
+     * @param throwable cause
+     */
     public FlyveException(String message, Throwable cause)
     {
         super(message, cause);
