@@ -33,6 +33,10 @@
 # - increment version name on manifest
 #-----------------------------------------------------------------
 if [[ ("$TRAVIS_BRANCH" == "master" || "$TRAVIS_BRANCH" == "develop") && "$TRAVIS_PULL_REQUEST" == "false" && "$TRAVIS_RUN" == "true" ]]; then
+    # create bintray information to deploy
+    echo bintray.user=$BT_USER >> local.properties
+    echo bintray.apikey=$BT_APIKEY >> local.properties
+
     # Move to local branch
     git checkout $TRAVIS_BRANCH -f
 
