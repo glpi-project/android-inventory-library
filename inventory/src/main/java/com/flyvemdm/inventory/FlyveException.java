@@ -30,6 +30,10 @@ package com.flyvemdm.inventory;
 public class FlyveException extends Exception
 {
 
+    /**
+     * Constructor of the class FlyveException
+     * Call the superclass constructor
+     */
     public FlyveException() {
         super();
     }
