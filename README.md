@@ -54,7 +54,7 @@ You can find more information here:
 
 | **Release channel** | **Beta channel** |
 |:---:|:---:|
-| [![Build Status](https://travis-ci.org/flyve-mdm/flyve-mdm-android-inventory.svg?branch=master)](https://travis-ci.org/flyve-mdm/flyve-mdm-android-inventory) | [![Build Status](https://travis-ci.org/flyve-mdm/flyve-mdm-android-inventory.svg?branch=develop)](https://travis-ci.org/flyve-mdm/flyve-mdm-android-inventory) |
+| [![Build Status](https://circleci.com/gh/flyve-mdm/flyve-mdm-android-inventory/tree/master.svg?style=svg)](https://circleci.com/gh/flyve-mdm/flyve-mdm-android-inventory/tree/master) | [![Build Status](https://circleci.com/gh/flyve-mdm/flyve-mdm-android-inventory/tree/develop.svg?style=svg)](https://circleci.com/gh/flyve-mdm/flyve-mdm-android-inventory/tree/develop) |
 
 ## Installation
 
