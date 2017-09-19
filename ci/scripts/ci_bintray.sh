@@ -25,5 +25,7 @@
 #  @link      https://flyve-mdm.com/
 #  ------------------------------------------------------------------------------
 #
-# send to google play
-fastlane android $1 storepass:'$KEYSTORE' keypass:'$ALIAS'
+
+# send to bintray
+./gradlew install
+./gradle bintrayUpload
