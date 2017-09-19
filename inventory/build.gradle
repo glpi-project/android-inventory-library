@@ -29,6 +29,9 @@ dependencies {
     testCompile 'com.android.support.test:runner:0.5'
 }
 
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
 ext {
     bintrayRepo = 'inventory'
     bintrayName = 'flyve-mdm-android-inventory'
@@ -43,7 +46,7 @@ ext {
     siteUrl = 'https://github.com/flyve-mdm/flyve-mdm-android-inventory'
     gitUrl = 'https://github.com/flyve-mdm/flyve-mdm-android-inventory.git'
 
-    libraryVersion = '1.0.5'
+    libraryVersion = properties.getProperty("version")
 
     developerId = 'rafaelje'
     developerName = 'Rafael Hernandez'
