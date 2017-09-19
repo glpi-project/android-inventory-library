@@ -10,14 +10,14 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "inventory/build.gradle" }}
       - run:
           name: Download Dependencies
           command: ./gradlew androidDependencies
       - save_cache:
           paths:
             - ~/.gradle
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "inventory/build.gradle" }}
   test_api_version_25:
     working_directory: ~/flyve_mdm
     docker:
@@ -45,10 +45,10 @@ jobs:
           name: Run Tests
           command: ./gradlew connectedAndroidTest
       - store_artifacts:
-          path: app/build/reports
+          path: inventory/build/reports
           destination: reports
       - store_test_results:
-          path: app/build/test-results
+          path: inventory/build/test-results
   test_api_version_16:
       working_directory: ~/flyve_mdm
       docker:
@@ -76,10 +76,10 @@ jobs:
             name: Run Tests
             command: ./gradlew connectedAndroidTest
         - store_artifacts:
-            path: app/build/reports
+            path: inventory/build/reports
             destination: reports
         - store_test_results:
-            path: app/build/test-results
+            path: inventory/build/test-results
   deploy_production:
       working_directory: ~/flyve_mdm
       docker:
@@ -90,7 +90,7 @@ jobs:
       steps:
         - checkout
         - restore_cache:
-            key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+            key: jars-{{ checksum "build.gradle" }}-{{ checksum  "inventory/build.gradle" }}
         - run:
             name: Setup environment
             command: source ci/scripts/ci_setup.sh
@@ -109,7 +109,7 @@ jobs:
         - save_cache:
             paths:
               - ~/.gradle
-            key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+            key: jars-{{ checksum "build.gradle" }}-{{ checksum  "inventory/build.gradle" }}
   documentation:
       working_directory: ~/flyve_mdm
       docker:
@@ -120,7 +120,7 @@ jobs:
       steps:
         - checkout
         - restore_cache:
-            key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+            key: jars-{{ checksum "build.gradle" }}-{{ checksum  "inventory/build.gradle" }}
         - run:
             name: Setup environment
             command: source ci/scripts/ci_setup.sh
@@ -148,7 +148,7 @@ jobs:
         - save_cache:
             paths:
               - ~/.gradle
-            key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+            key: jars-{{ checksum "build.gradle" }}-{{ checksum  "inventory/build.gradle" }}
 
 workflows:
   version: 2
