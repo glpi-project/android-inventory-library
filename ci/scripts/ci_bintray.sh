@@ -28,4 +28,4 @@
 
 # send to bintray
 ./gradlew install
-./gradle bintrayUpload
+./gradlew bintrayUpload
