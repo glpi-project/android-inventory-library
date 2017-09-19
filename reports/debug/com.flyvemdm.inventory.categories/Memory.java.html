@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Memory.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">com.flyvemdm.inventory.categories</a> &gt; <span class="el_source">Memory.java</span></div><h1>Memory.java</h1><pre class="source lang-java linenums">/**
+ *
+ * Copyright 2017 Teclib.
+ * Copyright 2010-2016 by the FusionInventory Development
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-android
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * ------------------------------------------------------------------------------
+ * @update    07/06/2017
+ * @license   GPLv2 https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * @link      https://github.com/fusioninventory/fusioninventory-android
+ * @link      http://www.fusioninventory.org/
+ * ------------------------------------------------------------------------------
+ */
+
+package com.flyvemdm.inventory.categories;
+
+
+import android.content.Context;
+
+import com.flyvemdm.inventory.FILog;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+
+/**
+ * This class get all the information of the Memory
+ */
+public class Memory extends Categories {
+
+
+    /*
+     * The serialization runtime associates with each serializable class a version number,
+     * called a serialVersionUID, which is used during deserialization to verify that the sender
+     * and receiver of a serialized object have loaded classes for that object that are compatible
+     * with respect to serialization. If the receiver has loaded a class for the object that has a
+     * different serialVersionUID than that of the corresponding sender's class, then deserialization
+     * will result in an  InvalidClassException
+     *
+     *  from: https://stackoverflow.com/questions/285793/what-is-a-serialversionuid-and-why-should-i-use-it
+     */
+	private static final long serialVersionUID = -494336872000892273L;
+
+    // Properties of this component
+    private static final String DESCRIPTION = &quot;Memory&quot;;
+    private static final String MEMINFO = &quot;/proc/meminfo&quot;;
+
+    /**
+     * This constructor load the context and the Memory information
+     * @param xCtx Context where this class work
+     */
+	public Memory(Context xCtx) {
+<span class="fc" id="L71">		super(xCtx);</span>
+<span class="fc" id="L72">		Category c = new Category(&quot;MEMORIES&quot;);</span>
+
+<span class="fc" id="L74">        c.put(&quot;DESCRIPTION&quot;, DESCRIPTION);</span>
+
+<span class="fc" id="L76">        String capacity = &quot;&quot;;</span>
+        try {
+<span class="fc" id="L78">            capacity = getCapacity();</span>
+<span class="nc" id="L79">        } catch (Exception ex) {</span>
+<span class="nc" id="L80">            FILog.e(ex.getMessage());</span>
+<span class="fc" id="L81">        }</span>
+<span class="fc" id="L82">        c.put(&quot;CAPACITY&quot;, capacity);</span>
+
+<span class="fc" id="L84">        this.add(c);</span>
+<span class="fc" id="L85">	}</span>
+
+    /**
+     *  Get total memory of the device
+     * @return String Total Memory
+     * @throws IOException return exception
+     */
+	public String getCapacity() throws IOException {
+
+<span class="fc" id="L94">        String capacity = &quot;&quot;;</span>
+<span class="fc" id="L95">        FileReader fr = null;</span>
+        try {
+<span class="fc" id="L97">            File f = new File(MEMINFO);</span>
+<span class="fc" id="L98">            fr = new FileReader(f);</span>
+<span class="fc" id="L99">        	BufferedReader br = new BufferedReader(fr, 8 * 1024);</span>
+        	String line;
+<span class="fc bfc" id="L101" title="All 2 branches covered.">			while ((line = br.readLine()) != null) {</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">        		if (line.startsWith(&quot;MemTotal&quot;)) {</span>
+<span class="fc" id="L103">                    String[] parts = line.split(&quot;:&quot;);</span>
+<span class="fc" id="L104">                    String part1 = parts[1].trim();</span>
+<span class="fc" id="L105">                    Long memory = Long.valueOf(part1.replaceAll(&quot;(.*)\\ kB&quot;, &quot;$1&quot;));</span>
+<span class="fc" id="L106">                    memory = memory / 1024;</span>
+<span class="fc" id="L107">                    capacity =  String.valueOf(memory);</span>
+<span class="fc" id="L108">        		}</span>
+        	}
+
+<span class="fc" id="L111">            br.close();</span>
+<span class="nc" id="L112">        } catch (IOException e) {</span>
+<span class="nc" id="L113">            FILog.e( e.getMessage());</span>
+        } finally {
+<span class="pc bpc" id="L115" title="5 of 6 branches missed.">            if(fr!=null) {</span>
+<span class="pc" id="L116">                fr.close();</span>
+            }
+        }
+<span class="fc" id="L119">        return capacity;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span>Generated by the Android Gradle plugin 2.2.0</div></body></html>

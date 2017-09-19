@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Bios.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">com.flyvemdm.inventory.categories</a> &gt; <span class="el_source">Bios.java</span></div><h1>Bios.java</h1><pre class="source lang-java linenums">/**
+ *
+ * Copyright 2017 Teclib.
+ * Copyright 2010-2016 by the FusionInventory Development
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-android
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * ------------------------------------------------------------------------------
+ * @update    07/06/2017
+ * @license   GPLv2 https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * @link      https://github.com/fusioninventory/fusioninventory-android
+ * @link      http://www.fusioninventory.org/
+ * ------------------------------------------------------------------------------
+ */
+
+package com.flyvemdm.inventory.categories;
+
+import android.content.Context;
+import android.os.Build;
+
+import com.flyvemdm.inventory.FILog;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.lang.reflect.Method;
+import java.text.SimpleDateFormat;
+
+/**
+ * This class get all the information of the Bios
+ */
+public class Bios extends Categories {
+
+	/*
+	 * The serialization runtime associates with each serializable class a version number,
+	 * called a serialVersionUID, which is used during deserialization to verify that the sender
+	 * and receiver of a serialized object have loaded classes for that object that are compatible
+	 * with respect to serialization. If the receiver has loaded a class for the object that has a
+	 * different serialVersionUID than that of the corresponding sender's class, then deserialization
+	 * will result in an  InvalidClassException
+	 *
+	 *  from: https://stackoverflow.com/questions/285793/what-is-a-serialversionuid-and-why-should-i-use-it
+	 */
+	private static final long serialVersionUID = -559572118090134691L;
+	private static final String CPUINFO = &quot;/proc/cpuinfo&quot;;
+
+	// &lt;!ELEMENT BIOS (SMODEL, SMANUFACTURER, SSN, BDATE, BVERSION,
+	//	BMANUFACTURER, MMANUFACTURER, MSN, MMODEL, ASSETTAG, ENCLOSURESERIAL,
+	//	BIOSSERIAL, TYPE, SKUNUMBER)&gt;
+
+	/**
+	 * This constructor trigger get all the information about Bios
+	 * @param xCtx Context where this class work
+	 */
+	public Bios(Context xCtx) {
+<span class="fc" id="L73">		super(xCtx);</span>
+<span class="fc" id="L74">		Category c = new Category(&quot;BIOS&quot;);</span>
+
+		// Bios Date
+<span class="fc" id="L77">		c.put(&quot;BDATE&quot;, getBiosDate());</span>
+
+		// Bios Manufacturer
+<span class="fc" id="L80">		c.put(&quot;BMANUFACTURER&quot;, getBiosManufacturer());</span>
+
+		// Bios version
+<span class="fc" id="L83">		c.put(&quot;BVERSION&quot;, getBiosVersion());</span>
+
+		// Mother Board Manufacturer
+<span class="fc" id="L86">		c.put(&quot;MMANUFACTURER&quot;, getMotherBoardManufacturer());</span>
+
+		// Mother Board Model
+<span class="fc" id="L89">		c.put(&quot;SMODEL&quot;, getMotherBoardModel());</span>
+
+		// Mother Board Serial Number
+<span class="fc" id="L92">		c.put(&quot;SSN&quot;, getMotherBoardSerialNumber());</span>
+
+<span class="fc" id="L94">		this.add(c);</span>
+<span class="fc" id="L95">	}</span>
+
+	public String getBiosDate() {
+<span class="fc" id="L98">		SimpleDateFormat format = new SimpleDateFormat(&quot;MM/dd/yy&quot;);</span>
+<span class="fc" id="L99">		return format.format(Build.TIME);</span>
+	}
+
+	public String getBiosManufacturer() {
+<span class="fc" id="L103">		return Build.MANUFACTURER;</span>
+	}
+
+	public String getBiosVersion() {
+<span class="fc" id="L107">		return Build.BOOTLOADER;</span>
+	}
+
+	public String getMotherBoardManufacturer() {
+<span class="fc" id="L111">		return Build.MANUFACTURER;</span>
+	}
+
+	public String getMotherBoardModel() {
+<span class="fc" id="L115">		return Build.MODEL;</span>
+	}
+
+	public String getMotherBoardSerialNumber() {
+<span class="fc" id="L119">		String motherBoardSerialNumber = &quot;Unknown&quot;;</span>
+
+<span class="pc bpc" id="L121" title="1 of 2 branches missed.">		if (!Build.SERIAL.equals(Build.UNKNOWN)) {</span>
+			// Mother Board Serial Number
+			// Since in 2.3.3 a.k.a gingerbread
+<span class="nc" id="L124">			motherBoardSerialNumber = Build.SERIAL;</span>
+		} else {
+			//Try to get the serial by reading /proc/cpuinfo
+<span class="fc" id="L127">			String serial = &quot;&quot;;</span>
+			try {
+<span class="fc" id="L129">				serial = this.getSerialNumberFromCpuinfo();</span>
+<span class="nc" id="L130">			} catch (Exception ex) {</span>
+<span class="nc" id="L131">				FILog.e(ex.getMessage());</span>
+<span class="fc" id="L132">			}</span>
+
+<span class="pc bpc" id="L134" title="2 of 4 branches missed.">			if (!serial.equals(&quot;&quot;) &amp;&amp; !serial.equals(&quot;0000000000000000&quot;)) {</span>
+<span class="nc" id="L135">				motherBoardSerialNumber = serial;</span>
+			} else {
+				//Last try, use the hidden API!
+<span class="fc" id="L138">				serial = getSerialFromPrivateAPI();</span>
+<span class="pc bpc" id="L139" title="1 of 2 branches missed.">				if (!serial.equals(&quot;&quot;)) {</span>
+<span class="nc" id="L140">					motherBoardSerialNumber = serial;</span>
+				}
+			}
+		}
+
+<span class="fc" id="L145">		return motherBoardSerialNumber;</span>
+	}
+
+	/**
+	 * This is a call to a private api to get Serial number
+	 * @return String with a Serial Device
+	 */
+	private String getSerialFromPrivateAPI() {
+<span class="fc" id="L153">		String serial = &quot;&quot;;</span>
+		try {
+<span class="fc" id="L155">	        Class&lt;?&gt; c = Class.forName(&quot;android.os.SystemProperties&quot;);</span>
+<span class="fc" id="L156">	        Method get = c.getMethod(&quot;get&quot;, String.class);</span>
+<span class="fc" id="L157">	        serial = (String) get.invoke(c, &quot;ro.serialno&quot;);</span>
+<span class="nc" id="L158">	    } catch (Exception e) {</span>
+<span class="nc" id="L159">			FILog.e(e.getMessage());</span>
+<span class="fc" id="L160">	    }</span>
+<span class="fc" id="L161">	    return serial;</span>
+	}
+
+	/**
+	 * Get the serial by reading /proc/cpuinfo
+	 * @return String
+	 */
+	private String getSerialNumberFromCpuinfo() throws IOException {
+<span class="fc" id="L169">		String serial = &quot;&quot;;</span>
+<span class="fc" id="L170">		File f = new File(CPUINFO);</span>
+<span class="fc" id="L171">		FileReader fr = null;</span>
+		try {
+<span class="fc" id="L173">			fr = new FileReader(f);</span>
+<span class="fc" id="L174">			BufferedReader br = new BufferedReader(fr, 8 * 1024);</span>
+			String line;
+<span class="fc bfc" id="L176" title="All 2 branches covered.">			while ((line = br.readLine()) != null) {</span>
+<span class="fc bfc" id="L177" title="All 2 branches covered.">				if (line.startsWith(&quot;Serial&quot;)) {</span>
+<span class="fc" id="L178">					FILog.d(line);</span>
+<span class="fc" id="L179">					String[] results = line.split(&quot;:&quot;);</span>
+<span class="fc" id="L180">					serial = results[1].trim();</span>
+<span class="fc" id="L181">				}</span>
+			}
+<span class="fc" id="L183">			br.close();</span>
+<span class="fc" id="L184">			fr.close();</span>
+<span class="nc" id="L185">		} catch (IOException e) {</span>
+<span class="nc" id="L186">			FILog.e(e.getMessage());</span>
+		} finally {
+<span class="pc bpc" id="L188" title="5 of 6 branches missed.">			if(fr != null) {</span>
+<span class="pc" id="L189">				fr.close();</span>
+			}
+		}
+
+<span class="fc" id="L193">		return serial.trim();</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span>Generated by the Android Gradle plugin 2.2.0</div></body></html>

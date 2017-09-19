@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Networks.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">com.flyvemdm.inventory.categories</a> &gt; <span class="el_source">Networks.java</span></div><h1>Networks.java</h1><pre class="source lang-java linenums">/**
+ *
+ * Copyright 2017 Teclib.
+ * Copyright 2010-2016 by the FusionInventory Development
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-android
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * ------------------------------------------------------------------------------
+ * @update    07/06/2017
+ * @license   GPLv2 https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * @link      https://github.com/fusioninventory/fusioninventory-android
+ * @link      http://www.fusioninventory.org/
+ * ------------------------------------------------------------------------------
+ */
+
+package com.flyvemdm.inventory.categories;
+
+import android.app.Service;
+import android.content.Context;
+import android.net.DhcpInfo;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
+import com.flyvemdm.inventory.FILog;
+
+/**
+ * This class get all the information of the Network
+ */
+public class Networks extends Categories {
+
+	/*
+     * The serialization runtime associates with each serializable class a version number,
+     * called a serialVersionUID, which is used during deserialization to verify that the sender
+     * and receiver of a serialized object have loaded classes for that object that are compatible
+     * with respect to serialization. If the receiver has loaded a class for the object that has a
+     * different serialVersionUID than that of the corresponding sender's class, then deserialization
+     * will result in an  InvalidClassException
+     *
+     *  from: https://stackoverflow.com/questions/285793/what-is-a-serialversionuid-and-why-should-i-use-it
+     */
+	private static final long serialVersionUID = 6829495385432791427L;
+
+	// Properties of this component
+	private static final String TYPE = &quot;WIFI&quot;;
+	private DhcpInfo dhcp;
+	private WifiInfo wifi;
+
+	@Override
+	public boolean equals(Object obj) {
+<span class="nc bnc" id="L65" title="All 2 branches missed.">		if (obj == null) {</span>
+<span class="nc" id="L66">			return false;</span>
+		}
+<span class="nc bnc" id="L68" title="All 2 branches missed.">		if (getClass() != obj.getClass()) {</span>
+<span class="nc" id="L69">			return false;</span>
+		}
+<span class="nc bnc" id="L71" title="All 2 branches missed.">		return (!super.equals(obj));</span>
+	}
+
+	@Override
+	public int hashCode() {
+<span class="nc" id="L76">		int hash = super.hashCode();</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">		hash = 89 * hash + (this.dhcp != null ? this.dhcp.hashCode() : 0);</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">		hash = 89 * hash + (this.wifi != null ? this.wifi.hashCode() : 0);</span>
+<span class="nc" id="L79">		return hash;</span>
+	}
+
+	/**
+	 * This constructor load the context and the Networks information
+	 * @param xCtx Context where this class work
+	 */
+	public Networks(Context xCtx) {
+<span class="fc" id="L87">		super(xCtx);</span>
+
+<span class="fc" id="L89">		WifiManager pWM = (WifiManager) xCtx.getSystemService(Service.WIFI_SERVICE);</span>
+<span class="fc" id="L90">		boolean wasWifiEnabled = pWM.isWifiEnabled();</span>
+
+		// Enable Wifi State if not
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">		if (!wasWifiEnabled) {</span>
+<span class="fc" id="L94">			pWM.setWifiEnabled(true);</span>
+		}
+<span class="fc" id="L96">		Category c = new Category(&quot;NETWORKS&quot;);</span>
+<span class="fc" id="L97">		c.put(&quot;TYPE&quot;, TYPE);</span>
+
+<span class="fc" id="L99">		dhcp = pWM.getDhcpInfo();</span>
+<span class="fc" id="L100">		wifi = pWM.getConnectionInfo();</span>
+
+<span class="fc" id="L102">		FILog.d(&quot;&lt;===WIFI DHCP===&gt;&quot;);</span>
+<span class="fc" id="L103">		FILog.d(&quot;dns1=&quot; + StringUtils.intToIp(dhcp.dns1));</span>
+<span class="fc" id="L104">		FILog.d(&quot;dns2=&quot; + StringUtils.intToIp(dhcp.dns2));</span>
+<span class="fc" id="L105">		FILog.d(&quot;leaseDuration=&quot; + dhcp.leaseDuration);</span>
+
+<span class="fc" id="L107">		c.put(&quot;MACADDR&quot;, getMacaddr());</span>
+<span class="fc" id="L108">		c.put(&quot;SPEED&quot;, getSpeed());</span>
+<span class="fc" id="L109">		c.put(&quot;BSSID&quot;, getBSSID());</span>
+<span class="fc" id="L110">		c.put(&quot;SSID&quot;, getSSID());</span>
+<span class="fc" id="L111">		c.put(&quot;IPGATEWAY&quot;, getIpgateway());</span>
+<span class="fc" id="L112">		c.put(&quot;IPADDRESS&quot;, getIpaddress());</span>
+<span class="fc" id="L113">		c.put(&quot;IPMASK&quot;, getIpmask());</span>
+<span class="fc" id="L114">		c.put(&quot;IPDHCP&quot;, getIpdhcp());</span>
+
+<span class="fc" id="L116">		this.add(c);</span>
+		// Restore Wifi State
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">		if (!wasWifiEnabled) {</span>
+<span class="fc" id="L119">			pWM.setWifiEnabled(false);</span>
+		}
+<span class="fc" id="L121">	}</span>
+
+	public String getMacaddr() {
+<span class="fc" id="L124">		return wifi.getMacAddress();</span>
+	}
+
+	public String getSpeed() {
+<span class="fc" id="L128">		return String.valueOf(wifi.getLinkSpeed());</span>
+	}
+
+	public String getBSSID() {
+<span class="fc" id="L132">		return String.valueOf(wifi.getBSSID());</span>
+	}
+
+	public String getSSID() {
+<span class="fc" id="L136">		return String.valueOf(wifi.getBSSID());</span>
+	}
+
+	public String getIpgateway() {
+<span class="fc" id="L140">		return StringUtils.intToIp(dhcp.gateway);</span>
+	}
+
+	public String getIpaddress() {
+<span class="fc" id="L144">		return StringUtils.intToIp(dhcp.ipAddress);</span>
+	}
+
+	public String getIpmask() {
+<span class="fc" id="L148">		return StringUtils.intToIp(dhcp.netmask);</span>
+	}
+
+	public String getIpdhcp() {
+<span class="fc" id="L152">		return StringUtils.intToIp(dhcp.serverAddress);</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span>Generated by the Android Gradle plugin 2.2.0</div></body></html>

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Battery.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">com.flyvemdm.inventory.categories</a> &gt; <span class="el_source">Battery.java</span></div><h1>Battery.java</h1><pre class="source lang-java linenums">/**
+ *
+ * Copyright 2017 Teclib.
+ * Copyright 2010-2016 by the FusionInventory Development
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-android
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * ------------------------------------------------------------------------------
+ * @update    07/06/2017
+ * @license   GPLv2 https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * @link      https://github.com/fusioninventory/fusioninventory-android
+ * @link      http://www.fusioninventory.org/
+ * ------------------------------------------------------------------------------
+ */
+
+ package com.flyvemdm.inventory.categories;
+
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.BatteryManager;
+
+/**
+ * This class get all the information of the baterry like level, voltage, temperature, status, health, technology
+ * The constructor of the class trigger a BroadcastReceiver with the information
+ */
+
+public class Battery extends Categories {
+
+	/*
+	 * The serialization runtime associates with each serializable class a version number,
+	 * called a serialVersionUID, which is used during deserialization to verify that the sender
+	 * and receiver of a serialized object have loaded classes for that object that are compatible
+	 * with respect to serialization. If the receiver has loaded a class for the object that has a
+	 * different serialVersionUID than that of the corresponding sender's class, then deserialization
+	 * will result in an  InvalidClassException
+	 *
+	 *  from: https://stackoverflow.com/questions/285793/what-is-a-serialversionuid-and-why-should-i-use-it
+	 */
+	private static final long serialVersionUID = -4096347994131285426L;
+
+	// Properties of this component
+<span class="nc" id="L60">	private String level = &quot;&quot;;</span>
+<span class="nc" id="L61">	private String voltage = &quot;&quot;;</span>
+<span class="nc" id="L62">	private String temperature = &quot;&quot;;</span>
+<span class="nc" id="L63">	private String status = &quot;&quot;;</span>
+<span class="nc" id="L64">	private String health = &quot;&quot;;</span>
+<span class="nc" id="L65">	private String technology = &quot;&quot;;</span>
+
+	@Override
+	public boolean equals(Object obj) {
+<span class="nc bnc" id="L69" title="All 2 branches missed.">		if (obj == null) {</span>
+<span class="nc" id="L70">			return false;</span>
+		}
+<span class="nc bnc" id="L72" title="All 2 branches missed.">		if (getClass() != obj.getClass()) {</span>
+<span class="nc" id="L73">			return false;</span>
+		}
+<span class="nc bnc" id="L75" title="All 2 branches missed.">		return (!super.equals(obj));</span>
+	}
+
+	@Override
+	public int hashCode() {
+<span class="nc" id="L80">		int hash = super.hashCode();</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">		hash = 89 * hash + (this.level != null ? this.level.hashCode() : 0);</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">		hash = 89 * hash + (this.voltage != null ? this.voltage.hashCode() : 0);</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">		hash = 89 * hash + (this.temperature != null ? this.temperature.hashCode() : 0);</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">		hash = 89 * hash + (this.status != null ? this.status.hashCode() : 0);</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">		hash = 89 * hash + (this.health != null ? this.health.hashCode() : 0);</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">		hash = 89 * hash + (this.technology != null ? this.technology.hashCode() : 0);</span>
+<span class="nc" id="L87">		return hash;</span>
+	}
+
+	/**
+	 * This constructor trigger BroadcastReceiver to get all the information about Battery
+	 * @param xCtx Context where this class work
+	 */
+	public Battery(Context xCtx) {
+<span class="nc" id="L95">		super(xCtx);</span>
+
+		// Trigger BroadcastReceiver
+<span class="nc" id="L98">		xCtx.registerReceiver(this.myBatteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));</span>
+<span class="nc" id="L99">		this.myBatteryReceiver.onReceive(xCtx, new Intent(Intent.ACTION_BATTERY_CHANGED));</span>
+<span class="nc" id="L100">	}</span>
+
+	/**
+	 *  This BroadcastReceiver load the information of the component
+	 */
+<span class="nc" id="L105">	private BroadcastReceiver myBatteryReceiver = new BroadcastReceiver() {</span>
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+
+<span class="nc bnc" id="L110" title="All 2 branches missed.">			if (intent.getAction().equals(Intent.ACTION_BATTERY_CHANGED)) {</span>
+
+<span class="nc" id="L112">				level = String.valueOf(intent.getIntExtra(&quot;level&quot;, 0)) + &quot;%&quot;;</span>
+
+<span class="nc" id="L114">				voltage = String</span>
+<span class="nc" id="L115">						.valueOf((float) intent.getIntExtra(&quot;voltage&quot;, 0) / 1000)</span>
+						+ &quot;V&quot;;
+
+<span class="nc" id="L118">				temperature = String.valueOf((float) intent.getIntExtra(</span>
+						&quot;temperature&quot;, 0) / 10)
+						+ &quot;c&quot;;
+
+<span class="nc" id="L122">				technology = intent.getStringExtra(&quot;technology&quot;);</span>
+
+				// get battery status
+<span class="nc" id="L125">				int intstatus = intent.getIntExtra(&quot;status&quot;,</span>
+						BatteryManager.BATTERY_STATUS_UNKNOWN);
+<span class="nc bnc" id="L127" title="All 2 branches missed.">				if (intstatus == BatteryManager.BATTERY_STATUS_CHARGING) {</span>
+<span class="nc" id="L128">					status = &quot;Charging&quot;;</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">				} else if (intstatus == BatteryManager.BATTERY_STATUS_DISCHARGING) {</span>
+<span class="nc" id="L130">					status = &quot;Dis-charging&quot;;</span>
+<span class="nc bnc" id="L131" title="All 2 branches missed.">				} else if (intstatus == BatteryManager.BATTERY_STATUS_NOT_CHARGING) {</span>
+<span class="nc" id="L132">					status = &quot;Not charging&quot;;</span>
+<span class="nc bnc" id="L133" title="All 2 branches missed.">				} else if (intstatus == BatteryManager.BATTERY_STATUS_FULL) {</span>
+<span class="nc" id="L134">					status = &quot;Full&quot;;</span>
+				} else {
+<span class="nc" id="L136">					status = &quot;Unknown&quot;;</span>
+				}
+
+				// get battery health
+<span class="nc" id="L140">				int inthealth = intent.getIntExtra(&quot;health&quot;,</span>
+						BatteryManager.BATTERY_HEALTH_UNKNOWN);
+<span class="nc bnc" id="L142" title="All 2 branches missed.">				if (inthealth == BatteryManager.BATTERY_HEALTH_GOOD) {</span>
+<span class="nc" id="L143">					health = &quot;Good&quot;;</span>
+<span class="nc bnc" id="L144" title="All 2 branches missed.">				} else if (inthealth == BatteryManager.BATTERY_HEALTH_OVERHEAT) {</span>
+<span class="nc" id="L145">					health = &quot;Over Heat&quot;;</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">				} else if (inthealth == BatteryManager.BATTERY_HEALTH_DEAD) {</span>
+<span class="nc" id="L147">					health = &quot;Dead&quot;;</span>
+<span class="nc bnc" id="L148" title="All 2 branches missed.">				} else if (inthealth == BatteryManager.BATTERY_HEALTH_OVER_VOLTAGE) {</span>
+<span class="nc" id="L149">					health = &quot;Over Voltage&quot;;</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">				} else if (inthealth == BatteryManager.BATTERY_HEALTH_UNSPECIFIED_FAILURE) {</span>
+<span class="nc" id="L151">					health = &quot;Unspecified Failure&quot;;</span>
+				} else {
+<span class="nc" id="L153">					health = &quot;Unknown&quot;;</span>
+				}
+
+<span class="nc bnc" id="L156" title="All 2 branches missed.">				if(!level.equals(&quot;0%&quot;)) {</span>
+					// Load the information
+<span class="nc" id="L158">					Category c = new Category(&quot;BATTERIES&quot;);</span>
+<span class="nc" id="L159">					c.put(&quot;CHEMISTRY&quot;, technology);</span>
+<span class="nc" id="L160">					c.put(&quot;TEMPERATURE&quot;, temperature);</span>
+<span class="nc" id="L161">					c.put(&quot;VOLTAGE&quot;, voltage);</span>
+<span class="nc" id="L162">					c.put(&quot;LEVEL&quot;, level);</span>
+<span class="nc" id="L163">					c.put(&quot;HEALTH&quot;, health);</span>
+<span class="nc" id="L164">					c.put(&quot;STATUS&quot;, status);</span>
+<span class="nc" id="L165">					Battery.this.add(c);</span>
+				}
+
+			}
+<span class="nc" id="L169">		}</span>
+
+	};
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span>Generated by the Android Gradle plugin 2.2.0</div></body></html>
