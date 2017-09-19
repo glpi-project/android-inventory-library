@@ -53,7 +53,6 @@ node_modules
 
 # Miscellaneous
 *.iml
-.gradle
 /local.properties
 /.idea/workspace.xml
 /.idea/libraries
@@ -62,10 +61,3 @@ node_modules
 /inventory/build/
 /captures
 .externalNativeBuild
-
-# Gradle
-gradlew
-gradlew.bat
-gradlew/
-gradle/
-gradle.properties
