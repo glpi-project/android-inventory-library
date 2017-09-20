@@ -25,5 +25,9 @@
 #  @link      https://flyve-mdm.com/
 #  ------------------------------------------------------------------------------
 #
+echo "-----------------------"
+echo $GIT_TAG
+echo "-----------------------"
+
 # push tag to github
 conventional-github-releaser -t $GH_TOKEN >/dev/null 2>&1
