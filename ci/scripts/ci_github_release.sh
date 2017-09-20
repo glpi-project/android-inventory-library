@@ -26,4 +26,4 @@
 #  ------------------------------------------------------------------------------
 #
 # push tag to github
-conventional-github-releaser -t $GH_TOKEN -r 0
+conventional-github-releaser -t $GH_TOKEN >/dev/null 2>&1
