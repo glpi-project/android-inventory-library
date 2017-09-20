@@ -25,9 +25,15 @@
 #  @link      https://flyve-mdm.com/
 #  ------------------------------------------------------------------------------
 #
-echo "-----------------------"
-echo $GIT_TAG
-echo "-----------------------"
+
+GIT_TAG=$(jq -r ".version" package.json)
 
 # push tag to github
-conventional-github-releaser -t $GH_TOKEN >/dev/null 2>&1
+conventional-github-releaser -t $GH_TOKEN
+
+# Update release name
+github-release edit \
+--user $CIRCLE_PROJECT_USERNAME \
+--repo $CIRCLE_PROJECT_REPONAME \
+--tag ${GIT_TAG} \
+--name "Inventory Engine v${GIT_TAG}" \
