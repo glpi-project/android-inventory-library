@@ -29,7 +29,7 @@
 GIT_TAG=$(jq -r ".version" package.json)
 
 # Push commits and tags to origin branch
-git push --follow-tags origin $CIRCLE_BRANCH
+# git push --follow-tags origin $CIRCLE_BRANCH
 
 # push tag to github
 conventional-github-releaser -t $GH_TOKEN
