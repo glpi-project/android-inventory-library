@@ -40,4 +40,4 @@ github-release release \
 --repo $CIRCLE_PROJECT_REPONAME \
 --tag ${GIT_TAG} \
 --name "Inventory Engine v${GIT_TAG}" \
---description "example"
+--description $(git log -1 --pretty=%B)
