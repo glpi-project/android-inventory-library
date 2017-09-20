@@ -31,7 +31,7 @@
 npm run release -- -m "ci(release): generate CHANGELOG.md for version %s"
 
 # Get version number from package.json
-export GIT_TAG=$(jq -r ".version" package.json)
+GIT_TAG=$(jq -r ".version" package.json)
 
 # update version name generate on package json
 echo version=$GIT_TAG >> local.properties
