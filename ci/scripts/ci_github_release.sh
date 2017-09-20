@@ -32,11 +32,12 @@ GIT_TAG=$(jq -r ".version" package.json)
 # git push --follow-tags origin $CIRCLE_BRANCH
 
 # push tag to github
-conventional-github-releaser -t $GH_TOKEN
+#conventional-github-releaser -t $GH_TOKEN
 
 # Update release name
-github-release edit \
+github-release release \
 --user $CIRCLE_PROJECT_USERNAME \
 --repo $CIRCLE_PROJECT_REPONAME \
 --tag ${GIT_TAG} \
 --name "Inventory Engine v${GIT_TAG}" \
+--description "example"
