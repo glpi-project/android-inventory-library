@@ -87,7 +87,7 @@ jobs:
         - image: circleci/android:api-26-alpha
       environment:
         JVM_OPTS: -Xmx3200m
-        GIT_TAG: ""
+        GIT_TAG: "test"
       steps:
         - checkout
         - restore_cache:
