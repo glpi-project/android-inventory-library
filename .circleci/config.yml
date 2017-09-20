@@ -99,9 +99,6 @@ jobs:
             name: Update version and code
             command: source ci/scripts/ci_updateversion.sh
         - run:
-            name: Create apk
-            command: ./gradlew assemble
-        - run:
             name: Deploy to Bintray
             command: source ci/scripts/ci_bintray.sh
         - run:
