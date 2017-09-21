@@ -26,7 +26,7 @@
 #  ------------------------------------------------------------------------------
 #
 # Generate javadoc this folder must be on .gitignore
-javadoc -d ./reports$1/javadoc -sourcepath ./inventory/src/main/java -subpackages .
+javadoc -d ./reports$1/javadoc -sourcepath ./inventory/src/main/java -subpackages . -nonavbar
 
 # add reports
 git add reports$1 -f
