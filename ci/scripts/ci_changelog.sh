@@ -26,6 +26,9 @@
 #  ------------------------------------------------------------------------------
 #
 
+# add header content to work with gh-pages templates
+ruby ci/scripts/add_changelog_header.rb
+
 # get gh-pages branch
 git fetch origin gh-pages
 
@@ -40,9 +43,6 @@ rm CHANGELOG.md
 
 # get changelog from branch
 git checkout $CIRCLE_BRANCH CHANGELOG.md
-
-# add header content to work with gh-pages templates
-ruby ci/scripts/add_changelog_header.rb
 
 # add
 git add CHANGELOG.md
