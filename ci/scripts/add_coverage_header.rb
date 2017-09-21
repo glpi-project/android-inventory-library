@@ -35,7 +35,8 @@ Dir.glob("reports/debug/**/*.html") do |search_file| # note one extra "*"
     file.puts "---"
     file.print buffer
 
-    filtered_data = file.gsub("install", "latest")
+    data = File.read("#{search_file}")
+    filtered_data = data.gsub(".resources", "resources")
     file.write(filtered_data)
 
     file.close
