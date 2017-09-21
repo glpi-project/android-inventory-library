@@ -56,6 +56,9 @@ git checkout gh-pages
 # clean
 sudo git clean -fdx
 
+# remove report folder
+sudo rm -R reports$1
+
 # get documentation folder
 git checkout $CIRCLE_BRANCH reports$1
 
