@@ -1,4 +1,3 @@
-#!/bin/bash
 #
 #  Copyright (C) 2017 Teclib'
 #
@@ -26,32 +25,13 @@
 #  ------------------------------------------------------------------------------
 #
 
-# get gh-pages branch
-git fetch origin gh-pages
-
-# move to gh-pages
-git checkout gh-pages
-
-# clean unstage file on gh-pages to remove all others files gets on checkout
-sudo git clean -fdx
-
-# remove local CHANGELOG.md on gh-pages
-rm CHANGELOG.md
-
-# get changelog from branch
-git checkout $CIRCLE_BRANCH CHANGELOG.md
-
-# add header content to work with gh-pages templates
-ruby ci/scripts/add_changelog_header.rb
-
-# add
-git add CHANGELOG.md
-
-# create commit
-git commit -m "docs(changelog): update changelog$1 with version ${GIT_TAG}"
-
-# push to branch
-git push origin gh-pages
-
-# got back to original branch
-git checkout $CIRCLE_BRANCH
+# Add header to CHANGELOG.md
+file = File.open("CHANGELOG.md", "r+")
+buffer = file.read
+file.rewind
+file.puts "---"
+file.puts "layout: modal"
+file.puts "title: changelog"
+file.puts "---"
+file.print buffer
+file.close
