@@ -34,10 +34,16 @@ Dir.glob("reports/debug/**/*.html") do |search_file| # note one extra "*"
     file.puts "layout: coverage"
     file.puts "---"
     file.print buffer
+    file.close
 
+    # rename folder resources
     data = File.read("#{search_file}")
     filtered_data = data.gsub(".resources", "resources")
-    file.write(filtered_data)
+    File.open("#{search_file}", "w") {|file| file.puts filtered_data }
 
-    file.close
+    # rename .session.html
+    data = File.read("#{search_file}")
+    filtered_data = data.gsub(".session", "session")
+    File.open("#{search_file}", "w") {|file| file.puts filtered_data }
+
 end
