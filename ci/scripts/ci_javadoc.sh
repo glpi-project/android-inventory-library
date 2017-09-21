@@ -49,7 +49,10 @@ git fetch origin gh-pages
 # move to gh-pages
 git checkout gh-pages
 
-# get javadoc folder
+# delete old javadoc folder
+sudo rm -R reports$1/javadoc
+
+# get fresh javadoc folder
 git checkout $CIRCLE_BRANCH reports$1/javadoc
 
 # git add javadoc folder
