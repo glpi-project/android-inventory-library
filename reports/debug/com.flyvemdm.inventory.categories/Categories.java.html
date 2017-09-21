@@ -1,4 +1,121 @@
+---
+layout: coverage
+---
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Categories.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">com.flyvemdm.inventory.categories</a> &gt; <span class="el_source">Categories.java</span></div><h1>Categories.java</h1><pre class="source lang-java linenums">/**
+ *
+ * Copyright 2017 Teclib.
+ * Copyright 2010-2016 by the FusionInventory Development
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-android
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * ------------------------------------------------------------------------------
+ * @update    07/06/2017
+ * @license   GPLv2 https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * @link      https://github.com/fusioninventory/fusioninventory-android
+ * @link      http://www.fusioninventory.org/
+ * ------------------------------------------------------------------------------
+ */
+
+package com.flyvemdm.inventory.categories;
+
+import android.content.Context;
+
+import com.flyvemdm.inventory.FILog;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.xmlpull.v1.XmlSerializer;
+
+import java.util.ArrayList;
+
+public class Categories extends ArrayList&lt;Category&gt;{
+
+    /*
+     * The serialization runtime associates with each serializable class a version number,
+     * called a serialVersionUID, which is used during deserialization to verify that the sender
+     * and receiver of a serialized object have loaded classes for that object that are compatible
+     * with respect to serialization. If the receiver has loaded a class for the object that has a
+     * different serialVersionUID than that of the corresponding sender's class, then deserialization
+     * will result in an  InvalidClassException
+     *
+     *  from: https://stackoverflow.com/questions/285793/what-is-a-serialversionuid-and-why-should-i-use-it
+     */
+    private static final long serialVersionUID = 2278660715848751766L;
+    private Context mCtx;
+
+    @Override
+    public boolean equals(Object obj) {
+<span class="nc bnc" id="L61" title="All 2 branches missed.">        if (obj == null) {</span>
+<span class="nc" id="L62">            return false;</span>
+        }
+<span class="nc bnc" id="L64" title="All 2 branches missed.">        if (getClass() != obj.getClass()) {</span>
+<span class="nc" id="L65">            return false;</span>
+        }
+<span class="nc bnc" id="L67" title="All 2 branches missed.">        return (!super.equals(obj));</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L72">        int hash = super.hashCode();</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">        hash = 89 * hash + (this.mCtx != null ? this.mCtx.hashCode() : 0);</span>
+<span class="nc" id="L74">        return hash;</span>
+    }
+
+    /**
+     * This constructor load the Context of the instance
+     * @param xCtx Context where this class work
+     */
+<span class="fc" id="L81">    public Categories(Context xCtx) {</span>
+<span class="fc" id="L82">        mCtx = xCtx;</span>
+<span class="fc" id="L83">    }</span>
+
+    /**
+     *  Create a XML object
+     * @param xSerializer object to create XML
+     */
+    public void toXML(XmlSerializer xSerializer) {
+        try {
+<span class="fc bfc" id="L91" title="All 2 branches covered.">            for( Category c : this) {</span>
+<span class="fc" id="L92">                c.toXML(xSerializer);</span>
+<span class="fc" id="L93">            }</span>
+<span class="nc" id="L94">        } catch (Exception e) {</span>
+<span class="nc" id="L95">            FILog.e(e.getMessage());</span>
+<span class="fc" id="L96">        }</span>
+<span class="fc" id="L97">    }</span>
+
+    public void toJSON(JSONObject json) {
+
+<span class="fc" id="L101">        JSONArray jsonArr = new JSONArray();</span>
+<span class="fc" id="L102">        String mType = &quot;&quot;;</span>
+        try {
+<span class="fc bfc" id="L104" title="All 2 branches covered.">            for( Category c : this) {</span>
+<span class="fc" id="L105">                mType = c.getType();</span>
+<span class="fc" id="L106">                jsonArr.put(c.toJSON());</span>
+<span class="fc" id="L107">            }</span>
+
+<span class="fc" id="L109">            json.put(mType, jsonArr);</span>
+<span class="nc" id="L110">        } catch (Exception e) {</span>
+<span class="nc" id="L111">            FILog.e(e.getMessage());</span>
+<span class="fc" id="L112">        }</span>
+<span class="fc" id="L113">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span>Generated by the Android Gradle plugin 2.2.0</div></body></html><?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../resources/report.css" type="text/css"/><link rel="shortcut icon" href="../resources/report.gif" type="image/gif"/><title>Categories.java</title><link rel="stylesheet" href="../resources/prettify.css" type="text/css"/><script type="text/javascript" src="../resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">com.flyvemdm.inventory.categories</a> &gt; <span class="el_source">Categories.java</span></div><h1>Categories.java</h1><pre class="source lang-java linenums">/**
  *
  * Copyright 2017 Teclib.
  * Copyright 2010-2016 by the FusionInventory Development
