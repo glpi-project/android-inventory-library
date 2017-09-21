@@ -47,3 +47,15 @@ Dir.glob("reports/debug/**/*.html") do |search_file| # note one extra "*"
     File.open("#{search_file}", "w") {|file| file.puts filtered_data }
 
 end
+
+# Add header to all files on the folder androidTests
+Dir.glob("reports/androidTests/**/*.html") do |search_file| # note one extra "*"
+    file = File.open("#{search_file}", "r+")
+    buffer = file.read
+    file.rewind
+    file.puts "---"
+    file.puts "layout: coverage"
+    file.puts "---"
+    file.print buffer
+    file.close
+end
