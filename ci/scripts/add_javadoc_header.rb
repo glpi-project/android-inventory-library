@@ -1,4 +1,3 @@
-#!/bin/bash
 #
 #  Copyright (C) 2017 Teclib'
 #
@@ -25,41 +24,15 @@
 #  @link      https://flyve-mdm.com/
 #  ------------------------------------------------------------------------------
 #
-# Generate javadoc this folder must be on .gitignore
-javadoc -d ./reports$1/javadoc -sourcepath ./inventory/src/main/java -subpackages . -nonavbar
 
-# delete the index.html file
-sudo rm ./reports$1/javadoc/index.html
-
-# rename the overview-summary.html file toindex.html
-mv ./reports$1/javadoc/overview-summary.html ./reports$1/javadoc/index.html
-
-# add header
-ruby ci/scripts/add_javadoc_header.rb
-
-# add reports
-git add reports$1 -f
-
-# create commit with temporary report folder
-git commit -m "tmp report commit"
-
-# get gh-pages branch
-git fetch origin gh-pages
-
-# move to gh-pages
-git checkout gh-pages
-
-# get javadoc folder
-git checkout $CIRCLE_BRANCH reports$1/javadoc
-
-# git add javadoc folder
-git add reports$1/javadoc
-
-# create commit for documentation
-git commit -m "docs(javadoc): update javadoc"
-
-# push to branch
-git push origin gh-pages
-
-# got back to original branch
-git checkout $CIRCLE_BRANCH
+# Add header to all files on the folder reports/javadoc
+Dir.glob("reports/javadoc/**/*.html") do |search_file| # note one extra "*"
+    file = File.open("#{search_file}", "r+")
+    buffer = file.read
+    file.rewind
+    file.puts "---"
+    file.puts "layout: codeDocumentation"
+    file.puts "---"
+    file.print buffer
+    file.close
+end
