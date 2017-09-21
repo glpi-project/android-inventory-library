@@ -154,17 +154,17 @@ public class InventoryTask {
 <span class="nc" id="L154">                            listener.onTaskSuccess( xml );</span>
 <span class="nc" id="L155">                        }</span>
                     });
-<span class="fc" id="L157">                } catch (final Exception ex) {</span>
+<span class="nc" id="L157">                } catch (final Exception ex) {</span>
 
-<span class="fc" id="L159">                    InventoryTask.runOnUI(new Runnable() {</span>
+<span class="nc" id="L159">                    InventoryTask.runOnUI(new Runnable() {</span>
                         public void run() {
-<span class="fc" id="L161">                            running = false;</span>
-<span class="fc" id="L162">                            listener.onTaskError( ex.getCause() );</span>
-<span class="fc" id="L163">                        }</span>
+<span class="nc" id="L161">                            running = false;</span>
+<span class="nc" id="L162">                            listener.onTaskError( ex.getCause() );</span>
+<span class="nc" id="L163">                        }</span>
                     });
 
 <span class="nc" id="L166">                }</span>
-<span class="fc" id="L167">            }</span>
+<span class="nc" id="L167">            }</span>
         });
 <span class="fc" id="L169">        t.start();</span>
 <span class="fc" id="L170">    }</span>
@@ -190,17 +190,17 @@ public class InventoryTask {
 <span class="nc" id="L190">                        }</span>
                     });
 
-<span class="nc" id="L193">                } catch (final Exception ex) {</span>
+<span class="fc" id="L193">                } catch (final Exception ex) {</span>
 
 
-<span class="nc" id="L196">                    InventoryTask.runOnUI(new Runnable() {</span>
+<span class="fc" id="L196">                    InventoryTask.runOnUI(new Runnable() {</span>
                         public void run() {
-<span class="nc" id="L198">                            running = false;</span>
-<span class="nc" id="L199">                            listener.onTaskError( ex.getCause() );</span>
-<span class="nc" id="L200">                        }</span>
+<span class="fc" id="L198">                            running = false;</span>
+<span class="fc" id="L199">                            listener.onTaskError( ex.getCause() );</span>
+<span class="fc" id="L200">                        }</span>
                     });
 <span class="nc" id="L202">                }</span>
-<span class="nc" id="L203">            }</span>
+<span class="fc" id="L203">            }</span>
         });
 <span class="fc" id="L205">        t.start();</span>
 <span class="fc" id="L206">    }</span>
