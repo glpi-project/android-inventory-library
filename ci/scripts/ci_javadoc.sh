@@ -37,14 +37,11 @@ mv ./reports$1/javadoc/overview-summary.html ./reports$1/javadoc/index.html
 # add header
 ruby ci/scripts/add_javadoc_header.rb
 
-# get stylesheet.css template
-RESULT="`wget -qO- https://gist.githubusercontent.com/flyve-mdm-bot/78014d4ffe3d5d70585a7b538f7eb84c/raw/fd12955bc582d968472a6d7f8b78ca5b8d4b8a23/stylesheet.css`"
-
 # remove default stylesheet.css
 sudo rm ./reports$1/javadoc/stylesheet.css
 
-# create a new stylesheet.css
-echo $RESULT >> ./reports$1/javadoc/stylesheet.css
+# get stylesheet.css template
+wget -qO- https://gist.githubusercontent.com/flyve-mdm-bot/78014d4ffe3d5d70585a7b538f7eb84c/raw/fd12955bc582d968472a6d7f8b78ca5b8d4b8a23/stylesheet.css -O ./reports$1/javadoc/stylesheet.css
 
 # add reports
 git add reports$1 -f
