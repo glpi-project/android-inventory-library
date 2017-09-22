@@ -57,7 +57,6 @@ rm header.md
 
 # if has change
 if [[ `git status --porcelain` ]]; then
-
     # add
     git add CHANGELOG.md
 
@@ -66,8 +65,7 @@ if [[ `git status --porcelain` ]]; then
 
     # push to branch
     git push origin gh-pages
+fi
 
     # got back to original branch
     git checkout $CIRCLE_BRANCH
-
-fi
