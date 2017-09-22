@@ -30,6 +30,11 @@
 echo bintray.user=$BT_USER >> local.properties
 echo bintray.apikey=$BT_APIKEY >> local.properties
 
+# Get version number from package.json
+GIT_TAG=$(jq -r ".version" package.json)
+# update version name generate on package json
+echo version=$GIT_TAG >> local.properties
+
 # send to bintray
 ./gradlew install
 ./gradlew bintrayUpload
