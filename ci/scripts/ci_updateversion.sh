@@ -29,9 +29,3 @@
 
 # increment version on package.json, create tag and commit with changelog
 npm run release -- -m "ci(release): generate CHANGELOG.md for version %s"
-
-# Get version number from package.json
-GIT_TAG=$(jq -r ".version" package.json)
-
-# update version name generate on package json
-echo version=$GIT_TAG >> local.properties
