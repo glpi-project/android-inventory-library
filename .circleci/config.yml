@@ -101,6 +101,9 @@ jobs:
             name: Deploy to Bintray
             command: source ci/scripts/ci_bintray.sh
         - run:
+            name: Send changelog to gh-page
+            command: source ci/scripts/ci_changelog.sh
+        - run:
             name: Create a github release
             command: source ci/scripts/ci_github_release.sh
         - save_cache:
