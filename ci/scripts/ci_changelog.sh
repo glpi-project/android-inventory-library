@@ -55,14 +55,19 @@ cp CHANGELOG.md CHANGELOG_COPY.md
 rm CHANGELOG_COPY.md
 rm header.md
 
-# add
-git add CHANGELOG.md
+# if has change
+if [[ `git status --porcelain` ]]; then
 
-# create commit
-git commit -m "docs(changelog): update changelog$1 with version ${GIT_TAG}"
+    # add
+    git add CHANGELOG.md
 
-# push to branch
-git push origin gh-pages
+    # create commit
+    git commit -m "docs(changelog): update changelog$1 with version ${GIT_TAG}"
 
-# got back to original branch
-git checkout $CIRCLE_BRANCH
+    # push to branch
+    git push origin gh-pages
+
+    # got back to original branch
+    git checkout $CIRCLE_BRANCH
+
+fi
