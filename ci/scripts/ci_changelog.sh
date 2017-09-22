@@ -57,17 +57,16 @@ rm header.md
 
 # if has change
 if [[ -z $(git status -s) ]]; then
-    echo "tree is clean"
+    echo "with out modifications"
 else
     # add
     git add CHANGELOG.md
 
     # create commit
-    git commit -m "docs(changelog): update changelog$1 with version ${GIT_TAG}"
+    git commit -m "docs(changelog): update changelog"
 
     # push to branch
     git push origin gh-pages
 fi
-
     # got back to original branch
     git checkout $CIRCLE_BRANCH
