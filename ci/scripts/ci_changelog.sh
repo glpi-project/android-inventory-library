@@ -56,7 +56,9 @@ rm CHANGELOG_COPY.md
 rm header.md
 
 # if has change
-if [[ `git status --porcelain` ]]; then
+if [[ -z $(git status -s) ]]; then
+    echo "tree is clean"
+else
     # add
     git add CHANGELOG.md
 
