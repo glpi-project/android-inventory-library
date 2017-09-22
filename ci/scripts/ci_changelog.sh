@@ -33,11 +33,12 @@ git fetch origin gh-pages
 git checkout gh-pages
 
 # clean unstage file on gh-pages to remove all others files gets on checkout
+sudo git clean -fdx
 
-# # remove local CHANGELOG.md on gh-pages
-# if [[ -e CHANGELOG.md ]]; then
-#     sudo rm CHANGELOG.md
-# fi
+# remove local CHANGELOG.md on gh-pages
+if [[ -e CHANGELOG.md ]]; then
+    sudo rm CHANGELOG.md
+fi
 
 # get changelog from branch
 git checkout $CIRCLE_BRANCH CHANGELOG.md
@@ -60,15 +61,8 @@ rm header.md
 if [[ -z $(git status -s) ]]; then
     echo "with out modifications"
 else
-    echo "with modifications"
-
-    # add
-    git add CHANGELOG.md
-
-    # create commit
-    git commit -m "docs(changelog): update changelog"
-
-    sudo git clean -fdx
+    # create a commit
+    git commit -m "build(changelog): send changelog.md to gh-page"
 
     # push to branch
     git push origin gh-pages
