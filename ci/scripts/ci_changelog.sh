@@ -55,10 +55,14 @@ cp CHANGELOG.md CHANGELOG_COPY.md
 rm CHANGELOG_COPY.md
 rm header.md
 
+git status
+
 # if has change
 if [[ -z $(git status -s) ]]; then
     echo "with out modifications"
 else
+    echo "with modifications"
+
     # add
     git add CHANGELOG.md
 
