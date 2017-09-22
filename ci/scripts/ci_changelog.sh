@@ -35,10 +35,10 @@ git checkout gh-pages
 # clean unstage file on gh-pages to remove all others files gets on checkout
 sudo git clean -fdx
 
-# remove local CHANGELOG.md on gh-pages
-if [[ -e CHANGELOG.md ]]; then
-    sudo rm CHANGELOG.md
-fi
+# # remove local CHANGELOG.md on gh-pages
+# if [[ -e CHANGELOG.md ]]; then
+#     sudo rm CHANGELOG.md
+# fi
 
 # get changelog from branch
 git checkout $CIRCLE_BRANCH CHANGELOG.md
