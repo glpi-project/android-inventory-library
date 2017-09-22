@@ -36,7 +36,9 @@ git checkout gh-pages
 sudo git clean -fdx
 
 # remove local CHANGELOG.md on gh-pages
-rm CHANGELOG.md
+if [[ -e CHANGELOG.md ]]; then
+    sudo rm CHANGELOG.md
+fi
 
 # get changelog from branch
 git checkout $CIRCLE_BRANCH CHANGELOG.md
@@ -54,8 +56,6 @@ cp CHANGELOG.md CHANGELOG_COPY.md
 # Remove CHANGELOG_COPY.md
 rm CHANGELOG_COPY.md
 rm header.md
-
-git status
 
 # if has change
 if [[ -z $(git status -s) ]]; then
