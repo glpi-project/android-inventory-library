@@ -33,7 +33,6 @@ git fetch origin gh-pages
 git checkout gh-pages
 
 # clean unstage file on gh-pages to remove all others files gets on checkout
-sudo git clean -fdx
 
 # # remove local CHANGELOG.md on gh-pages
 # if [[ -e CHANGELOG.md ]]; then
@@ -68,6 +67,8 @@ else
 
     # create commit
     git commit -m "docs(changelog): update changelog"
+
+    sudo git clean -fdx
 
     # push to branch
     git push origin gh-pages
