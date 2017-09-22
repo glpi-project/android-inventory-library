@@ -26,9 +26,6 @@
 #  ------------------------------------------------------------------------------
 #
 
-# add header content to work with gh-pages templates
-ruby ci/scripts/add_changelog_header.rb
-
 # get gh-pages branch
 git fetch origin gh-pages
 
