@@ -41,6 +41,20 @@ rm CHANGELOG.md
 # get changelog from branch
 git checkout $CIRCLE_BRANCH CHANGELOG.md
 
+# Create header content to CHANGELOG.md
+echo "---" > header.md
+echo "layout: modal" >> header.md
+echo "title: changelog" >> header.md
+echo "---" >> header.md
+
+# Duplicate CHANGELOG.md
+cp CHANGELOG.md CHANGELOG_COPY.md
+# Add header to CHANGELOG.md
+(cat header.md ; cat CHANGELOG_COPY.md) > CHANGELOG.md
+# Remove CHANGELOG_COPY.md
+rm CHANGELOG_COPY.md
+rm header.md
+
 # add
 git add CHANGELOG.md
 
