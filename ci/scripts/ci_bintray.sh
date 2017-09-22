@@ -26,6 +26,10 @@
 #  ------------------------------------------------------------------------------
 #
 
+# Bintray information
+echo bintray.user=$BT_USER >> local.properties
+echo bintray.apikey=$BT_APIKEY >> local.properties
+
 # send to bintray
 ./gradlew install
 ./gradlew bintrayUpload
