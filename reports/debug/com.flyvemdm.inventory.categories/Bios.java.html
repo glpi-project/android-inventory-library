@@ -97,55 +97,79 @@ public class Bios extends Categories {
 <span class="fc" id="L94">		this.add(c);</span>
 <span class="fc" id="L95">	}</span>
 
+	/**
+	 * Get the Bios Date
+	 * @return string with the date in simple format
+	 */
 	public String getBiosDate() {
-<span class="fc" id="L98">		SimpleDateFormat format = new SimpleDateFormat(&quot;MM/dd/yy&quot;);</span>
-<span class="fc" id="L99">		return format.format(Build.TIME);</span>
+<span class="fc" id="L102">		SimpleDateFormat format = new SimpleDateFormat(&quot;MM/dd/yy&quot;);</span>
+<span class="fc" id="L103">		return format.format(Build.TIME);</span>
 	}
 
+	/**
+	 * Get the Bios Manufacturer
+	 * @return string with the manufacturer
+	 */
 	public String getBiosManufacturer() {
-<span class="fc" id="L103">		return Build.MANUFACTURER;</span>
-	}
-
-	public String getBiosVersion() {
-<span class="fc" id="L107">		return Build.BOOTLOADER;</span>
-	}
-
-	public String getMotherBoardManufacturer() {
 <span class="fc" id="L111">		return Build.MANUFACTURER;</span>
 	}
 
-	public String getMotherBoardModel() {
-<span class="fc" id="L115">		return Build.MODEL;</span>
+	/**
+	 * Get the Bios Version
+	 * @return string with the bootloader version
+	 */
+	public String getBiosVersion() {
+<span class="fc" id="L119">		return Build.BOOTLOADER;</span>
 	}
 
-	public String getMotherBoardSerialNumber() {
-<span class="fc" id="L119">		String motherBoardSerialNumber = &quot;Unknown&quot;;</span>
+	/**
+	 * Get the Mother Board Manufacturer
+	 * @return string with the manufacturer
+	 */
+	public String getMotherBoardManufacturer() {
+<span class="fc" id="L127">		return Build.MANUFACTURER;</span>
+	}
 
-<span class="pc bpc" id="L121" title="1 of 2 branches missed.">		if (!Build.SERIAL.equals(Build.UNKNOWN)) {</span>
+	/**
+	 * Get the Mother Board Model
+	 * @return string with the model
+	 */
+	public String getMotherBoardModel() {
+<span class="fc" id="L135">		return Build.MODEL;</span>
+	}
+
+	/**
+	 * Get the Mother Board serial number
+	 * @return string with the serial number
+	 */
+	public String getMotherBoardSerialNumber() {
+<span class="fc" id="L143">		String motherBoardSerialNumber = &quot;Unknown&quot;;</span>
+
+<span class="pc bpc" id="L145" title="1 of 2 branches missed.">		if (!Build.SERIAL.equals(Build.UNKNOWN)) {</span>
 			// Mother Board Serial Number
 			// Since in 2.3.3 a.k.a gingerbread
-<span class="nc" id="L124">			motherBoardSerialNumber = Build.SERIAL;</span>
+<span class="nc" id="L148">			motherBoardSerialNumber = Build.SERIAL;</span>
 		} else {
 			//Try to get the serial by reading /proc/cpuinfo
-<span class="fc" id="L127">			String serial = &quot;&quot;;</span>
+<span class="fc" id="L151">			String serial = &quot;&quot;;</span>
 			try {
-<span class="fc" id="L129">				serial = this.getSerialNumberFromCpuinfo();</span>
-<span class="nc" id="L130">			} catch (Exception ex) {</span>
-<span class="nc" id="L131">				FILog.e(ex.getMessage());</span>
-<span class="fc" id="L132">			}</span>
+<span class="fc" id="L153">				serial = this.getSerialNumberFromCpuinfo();</span>
+<span class="nc" id="L154">			} catch (Exception ex) {</span>
+<span class="nc" id="L155">				FILog.e(ex.getMessage());</span>
+<span class="fc" id="L156">			}</span>
 
-<span class="pc bpc" id="L134" title="2 of 4 branches missed.">			if (!serial.equals(&quot;&quot;) &amp;&amp; !serial.equals(&quot;0000000000000000&quot;)) {</span>
-<span class="nc" id="L135">				motherBoardSerialNumber = serial;</span>
+<span class="pc bpc" id="L158" title="2 of 4 branches missed.">			if (!serial.equals(&quot;&quot;) &amp;&amp; !serial.equals(&quot;0000000000000000&quot;)) {</span>
+<span class="nc" id="L159">				motherBoardSerialNumber = serial;</span>
 			} else {
 				//Last try, use the hidden API!
-<span class="fc" id="L138">				serial = getSerialFromPrivateAPI();</span>
-<span class="pc bpc" id="L139" title="1 of 2 branches missed.">				if (!serial.equals(&quot;&quot;)) {</span>
-<span class="nc" id="L140">					motherBoardSerialNumber = serial;</span>
+<span class="fc" id="L162">				serial = getSerialFromPrivateAPI();</span>
+<span class="pc bpc" id="L163" title="1 of 2 branches missed.">				if (!serial.equals(&quot;&quot;)) {</span>
+<span class="nc" id="L164">					motherBoardSerialNumber = serial;</span>
 				}
 			}
 		}
 
-<span class="fc" id="L145">		return motherBoardSerialNumber;</span>
+<span class="fc" id="L169">		return motherBoardSerialNumber;</span>
 	}
 
 	/**
@@ -153,15 +177,15 @@ public class Bios extends Categories {
 	 * @return String with a Serial Device
 	 */
 	private String getSerialFromPrivateAPI() {
-<span class="fc" id="L153">		String serial = &quot;&quot;;</span>
+<span class="fc" id="L177">		String serial = &quot;&quot;;</span>
 		try {
-<span class="fc" id="L155">	        Class&lt;?&gt; c = Class.forName(&quot;android.os.SystemProperties&quot;);</span>
-<span class="fc" id="L156">	        Method get = c.getMethod(&quot;get&quot;, String.class);</span>
-<span class="fc" id="L157">	        serial = (String) get.invoke(c, &quot;ro.serialno&quot;);</span>
-<span class="nc" id="L158">	    } catch (Exception e) {</span>
-<span class="nc" id="L159">			FILog.e(e.getMessage());</span>
-<span class="fc" id="L160">	    }</span>
-<span class="fc" id="L161">	    return serial;</span>
+<span class="fc" id="L179">	        Class&lt;?&gt; c = Class.forName(&quot;android.os.SystemProperties&quot;);</span>
+<span class="fc" id="L180">	        Method get = c.getMethod(&quot;get&quot;, String.class);</span>
+<span class="fc" id="L181">	        serial = (String) get.invoke(c, &quot;ro.serialno&quot;);</span>
+<span class="nc" id="L182">	    } catch (Exception e) {</span>
+<span class="nc" id="L183">			FILog.e(e.getMessage());</span>
+<span class="fc" id="L184">	    }</span>
+<span class="fc" id="L185">	    return serial;</span>
 	}
 
 	/**
@@ -169,31 +193,31 @@ public class Bios extends Categories {
 	 * @return String
 	 */
 	private String getSerialNumberFromCpuinfo() throws IOException {
-<span class="fc" id="L169">		String serial = &quot;&quot;;</span>
-<span class="fc" id="L170">		File f = new File(CPUINFO);</span>
-<span class="fc" id="L171">		FileReader fr = null;</span>
+<span class="fc" id="L193">		String serial = &quot;&quot;;</span>
+<span class="fc" id="L194">		File f = new File(CPUINFO);</span>
+<span class="fc" id="L195">		FileReader fr = null;</span>
 		try {
-<span class="fc" id="L173">			fr = new FileReader(f);</span>
-<span class="fc" id="L174">			BufferedReader br = new BufferedReader(fr, 8 * 1024);</span>
+<span class="fc" id="L197">			fr = new FileReader(f);</span>
+<span class="fc" id="L198">			BufferedReader br = new BufferedReader(fr, 8 * 1024);</span>
 			String line;
-<span class="fc bfc" id="L176" title="All 2 branches covered.">			while ((line = br.readLine()) != null) {</span>
-<span class="fc bfc" id="L177" title="All 2 branches covered.">				if (line.startsWith(&quot;Serial&quot;)) {</span>
-<span class="fc" id="L178">					FILog.d(line);</span>
-<span class="fc" id="L179">					String[] results = line.split(&quot;:&quot;);</span>
-<span class="fc" id="L180">					serial = results[1].trim();</span>
-<span class="fc" id="L181">				}</span>
+<span class="fc bfc" id="L200" title="All 2 branches covered.">			while ((line = br.readLine()) != null) {</span>
+<span class="fc bfc" id="L201" title="All 2 branches covered.">				if (line.startsWith(&quot;Serial&quot;)) {</span>
+<span class="fc" id="L202">					FILog.d(line);</span>
+<span class="fc" id="L203">					String[] results = line.split(&quot;:&quot;);</span>
+<span class="fc" id="L204">					serial = results[1].trim();</span>
+<span class="fc" id="L205">				}</span>
 			}
-<span class="fc" id="L183">			br.close();</span>
-<span class="fc" id="L184">			fr.close();</span>
-<span class="nc" id="L185">		} catch (IOException e) {</span>
-<span class="nc" id="L186">			FILog.e(e.getMessage());</span>
+<span class="fc" id="L207">			br.close();</span>
+<span class="fc" id="L208">			fr.close();</span>
+<span class="nc" id="L209">		} catch (IOException e) {</span>
+<span class="nc" id="L210">			FILog.e(e.getMessage());</span>
 		} finally {
-<span class="pc bpc" id="L188" title="5 of 6 branches missed.">			if(fr != null) {</span>
-<span class="pc" id="L189">				fr.close();</span>
+<span class="pc bpc" id="L212" title="5 of 6 branches missed.">			if(fr != null) {</span>
+<span class="pc" id="L213">				fr.close();</span>
 			}
 		}
 
-<span class="fc" id="L193">		return serial.trim();</span>
+<span class="fc" id="L217">		return serial.trim();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span>Generated by the Android Gradle plugin 2.2.0</div></body></html>

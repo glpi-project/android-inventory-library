@@ -55,50 +55,67 @@ public class Bluetooth extends Categories {
     private static final long serialVersionUID = 3252750764653173048L;
     private BluetoothAdapter adapter;
 
+   /**
+     * Indicates whether some other object is &quot;equal to&quot; this one
+     * @param Object obj the reference object with which to compare
+     * @return boolean true if the object is the same as the one given in argument
+     */
     @Override
     public boolean equals(Object obj) {
-<span class="nc bnc" id="L57" title="All 2 branches missed.">        if (obj == null) {</span>
-<span class="nc" id="L58">            return false;</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">        if (obj == null) {</span>
+<span class="nc" id="L63">            return false;</span>
         }
-<span class="nc bnc" id="L60" title="All 2 branches missed.">        if (getClass() != obj.getClass()) {</span>
-<span class="nc" id="L61">            return false;</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">        if (getClass() != obj.getClass()) {</span>
+<span class="nc" id="L66">            return false;</span>
         }
-<span class="nc bnc" id="L63" title="All 2 branches missed.">        return (!super.equals(obj));</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">        return (!super.equals(obj));</span>
     }
 
+    /**
+     * Returns a hash code value for the object
+     * @return int a hash code value for the object
+     */
     @Override
     public int hashCode() {
-<span class="nc" id="L68">        int hash = super.hashCode();</span>
-<span class="nc bnc" id="L69" title="All 2 branches missed.">        hash = 89 * hash + (this.adapter != null ? this.adapter.hashCode() : 0);</span>
-<span class="nc" id="L70">        return hash;</span>
+<span class="nc" id="L77">        int hash = super.hashCode();</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">        hash = 89 * hash + (this.adapter != null ? this.adapter.hashCode() : 0);</span>
+<span class="nc" id="L79">        return hash;</span>
     }
     /**
      * This constructor get all the information about Bluetooth
      * @param xCtx Context where this class work
      */
     public Bluetooth(Context xCtx) {
-<span class="nc" id="L77">        super(xCtx);</span>
+<span class="nc" id="L86">        super(xCtx);</span>
 
-<span class="nc" id="L79">        adapter = BluetoothAdapter.getDefaultAdapter();</span>
+<span class="nc" id="L88">        adapter = BluetoothAdapter.getDefaultAdapter();</span>
 
-<span class="nc bnc" id="L81" title="All 2 branches missed.">        if(adapter != null) {</span>
-<span class="nc" id="L82">            Category c = new Category(&quot;BLUETOOTH_ADAPTER&quot;);</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">        if(adapter != null) {</span>
+<span class="nc" id="L91">            Category c = new Category(&quot;BLUETOOTH_ADAPTER&quot;);</span>
 
             // The hardware address of the local Bluetooth adapter.
-<span class="nc" id="L85">            c.put(&quot;HMAC&quot;, getHardwareAddress());</span>
+<span class="nc" id="L94">            c.put(&quot;HMAC&quot;, getHardwareAddress());</span>
 
             // This name is visible to remote Bluetooth devices.
-<span class="nc" id="L88">            c.put(&quot;NAME&quot;, getName());</span>
-<span class="nc" id="L89">            this.add(c);</span>
+<span class="nc" id="L97">            c.put(&quot;NAME&quot;, getName());</span>
+<span class="nc" id="L98">            this.add(c);</span>
         }
-<span class="nc" id="L91">    }</span>
+<span class="nc" id="L100">    }</span>
 
+    /**
+     * Get the hardware address of the local bluetooth adapter
+     * @return string with the hardware address
+     */
     public String getHardwareAddress() {
-<span class="nc" id="L94">        return adapter.getAddress();</span>
+<span class="nc" id="L107">        return adapter.getAddress();</span>
     }
 
+    /**
+     * Get the adapter name
+     * @return string the name of the adapter
+     */
     public String getName() {
-<span class="nc" id="L98">        return adapter.getName();</span>
+<span class="nc" id="L115">        return adapter.getName();</span>
     }
 
 }

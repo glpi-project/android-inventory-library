@@ -76,27 +76,32 @@ public class Cameras
         }
 <span class="fc" id="L74">    }</span>
 
+    /**
+     * Get the camera resolutions
+     * @param int index
+     * @return string with the width and height
+     */
     public String getResolutions(int index) {
-<span class="fc" id="L77">        Camera cam = Camera.open(index);</span>
-<span class="pc bpc" id="L78" title="1 of 2 branches missed.">        if(cam != null) {</span>
-<span class="fc" id="L79">            Camera.Parameters params = cam.getParameters();</span>
+<span class="fc" id="L82">        Camera cam = Camera.open(index);</span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">        if(cam != null) {</span>
+<span class="fc" id="L84">            Camera.Parameters params = cam.getParameters();</span>
             List&lt;Camera.Size&gt; list;
 
-<span class="fc" id="L82">            list = params.getSupportedPictureSizes();</span>
-<span class="fc" id="L83">            int width = 0;</span>
-<span class="fc" id="L84">            int height = 0;</span>
-<span class="fc bfc" id="L85" title="All 2 branches covered.">            for (Camera.Size size : list) {</span>
-<span class="fc bfc" id="L86" title="All 2 branches covered.">                if ((size.width * size.height) &gt; (width * height)) {</span>
-<span class="fc" id="L87">                    width = size.width;</span>
-<span class="fc" id="L88">                    height = size.height;</span>
+<span class="fc" id="L87">            list = params.getSupportedPictureSizes();</span>
+<span class="fc" id="L88">            int width = 0;</span>
+<span class="fc" id="L89">            int height = 0;</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">            for (Camera.Size size : list) {</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">                if ((size.width * size.height) &gt; (width * height)) {</span>
+<span class="fc" id="L92">                    width = size.width;</span>
+<span class="fc" id="L93">                    height = size.height;</span>
                 }
-<span class="fc" id="L90">            }</span>
-<span class="fc" id="L91">            cam.release();</span>
+<span class="fc" id="L95">            }</span>
+<span class="fc" id="L96">            cam.release();</span>
 
             // cam resolution width x height
-<span class="fc" id="L94">            return String.format(&quot;%dx%d&quot;, width, height);</span>
+<span class="fc" id="L99">            return String.format(&quot;%dx%d&quot;, width, height);</span>
         } else {
-<span class="nc" id="L96">         return &quot;&quot;;</span>
+<span class="nc" id="L101">         return &quot;&quot;;</span>
         }
     }
 

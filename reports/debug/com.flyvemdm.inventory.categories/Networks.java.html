@@ -63,23 +63,32 @@ public class Networks extends Categories {
 	private DhcpInfo dhcp;
 	private WifiInfo wifi;
 
+	/**
+     * Indicates whether some other object is &quot;equal to&quot; this one
+     * @param Object obj the reference object with which to compare
+     * @return boolean true if the object is the same as the one given in argument
+     */
 	@Override
 	public boolean equals(Object obj) {
-<span class="nc bnc" id="L65" title="All 2 branches missed.">		if (obj == null) {</span>
-<span class="nc" id="L66">			return false;</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">		if (obj == null) {</span>
+<span class="nc" id="L71">			return false;</span>
 		}
-<span class="nc bnc" id="L68" title="All 2 branches missed.">		if (getClass() != obj.getClass()) {</span>
-<span class="nc" id="L69">			return false;</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">		if (getClass() != obj.getClass()) {</span>
+<span class="nc" id="L74">			return false;</span>
 		}
-<span class="nc bnc" id="L71" title="All 2 branches missed.">		return (!super.equals(obj));</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">		return (!super.equals(obj));</span>
 	}
 
+	/**
+     * Returns a hash code value for the object
+     * @return int a hash code value for the object
+     */
 	@Override
 	public int hashCode() {
-<span class="nc" id="L76">		int hash = super.hashCode();</span>
-<span class="nc bnc" id="L77" title="All 2 branches missed.">		hash = 89 * hash + (this.dhcp != null ? this.dhcp.hashCode() : 0);</span>
-<span class="nc bnc" id="L78" title="All 2 branches missed.">		hash = 89 * hash + (this.wifi != null ? this.wifi.hashCode() : 0);</span>
-<span class="nc" id="L79">		return hash;</span>
+<span class="nc" id="L85">		int hash = super.hashCode();</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">		hash = 89 * hash + (this.dhcp != null ? this.dhcp.hashCode() : 0);</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">		hash = 89 * hash + (this.wifi != null ? this.wifi.hashCode() : 0);</span>
+<span class="nc" id="L88">		return hash;</span>
 	}
 
 	/**
@@ -87,72 +96,105 @@ public class Networks extends Categories {
 	 * @param xCtx Context where this class work
 	 */
 	public Networks(Context xCtx) {
-<span class="fc" id="L87">		super(xCtx);</span>
+<span class="fc" id="L96">		super(xCtx);</span>
 
-<span class="fc" id="L89">		WifiManager pWM = (WifiManager) xCtx.getSystemService(Service.WIFI_SERVICE);</span>
-<span class="fc" id="L90">		boolean wasWifiEnabled = pWM.isWifiEnabled();</span>
+<span class="fc" id="L98">		WifiManager pWM = (WifiManager) xCtx.getSystemService(Service.WIFI_SERVICE);</span>
+<span class="fc" id="L99">		boolean wasWifiEnabled = pWM.isWifiEnabled();</span>
 
 		// Enable Wifi State if not
-<span class="pc bpc" id="L93" title="1 of 2 branches missed.">		if (!wasWifiEnabled) {</span>
-<span class="fc" id="L94">			pWM.setWifiEnabled(true);</span>
+<span class="pc bpc" id="L102" title="1 of 2 branches missed.">		if (!wasWifiEnabled) {</span>
+<span class="fc" id="L103">			pWM.setWifiEnabled(true);</span>
 		}
-<span class="fc" id="L96">		Category c = new Category(&quot;NETWORKS&quot;);</span>
-<span class="fc" id="L97">		c.put(&quot;TYPE&quot;, TYPE);</span>
+<span class="fc" id="L105">		Category c = new Category(&quot;NETWORKS&quot;);</span>
+<span class="fc" id="L106">		c.put(&quot;TYPE&quot;, TYPE);</span>
 
-<span class="fc" id="L99">		dhcp = pWM.getDhcpInfo();</span>
-<span class="fc" id="L100">		wifi = pWM.getConnectionInfo();</span>
+<span class="fc" id="L108">		dhcp = pWM.getDhcpInfo();</span>
+<span class="fc" id="L109">		wifi = pWM.getConnectionInfo();</span>
 
-<span class="fc" id="L102">		FILog.d(&quot;&lt;===WIFI DHCP===&gt;&quot;);</span>
-<span class="fc" id="L103">		FILog.d(&quot;dns1=&quot; + StringUtils.intToIp(dhcp.dns1));</span>
-<span class="fc" id="L104">		FILog.d(&quot;dns2=&quot; + StringUtils.intToIp(dhcp.dns2));</span>
-<span class="fc" id="L105">		FILog.d(&quot;leaseDuration=&quot; + dhcp.leaseDuration);</span>
+<span class="fc" id="L111">		FILog.d(&quot;&lt;===WIFI DHCP===&gt;&quot;);</span>
+<span class="fc" id="L112">		FILog.d(&quot;dns1=&quot; + StringUtils.intToIp(dhcp.dns1));</span>
+<span class="fc" id="L113">		FILog.d(&quot;dns2=&quot; + StringUtils.intToIp(dhcp.dns2));</span>
+<span class="fc" id="L114">		FILog.d(&quot;leaseDuration=&quot; + dhcp.leaseDuration);</span>
 
-<span class="fc" id="L107">		c.put(&quot;MACADDR&quot;, getMacaddr());</span>
-<span class="fc" id="L108">		c.put(&quot;SPEED&quot;, getSpeed());</span>
-<span class="fc" id="L109">		c.put(&quot;BSSID&quot;, getBSSID());</span>
-<span class="fc" id="L110">		c.put(&quot;SSID&quot;, getSSID());</span>
-<span class="fc" id="L111">		c.put(&quot;IPGATEWAY&quot;, getIpgateway());</span>
-<span class="fc" id="L112">		c.put(&quot;IPADDRESS&quot;, getIpaddress());</span>
-<span class="fc" id="L113">		c.put(&quot;IPMASK&quot;, getIpmask());</span>
-<span class="fc" id="L114">		c.put(&quot;IPDHCP&quot;, getIpdhcp());</span>
+<span class="fc" id="L116">		c.put(&quot;MACADDR&quot;, getMacaddr());</span>
+<span class="fc" id="L117">		c.put(&quot;SPEED&quot;, getSpeed());</span>
+<span class="fc" id="L118">		c.put(&quot;BSSID&quot;, getBSSID());</span>
+<span class="fc" id="L119">		c.put(&quot;SSID&quot;, getSSID());</span>
+<span class="fc" id="L120">		c.put(&quot;IPGATEWAY&quot;, getIpgateway());</span>
+<span class="fc" id="L121">		c.put(&quot;IPADDRESS&quot;, getIpaddress());</span>
+<span class="fc" id="L122">		c.put(&quot;IPMASK&quot;, getIpmask());</span>
+<span class="fc" id="L123">		c.put(&quot;IPDHCP&quot;, getIpdhcp());</span>
 
-<span class="fc" id="L116">		this.add(c);</span>
+<span class="fc" id="L125">		this.add(c);</span>
 		// Restore Wifi State
-<span class="pc bpc" id="L118" title="1 of 2 branches missed.">		if (!wasWifiEnabled) {</span>
-<span class="fc" id="L119">			pWM.setWifiEnabled(false);</span>
+<span class="pc bpc" id="L127" title="1 of 2 branches missed.">		if (!wasWifiEnabled) {</span>
+<span class="fc" id="L128">			pWM.setWifiEnabled(false);</span>
 		}
-<span class="fc" id="L121">	}</span>
+<span class="fc" id="L130">	}</span>
 
+	/**
+	 * Get the Media Access Control address
+	 * @return string the MAC address
+	 */
 	public String getMacaddr() {
-<span class="fc" id="L124">		return wifi.getMacAddress();</span>
+<span class="fc" id="L137">		return wifi.getMacAddress();</span>
 	}
 
+	/**
+	 * Get the speed of the Wifi connection
+	 * @return string the current speed in Mbps
+	 */
 	public String getSpeed() {
-<span class="fc" id="L128">		return String.valueOf(wifi.getLinkSpeed());</span>
+<span class="fc" id="L145">		return String.valueOf(wifi.getLinkSpeed());</span>
 	}
 
+	/**
+	 * Get the Basic Service Set Identifier (BSSID)
+	 * @return string the BSSID of the current access point
+	 */
 	public String getBSSID() {
-<span class="fc" id="L132">		return String.valueOf(wifi.getBSSID());</span>
+<span class="fc" id="L153">		return String.valueOf(wifi.getBSSID());</span>
 	}
 
+	/**
+	 * Get the Service Set Identifier (SSID)
+	 * @return string the SSID of the current network
+	 * 
+	 */
 	public String getSSID() {
-<span class="fc" id="L136">		return String.valueOf(wifi.getBSSID());</span>
+<span class="fc" id="L162">		return String.valueOf(wifi.getBSSID());</span>
 	}
 
+	/**
+	 * Get the IP address of the gateway
+	 * @return string the gateway IP address
+	 */
 	public String getIpgateway() {
-<span class="fc" id="L140">		return StringUtils.intToIp(dhcp.gateway);</span>
+<span class="fc" id="L170">		return StringUtils.intToIp(dhcp.gateway);</span>
 	}
 
+	/**
+	 * Get the IP address
+	 * @return string the current IP address
+	 */
 	public String getIpaddress() {
-<span class="fc" id="L144">		return StringUtils.intToIp(dhcp.ipAddress);</span>
+<span class="fc" id="L178">		return StringUtils.intToIp(dhcp.ipAddress);</span>
 	}
 
+	/**
+	 * Get the IP address of the netmask
+	 * @return string the netmask
+	 */
 	public String getIpmask() {
-<span class="fc" id="L148">		return StringUtils.intToIp(dhcp.netmask);</span>
+<span class="fc" id="L186">		return StringUtils.intToIp(dhcp.netmask);</span>
 	}
 
+	/**
+	 * Get the IP address of the DHCP
+	 * @return string the server address
+	 */
 	public String getIpdhcp() {
-<span class="fc" id="L152">		return StringUtils.intToIp(dhcp.serverAddress);</span>
+<span class="fc" id="L194">		return StringUtils.intToIp(dhcp.serverAddress);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span>Generated by the Android Gradle plugin 2.2.0</div></body></html>

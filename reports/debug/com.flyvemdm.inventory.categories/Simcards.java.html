@@ -56,22 +56,31 @@ public class Simcards extends Categories {
 
     private TelephonyManager mTM;
 
+    /**
+     * Indicates whether some other object is &quot;equal to&quot; this one
+     * @param Object obj the reference object with which to compare
+     * @return boolean true if the object is the same as the one given in argument
+     */
     @Override
     public boolean equals(Object obj) {
-<span class="nc bnc" id="L58" title="All 2 branches missed.">        if (obj == null) {</span>
-<span class="nc" id="L59">            return false;</span>
+<span class="nc bnc" id="L63" title="All 2 branches missed.">        if (obj == null) {</span>
+<span class="nc" id="L64">            return false;</span>
         }
-<span class="nc bnc" id="L61" title="All 2 branches missed.">        if (getClass() != obj.getClass()) {</span>
-<span class="nc" id="L62">            return false;</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">        if (getClass() != obj.getClass()) {</span>
+<span class="nc" id="L67">            return false;</span>
         }
-<span class="nc bnc" id="L64" title="All 2 branches missed.">        return (!super.equals(obj));</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">        return (!super.equals(obj));</span>
     }
 
+    /**
+     * Returns a hash code value for the object
+     * @return int a hash code value for the object
+     */
     @Override
     public int hashCode() {
-<span class="nc" id="L69">        int hash = super.hashCode();</span>
-<span class="nc bnc" id="L70" title="All 2 branches missed.">        hash = 89 * hash + (this.mTM != null ? this.mTM.hashCode() : 0);</span>
-<span class="nc" id="L71">        return hash;</span>
+<span class="nc" id="L78">        int hash = super.hashCode();</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">        hash = 89 * hash + (this.mTM != null ? this.mTM.hashCode() : 0);</span>
+<span class="nc" id="L80">        return hash;</span>
     }
 
     /**
@@ -79,76 +88,104 @@ public class Simcards extends Categories {
      * @param xCtx Context where this class work
      */
     public Simcards(Context xCtx) {
-<span class="fc" id="L79">        super(xCtx);</span>
+<span class="fc" id="L88">        super(xCtx);</span>
         
-<span class="fc" id="L81">        mTM = (TelephonyManager) xCtx.getSystemService(Context.TELEPHONY_SERVICE);</span>
+<span class="fc" id="L90">        mTM = (TelephonyManager) xCtx.getSystemService(Context.TELEPHONY_SERVICE);</span>
 
         /*
          * Starting SimCards Informations retrieval
          */
-<span class="fc" id="L86">        Category c = new Category(&quot;SIMCARDS&quot;);</span>
+<span class="fc" id="L95">        Category c = new Category(&quot;SIMCARDS&quot;);</span>
 
-<span class="fc" id="L88">        c.put(&quot;COUNTRY&quot;, getCountry());</span>
-<span class="fc" id="L89">        c.put(&quot;OPERATOR_CODE&quot;, getOperatorCode());</span>
-<span class="fc" id="L90">        c.put(&quot;OPERATOR_NAME&quot;, getOperatorName());</span>
-<span class="fc" id="L91">        c.put(&quot;SERIAL&quot;, getSerial());</span>
-<span class="fc" id="L92">        c.put(&quot;STATE&quot;, getState());</span>
-<span class="fc" id="L93">        c.put(&quot;LINE_NUMBER&quot;, getLineNumber());</span>
-<span class="fc" id="L94">        c.put(&quot;SUBSCRIBER_ID&quot;, getSubscriberId());</span>
+<span class="fc" id="L97">        c.put(&quot;COUNTRY&quot;, getCountry());</span>
+<span class="fc" id="L98">        c.put(&quot;OPERATOR_CODE&quot;, getOperatorCode());</span>
+<span class="fc" id="L99">        c.put(&quot;OPERATOR_NAME&quot;, getOperatorName());</span>
+<span class="fc" id="L100">        c.put(&quot;SERIAL&quot;, getSerial());</span>
+<span class="fc" id="L101">        c.put(&quot;STATE&quot;, getState());</span>
+<span class="fc" id="L102">        c.put(&quot;LINE_NUMBER&quot;, getLineNumber());</span>
+<span class="fc" id="L103">        c.put(&quot;SUBSCRIBER_ID&quot;, getSubscriberId());</span>
         
-<span class="fc" id="L96">        this.add(c);</span>
-<span class="fc" id="L97">    }</span>
+<span class="fc" id="L105">        this.add(c);</span>
+<span class="fc" id="L106">    }</span>
 
+    /**
+     * Get the country
+     * @return string the ISO country code
+     */
     public String getCountry() {
-<span class="fc" id="L100">        return mTM.getSimCountryIso();</span>
+<span class="fc" id="L113">        return mTM.getSimCountryIso();</span>
     }
 
+    /**
+     * Get the operator code
+     * @return the Mobile Country Code and Mobile Network Code of the provider of the sim
+     */
     public String getOperatorCode() {
-<span class="fc" id="L104">        return mTM.getSimOperator();</span>
+<span class="fc" id="L121">        return mTM.getSimOperator();</span>
     }
 
+    /**
+     * Get the operator name
+     * @return string the Service Provider Name
+     */
     public String getOperatorName() {
-<span class="fc" id="L108">        return mTM.getSimOperatorName();</span>
+<span class="fc" id="L129">        return mTM.getSimOperatorName();</span>
     }
 
+    /**
+     * Get the serial number of the Sim
+     * @return string the serial number
+     */
     public String getSerial() {
-<span class="fc" id="L112">        return mTM.getSimSerialNumber();</span>
+<span class="fc" id="L137">        return mTM.getSimSerialNumber();</span>
     }
 
+    /**
+     * Get state of the Simcard
+     * @return string the Simcard state
+     */
     public String getState() {
-<span class="fc" id="L116">        String mState = &quot;&quot;;</span>
-<span class="pc bpc" id="L117" title="6 of 7 branches missed.">        switch(mTM.getSimState()) {</span>
+<span class="fc" id="L145">        String mState = &quot;&quot;;</span>
+<span class="pc bpc" id="L146" title="6 of 7 branches missed.">        switch(mTM.getSimState()) {</span>
             case TelephonyManager.SIM_STATE_ABSENT:
-<span class="nc" id="L119">                mState = &quot;SIM_STATE_ABSENT&quot;;</span>
-<span class="nc" id="L120">                break;</span>
+<span class="nc" id="L148">                mState = &quot;SIM_STATE_ABSENT&quot;;</span>
+<span class="nc" id="L149">                break;</span>
             case TelephonyManager.SIM_STATE_NETWORK_LOCKED:
-<span class="nc" id="L122">                mState = &quot;SIM_STATE_NETWORK_LOCKED&quot;;</span>
-<span class="nc" id="L123">                break;</span>
+<span class="nc" id="L151">                mState = &quot;SIM_STATE_NETWORK_LOCKED&quot;;</span>
+<span class="nc" id="L152">                break;</span>
             case TelephonyManager.SIM_STATE_PIN_REQUIRED:
-<span class="nc" id="L125">                mState = &quot;SIM_STATE_PIN_REQUIRED&quot;;</span>
-<span class="nc" id="L126">                break;</span>
+<span class="nc" id="L154">                mState = &quot;SIM_STATE_PIN_REQUIRED&quot;;</span>
+<span class="nc" id="L155">                break;</span>
             case TelephonyManager.SIM_STATE_PUK_REQUIRED:
-<span class="nc" id="L128">                mState = &quot;SIM_STATE_PUK_REQUIRED&quot;;</span>
-<span class="nc" id="L129">                break;</span>
+<span class="nc" id="L157">                mState = &quot;SIM_STATE_PUK_REQUIRED&quot;;</span>
+<span class="nc" id="L158">                break;</span>
             case TelephonyManager.SIM_STATE_READY:
-<span class="fc" id="L131">                mState = &quot;SIM_STATE_READY&quot;;</span>
-<span class="fc" id="L132">                break;</span>
+<span class="fc" id="L160">                mState = &quot;SIM_STATE_READY&quot;;</span>
+<span class="fc" id="L161">                break;</span>
             case TelephonyManager.SIM_STATE_UNKNOWN:
-<span class="nc" id="L134">                mState = &quot;SIM_STATE_UNKNOWN&quot;;</span>
-<span class="nc" id="L135">                break;</span>
+<span class="nc" id="L163">                mState = &quot;SIM_STATE_UNKNOWN&quot;;</span>
+<span class="nc" id="L164">                break;</span>
             default:
-<span class="nc" id="L137">                mState = &quot;Unknow&quot;;</span>
+<span class="nc" id="L166">                mState = &quot;Unknow&quot;;</span>
                 break;
         }
-<span class="fc" id="L140">        return mState;</span>
+<span class="fc" id="L169">        return mState;</span>
     }
 
+    /**
+     * Get the line number
+     * @return string the phone number for line 1
+     */
     public String getLineNumber() {
-<span class="fc" id="L144">        return mTM.getLine1Number();</span>
+<span class="fc" id="L177">        return mTM.getLine1Number();</span>
     }
 
+    /**
+     * Get the subscriber ID
+     * @return string the unique subscriber ID
+     */
     public String getSubscriberId() {
-<span class="fc" id="L148">        return mTM.getSubscriberId();</span>
+<span class="fc" id="L185">        return mTM.getSubscriberId();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span>Generated by the Android Gradle plugin 2.2.0</div></body></html>
