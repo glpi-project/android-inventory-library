@@ -51,7 +51,3 @@ git config --global user.email $GH_EMAIL
 git config --global user.name "Flyve MDM"
 git remote remove origin
 git remote add origin https://$GH_USER:$GH_TOKEN@github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git
-
-# Bintray information
-echo bintray.user=$BT_USER >> local.properties
-echo bintray.apikey=$BT_APIKEY >> local.properties
