@@ -1,0 +1,194 @@
+---
+layout: coverage
+---
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../resources/report.css" type="text/css"/><link rel="shortcut icon" href="../resources/report.gif" type="image/gif"/><title>Hardware.java</title><link rel="stylesheet" href="../resources/prettify.css" type="text/css"/><script type="text/javascript" src="../resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory.categories</a> &gt; <span class="el_source">Hardware.java</span></div><h1>Hardware.java</h1><pre class="source lang-java linenums">/**
+ *
+ * Copyright 2017 Teclib.
+ * Copyright 2010-2016 by the FusionInventory Development
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-android
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * ------------------------------------------------------------------------------
+ * @update    07/06/2017
+ * @license   GPLv2 https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * @link      https://github.com/fusioninventory/fusioninventory-android
+ * @link      http://www.fusioninventory.org/
+ * ------------------------------------------------------------------------------
+ */
+
+package org.flyve.inventory.categories;
+
+import android.content.Context;
+import android.os.Build;
+import android.provider.Settings.Secure;
+import android.text.format.DateFormat;
+
+import org.flyve.inventory.FILog;
+
+import java.util.Properties;
+
+/**
+ * This class get all the information of the Environment
+ */
+public class Hardware extends Categories {
+
+    /*
+     * The serialization runtime associates with each serializable class a version number,
+     * called a serialVersionUID, which is used during deserialization to verify that the sender
+     * and receiver of a serialized object have loaded classes for that object that are compatible
+     * with respect to serialization. If the receiver has loaded a class for the object that has a
+     * different serialVersionUID than that of the corresponding sender's class, then deserialization
+     * will result in an  InvalidClassException
+     *
+     *  from: https://stackoverflow.com/questions/285793/what-is-a-serialversionuid-and-why-should-i-use-it
+     */
+    private static final long serialVersionUID = 3528873342443549732L;
+
+//    &lt;!ELEMENT HARDWARE (USERID, OSVERSION, PROCESSORN, OSCOMMENTS,
+//                        NAME, PROCESSORS, SWAP, ETIME, TYPE, OSNAME, IPADDR,
+//                        WORKGROUP, DESCRIPTION, MEMORY, UUID, DNS, LASTLOGGEDUSER,
+//                        USERDOMAIN, DATELASTLOGGEDUSER, DEFAULTGATEWAY, VMSYSTEM, WINOWNER,
+//                        WINPRODID, WINPRODKEY, WINCOMPANY, WINLANG, CHASSIS_TYPE, VMNAME,
+//                        VMHOSTSERIAL, ARCHNAME)&gt;
+
+    private Properties props;
+    private Context xCtx;
+    private static final String OSNAME = &quot;Android&quot;;
+
+    /**
+     * Indicates whether some other object is &quot;equal to&quot; this one
+     * @param Object obj the reference object with which to compare
+     * @return boolean true if the object is the same as the one given in argument
+     */
+    @Override
+    public boolean equals(Object obj) {
+<span class="nc bnc" id="L78" title="All 2 branches missed.">        if (obj == null) {</span>
+<span class="nc" id="L79">            return false;</span>
+        }
+<span class="nc bnc" id="L81" title="All 2 branches missed.">        if (getClass() != obj.getClass()) {</span>
+<span class="nc" id="L82">            return false;</span>
+        }
+<span class="nc bnc" id="L84" title="All 2 branches missed.">        return (!super.equals(obj));</span>
+    }
+
+    /**
+     * Returns a hash code value for the object
+     * @return int a hash code value for the object
+     */
+    @Override
+    public int hashCode() {
+<span class="nc" id="L93">        int hash = super.hashCode();</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">        hash = 89 * hash + (this.xCtx != null ? this.xCtx.hashCode() : 0);</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">        hash = 89 * hash + (this.props != null ? this.props.hashCode() : 0);</span>
+<span class="nc" id="L96">        return hash;</span>
+    }
+
+    /**
+     * This constructor load the context and the Hardware information
+     * @param xCtx Context where this class work
+     */
+    public Hardware(Context xCtx) {
+<span class="fc" id="L104">        super(xCtx);</span>
+
+<span class="fc" id="L106">        this.xCtx = xCtx;</span>
+<span class="fc" id="L107">        props = System.getProperties();</span>
+<span class="fc" id="L108">        Memory memory = new Memory(xCtx);</span>
+
+<span class="fc" id="L110">        Category c = new Category(&quot;HARDWARE&quot;);</span>
+
+<span class="fc" id="L112">        c.put(&quot;DATELASTLOGGEDUSER&quot;, getDatelastloggeduser() );</span>
+<span class="fc" id="L113">        c.put(&quot;LASTLOGGEDUSER&quot;, getLastloggeduser());</span>
+<span class="fc" id="L114">        c.put(&quot;NAME&quot;, getName());</span>
+<span class="fc" id="L115">        c.put(&quot;OSNAME&quot;, OSNAME);</span>
+<span class="fc" id="L116">        c.put(&quot;OSVERSION&quot;, getOsversion());</span>
+<span class="fc" id="L117">        c.put(&quot;ARCHNAME&quot;, getArchname());</span>
+<span class="fc" id="L118">        c.put(&quot;UUID&quot;, getUUID());</span>
+
+<span class="fc" id="L120">        String vMemory = &quot;&quot;;</span>
+        try {
+<span class="fc" id="L122">            vMemory = memory.getCapacity();</span>
+<span class="nc" id="L123">        } catch (Exception ex) {</span>
+<span class="nc" id="L124">            FILog.e(ex.getMessage());</span>
+<span class="fc" id="L125">        }</span>
+<span class="fc" id="L126">        c.put(&quot;MEMORY&quot;, vMemory);</span>
+
+<span class="fc" id="L128">        this.add(c);</span>
+
+<span class="fc" id="L130">    }</span>
+
+    /**
+     * Get the date of the last time the user logged
+     * @return string the date in simple format
+     */
+    public String getDatelastloggeduser() {
+<span class="fc" id="L137">        return String.valueOf(DateFormat.format(&quot;MM/dd/yy&quot;, Build.TIME));</span>
+    }
+
+    /**
+     * Get the name of the last logged user
+     * @return string the user name
+     */
+    public String getLastloggeduser() {
+<span class="fc" id="L145">        String mLastloggeduser = &quot;&quot;;</span>
+<span class="pc bpc" id="L146" title="1 of 2 branches missed.">        if (!Build.USER.equals(Build.UNKNOWN)) {</span>
+<span class="fc" id="L147">            mLastloggeduser = Build.USER;</span>
+        } else {
+<span class="nc" id="L149">            String user = props.getProperty(&quot;user.name&quot;);</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">            if (!user.equals(&quot;&quot;)) {</span>
+<span class="nc" id="L151">                mLastloggeduser = props.getProperty(&quot;user.name&quot;);</span>
+            }
+        }
+
+<span class="fc" id="L155">        return mLastloggeduser;</span>
+    }
+
+    /**
+     * Get the hardware name
+     * @return string with the model
+     */
+    public String getName() {
+<span class="fc" id="L163">        return Build.MODEL;</span>
+    }
+
+    /**
+     * Get the OS version
+     * @return string the version
+     */
+    public String getOsversion() {
+<span class="fc" id="L171">        return Build.VERSION.RELEASE;</span>
+    }
+
+    /**
+     * Get the name of the architecture
+     * @return string the OS architecture
+     */
+    public String getArchname() {
+<span class="fc" id="L179">        return props.getProperty(&quot;os.arch&quot;);</span>
+    }
+
+    /**
+     * Get the Universal Unique Identifier (UUID)
+     * @return string the Android ID
+     */
+    public String getUUID() {
+<span class="fc" id="L187">        return Secure.getString(xCtx.getContentResolver(), Secure.ANDROID_ID);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span>Generated by the Android Gradle plugin 2.2.0</div></body></html>

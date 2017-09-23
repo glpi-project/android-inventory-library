@@ -1,0 +1,231 @@
+---
+layout: coverage
+---
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../resources/report.css" type="text/css"/><link rel="shortcut icon" href="../resources/report.gif" type="image/gif"/><title>InventoryTask.java</title><link rel="stylesheet" href="../resources/prettify.css" type="text/css"/><script type="text/javascript" src="../resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory</a> &gt; <span class="el_source">InventoryTask.java</span></div><h1>InventoryTask.java</h1><pre class="source lang-java linenums">/**
+ * FILog
+ *
+ * Copyright 2017 Teclib.
+ * Copyright 2010-2016 by the FusionInventory Development
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-android
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * ------------------------------------------------------------------------------
+ * @update    07/06/2017
+ * @license   GPLv2 https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * @link      https://github.com/fusioninventory/fusioninventory-android
+ * @link      http://www.fusioninventory.org/
+ * ------------------------------------------------------------------------------
+ */
+
+package org.flyve.inventory;
+
+import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
+import org.flyve.inventory.categories.Categories;
+
+import java.lang.reflect.Constructor;
+import java.util.ArrayList;
+/**
+ * This class generate the XML file
+ */
+public class InventoryTask {
+
+    private static Handler uiHandler;
+
+<span class="fc" id="L49">    private Boolean running = false;</span>
+
+    static {
+<span class="fc" id="L52">        uiHandler = new Handler(Looper.getMainLooper());</span>
+<span class="fc" id="L53">    }</span>
+
+    private static void runOnUI(Runnable runnable) {
+<span class="fc" id="L56">        uiHandler.post(runnable);</span>
+<span class="fc" id="L57">    }</span>
+
+<span class="fc" id="L59">    private Context ctx = null;</span>
+<span class="fc" id="L60">    private String appVersion = &quot;&quot;;</span>
+
+    public Boolean isRunning() {
+<span class="nc" id="L63">        return running;</span>
+    }
+
+    /**
+     * This constructor return a Success XML or Error on asynchronous way
+     * @param context The context to be use
+     * @param appVersion The name of the agent
+     */
+<span class="fc" id="L71">    public InventoryTask(Context context, String appVersion) {</span>
+<span class="fc" id="L72">        this.appVersion = appVersion;</span>
+<span class="fc" id="L73">        ctx = context;</span>
+<span class="fc" id="L74">    }</span>
+
+    /**
+     * This function load all the categories class dynamically
+     * @return ArrayList&lt;Categories&gt;
+     */
+    @SuppressWarnings(&quot;unchecked&quot;)
+    private ArrayList&lt;Categories&gt; loadCategoriesClass() throws FlyveException {
+
+<span class="fc" id="L83">        ArrayList&lt;Categories&gt; mContent = new ArrayList&lt;Categories&gt;();</span>
+
+<span class="fc" id="L85">        String[] categories = {</span>
+//                &quot;PhoneStatus&quot;,
+                &quot;Hardware&quot;,
+                &quot;Bios&quot;,
+                &quot;Memory&quot;,
+                &quot;Inputs&quot;,
+                &quot;Sensors&quot;,
+                &quot;Drives&quot;,
+                &quot;Cpus&quot;,
+                &quot;Simcards&quot;,
+                &quot;Videos&quot;,
+                &quot;Cameras&quot;,
+                &quot;Networks&quot;,
+//                &quot;LocationProviders&quot;,
+                &quot;Envs&quot;,
+                &quot;Jvm&quot;,
+                &quot;Software&quot;,
+                &quot;Usb&quot;,
+                &quot;Battery&quot;
+        };
+
+<span class="fc" id="L106">        Class&lt;Categories&gt; catClass = null;</span>
+
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">        for(String c : categories) {</span>
+<span class="fc" id="L109">            FILog.v(String.format(&quot;new INVENTORY of %s&quot;, c));</span>
+
+            // Loading the class with name of the ArrayList
+            try {
+<span class="fc" id="L113">                Class cCat = Class.forName(String.format(&quot;org.flyve.inventory.categories.%s&quot;, c));</span>
+<span class="fc" id="L114">                catClass = (Class&lt;Categories&gt;)cCat;</span>
+
+            }
+<span class="nc" id="L117">            catch (Exception ex) {</span>
+<span class="nc" id="L118">                FILog.e( ex.getCause().toString() );</span>
+<span class="nc" id="L119">                throw new FlyveException(ex.getMessage(), ex.getCause());</span>
+<span class="fc" id="L120">            }</span>
+
+            // Instance the class and checking errors
+<span class="pc bpc" id="L123" title="1 of 2 branches missed.">            if(catClass!=null) {</span>
+                try {
+<span class="fc" id="L125">                    Constructor&lt;Categories&gt; co = catClass.getConstructor(Context.class);</span>
+<span class="fc" id="L126">                    mContent.add(co.newInstance(ctx));</span>
+<span class="fc" id="L127">                } catch ( Exception ex ) {</span>
+<span class="fc" id="L128">                    FILog.e( ex.getCause().toString() );</span>
+<span class="fc" id="L129">                    throw new FlyveException(ex.getMessage(), ex.getCause());</span>
+<span class="fc" id="L130">                }</span>
+            }
+        }
+
+<span class="nc" id="L134">        return mContent;</span>
+    }
+
+    /**
+     * Return a XML String or Error OnTaskCompleted interface
+     * @param listener the interface OnTaskCompleted
+     */
+    public void getXML(final OnTaskCompleted listener) {
+
+<span class="fc" id="L143">        running = true;</span>
+<span class="fc" id="L144">        Thread t = new Thread(new Runnable()</span>
+<span class="fc" id="L145">        {</span>
+            public void run() {
+
+                try {
+<span class="nc" id="L149">                    ArrayList&lt;Categories&gt; mContent = loadCategoriesClass();</span>
+<span class="nc" id="L150">                    final String xml = Utils.createXML(mContent, InventoryTask.this.appVersion);</span>
+
+<span class="nc" id="L152">                    InventoryTask.runOnUI(new Runnable() {</span>
+                        public void run() {
+<span class="nc" id="L154">                            running = false;</span>
+<span class="nc" id="L155">                            listener.onTaskSuccess( xml );</span>
+<span class="nc" id="L156">                        }</span>
+                    });
+<span class="fc" id="L158">                } catch (final Exception ex) {</span>
+
+<span class="fc" id="L160">                    InventoryTask.runOnUI(new Runnable() {</span>
+                        public void run() {
+<span class="fc" id="L162">                            running = false;</span>
+<span class="fc" id="L163">                            listener.onTaskError( ex.getCause() );</span>
+<span class="fc" id="L164">                        }</span>
+                    });
+
+<span class="nc" id="L167">                }</span>
+<span class="fc" id="L168">            }</span>
+        });
+<span class="fc" id="L170">        t.start();</span>
+<span class="fc" id="L171">    }</span>
+
+    /**
+     * Return a JSON String or Error OnTaskCompleted interface
+     * @param listener the interface OnTaskCompleted
+     */
+    public void getJSON(final OnTaskCompleted listener) {
+
+<span class="fc" id="L179">        running = true;</span>
+<span class="fc" id="L180">        Thread t = new Thread(new Runnable()</span>
+<span class="fc" id="L181">        {</span>
+            public void run() {
+
+                try {
+<span class="nc" id="L185">                    ArrayList&lt;Categories&gt; mContent = loadCategoriesClass();</span>
+<span class="nc" id="L186">                    final String json = Utils.createJSON(mContent, InventoryTask.this.appVersion);</span>
+<span class="nc" id="L187">                    InventoryTask.runOnUI(new Runnable() {</span>
+                        public void run() {
+<span class="nc" id="L189">                            running = false;</span>
+<span class="nc" id="L190">                            listener.onTaskSuccess( json );</span>
+<span class="nc" id="L191">                        }</span>
+                    });
+
+<span class="nc" id="L194">                } catch (final Exception ex) {</span>
+
+
+<span class="nc" id="L197">                    InventoryTask.runOnUI(new Runnable() {</span>
+                        public void run() {
+<span class="nc" id="L199">                            running = false;</span>
+<span class="nc" id="L200">                            listener.onTaskError( ex.getCause() );</span>
+<span class="nc" id="L201">                        }</span>
+                    });
+<span class="nc" id="L203">                }</span>
+<span class="nc" id="L204">            }</span>
+        });
+<span class="fc" id="L206">        t.start();</span>
+<span class="fc" id="L207">    }</span>
+
+    /**
+     * This is the interface of return data
+     */
+    public interface OnTaskCompleted {
+
+        /**
+         * if everything is Ok
+         * @param data String
+         */
+        void onTaskSuccess(String data);
+
+        /**
+         * if something wrong
+         * @param error String
+         */
+        void onTaskError(Throwable error);
+
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span>Generated by the Android Gradle plugin 2.2.0</div></body></html>
