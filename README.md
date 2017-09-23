@@ -64,7 +64,7 @@ Download the latest JAR, grab via Maven or insert on `build.gradle` at app level
 
 ```xml
 <dependency>
-  <groupId>com.flyvemdm</groupId>
+  <groupId>org.flyve</groupId>
   <artifactId>inventory</artifactId>
   <version>1.0.0</version>
   <type>pom</type>
@@ -74,7 +74,7 @@ Download the latest JAR, grab via Maven or insert on `build.gradle` at app level
 ### Gradle
 
 ```groovy
-compile 'com.flyvemdm:inventory:1.0.0'
+compile 'org.flyve:inventory:1.0.0'
 ```
 
 ## Code Example

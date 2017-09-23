@@ -110,7 +110,7 @@ public class InventoryTask {
 
             // Loading the class with name of the ArrayList
             try {
-                Class cCat = Class.forName(String.format("com.flyvemdm.inventory.categories.%s", c));
+                Class cCat = Class.forName(String.format("org.flyve.inventory.categories.%s", c));
                 catClass = (Class<Categories>)cCat;
 
             }
