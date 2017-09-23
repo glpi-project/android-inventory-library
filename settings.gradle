@@ -1,1 +1,1 @@
-include ':app', ':inventory'
+include ':inventory'
