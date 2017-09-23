@@ -34,6 +34,9 @@ GIT_TAG=$(jq -r ".version" package.json)
 # push tag to github
 #conventional-github-releaser -t $GH_TOKEN
 
+# Create zip example code
+sudo zip -r $CIRCLE_ARTIFACTS/app_example_code.zip app/*
+
 # Update release name
 github-release release \
 --user $CIRCLE_PROJECT_USERNAME \
@@ -41,3 +44,11 @@ github-release release \
 --tag ${GIT_TAG} \
 --name "Inventory Engine v${GIT_TAG}" \
 --description "$(git log -1 --pretty=%B)"
+
+# Upload example code release
+github-release upload \
+--user $CIRCLE_PROJECT_USERNAME \
+--repo $CIRCLE_PROJECT_REPONAME \
+--tag ${GIT_TAG} \
+--name "example.zip" \
+--file $CIRCLE_ARTIFACTS/app_example_code.zip
