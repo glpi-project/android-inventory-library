@@ -42,7 +42,7 @@ ext {
     bintrayName = 'flyve-mdm-android-inventory'
     bintrayUserOrg = "flyve-mdm"
 
-    publishedGroupId = 'com.flyvemdm'
+    publishedGroupId = 'org.flyve'
     libraryName = 'inventory'
     artifact = 'inventory'
 
