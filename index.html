@@ -494,7 +494,18 @@ inventoryTask.getXML(new InventoryTask.OnTaskCompleted() {
 {% endhighlight %}
 
           <div class="btn-group">
-            <button class="btn btn-primary" href="#">Download demo</button>
+            <a class="btn btn-primary" 
+              {% for asset in site.github.releases[0].assets %}
+                {% if asset.name == 'example.zip' %}
+                  href="{{ site.github.releases[0].assets[0].browser_download_url }}"
+                  download
+                {% endif %}
+                {% else %}
+                href="#"
+              {% endfor %}
+             >
+              Download demo
+            </a>
             <a class="btn btn-secondary" href="{{ site.github.wiki_url }}">Read more</a>
           </div>
         </div>
