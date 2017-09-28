@@ -3,7 +3,6 @@
 Overall document style
 */
 
-
 footer h4 {
     font-size: 24px;
 }
@@ -383,7 +382,7 @@ Table styles
 .useSummary caption a:visited, .constantsSummary caption a:visited, .deprecatedSummary caption a:visited {
     color: #474747;
 }
-.overviewSummary caption span, .memberSummary caption span, .typeSummary caption span,
+
 .useSummary caption span, .constantsSummary caption span, .deprecatedSummary caption span {
     white-space:nowrap;
     padding-top:5px;
@@ -392,33 +391,38 @@ Table styles
     padding-bottom:7px;
     display:inline-block;
     float:left;
-    color: #FFF;
-    background-color: #008785;
+    background-color:#008785;
     border: none;
-    margin: 5px;
+    height:30px;
+    margin-bottom: 5px;
+    color: #FFF;
 }
 .memberSummary caption span.activeTableTab span {
     white-space:nowrap;
     padding-top:5px;
     padding-left:12px;
     padding-right:12px;
+    margin-right:3px;
     display:inline-block;
     float:left;
+    background-color:#008785;
+    height:30px;
+    margin-bottom: 5px;
     color: #FFF;
-    background-color: #008785;
-    margin: 5px;
 }
 .memberSummary caption span.tableTab span {
     white-space:nowrap;
     padding-top:5px;
     padding-left:12px;
     padding-right:12px;
+    margin-right:3px;
     display:inline-block;
     float:left;
-    color: black;
-    background-color: rgba(62,62,62,.3);
-    margin: 5px;
+    background-color:rgba(62,62,62,.3);
+    height:30px;
+    margin-bottom: 5px;
 }
+
 .memberSummary caption span.tableTab, .memberSummary caption span.activeTableTab {
     padding-top:0px;
     padding-left:0px;
