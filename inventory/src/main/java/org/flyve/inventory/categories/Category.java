@@ -157,7 +157,7 @@ public class Category extends LinkedHashMap<String, String>{
         try {
             JSONObject jsonCategories = new JSONObject();
             for (Map.Entry<String,String> entry : this.entrySet()) {
-                jsonCategories.put(entry.getKey(), String.valueOf(this.get(entry.getKey())));
+                jsonCategories.put(entry.getKey().toLowerCase(), String.valueOf(this.get(entry.getKey())));
             }
 
             return jsonCategories;

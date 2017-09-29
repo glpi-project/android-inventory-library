@@ -139,29 +139,29 @@ public class Utils {
         try {
 
             JSONObject accountInfo = new JSONObject();
-            accountInfo.put("KEYNAME", "TAG");
-            accountInfo.put("KEYVALUE", "N/A");
+            accountInfo.put("keyName", "TAG");
+            accountInfo.put("keyValue", "N/A");
 
             JSONObject jsonAccessLog = new JSONObject();
-            jsonAccessLog.put("LOGDATE", DateFormat.format("yyyy-MM-dd H:mm:ss", new Date()).toString());
-            jsonAccessLog.put("USERID", "N/A");
+            jsonAccessLog.put("logDate", DateFormat.format("yyyy-MM-dd H:mm:ss", new Date()).toString());
+            jsonAccessLog.put("userId", "N/A");
 
             JSONObject content = new JSONObject();
-            content.put("ACCESSLOG", jsonAccessLog);
-            content.put("ACCOUNTINFO", jsonAccessLog);
+            content.put("accessLog", jsonAccessLog);
+            content.put("accountInfo", jsonAccessLog);
 
             for (Categories cat : mContent) {
                 cat.toJSON(content);
             }
 
             JSONObject jsonQuery = new JSONObject();
-            jsonQuery.put("QUERY", "INVENTORY");
-            jsonQuery.put("VERSIONCLIENT", appVersion);
-            jsonQuery.put("DEVICEID", Build.SERIAL);
-            jsonQuery.put("CONTENT", content);
+            jsonQuery.put("query", "INVENTORY");
+            jsonQuery.put("versionClient", appVersion);
+            jsonQuery.put("deviceId", Build.SERIAL);
+            jsonQuery.put("content", content);
 
             JSONObject jsonRequest = new JSONObject();
-            jsonRequest.put("REQUEST", jsonQuery);
+            jsonRequest.put("request", jsonQuery);
 
             return jsonRequest.toString();
 
