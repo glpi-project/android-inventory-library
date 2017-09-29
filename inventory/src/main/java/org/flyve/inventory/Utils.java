@@ -1,17 +1,24 @@
 package org.flyve.inventory;
 
 import android.os.Build;
+import android.os.Environment;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.util.Xml;
 
 import org.flyve.inventory.categories.Categories;
-
 import org.json.JSONObject;
 import org.xmlpull.v1.XmlSerializer;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Date;
+
+import static org.flyve.inventory.FILog.e;
 
 /*
  *   Copyright © 2017 Teclib. All rights reserved.
@@ -166,7 +173,7 @@ public class Utils {
             return jsonRequest.toString();
 
         } catch (Exception ex) {
-            FILog.e(ex.getMessage());
+            e(ex.getMessage());
             throw new FlyveException(ex.getMessage(), ex.getCause());
         }
     }
@@ -251,12 +258,65 @@ public class Utils {
                 return writer.toString();
 
             } catch (Exception ex) {
-                FILog.e(ex.getMessage());
+                e(ex.getMessage());
                 throw new FlyveException(ex.getMessage(), ex.getCause());
             }
         }
 
         return "";
+    }
+
+    /**
+     * Logs the message in a directory
+     * @param string the message
+     * @param string the filename
+     */
+    public static void storeFile(String message, String filename) {
+        String state = Environment.getExternalStorageState();
+
+        File dir = new File("/sdcard/FlyveMDM");
+        if (Environment.MEDIA_MOUNTED.equals(state)) {
+            if(!dir.exists()) {
+                Log.d("Dir created ", "Dir created ");
+                dir.mkdirs();
+            }
+
+            File logFile = new File("/sdcard/FlyveMDM/" + filename);
+
+            if (!logFile.exists())  {
+                try  {
+                    Log.d("File created ", "File created ");
+                    logFile.createNewFile();
+                } catch (IOException ex) {
+                    Log.e("Inventory", ex.getMessage());
+                }
+            }
+
+            FileWriter fw = null;
+            try {
+                //BufferedWriter for performance, true to set append to file flag
+                fw = new FileWriter(logFile, true);
+                BufferedWriter buf = new BufferedWriter(fw);
+
+                buf.write(message);
+                buf.newLine();
+                buf.flush();
+                buf.close();
+                fw.close();
+            }
+            catch (IOException ex) {
+                e(ex.getMessage());
+            }
+            finally {
+                if(fw!=null) {
+                    try {
+                        fw.close();
+                    } catch(Exception ex) {
+                        Log.e("Inventory", ex.getMessage());
+                    }
+                }
+            }
+        }
     }
 
 }
