@@ -222,6 +222,19 @@ public class InventoryTask {
     }
 
     /**
+     * Return a XML String synchronously
+     */
+    public String getXMLSyn() {
+        try {
+            ArrayList<Categories> mContent = loadCategoriesClass();
+            return Utils.createXML(mContent, InventoryTask.this.appVersion);
+        } catch (final Exception ex) {
+            Log.e("Library Exception", ex.getLocalizedMessage());
+            return null;
+        }
+    }
+
+    /**
      * This is the interface of return data
      */
     public interface OnTaskCompleted {
