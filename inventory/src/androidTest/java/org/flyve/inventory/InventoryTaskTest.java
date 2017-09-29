@@ -18,7 +18,7 @@ package org.flyve.inventory;
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  * ------------------------------------------------------------------------------
- * @author    rafaelhernandez
+ * @author    Rafael Hernandez
  * @date      28/7/17
  * @copyright Copyright © 2017 Teclib. All rights reserved.
  * @license   GPLv3 https://www.gnu.org/licenses/gpl-3.0.html
@@ -43,7 +43,7 @@ public class InventoryTaskTest {
     Context appContext = InstrumentationRegistry.getTargetContext();
 
     @Test
-    public void getJSON() throws Exception {
+    public void getJSONTest() throws Exception {
         InventoryTask task = new InventoryTask(appContext, "test", true);
         task.getJSON(new InventoryTask.OnTaskCompleted() {
             @Override
@@ -60,7 +60,7 @@ public class InventoryTaskTest {
     }
 
     @Test
-    public void getXML() throws Exception {
+    public void getXMLTest() throws Exception {
         InventoryTask task = new InventoryTask(appContext, "test", true);
         task.getXML(new InventoryTask.OnTaskCompleted() {
             @Override
@@ -76,7 +76,7 @@ public class InventoryTaskTest {
     }
 
     @Test
-    public void getJSONsync() throws Exception {
+    public void getJSONsyncTest() throws Exception {
         InventoryTask task = new InventoryTask(appContext, "test", true);
         String data = task.getJSONSync();
         Log.d("Success Library JSON: ", data);
@@ -84,7 +84,7 @@ public class InventoryTaskTest {
     }
 
     @Test
-    public void getXMLsync() throws Exception {
+    public void getXMLsyncTest() throws Exception {
         InventoryTask task = new InventoryTask(appContext, "test", true);
         String data = task.getXMLSyn();
         Log.d("Success Library XML: ", data);
