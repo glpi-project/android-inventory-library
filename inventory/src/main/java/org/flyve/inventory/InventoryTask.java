@@ -35,6 +35,8 @@ package org.flyve.inventory;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
+
 import org.flyve.inventory.categories.Categories;
 
 import java.lang.reflect.Constructor;
@@ -204,6 +206,19 @@ public class InventoryTask {
             }
         });
         t.start();
+    }
+
+    /**
+     * Return a JSON String synchronously
+     */
+    public String getJSONSync() {
+        try {
+            ArrayList<Categories> mContent = loadCategoriesClass();
+            return Utils.createJSON(mContent, InventoryTask.this.appVersion);
+        } catch (final Exception ex) {
+            Log.e("Library Exception", ex.getLocalizedMessage());
+            return null;
+        }
     }
 
     /**
