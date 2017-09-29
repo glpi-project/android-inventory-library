@@ -30,6 +30,7 @@ package org.flyve.inventory;
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
+import android.util.Log;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -47,6 +48,7 @@ public class InventoryTaskTest {
         task.getJSON(new InventoryTask.OnTaskCompleted() {
             @Override
             public void onTaskSuccess(String data) {
+                Log.d("Success Library JSON: ", data);
                 assertNotEquals("", data);
             }
 

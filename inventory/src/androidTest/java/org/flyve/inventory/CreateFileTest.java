@@ -50,7 +50,7 @@ public class CreateFileTest {
     @Test
     public void createXMLTest() throws Exception {
         ArrayList<Categories> mContent = new ArrayList<Categories>();
-        Category category = new Category("CAMERAS");
+        Category category = new Category("CAMERAS", "cameras");
         category.put("RESOLUTION", "3264x2448");
 
         Categories categories = new Categories(appContext);
@@ -69,7 +69,7 @@ public class CreateFileTest {
     @Test
     public void createJSONTest() throws Exception {
         ArrayList<Categories> mContent = new ArrayList<Categories>();
-        Category category = new Category("CAMERAS");
+        Category category = new Category("CAMERAS", "cameras");
         category.put("RESOLUTION", "3264x2448");
 
         Categories categories = new Categories(appContext);
