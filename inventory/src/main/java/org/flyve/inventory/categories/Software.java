@@ -99,7 +99,7 @@ public class Software extends Categories {
 
         for (ApplicationInfo p : packages) {
 
-            Category c = new Category("SOFTWARE");
+            Category c = new Category("SOFTWARE", "software");
 
             c.put("NAME", getName(p));
             c.put("VERSION", getVersion(p));

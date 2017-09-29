@@ -89,7 +89,7 @@ public class Videos extends Categories {
     public Videos(Context xCtx) {
         super(xCtx);
         this.xCtx = xCtx;
-        Category c = new Category("VIDEOS");
+        Category c = new Category("VIDEOS", "videos");
         c.put("RESOLUTION" ,  getResolution());
         this.add(c);
     }

@@ -64,7 +64,7 @@ public class Sensors extends Categories {
 		List<Sensor> sensors = sensorManager.getSensorList(Sensor.TYPE_ALL);
 
 		for (Sensor s : sensors) {
-			Category c = new Category("SENSORS");
+			Category c = new Category("SENSORS", "sensors");
 
 			c.put("NAME", getName(s));
 			c.put("MANUFACTURER", getManufacturer(s));

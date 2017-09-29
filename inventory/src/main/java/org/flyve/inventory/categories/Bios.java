@@ -71,7 +71,7 @@ public class Bios extends Categories {
 	 */
 	public Bios(Context xCtx) {
 		super(xCtx);
-		Category c = new Category("BIOS");
+		Category c = new Category("BIOS", "bios");
 
 		// Bios Date
 		c.put("BDATE", getBiosDate());

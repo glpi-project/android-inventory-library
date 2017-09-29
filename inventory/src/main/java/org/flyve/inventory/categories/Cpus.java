@@ -67,7 +67,7 @@ public class Cpus extends Categories {
     public Cpus(Context xCtx) {
         super(xCtx);
 
-        Category c = new Category("CPUS");
+        Category c = new Category("CPUS", "cpus");
 
         // Cpu Name
         String cpuName = "";

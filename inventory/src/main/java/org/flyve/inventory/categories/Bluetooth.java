@@ -88,7 +88,7 @@ public class Bluetooth extends Categories {
         adapter = BluetoothAdapter.getDefaultAdapter();
 
         if(adapter != null) {
-            Category c = new Category("BLUETOOTH_ADAPTER");
+            Category c = new Category("BLUETOOTH_ADAPTER", "bluetoothAdapter");
 
             // The hardware address of the local Bluetooth adapter.
             c.put("HMAC", getHardwareAddress());

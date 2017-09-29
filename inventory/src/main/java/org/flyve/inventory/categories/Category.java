@@ -59,6 +59,7 @@ public class Category extends LinkedHashMap<String, String>{
      */
     private static final long serialVersionUID = 6443019125036309325L;
     private String mType;
+    private String mtagName;
 
     /**
      * Indicates whether some other object is "equal to" this one.
@@ -91,8 +92,9 @@ public class Category extends LinkedHashMap<String, String>{
      * This constructor load the Context of the instance and the name of the node in XML
      * @param xType name of the node
      */
-    public Category(String xType) {
+    public Category(String xType, String tagName) {
         mType = xType;
+        mtagName = tagName;
     }
 
     /**
@@ -101,6 +103,14 @@ public class Category extends LinkedHashMap<String, String>{
      */
     public String getType() {
         return mType;
+    }
+
+    /**
+     * Return the name that will appear on json node
+     * @return String with the category
+     */
+    public String getTagName() {
+        return mtagName;
     }
 
     /**
