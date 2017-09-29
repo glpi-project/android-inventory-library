@@ -227,6 +227,7 @@ table.coverage tfoot td.ctr2 {
   padding-top:2px;
   font-size:8pt;
   color:#a0a0a0;
+  display: none;
 }
 
 .footer a {
