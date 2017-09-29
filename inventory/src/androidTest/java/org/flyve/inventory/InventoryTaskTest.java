@@ -44,7 +44,7 @@ public class InventoryTaskTest {
 
     @Test
     public void getJSON() throws Exception {
-        InventoryTask task = new InventoryTask(appContext, "test");
+        InventoryTask task = new InventoryTask(appContext, "test", true);
         task.getJSON(new InventoryTask.OnTaskCompleted() {
             @Override
             public void onTaskSuccess(String data) {
@@ -61,7 +61,7 @@ public class InventoryTaskTest {
 
     @Test
     public void getXML() throws Exception {
-        InventoryTask task = new InventoryTask(appContext, "test");
+        InventoryTask task = new InventoryTask(appContext, "test", true);
         task.getXML(new InventoryTask.OnTaskCompleted() {
             @Override
             public void onTaskSuccess(String data) {
@@ -73,5 +73,21 @@ public class InventoryTaskTest {
                 assertTrue(true);
             }
         });
+    }
+
+    @Test
+    public void getJSONsync() throws Exception {
+        InventoryTask task = new InventoryTask(appContext, "test", true);
+        String data = task.getJSONSync();
+        Log.d("Success Library JSON: ", data);
+        assertNotEquals("", data);
+    }
+
+    @Test
+    public void getXMLsync() throws Exception {
+        InventoryTask task = new InventoryTask(appContext, "test", true);
+        String data = task.getXMLSyn();
+        Log.d("Success Library XML: ", data);
+        assertNotEquals("", data);
     }
 }

@@ -41,6 +41,9 @@ import org.flyve.inventory.categories.Categories;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
+
+import static org.flyve.inventory.Utils.createXML;
+
 /**
  * This class generate the XML file
  */
@@ -60,6 +63,9 @@ public class InventoryTask {
 
     private Context ctx = null;
     private String appVersion = "";
+    private String fileNameXML = "Inventory.xml";
+    private String fileNameJSON = "Inventory.json";
+    private Boolean storeResult = false;
 
     public Boolean isRunning() {
         return running;
@@ -72,6 +78,18 @@ public class InventoryTask {
      */
     public InventoryTask(Context context, String appVersion) {
         this.appVersion = appVersion;
+        ctx = context;
+    }
+
+    /**
+     * This constructor return a Success XML or Error on asynchronous way
+     * @param context The context to be use
+     * @param appVersion The name of the agent
+     * @param storeResult Indicate is the result will be stored on file
+     */
+    public InventoryTask(Context context, String appVersion, Boolean storeResult) {
+        this.appVersion = appVersion;
+        this.storeResult = storeResult;
         ctx = context;
     }
 
@@ -132,7 +150,6 @@ public class InventoryTask {
                 }
             }
         }
-
         return mContent;
     }
 
@@ -149,7 +166,11 @@ public class InventoryTask {
 
                 try {
                     ArrayList<Categories> mContent = loadCategoriesClass();
-                    final String xml = Utils.createXML(mContent, InventoryTask.this.appVersion);
+                    final String xml = createXML(mContent, InventoryTask.this.appVersion);
+
+                    if(storeResult) {
+                        Utils.storeFile(xml, fileNameXML);
+                    }
 
                     InventoryTask.runOnUI(new Runnable() {
                         public void run() {
@@ -186,6 +207,11 @@ public class InventoryTask {
                 try {
                     ArrayList<Categories> mContent = loadCategoriesClass();
                     final String json = Utils.createJSON(mContent, InventoryTask.this.appVersion);
+
+                    if(storeResult) {
+                        Utils.storeFile(json, fileNameJSON);
+                    }
+
                     InventoryTask.runOnUI(new Runnable() {
                         public void run() {
                             running = false;
@@ -194,8 +220,6 @@ public class InventoryTask {
                     });
 
                 } catch (final Exception ex) {
-
-
                     InventoryTask.runOnUI(new Runnable() {
                         public void run() {
                             running = false;
@@ -214,7 +238,14 @@ public class InventoryTask {
     public String getJSONSync() {
         try {
             ArrayList<Categories> mContent = loadCategoriesClass();
-            return Utils.createJSON(mContent, InventoryTask.this.appVersion);
+            String json = Utils.createJSON(mContent, InventoryTask.this.appVersion);
+
+            if(storeResult) {
+                Utils.storeFile(json, fileNameJSON);
+            }
+
+            return json;
+
         } catch (final Exception ex) {
             Log.e("Library Exception", ex.getLocalizedMessage());
             return null;
@@ -227,7 +258,14 @@ public class InventoryTask {
     public String getXMLSyn() {
         try {
             ArrayList<Categories> mContent = loadCategoriesClass();
-            return Utils.createXML(mContent, InventoryTask.this.appVersion);
+            String xml = Utils.createXML(mContent, InventoryTask.this.appVersion);
+
+            if(storeResult) {
+                Utils.storeFile(xml, fileNameXML);
+            }
+
+            return xml;
+
         } catch (final Exception ex) {
             Log.e("Library Exception", ex.getLocalizedMessage());
             return null;
