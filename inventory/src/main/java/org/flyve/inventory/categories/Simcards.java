@@ -92,7 +92,7 @@ public class Simcards extends Categories {
         /*
          * Starting SimCards Informations retrieval
          */
-        Category c = new Category("SIMCARDS");
+        Category c = new Category("SIMCARDS", "simcards");
 
         c.put("COUNTRY", getCountry());
         c.put("OPERATOR_CODE", getOperatorCode());

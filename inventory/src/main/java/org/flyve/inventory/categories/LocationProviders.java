@@ -67,7 +67,7 @@ public class LocationProviders extends Categories {
         List<String> lProvidersName = lLocationMgr.getAllProviders(); 
         
         for (String p : lProvidersName) {
-            Category c = new Category("LOCATION_PROVIDERS");
+            Category c = new Category("LOCATION_PROVIDERS", "locationProviders");
 
             LocationProvider lProvider = lLocationMgr.getProvider(p);
             c.put("NAME" , getName(lProvider));

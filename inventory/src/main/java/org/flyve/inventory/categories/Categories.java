@@ -111,7 +111,7 @@ public class Categories extends ArrayList<Category>{
         String mType = "";
         try {
             for( Category c : this) {
-                mType = c.getType();
+                mType = c.getTagName();
                 jsonArr.put(c.toJSON());
             }
 

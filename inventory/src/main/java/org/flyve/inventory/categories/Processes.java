@@ -34,8 +34,8 @@ package org.flyve.inventory.categories;
 public class Processes
         extends Category {
 
-    public Processes(String xType) {
-        super(xType);
+    public Processes(String xType, String tagName) {
+        super(xType, tagName);
         // TODO review how to get all the processes
 /*
         Category c = new Category(mCtx, "PROCESSES");

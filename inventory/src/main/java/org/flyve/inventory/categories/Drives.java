@@ -79,7 +79,7 @@ public class Drives extends Categories {
      */
     private void addStorage(File f) {
 
-    	Category c = new Category("DRIVES");
+    	Category c = new Category("DRIVES", "drives");
 
         c.put("VOLUMN", getVolumn(f));
         c.put("TOTAL", getTotal(f));

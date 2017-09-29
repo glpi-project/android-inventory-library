@@ -66,7 +66,7 @@ public class Cameras
         int count = Camera.getNumberOfCameras();
         if (count > 0) {
             for (int i = 0; i < count; i++) {
-                Category c = new Category("CAMERAS");
+                Category c = new Category("CAMERAS", "cameras");
                 c.put("RESOLUTIONS", getResolutions(i));
                 this.add(c);
             }

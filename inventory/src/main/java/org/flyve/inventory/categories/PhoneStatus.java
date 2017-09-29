@@ -66,7 +66,7 @@ public class PhoneStatus extends Categories {
         // The problem here is with a the PhoneStateListener and the
         // AsyncTask we got a Thread inside other Thread
 
-        final Category c = new Category("PHONE_STATUS");
+        final Category c = new Category("PHONE_STATUS", "phoneStatus");
 
         TelephonyManager telMng = (TelephonyManager)xCtx.getSystemService(Context.TELEPHONY_SERVICE);
 

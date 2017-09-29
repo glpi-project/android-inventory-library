@@ -107,7 +107,7 @@ public class Hardware extends Categories {
         props = System.getProperties();
         Memory memory = new Memory(xCtx);
 
-        Category c = new Category("HARDWARE");
+        Category c = new Category("HARDWARE", "hardware");
 
         c.put("DATELASTLOGGEDUSER", getDatelastloggeduser() );
         c.put("LASTLOGGEDUSER", getLastloggeduser());

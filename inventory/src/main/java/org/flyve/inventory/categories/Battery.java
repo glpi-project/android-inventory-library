@@ -164,7 +164,7 @@ public class Battery extends Categories {
 
 				if(!level.equals("0%")) {
 					// Load the information
-					Category c = new Category("BATTERIES");
+					Category c = new Category("BATTERIES", "batteries");
 					c.put("CHEMISTRY", technology);
 					c.put("TEMPERATURE", temperature);
 					c.put("VOLTAGE", voltage);

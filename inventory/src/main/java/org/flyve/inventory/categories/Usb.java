@@ -71,7 +71,7 @@ public class Usb extends Categories {
 			for (Map.Entry<String, UsbDevice> entry : devices.entrySet()) {
 
 				UsbDevice mydevice = devices.get(entry.getKey());
-				Category c = new Category("USBDEVICES");
+				Category c = new Category("USBDEVICES", "usbDevices");
 
 				c.put("CLASS", getClass(mydevice));
 				c.put("PRODUCTID", getProductid(mydevice));
