@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
 <a name="0.1.0"></a>
-# 0.1.0 (2017-09-23)
+# 0.1.0 (2017-10-02)
 
 
 ### Bug Fixes
@@ -19,4 +19,8 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Features
 
-* **example:** add Flyve Inventory Example ([c0e865b](https://github.com/flyve-mdm/flyve-mdm-android-inventory/commit/c0e865b))
+* **inventory:** store json and xml result on a file ([0d2c6f7](https://github.com/flyve-mdm/flyve-mdm-android-inventory/commit/0d2c6f7))
+* **json:** add method to get json string synchronously ([6769000](https://github.com/flyve-mdm/flyve-mdm-android-inventory/commit/6769000))
+* **json:** refactor to lower case the json keys ([b419cd1](https://github.com/flyve-mdm/flyve-mdm-android-inventory/commit/b419cd1))
+* **tagName:** add tag name to create a better json ([0ca6399](https://github.com/flyve-mdm/flyve-mdm-android-inventory/commit/0ca6399))
+* **xml:** add method to get xml string synchronously ([50212d4](https://github.com/flyve-mdm/flyve-mdm-android-inventory/commit/50212d4))
