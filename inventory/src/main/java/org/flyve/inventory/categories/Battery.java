@@ -165,12 +165,12 @@ public class Battery extends Categories {
 				if(!level.equals("0%")) {
 					// Load the information
 					Category c = new Category("BATTERIES", "batteries");
-					c.put("CHEMISTRY", technology);
-					c.put("TEMPERATURE", temperature);
-					c.put("VOLTAGE", voltage);
-					c.put("LEVEL", level);
-					c.put("HEALTH", health);
-					c.put("STATUS", status);
+					c.put("CHEMISTRY", new CategoryValue(technology, "CHEMISTRY","chemistry"));
+					c.put("TEMPERATURE", new CategoryValue(temperature, "TEMPERATURE","temperature"));
+					c.put("VOLTAGE", new CategoryValue(voltage, "VOLTAGE","voltage"));
+					c.put("LEVEL", new CategoryValue(level, "LEVEL","level"));
+					c.put("HEALTH", new CategoryValue(health, "HEALTH","health"));
+					c.put("STATUS", new CategoryValue(status, "STATUS","status"));
 					Battery.this.add(c);
 				}
 
