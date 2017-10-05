@@ -91,10 +91,10 @@ public class Bluetooth extends Categories {
             Category c = new Category("BLUETOOTH_ADAPTER", "bluetoothAdapter");
 
             // The hardware address of the local Bluetooth adapter.
-            c.put("HMAC", getHardwareAddress());
+            c.put("HMAC", new CategoryValue(getHardwareAddress(),"HMAC","hardwareAddress"));
 
             // This name is visible to remote Bluetooth devices.
-            c.put("NAME", getName());
+            c.put("NAME", new CategoryValue(getName(),"NAME","name"));
             this.add(c);
         }
     }
