@@ -37,6 +37,18 @@ public class CategoryValue {
     }
 
     public CategoryValue(String value, String xmlName, String jsonName) {
+        if(value==null) {
+            value = "";
+        }
+
+        if(xmlName==null) {
+            xmlName = "";
+        }
+
+        if(jsonName==null) {
+            jsonName = "";
+        }
+
         this.value = value;
         this.jsonName = jsonName;
         this.xmlName = xmlName;
