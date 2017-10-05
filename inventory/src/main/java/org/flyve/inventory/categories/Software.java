@@ -101,10 +101,10 @@ public class Software extends Categories {
 
             Category c = new Category("SOFTWARE", "software");
 
-            c.put("NAME", getName(p));
-            c.put("VERSION", getVersion(p));
-            c.put("FILESIZE", getFilesize(p));
-            c.put("FROM", FROM);
+            c.put("NAME", new CategoryValue(getName(p), "NAME", "name"));
+            c.put("VERSION", new CategoryValue(getVersion(p), "NAME", "name"));
+            c.put("FILESIZE", new CategoryValue(getFilesize(p), "FILESIZE", "fileSize"));
+            c.put("FROM", new CategoryValue(FROM, "FROM", "from"));
 
             this.add(c);
         }
