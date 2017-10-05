@@ -69,7 +69,7 @@ public class PhoneStatus extends Categories {
         // The problem here is with a the PhoneStateListener and the
         // AsyncTask we got a Thread inside other Thread
 
-<span class="nc" id="L69">        final Category c = new Category(&quot;PHONE_STATUS&quot;);</span>
+<span class="nc" id="L69">        final Category c = new Category(&quot;PHONE_STATUS&quot;, &quot;phoneStatus&quot;);</span>
 
 <span class="nc" id="L71">        TelephonyManager telMng = (TelephonyManager)xCtx.getSystemService(Context.TELEPHONY_SERVICE);</span>
 
@@ -98,11 +98,11 @@ public class PhoneStatus extends Categories {
                             break;
                     }
 
-<span class="nc" id="L98">                    c.put(&quot;STATE&quot;, phoneState);</span>
-<span class="nc" id="L99">                    c.put(&quot;OPERATOR_ALPHA&quot;, serviceState.getOperatorAlphaLong());</span>
-<span class="nc" id="L100">                    c.put(&quot;OPERATOR_NUMERIC&quot;, serviceState.getOperatorNumeric());</span>
-<span class="nc" id="L101">                    c.put(&quot;ROAMING&quot;, Boolean.valueOf(serviceState.getRoaming()).toString());</span>
-<span class="nc bnc" id="L102" title="All 2 branches missed.">                    c.put(&quot;NETWORK_SELECTION&quot;, serviceState.getIsManualSelection() ? &quot;MANUAL&quot; : &quot;AUTO&quot;);</span>
+<span class="nc" id="L98">                    c.put(&quot;STATE&quot;, new CategoryValue(phoneState, &quot;STATE&quot;, &quot;state&quot;));</span>
+<span class="nc" id="L99">                    c.put(&quot;OPERATOR_ALPHA&quot;, new CategoryValue(serviceState.getOperatorAlphaLong(), &quot;OPERATOR_ALPHA&quot;, &quot;operatorAlpha&quot;));</span>
+<span class="nc" id="L100">                    c.put(&quot;OPERATOR_NUMERIC&quot;, new CategoryValue(serviceState.getOperatorNumeric(), &quot;OPERATOR_NUMERIC&quot;, &quot;operatorNumeric&quot;));</span>
+<span class="nc" id="L101">                    c.put(&quot;ROAMING&quot;, new CategoryValue(Boolean.valueOf(serviceState.getRoaming()).toString(), &quot;ROAMING&quot;, &quot;roaming&quot;));</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">                    c.put(&quot;NETWORK_SELECTION&quot;, new CategoryValue(serviceState.getIsManualSelection() ? &quot;NETWORK_SELECTION&quot; : &quot;AUTO&quot;, &quot;NETWORK_SELECTION&quot;, &quot;networkSelection&quot;));</span>
 
 <span class="nc" id="L104">                    PhoneStatus.this.add(c);</span>
 <span class="nc" id="L105">                }</span>

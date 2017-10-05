@@ -74,25 +74,25 @@ public class Bios extends Categories {
 	 */
 	public Bios(Context xCtx) {
 <span class="fc" id="L73">		super(xCtx);</span>
-<span class="fc" id="L74">		Category c = new Category(&quot;BIOS&quot;);</span>
+<span class="fc" id="L74">		Category c = new Category(&quot;BIOS&quot;, &quot;bios&quot;);</span>
 
 		// Bios Date
-<span class="fc" id="L77">		c.put(&quot;BDATE&quot;, getBiosDate());</span>
+<span class="fc" id="L77">		c.put(&quot;BDATE&quot;, new CategoryValue(getBiosDate(), &quot;BDATE&quot;, &quot;biosReleaseDate&quot;));</span>
 
 		// Bios Manufacturer
-<span class="fc" id="L80">		c.put(&quot;BMANUFACTURER&quot;, getBiosManufacturer());</span>
+<span class="fc" id="L80">		c.put(&quot;BMANUFACTURER&quot;, new CategoryValue(getBiosManufacturer(), &quot;BMANUFACTURER&quot;, &quot;biosManufacturer&quot;));</span>
 
 		// Bios version
-<span class="fc" id="L83">		c.put(&quot;BVERSION&quot;, getBiosVersion());</span>
+<span class="fc" id="L83">		c.put(&quot;BVERSION&quot;, new CategoryValue(getBiosVersion(), &quot;BVERSION&quot;, &quot;biosVersion&quot;));</span>
 
 		// Mother Board Manufacturer
-<span class="fc" id="L86">		c.put(&quot;MMANUFACTURER&quot;, getMotherBoardManufacturer());</span>
+<span class="fc" id="L86">		c.put(&quot;MMANUFACTURER&quot;, new CategoryValue(getMotherBoardManufacturer(), &quot;MMANUFACTURER&quot;, &quot;motherBoardManufacturer&quot;));</span>
 
 		// Mother Board Model
-<span class="fc" id="L89">		c.put(&quot;SMODEL&quot;, getMotherBoardModel());</span>
+<span class="fc" id="L89">		c.put(&quot;SMODEL&quot;, new CategoryValue(getMotherBoardModel(), &quot;SMODEL&quot;, &quot;motherBoardModel&quot;));</span>
 
 		// Mother Board Serial Number
-<span class="fc" id="L92">		c.put(&quot;SSN&quot;, getMotherBoardSerialNumber());</span>
+<span class="fc" id="L92">		c.put(&quot;SSN&quot;, new CategoryValue(getMotherBoardSerialNumber(), &quot;SSN&quot;, &quot;motherBoardSerialNumber&quot;));</span>
 
 <span class="fc" id="L94">		this.add(c);</span>
 <span class="fc" id="L95">	}</span>

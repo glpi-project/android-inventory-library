@@ -92,8 +92,8 @@ public class Videos extends Categories {
     public Videos(Context xCtx) {
 <span class="fc" id="L90">        super(xCtx);</span>
 <span class="fc" id="L91">        this.xCtx = xCtx;</span>
-<span class="fc" id="L92">        Category c = new Category(&quot;VIDEOS&quot;);</span>
-<span class="fc" id="L93">        c.put(&quot;RESOLUTION&quot; ,  getResolution());</span>
+<span class="fc" id="L92">        Category c = new Category(&quot;VIDEOS&quot;, &quot;videos&quot;);</span>
+<span class="fc" id="L93">        c.put(&quot;RESOLUTION&quot; , new CategoryValue(getResolution(), &quot;RESOLUTION&quot;, &quot;resolution&quot;));</span>
 <span class="fc" id="L94">        this.add(c);</span>
 <span class="fc" id="L95">    }</span>
 

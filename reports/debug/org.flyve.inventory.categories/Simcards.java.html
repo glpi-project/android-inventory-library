@@ -95,15 +95,15 @@ public class Simcards extends Categories {
         /*
          * Starting SimCards Informations retrieval
          */
-<span class="fc" id="L95">        Category c = new Category(&quot;SIMCARDS&quot;);</span>
+<span class="fc" id="L95">        Category c = new Category(&quot;SIMCARDS&quot;, &quot;simcards&quot;);</span>
 
-<span class="fc" id="L97">        c.put(&quot;COUNTRY&quot;, getCountry());</span>
-<span class="fc" id="L98">        c.put(&quot;OPERATOR_CODE&quot;, getOperatorCode());</span>
-<span class="fc" id="L99">        c.put(&quot;OPERATOR_NAME&quot;, getOperatorName());</span>
-<span class="fc" id="L100">        c.put(&quot;SERIAL&quot;, getSerial());</span>
-<span class="fc" id="L101">        c.put(&quot;STATE&quot;, getState());</span>
-<span class="fc" id="L102">        c.put(&quot;LINE_NUMBER&quot;, getLineNumber());</span>
-<span class="fc" id="L103">        c.put(&quot;SUBSCRIBER_ID&quot;, getSubscriberId());</span>
+<span class="fc" id="L97">        c.put(&quot;COUNTRY&quot;, new CategoryValue(getCountry(), &quot;COUNTRY&quot;, &quot;country&quot;));</span>
+<span class="fc" id="L98">        c.put(&quot;OPERATOR_CODE&quot;, new CategoryValue(getOperatorCode(), &quot;OPERATOR_CODE&quot;, &quot;operatorCode&quot;));</span>
+<span class="fc" id="L99">        c.put(&quot;OPERATOR_NAME&quot;, new CategoryValue(getOperatorName(), &quot;OPERATOR_NAME&quot;, &quot;operatorName&quot;));</span>
+<span class="fc" id="L100">        c.put(&quot;SERIAL&quot;, new CategoryValue(getSerial(), &quot;SERIAL&quot;, &quot;serial&quot;));</span>
+<span class="fc" id="L101">        c.put(&quot;STATE&quot;, new CategoryValue(getState(), &quot;STATE&quot;, &quot;state&quot;));</span>
+<span class="fc" id="L102">        c.put(&quot;LINE_NUMBER&quot;, new CategoryValue(getLineNumber(), &quot;LINE_NUMBER&quot;, &quot;lineNumber&quot;));</span>
+<span class="fc" id="L103">        c.put(&quot;SUBSCRIBER_ID&quot;, new CategoryValue(getSubscriberId(), &quot;SUBSCRIBER_ID&quot;, &quot;subscriberId&quot;));</span>
         
 <span class="fc" id="L105">        this.add(c);</span>
 <span class="fc" id="L106">    }</span>

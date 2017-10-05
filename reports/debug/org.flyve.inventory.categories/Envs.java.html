@@ -66,9 +66,9 @@ public class Envs extends Categories {
         //get all envs vars
 <span class="fc" id="L64">        Map&lt;String,String&gt; envs = System.getenv();</span>
 <span class="fc bfc" id="L65" title="All 2 branches covered.">        for( Map.Entry&lt;String,String&gt; entry : envs.entrySet()) {</span>
-<span class="fc" id="L66">           Category c = new Category(&quot;ENVS&quot;);</span>
-<span class="fc" id="L67">           c.put(&quot;KEY&quot;, entry.getKey());</span>
-<span class="fc" id="L68">           c.put(&quot;VAL&quot;, envs.get(entry.getKey()));</span>
+<span class="fc" id="L66">           Category c = new Category(&quot;ENVS&quot;, &quot;envs&quot;);</span>
+<span class="fc" id="L67">           c.put(&quot;KEY&quot;, new CategoryValue(entry.getKey(),&quot;KEY&quot;,&quot;key&quot;));</span>
+<span class="fc" id="L68">           c.put(&quot;VAL&quot;, new CategoryValue(envs.get(entry.getKey()),&quot;VAL&quot;,&quot;Value&quot;));</span>
 <span class="fc" id="L69">           this.add(c);</span>
 <span class="fc" id="L70">        }</span>
 <span class="fc" id="L71">    }</span>

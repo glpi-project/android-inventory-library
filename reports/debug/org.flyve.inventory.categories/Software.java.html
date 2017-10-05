@@ -102,12 +102,12 @@ public class Software extends Categories {
 
 <span class="fc bfc" id="L100" title="All 2 branches covered.">        for (ApplicationInfo p : packages) {</span>
 
-<span class="fc" id="L102">            Category c = new Category(&quot;SOFTWARE&quot;);</span>
+<span class="fc" id="L102">            Category c = new Category(&quot;SOFTWARE&quot;, &quot;software&quot;);</span>
 
-<span class="fc" id="L104">            c.put(&quot;NAME&quot;, getName(p));</span>
-<span class="fc" id="L105">            c.put(&quot;VERSION&quot;, getVersion(p));</span>
-<span class="fc" id="L106">            c.put(&quot;FILESIZE&quot;, getFilesize(p));</span>
-<span class="fc" id="L107">            c.put(&quot;FROM&quot;, FROM);</span>
+<span class="fc" id="L104">            c.put(&quot;NAME&quot;, new CategoryValue(getName(p), &quot;NAME&quot;, &quot;name&quot;));</span>
+<span class="fc" id="L105">            c.put(&quot;VERSION&quot;, new CategoryValue(getVersion(p), &quot;NAME&quot;, &quot;name&quot;));</span>
+<span class="fc" id="L106">            c.put(&quot;FILESIZE&quot;, new CategoryValue(getFilesize(p), &quot;FILESIZE&quot;, &quot;fileSize&quot;));</span>
+<span class="fc" id="L107">            c.put(&quot;FROM&quot;, new CategoryValue(FROM, &quot;FROM&quot;, &quot;from&quot;));</span>
 
 <span class="fc" id="L109">            this.add(c);</span>
 <span class="fc" id="L110">        }</span>

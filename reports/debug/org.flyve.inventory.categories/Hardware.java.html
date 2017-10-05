@@ -110,15 +110,15 @@ public class Hardware extends Categories {
 <span class="fc" id="L107">        props = System.getProperties();</span>
 <span class="fc" id="L108">        Memory memory = new Memory(xCtx);</span>
 
-<span class="fc" id="L110">        Category c = new Category(&quot;HARDWARE&quot;);</span>
+<span class="fc" id="L110">        Category c = new Category(&quot;HARDWARE&quot;, &quot;hardware&quot;);</span>
 
-<span class="fc" id="L112">        c.put(&quot;DATELASTLOGGEDUSER&quot;, getDatelastloggeduser() );</span>
-<span class="fc" id="L113">        c.put(&quot;LASTLOGGEDUSER&quot;, getLastloggeduser());</span>
-<span class="fc" id="L114">        c.put(&quot;NAME&quot;, getName());</span>
-<span class="fc" id="L115">        c.put(&quot;OSNAME&quot;, OSNAME);</span>
-<span class="fc" id="L116">        c.put(&quot;OSVERSION&quot;, getOsversion());</span>
-<span class="fc" id="L117">        c.put(&quot;ARCHNAME&quot;, getArchname());</span>
-<span class="fc" id="L118">        c.put(&quot;UUID&quot;, getUUID());</span>
+<span class="fc" id="L112">        c.put(&quot;DATELASTLOGGEDUSER&quot;, new CategoryValue(getDatelastloggeduser(), &quot;DATELASTLOGGEDUSER&quot;, &quot;dateLastLoggedUser&quot;) );</span>
+<span class="fc" id="L113">        c.put(&quot;LASTLOGGEDUSER&quot;, new CategoryValue(getDatelastloggeduser(), &quot;LASTLOGGEDUSER&quot;, &quot;dateLastLoggedUser&quot;));</span>
+<span class="fc" id="L114">        c.put(&quot;NAME&quot;, new CategoryValue(getName(), &quot;NAME&quot;, &quot;name&quot;));</span>
+<span class="fc" id="L115">        c.put(&quot;OSNAME&quot;, new CategoryValue(OSNAME, &quot;OSNAME&quot;, &quot;osName&quot;));</span>
+<span class="fc" id="L116">        c.put(&quot;OSVERSION&quot;, new CategoryValue(getOsversion(), &quot;OSVERSION&quot;, &quot;osVersion&quot;));</span>
+<span class="fc" id="L117">        c.put(&quot;ARCHNAME&quot;, new CategoryValue(getArchname(), &quot;ARCHNAME&quot;, &quot;archName&quot;));</span>
+<span class="fc" id="L118">        c.put(&quot;UUID&quot;, new CategoryValue(getUUID(), &quot;UUID&quot;, &quot;uuid&quot;));</span>
 
 <span class="fc" id="L120">        String vMemory = &quot;&quot;;</span>
         try {
@@ -126,7 +126,7 @@ public class Hardware extends Categories {
 <span class="nc" id="L123">        } catch (Exception ex) {</span>
 <span class="nc" id="L124">            FILog.e(ex.getMessage());</span>
 <span class="fc" id="L125">        }</span>
-<span class="fc" id="L126">        c.put(&quot;MEMORY&quot;, vMemory);</span>
+<span class="fc" id="L126">        c.put(&quot;MEMORY&quot;, new CategoryValue(vMemory, &quot;MEMORY&quot;, &quot;memory&quot;));</span>
 
 <span class="fc" id="L128">        this.add(c);</span>
 

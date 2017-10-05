@@ -91,10 +91,10 @@ public class Inputs extends Categories {
 
 <span class="fc" id="L89">		config = xCtx.getResources().getConfiguration();</span>
 
-<span class="fc" id="L91">		Category c = new Category(&quot;INPUTS&quot;);</span>
+<span class="fc" id="L91">		Category c = new Category(&quot;INPUTS&quot;, &quot;inputs&quot;);</span>
 
-<span class="fc" id="L93">		c.put(&quot;KEYBOARD&quot;, getKeyboard());</span>
-<span class="fc" id="L94">		c.put(&quot;TOUCHSCREEN&quot;, getTouchscreen());</span>
+<span class="fc" id="L93">		c.put(&quot;KEYBOARD&quot;, new CategoryValue(getKeyboard(), &quot;KEYBOARD&quot;, &quot;keyboard&quot;));</span>
+<span class="fc" id="L94">		c.put(&quot;TOUCHSCREEN&quot;, new CategoryValue(getTouchscreen(), &quot;TOUCHSCREEN&quot;, &quot;touchScreen&quot;));</span>
 
 <span class="fc" id="L96">		this.add(c);</span>
 <span class="fc" id="L97">	}</span>

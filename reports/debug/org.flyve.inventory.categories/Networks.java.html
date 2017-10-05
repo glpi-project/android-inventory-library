@@ -105,8 +105,8 @@ public class Networks extends Categories {
 <span class="pc bpc" id="L102" title="1 of 2 branches missed.">		if (!wasWifiEnabled) {</span>
 <span class="fc" id="L103">			pWM.setWifiEnabled(true);</span>
 		}
-<span class="fc" id="L105">		Category c = new Category(&quot;NETWORKS&quot;);</span>
-<span class="fc" id="L106">		c.put(&quot;TYPE&quot;, TYPE);</span>
+<span class="fc" id="L105">		Category c = new Category(&quot;NETWORKS&quot;, &quot;networks&quot;);</span>
+<span class="fc" id="L106">		c.put(&quot;TYPE&quot;, new CategoryValue(TYPE, &quot;TYPE&quot;, &quot;type&quot;));</span>
 
 <span class="fc" id="L108">		dhcp = pWM.getDhcpInfo();</span>
 <span class="fc" id="L109">		wifi = pWM.getConnectionInfo();</span>
@@ -116,14 +116,14 @@ public class Networks extends Categories {
 <span class="fc" id="L113">		FILog.d(&quot;dns2=&quot; + StringUtils.intToIp(dhcp.dns2));</span>
 <span class="fc" id="L114">		FILog.d(&quot;leaseDuration=&quot; + dhcp.leaseDuration);</span>
 
-<span class="fc" id="L116">		c.put(&quot;MACADDR&quot;, getMacaddr());</span>
-<span class="fc" id="L117">		c.put(&quot;SPEED&quot;, getSpeed());</span>
-<span class="fc" id="L118">		c.put(&quot;BSSID&quot;, getBSSID());</span>
-<span class="fc" id="L119">		c.put(&quot;SSID&quot;, getSSID());</span>
-<span class="fc" id="L120">		c.put(&quot;IPGATEWAY&quot;, getIpgateway());</span>
-<span class="fc" id="L121">		c.put(&quot;IPADDRESS&quot;, getIpaddress());</span>
-<span class="fc" id="L122">		c.put(&quot;IPMASK&quot;, getIpmask());</span>
-<span class="fc" id="L123">		c.put(&quot;IPDHCP&quot;, getIpdhcp());</span>
+<span class="fc" id="L116">		c.put(&quot;MACADDR&quot;, new CategoryValue(getMacaddr(), &quot;MACADDR&quot;, &quot;macAddress&quot;));</span>
+<span class="fc" id="L117">		c.put(&quot;SPEED&quot;, new CategoryValue(getSpeed(), &quot;SPEED&quot;, &quot;speed&quot;));</span>
+<span class="fc" id="L118">		c.put(&quot;BSSID&quot;, new CategoryValue(getBSSID(), &quot;BSSID&quot;, &quot;bssid&quot;));</span>
+<span class="fc" id="L119">		c.put(&quot;SSID&quot;, new CategoryValue(getSSID(), &quot;SSID&quot;, &quot;ssid&quot;));</span>
+<span class="fc" id="L120">		c.put(&quot;IPGATEWAY&quot;, new CategoryValue(getIpgateway(), &quot;IPGATEWAY&quot;, &quot;ipGateway&quot;));</span>
+<span class="fc" id="L121">		c.put(&quot;IPADDRESS&quot;, new CategoryValue(getIpaddress(), &quot;IPADDRESS&quot;, &quot;ipAddress&quot;));</span>
+<span class="fc" id="L122">		c.put(&quot;IPMASK&quot;, new CategoryValue(getIpmask(), &quot;IPMASK&quot;, &quot;ipMask&quot;));</span>
+<span class="fc" id="L123">		c.put(&quot;IPDHCP&quot;, new CategoryValue(getIpdhcp(), &quot;IPDHCP&quot;, &quot;ipDhcp&quot;));</span>
 
 <span class="fc" id="L125">		this.add(c);</span>
 		// Restore Wifi State

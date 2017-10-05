@@ -62,16 +62,16 @@ public class Jvm extends Categories {
 	public Jvm(Context xCtx) {
 <span class="fc" id="L60">        super(xCtx);</span>
 
-<span class="fc" id="L62">        Category c = new Category(&quot;JVMS&quot;);</span>
+<span class="fc" id="L62">        Category c = new Category(&quot;JVMS&quot;, &quot;jvms&quot;);</span>
 <span class="fc" id="L63">        Properties props = System.getProperties();</span>
 
-<span class="fc" id="L65">            c.put(&quot;NAME&quot;, getName(props));</span>
-<span class="fc" id="L66">            c.put(&quot;LANGUAGE&quot;, getLanguage(props));</span>
-<span class="fc" id="L67">            c.put(&quot;VENDOR&quot;, getVendor(props));</span>
-<span class="fc" id="L68">            c.put(&quot;RUNTIME&quot;, getRuntime(props));</span>
-<span class="fc" id="L69">            c.put(&quot;HOME&quot;, getHome(props));</span>
-<span class="fc" id="L70">            c.put(&quot;VERSION&quot;, getVersion(props));</span>
-<span class="fc" id="L71">            c.put(&quot;CLASSPATH&quot;, getmClasspath(props));</span>
+<span class="fc" id="L65">            c.put(&quot;NAME&quot;, new CategoryValue(getName(props), &quot;NAME&quot;, &quot;name&quot;));</span>
+<span class="fc" id="L66">            c.put(&quot;LANGUAGE&quot;, new CategoryValue(getLanguage(props), &quot;LANGUAGE&quot;, &quot;language&quot;));</span>
+<span class="fc" id="L67">            c.put(&quot;VENDOR&quot;, new CategoryValue(getVendor(props), &quot;VENDOR&quot;, &quot;vendor&quot;));</span>
+<span class="fc" id="L68">            c.put(&quot;RUNTIME&quot;, new CategoryValue(getRuntime(props), &quot;RUNTIME&quot;, &quot;runtime&quot;));</span>
+<span class="fc" id="L69">            c.put(&quot;HOME&quot;, new CategoryValue(getHome(props), &quot;HOME&quot;, &quot;home&quot;));</span>
+<span class="fc" id="L70">            c.put(&quot;VERSION&quot;, new CategoryValue(getVersion(props), &quot;VERSION&quot;, &quot;version&quot;));</span>
+<span class="fc" id="L71">            c.put(&quot;CLASSPATH&quot;, new CategoryValue(getmClasspath(props), &quot;CLASSPATH&quot;, &quot;classPath&quot;));</span>
 
 <span class="fc" id="L73">        this.add(c);</span>
 <span class="fc" id="L74">    }</span>

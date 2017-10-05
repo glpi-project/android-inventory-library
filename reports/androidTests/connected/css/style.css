@@ -21,8 +21,6 @@
     padding-top: 15px;
     padding-bottom: 15px;
     text-align: center;
-    border: 1px solid;
-    margin: 5px; 
 }
 
 .infoBox p {
@@ -40,6 +38,10 @@
 }
 
 #successRate, .summaryGroup {
+    border: solid 2px #d0d0d0;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    behavior: url(css3-pie-1.0beta3.htc);
 }
 
 #successRate {

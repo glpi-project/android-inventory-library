@@ -74,12 +74,12 @@ public class Usb extends Categories {
 <span class="pc bpc" id="L71" title="1 of 2 branches missed.">			for (Map.Entry&lt;String, UsbDevice&gt; entry : devices.entrySet()) {</span>
 
 <span class="nc" id="L73">				UsbDevice mydevice = devices.get(entry.getKey());</span>
-<span class="nc" id="L74">				Category c = new Category(&quot;USBDEVICES&quot;);</span>
+<span class="nc" id="L74">				Category c = new Category(&quot;USBDEVICES&quot;, &quot;usbDevices&quot;);</span>
 
-<span class="nc" id="L76">				c.put(&quot;CLASS&quot;, getClass(mydevice));</span>
-<span class="nc" id="L77">				c.put(&quot;PRODUCTID&quot;, getProductid(mydevice));</span>
-<span class="nc" id="L78">				c.put(&quot;VENDORID&quot;, getVendorid(mydevice));</span>
-<span class="nc" id="L79">				c.put(&quot;SUBCLASS&quot;, getSubclass(mydevice));</span>
+<span class="nc" id="L76">				c.put(&quot;CLASS&quot;, new CategoryValue(getClass(mydevice), &quot;CLASS&quot;, &quot;class&quot;));</span>
+<span class="nc" id="L77">				c.put(&quot;PRODUCTID&quot;, new CategoryValue(getProductid(mydevice), &quot;PRODUCTID&quot;, &quot;productId&quot;));</span>
+<span class="nc" id="L78">				c.put(&quot;VENDORID&quot;, new CategoryValue(getVendorid(mydevice), &quot;VENDORID&quot;, &quot;vendorId&quot;));</span>
+<span class="nc" id="L79">				c.put(&quot;SUBCLASS&quot;, new CategoryValue(getSubclass(mydevice), &quot;SUBCLASS&quot;, &quot;subClass&quot;));</span>
 
 <span class="nc" id="L81">				this.add(c);</span>
 <span class="nc" id="L82">			}</span>

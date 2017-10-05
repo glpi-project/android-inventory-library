@@ -91,13 +91,13 @@ public class Bluetooth extends Categories {
 <span class="nc" id="L88">        adapter = BluetoothAdapter.getDefaultAdapter();</span>
 
 <span class="nc bnc" id="L90" title="All 2 branches missed.">        if(adapter != null) {</span>
-<span class="nc" id="L91">            Category c = new Category(&quot;BLUETOOTH_ADAPTER&quot;);</span>
+<span class="nc" id="L91">            Category c = new Category(&quot;BLUETOOTH_ADAPTER&quot;, &quot;bluetoothAdapter&quot;);</span>
 
             // The hardware address of the local Bluetooth adapter.
-<span class="nc" id="L94">            c.put(&quot;HMAC&quot;, getHardwareAddress());</span>
+<span class="nc" id="L94">            c.put(&quot;HMAC&quot;, new CategoryValue(getHardwareAddress(),&quot;HMAC&quot;,&quot;hardwareAddress&quot;));</span>
 
             // This name is visible to remote Bluetooth devices.
-<span class="nc" id="L97">            c.put(&quot;NAME&quot;, getName());</span>
+<span class="nc" id="L97">            c.put(&quot;NAME&quot;, new CategoryValue(getName(),&quot;NAME&quot;,&quot;name&quot;));</span>
 <span class="nc" id="L98">            this.add(c);</span>
         }
 <span class="nc" id="L100">    }</span>

@@ -70,7 +70,7 @@ public class Cpus extends Categories {
     public Cpus(Context xCtx) {
 <span class="fc" id="L68">        super(xCtx);</span>
 
-<span class="fc" id="L70">        Category c = new Category(&quot;CPUS&quot;);</span>
+<span class="fc" id="L70">        Category c = new Category(&quot;CPUS&quot;, &quot;cpus&quot;);</span>
 
         // Cpu Name
 <span class="fc" id="L73">        String cpuName = &quot;&quot;;</span>
@@ -79,7 +79,7 @@ public class Cpus extends Categories {
 <span class="nc" id="L76">        } catch (Exception ex) {</span>
 <span class="nc" id="L77">            FILog.e(ex.getMessage());</span>
 <span class="fc" id="L78">        }</span>
-<span class="fc" id="L79">        c.put(&quot;NAME&quot;, cpuName);</span>
+<span class="fc" id="L79">        c.put(&quot;NAME&quot;, new CategoryValue(cpuName, &quot;NAME&quot;, &quot;name&quot;));</span>
 
         // Cpu Frequency
 <span class="fc" id="L82">        String cpuFrequency = &quot;&quot;;</span>
@@ -88,7 +88,7 @@ public class Cpus extends Categories {
 <span class="nc" id="L85">        } catch (Exception ex) {</span>
 <span class="nc" id="L86">            FILog.e(ex.getMessage());</span>
 <span class="fc" id="L87">        }</span>
-<span class="fc" id="L88">        c.put(&quot;SPEED&quot;, cpuFrequency);</span>
+<span class="fc" id="L88">        c.put(&quot;SPEED&quot;, new CategoryValue(cpuFrequency, &quot;SPEED&quot;,&quot;cpuFrequency&quot;));</span>
 
 <span class="fc" id="L90">        this.add(c);</span>
 <span class="fc" id="L91">    }</span>

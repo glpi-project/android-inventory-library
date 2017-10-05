@@ -114,7 +114,7 @@ public class Categories extends ArrayList&lt;Category&gt;{
 <span class="fc" id="L111">        String mType = &quot;&quot;;</span>
         try {
 <span class="fc bfc" id="L113" title="All 2 branches covered.">            for( Category c : this) {</span>
-<span class="fc" id="L114">                mType = c.getType();</span>
+<span class="fc" id="L114">                mType = c.getTagName();</span>
 <span class="fc" id="L115">                jsonArr.put(c.toJSON());</span>
 <span class="fc" id="L116">            }</span>
 

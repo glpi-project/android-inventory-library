@@ -70,10 +70,10 @@ public class LocationProviders extends Categories {
 <span class="nc" id="L67">        List&lt;String&gt; lProvidersName = lLocationMgr.getAllProviders(); </span>
         
 <span class="nc bnc" id="L69" title="All 2 branches missed.">        for (String p : lProvidersName) {</span>
-<span class="nc" id="L70">            Category c = new Category(&quot;LOCATION_PROVIDERS&quot;);</span>
+<span class="nc" id="L70">            Category c = new Category(&quot;LOCATION_PROVIDERS&quot;, &quot;locationProviders&quot;);</span>
 
 <span class="nc" id="L72">            LocationProvider lProvider = lLocationMgr.getProvider(p);</span>
-<span class="nc" id="L73">            c.put(&quot;NAME&quot; , getName(lProvider));</span>
+<span class="nc" id="L73">            c.put(&quot;NAME&quot; , new CategoryValue(getName(lProvider), &quot;NAME&quot;, &quot;name&quot;));</span>
 
 <span class="nc" id="L75">            this.add(c);</span>
 <span class="nc" id="L76">        }</span>

@@ -1,4 +1,15 @@
 
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    font-size: 12pt;
+}
+
+body, a, a:visited {
+    color: #303030;
+}
+
 #content {
     padding-left: 50px;
     padding-right: 50px;
@@ -12,7 +23,6 @@
 }
 
 #footer {
-    display: none;
     margin-top: 100px;
     font-size: 80%;
     white-space: nowrap;
@@ -46,46 +56,37 @@ ul.tabLinks {
 
 ul.tabLinks li {
     float: left;
+    height: 100%;
     list-style: none;
-    min-width: 120px;
-    padding: 9px 12px 10px;
-    line-height: 1;
-    letter-spacing: normal;
-    font-weight: 400;
-    display: inline-block;
-    margin: 5px 5px 0;
-    text-align: center;
-    touch-action: manipulation;
-    cursor: pointer;
-    border: 1px solid transparent;
-    white-space: nowrap;
-    border-radius: 0;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
-ul.tabLinks li.selected {
-    color: #000;
-    border-color: #000;
-    box-shadow: 0 0 0 1px #000 inset;
-}
-
-ul.tabLinks li.deselected {
-    font-family: "Segoe UI Light","Segoe UI","Selawik Light",Tahoma,Verdana,Arial,sans-serif;
-    border-color: rgba(0,0,0,.3);
-    font-size: 120%;
-    line-height: 1.21739;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-bottom: 0;
+    -moz-border-radius: 7px;
+    border-radius: 7px;
+    margin-right: 25px;
+    border: solid 1px #d4d4d4;
+    background-color: #f0f0f0;
+    behavior: url(css3-pie-1.0beta3.htc);
 }
 
 ul.tabLinks li:hover {
-     border-color: rgba(0,0,0,.8);
+    background-color: #fafafa;
 }
 
-ul.tabLinks li.deselected a { 
-    color: #000;
-    text-decoration: none;    
+ul.tabLinks li.selected {
+    background-color: #c5f0f5;
+    border-color: #c5f0f5;
+}
+
+ul.tabLinks a {
+    font-size: 120%;
+    display: block;
+    outline: none;
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
 }
 
 ul.tabLinks li h2 {
