@@ -90,7 +90,7 @@ public class Videos extends Categories {
         super(xCtx);
         this.xCtx = xCtx;
         Category c = new Category("VIDEOS", "videos");
-        c.put("RESOLUTION" ,  getResolution());
+        c.put("RESOLUTION" , new CategoryValue(getResolution(), "RESOLUTION", "resolution"));
         this.add(c);
     }
 
