@@ -74,22 +74,22 @@ public class Bios extends Categories {
 		Category c = new Category("BIOS", "bios");
 
 		// Bios Date
-		c.put("BDATE", getBiosDate());
+		c.put("BDATE", new CategoryValue(getBiosDate(), "BDATE", "biosReleaseDate"));
 
 		// Bios Manufacturer
-		c.put("BMANUFACTURER", getBiosManufacturer());
+		c.put("BMANUFACTURER", new CategoryValue(getBiosManufacturer(), "BMANUFACTURER", "biosManufacturer"));
 
 		// Bios version
-		c.put("BVERSION", getBiosVersion());
+		c.put("BVERSION", new CategoryValue(getBiosVersion(), "BVERSION", "biosVersion"));
 
 		// Mother Board Manufacturer
-		c.put("MMANUFACTURER", getMotherBoardManufacturer());
+		c.put("MMANUFACTURER", new CategoryValue(getMotherBoardManufacturer(), "MMANUFACTURER", "motherBoardManufacturer"));
 
 		// Mother Board Model
-		c.put("SMODEL", getMotherBoardModel());
+		c.put("SMODEL", new CategoryValue(getMotherBoardModel(), "SMODEL", "motherBoardModel"));
 
 		// Mother Board Serial Number
-		c.put("SSN", getMotherBoardSerialNumber());
+		c.put("SSN", new CategoryValue(getMotherBoardSerialNumber(), "SSN", "motherBoardSerialNumber"));
 
 		this.add(c);
 	}
