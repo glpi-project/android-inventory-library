@@ -66,11 +66,11 @@ public class Sensors extends Categories {
 		for (Sensor s : sensors) {
 			Category c = new Category("SENSORS", "sensors");
 
-			c.put("NAME", getName(s));
-			c.put("MANUFACTURER", getManufacturer(s));
-			c.put("TYPE", getType(s));
-			c.put("POWER", getPower(s));
-			c.put("VERSION", getVersion(s));
+			c.put("NAME", new CategoryValue(getName(s), "NAME", "name"));
+			c.put("MANUFACTURER", new CategoryValue(getManufacturer(s), "NAME", "manufacturer"));
+			c.put("TYPE", new CategoryValue(getType(s), "TYPE", "type"));
+			c.put("POWER", new CategoryValue(getPower(s), "POWER", "power"));
+			c.put("VERSION", new CategoryValue(getVersion(s), "VERSION", "version"));
 
 			this.add(c);
 		}
