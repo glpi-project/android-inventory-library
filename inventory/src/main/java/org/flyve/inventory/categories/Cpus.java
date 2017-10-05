@@ -76,7 +76,7 @@ public class Cpus extends Categories {
         } catch (Exception ex) {
             FILog.e(ex.getMessage());
         }
-        c.put("NAME", cpuName);
+        c.put("NAME", new CategoryValue(cpuName, "NAME", "name"));
 
         // Cpu Frequency
         String cpuFrequency = "";
@@ -85,7 +85,7 @@ public class Cpus extends Categories {
         } catch (Exception ex) {
             FILog.e(ex.getMessage());
         }
-        c.put("SPEED", cpuFrequency);
+        c.put("SPEED", new CategoryValue(cpuFrequency, "SPEED","cpuFrequency"));
 
         this.add(c);
     }
