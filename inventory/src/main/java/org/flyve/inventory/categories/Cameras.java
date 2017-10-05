@@ -67,7 +67,7 @@ public class Cameras
         if (count > 0) {
             for (int i = 0; i < count; i++) {
                 Category c = new Category("CAMERAS", "cameras");
-                c.put("RESOLUTIONS", getResolutions(i));
+                c.put("RESOLUTIONS", new CategoryValue(getResolutions(i), "RESOLUTIONS", "resolutions"));
                 this.add(c);
             }
         }
