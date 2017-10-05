@@ -45,7 +45,7 @@ import java.util.Map;
 /**
  * This class create a node of the XML
  */
-public class Category extends LinkedHashMap<String, String>{
+public class Category extends LinkedHashMap<String, CategoryValue> {
 
     /*
      * The serialization runtime associates with each serializable class a version number,
@@ -120,12 +120,12 @@ public class Category extends LinkedHashMap<String, String>{
      * @param value value String
      * @return String
      */
-    public String put(String key, String value) {
-       //Do not add value if it's null, blank or "unkown"
-       if (value != null && !value.equals("") && !value.equals(Build.UNKNOWN)) {
+    public CategoryValue put(String key, CategoryValue value) {
+       //Do not add value if it's null, blank or "unknow"
+       if (value != null && !value.getValue().equals("") && !value.getValue().equals(Build.UNKNOWN)) {
     	   return super.put(key, value);
        } else {
-    	   return "";
+    	   return null;
        }
     }
 
@@ -138,10 +138,10 @@ public class Category extends LinkedHashMap<String, String>{
         try {
             serializer.startTag(null, mType);
 
-            for (Map.Entry<String, String> entry : this.entrySet()) {
-                serializer.startTag(null, entry.getKey());
-                serializer.text(String.valueOf(this.get(entry.getKey())));
-                serializer.endTag(null, entry.getKey());
+            for (Map.Entry<String, CategoryValue> entry : this.entrySet()) {
+                serializer.startTag(null, this.get(entry.getKey()).getXmlName());
+                serializer.text(String.valueOf(this.get(entry.getKey()).getValue()));
+                serializer.endTag(null, this.get(entry.getKey()).getXmlName());
             }
 
             serializer.endTag(null, mType);
@@ -156,8 +156,8 @@ public class Category extends LinkedHashMap<String, String>{
     JSONObject toJSON() throws FlyveException {
         try {
             JSONObject jsonCategories = new JSONObject();
-            for (Map.Entry<String,String> entry : this.entrySet()) {
-                jsonCategories.put(entry.getKey().toLowerCase(), String.valueOf(this.get(entry.getKey())));
+            for (Map.Entry<String,CategoryValue> entry : this.entrySet()) {
+                jsonCategories.put(this.get(entry.getKey()).getJsonName(), this.get(entry.getKey()).getValue());
             }
 
             return jsonCategories;
