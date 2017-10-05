@@ -70,7 +70,7 @@ public class LocationProviders extends Categories {
             Category c = new Category("LOCATION_PROVIDERS", "locationProviders");
 
             LocationProvider lProvider = lLocationMgr.getProvider(p);
-            c.put("NAME" , getName(lProvider));
+            c.put("NAME" , new CategoryValue(getName(lProvider), "NAME", "name"));
 
             this.add(c);
         }
