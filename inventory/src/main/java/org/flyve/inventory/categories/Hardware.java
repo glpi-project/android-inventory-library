@@ -109,13 +109,13 @@ public class Hardware extends Categories {
 
         Category c = new Category("HARDWARE", "hardware");
 
-        c.put("DATELASTLOGGEDUSER", getDatelastloggeduser() );
-        c.put("LASTLOGGEDUSER", getLastloggeduser());
-        c.put("NAME", getName());
-        c.put("OSNAME", OSNAME);
-        c.put("OSVERSION", getOsversion());
-        c.put("ARCHNAME", getArchname());
-        c.put("UUID", getUUID());
+        c.put("DATELASTLOGGEDUSER", new CategoryValue(getDatelastloggeduser(), "DATELASTLOGGEDUSER", "dateLastLoggedUser") );
+        c.put("LASTLOGGEDUSER", new CategoryValue(getDatelastloggeduser(), "LASTLOGGEDUSER", "dateLastLoggedUser"));
+        c.put("NAME", new CategoryValue(getName(), "NAME", "name"));
+        c.put("OSNAME", new CategoryValue(OSNAME, "OSNAME", "osName"));
+        c.put("OSVERSION", new CategoryValue(getOsversion(), "OSVERSION", "osVersion"));
+        c.put("ARCHNAME", new CategoryValue(getArchname(), "ARCHNAME", "archName"));
+        c.put("UUID", new CategoryValue(getUUID(), "UUID", "uuid"));
 
         String vMemory = "";
         try {
@@ -123,7 +123,7 @@ public class Hardware extends Categories {
         } catch (Exception ex) {
             FILog.e(ex.getMessage());
         }
-        c.put("MEMORY", vMemory);
+        c.put("MEMORY", new CategoryValue(vMemory, "MEMORY", "memory"));
 
         this.add(c);
 
