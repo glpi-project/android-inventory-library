@@ -90,8 +90,8 @@ public class Inputs extends Categories {
 
 		Category c = new Category("INPUTS", "inputs");
 
-		c.put("KEYBOARD", getKeyboard());
-		c.put("TOUCHSCREEN", getTouchscreen());
+		c.put("KEYBOARD", new CategoryValue(getKeyboard(), "KEYBOARD", "keyboard"));
+		c.put("TOUCHSCREEN", new CategoryValue(getTouchscreen(), "TOUCHSCREEN", "touchScreen"));
 
 		this.add(c);
 	}
