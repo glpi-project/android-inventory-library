@@ -7,6 +7,7 @@ import android.support.test.runner.AndroidJUnit4;
 import org.flyve.inventory.categories.Categories;
 import org.flyve.inventory.categories.Category;
 
+import org.flyve.inventory.categories.CategoryValue;
 import org.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -51,7 +52,7 @@ public class CreateFileTest {
     public void createXMLTest() throws Exception {
         ArrayList<Categories> mContent = new ArrayList<Categories>();
         Category category = new Category("CAMERAS", "cameras");
-        category.put("RESOLUTION", "3264x2448");
+        category.put("RESOLUTION", new CategoryValue("3264x2448", "RESOLUTION", "resolution"));
 
         Categories categories = new Categories(appContext);
         categories.add(category);
@@ -70,7 +71,7 @@ public class CreateFileTest {
     public void createJSONTest() throws Exception {
         ArrayList<Categories> mContent = new ArrayList<Categories>();
         Category category = new Category("CAMERAS", "cameras");
-        category.put("RESOLUTION", "3264x2448");
+        category.put("RESOLUTION", new CategoryValue("3264x2448", "RESOLUTION", "resolution"));
 
         Categories categories = new Categories(appContext);
         categories.add(category);
