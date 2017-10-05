@@ -71,7 +71,7 @@ public class Memory extends Categories {
 		super(xCtx);
 		Category c = new Category("MEMORIES", "memories");
 
-        c.put("DESCRIPTION", DESCRIPTION);
+        c.put("DESCRIPTION", new CategoryValue(DESCRIPTION, "DESCRIPTION", "description"));
 
         String capacity = "";
         try {
@@ -79,7 +79,7 @@ public class Memory extends Categories {
         } catch (Exception ex) {
             FILog.e(ex.getMessage());
         }
-        c.put("CAPACITY", capacity);
+        c.put("CAPACITY", new CategoryValue(capacity, "CAPACITY", "capacity"));
 
         this.add(c);
 	}
