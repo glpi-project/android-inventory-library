@@ -95,11 +95,11 @@ public class PhoneStatus extends Categories {
                             break;
                     }
 
-                    c.put("STATE", phoneState);
-                    c.put("OPERATOR_ALPHA", serviceState.getOperatorAlphaLong());
-                    c.put("OPERATOR_NUMERIC", serviceState.getOperatorNumeric());
-                    c.put("ROAMING", Boolean.valueOf(serviceState.getRoaming()).toString());
-                    c.put("NETWORK_SELECTION", serviceState.getIsManualSelection() ? "MANUAL" : "AUTO");
+                    c.put("STATE", new CategoryValue(phoneState, "STATE", "state"));
+                    c.put("OPERATOR_ALPHA", new CategoryValue(serviceState.getOperatorAlphaLong(), "OPERATOR_ALPHA", "operatorAlpha"));
+                    c.put("OPERATOR_NUMERIC", new CategoryValue(serviceState.getOperatorNumeric(), "OPERATOR_NUMERIC", "operatorNumeric"));
+                    c.put("ROAMING", new CategoryValue(Boolean.valueOf(serviceState.getRoaming()).toString(), "ROAMING", "roaming"));
+                    c.put("NETWORK_SELECTION", new CategoryValue(serviceState.getIsManualSelection() ? "NETWORK_SELECTION" : "AUTO", "NETWORK_SELECTION", "networkSelection"));
 
                     PhoneStatus.this.add(c);
                 }
