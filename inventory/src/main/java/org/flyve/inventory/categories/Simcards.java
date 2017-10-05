@@ -94,7 +94,7 @@ public class Simcards extends Categories {
          */
         Category c = new Category("SIMCARDS", "simcards");
 
-        c.put("COUNTRY", new CategoryValue(getCountry(), "COUNTRY", "COUNTRY"));
+        c.put("COUNTRY", new CategoryValue(getCountry(), "COUNTRY", "country"));
         c.put("OPERATOR_CODE", new CategoryValue(getOperatorCode(), "OPERATOR_CODE", "operatorCode"));
         c.put("OPERATOR_NAME", new CategoryValue(getOperatorName(), "OPERATOR_NAME", "operatorName"));
         c.put("SERIAL", new CategoryValue(getSerial(), "SERIAL", "serial"));
