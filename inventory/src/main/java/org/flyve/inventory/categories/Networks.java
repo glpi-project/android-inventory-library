@@ -103,7 +103,7 @@ public class Networks extends Categories {
 			pWM.setWifiEnabled(true);
 		}
 		Category c = new Category("NETWORKS", "networks");
-		c.put("TYPE", TYPE);
+		c.put("TYPE", new CategoryValue(TYPE, "TYPE", "type"));
 
 		dhcp = pWM.getDhcpInfo();
 		wifi = pWM.getConnectionInfo();
@@ -113,14 +113,14 @@ public class Networks extends Categories {
 		FILog.d("dns2=" + StringUtils.intToIp(dhcp.dns2));
 		FILog.d("leaseDuration=" + dhcp.leaseDuration);
 
-		c.put("MACADDR", getMacaddr());
-		c.put("SPEED", getSpeed());
-		c.put("BSSID", getBSSID());
-		c.put("SSID", getSSID());
-		c.put("IPGATEWAY", getIpgateway());
-		c.put("IPADDRESS", getIpaddress());
-		c.put("IPMASK", getIpmask());
-		c.put("IPDHCP", getIpdhcp());
+		c.put("MACADDR", new CategoryValue(getMacaddr(), "MACADDR", "macAddress"));
+		c.put("SPEED", new CategoryValue(getSpeed(), "SPEED", "speed"));
+		c.put("BSSID", new CategoryValue(getBSSID(), "BSSID", "bssid"));
+		c.put("SSID", new CategoryValue(getSSID(), "SSID", "ssid"));
+		c.put("IPGATEWAY", new CategoryValue(getIpgateway(), "IPGATEWAY", "ipGateway"));
+		c.put("IPADDRESS", new CategoryValue(getIpaddress(), "IPADDRESS", "ipAddress"));
+		c.put("IPMASK", new CategoryValue(getIpmask(), "IPMASK", "ipMask"));
+		c.put("IPDHCP", new CategoryValue(getIpdhcp(), "IPDHCP", "ipDhcp"));
 
 		this.add(c);
 		// Restore Wifi State
