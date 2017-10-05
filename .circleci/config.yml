@@ -98,6 +98,9 @@ jobs:
             name: Update version and code
             command: source ci/scripts/ci_updateversion.sh
         - run:
+            name: Push changes to github
+            command: source ci/scripts/ci_push_changes.sh
+        - run:
             name: Send changelog to gh-page
             command: source ci/scripts/ci_changelog.sh
         - run:
