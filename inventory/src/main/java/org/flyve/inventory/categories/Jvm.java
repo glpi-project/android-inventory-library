@@ -62,13 +62,13 @@ public class Jvm extends Categories {
         Category c = new Category("JVMS", "jvms");
         Properties props = System.getProperties();
 
-            c.put("NAME", getName(props));
-            c.put("LANGUAGE", getLanguage(props));
-            c.put("VENDOR", getVendor(props));
-            c.put("RUNTIME", getRuntime(props));
-            c.put("HOME", getHome(props));
-            c.put("VERSION", getVersion(props));
-            c.put("CLASSPATH", getmClasspath(props));
+            c.put("NAME", new CategoryValue(getName(props), "NAME", "name"));
+            c.put("LANGUAGE", new CategoryValue(getLanguage(props), "LANGUAGE", "language"));
+            c.put("VENDOR", new CategoryValue(getVendor(props), "VENDOR", "vendor"));
+            c.put("RUNTIME", new CategoryValue(getRuntime(props), "RUNTIME", "runtime"));
+            c.put("HOME", new CategoryValue(getHome(props), "HOME", "home"));
+            c.put("VERSION", new CategoryValue(getVersion(props), "VERSION", "version"));
+            c.put("CLASSPATH", new CategoryValue(getmClasspath(props), "CLASSPATH", "classPath"));
 
         this.add(c);
     }
