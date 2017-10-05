@@ -81,9 +81,9 @@ public class Drives extends Categories {
 
     	Category c = new Category("DRIVES", "drives");
 
-        c.put("VOLUMN", getVolumn(f));
-        c.put("TOTAL", getTotal(f));
-        c.put("FREE", getFree(f));
+        c.put("VOLUMN", new CategoryValue(getVolumn(f), "VOLUMN", "path"));
+        c.put("TOTAL", new CategoryValue(getTotal(f), "TOTAL", "total"));
+        c.put("FREE", new CategoryValue(getFree(f), "FREE", "free"));
 
         this.add(c);
     }
