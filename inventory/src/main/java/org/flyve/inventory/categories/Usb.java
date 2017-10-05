@@ -73,10 +73,10 @@ public class Usb extends Categories {
 				UsbDevice mydevice = devices.get(entry.getKey());
 				Category c = new Category("USBDEVICES", "usbDevices");
 
-				c.put("CLASS", getClass(mydevice));
-				c.put("PRODUCTID", getProductid(mydevice));
-				c.put("VENDORID", getVendorid(mydevice));
-				c.put("SUBCLASS", getSubclass(mydevice));
+				c.put("CLASS", new CategoryValue(getClass(mydevice), "CLASS", "class"));
+				c.put("PRODUCTID", new CategoryValue(getProductid(mydevice), "PRODUCTID", "productId"));
+				c.put("VENDORID", new CategoryValue(getVendorid(mydevice), "VENDORID", "vendorId"));
+				c.put("SUBCLASS", new CategoryValue(getSubclass(mydevice), "SUBCLASS", "subClass"));
 
 				this.add(c);
 			}
