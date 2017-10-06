@@ -513,7 +513,7 @@ inventoryTask.getXML(new InventoryTask.OnTaskCompleted() {
     </div>
   </div>
 
-  <div class="jumbotron theme-default hidden">
+  <div class="jumbotron theme-default">
     <div class="container">
       <div class="row">
         <div class="col-md-12 col-md-push-12 text-center">
@@ -528,20 +528,14 @@ inventoryTask.getXML(new InventoryTask.OnTaskCompleted() {
             It's easy to implement in your code
           </div>
 
-{% highlight java %}
-InventoryTask inventoryTask = new InventoryTask(this.context, "FlyveMDM-Agent_v1.0");
+{% highlight kotlin %}
+val inventoryTask = InventoryTask(this@MainActivity, "Agent_v1.0", object : InventoryTask.OnTaskCompleted() {
+    override fun onTaskCompleted(data: String) {
+        Log.d("XML", data)
+    }
+})
 
-inventoryTask.getXML(new InventoryTask.OnTaskCompleted() {
-  @Override
-  public void onTaskSuccess(String data) {
-      Log.d("mdm", data);
-  }
-
-  @Override
-  public void onTaskError(Throwable error) {
-    Log.e("mdm", error.getMessage());
-  }
-});
+inventoryTask.execute()
 {% endhighlight %}
 
 
