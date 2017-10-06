@@ -81,6 +81,8 @@ compile 'org.flyve:inventory:1.0.0'
 
 It's easy to implement in your code
 
+# Java:
+
 ```java
 InventoryTask inventoryTask = new InventoryTask(MainActivity.this, "Agent_v1.0", new InventoryTask.OnTaskCompleted() {
   @Override
@@ -90,6 +92,17 @@ InventoryTask inventoryTask = new InventoryTask(MainActivity.this, "Agent_v1.0",
 });
 
 inventoryTask.execute();
+```
+
+#kotlin
+```kotlin
+val inventoryTask = InventoryTask(this@MainActivity, "Agent_v1.0", object : InventoryTask.OnTaskCompleted() {
+    override fun onTaskCompleted(data: String) {
+        Log.d("XML", data)
+    }
+})
+
+inventoryTask.execute()
 ```
 
 ## Documentation
