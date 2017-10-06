@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-GH_COMMIT_MESSAGE=$(git log —format=oneline -n 1 $CIRCLE_SHA1)
+GH_COMMIT_MESSAGE=$(git log --pretty=oneline -n 1 $CIRCLE_SHA1)
 
 if [[ $GH_COMMIT_MESSAGE != *"ci(release): generate CHANGELOG.md for version"* && $GH_COMMIT_MESSAGE != *"ci(build): release version"* ]]; then
     echo "Running duplicated"
