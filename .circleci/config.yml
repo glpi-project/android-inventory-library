@@ -184,6 +184,8 @@ workflows:
               only:
                 - develop
       - deploy_production:
+          requires:
+            - build
           filters:
             branches:
               only:
