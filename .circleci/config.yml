@@ -161,7 +161,7 @@ workflows:
   build_test_and_deploy:
     jobs:
       - build
-      - test_api_v25:
+      - test_api_v16:
           requires:
             - build
           filters:
@@ -177,7 +177,7 @@ workflows:
                 - develop
       - documentation:
           requires:
-            - test_api_v25
+            - test_api_v16
             - test_api_v25
           filters:
             branches:
