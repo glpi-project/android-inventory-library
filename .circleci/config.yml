@@ -18,7 +18,7 @@ jobs:
           paths:
             - ~/.gradle
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "inventory/build.gradle" }}
-  test_api_version_25:
+  test_api_v25:
     working_directory: ~/flyve_mdm
     docker:
         - image: circleci/android:api-26-alpha
@@ -49,7 +49,7 @@ jobs:
           destination: reports
       - store_test_results:
           path: inventory/build/test-results
-  test_api_version_16:
+  test_api_v16:
       working_directory: ~/flyve_mdm
       docker:
           - image: circleci/android:api-26-alpha
