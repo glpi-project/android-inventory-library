@@ -164,17 +164,9 @@ workflows:
       - test_api_v16:
           requires:
             - build
-          filters:
-            branches:
-              only:
-                - develop
       - test_api_v25:
           requires:
             - build
-          filters:
-            branches:
-              only:
-                - develop
       - documentation:
           requires:
             - test_api_v16
