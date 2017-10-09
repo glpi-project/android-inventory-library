@@ -70,6 +70,15 @@ git add ./reports/javadoc/stylesheet.css
 # create commit for documentation
 git commit -m "docs(javadoc): update javadoc"
 
+# change headers
+ruby ci/add_header.rb
+
+# git add
+git add .
+
+# git commit
+git commit -m "docs(headers): update headers"
+
 # push to branch
 git push origin gh-pages
 
