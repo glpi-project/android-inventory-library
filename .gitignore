@@ -12,5 +12,3 @@ inventory/
 local.properties
 gradlew
 gradlew.bat
-package.json
-package-lock.json
