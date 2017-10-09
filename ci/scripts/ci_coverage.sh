@@ -41,9 +41,6 @@ mv reports/debug/.resources reports/debug/resources
 # replace .sessions
 mv reports/debug/.sessions.html reports/debug/sessions.html
 
-# add header
-ruby ci/scripts/add_coverage_header.rb
-
 # add code coverage and test result
 git add reports -f
 

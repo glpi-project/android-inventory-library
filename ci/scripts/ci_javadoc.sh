@@ -32,13 +32,10 @@ javadoc -d ./reports/javadoc -sourcepath ./inventory/src/main/java -subpackages 
 sudo rm ./reports/javadoc/index.html
 
 # rename the overview-summary.html file toindex.html
-mv ./reports/javadoc/overview-summary.html ./reports$1/javadoc/index.html
-
-# add header
-ruby ci/scripts/add_javadoc_header.rb
+mv ./reports/javadoc/overview-summary.html ./reports/javadoc/index.html
 
 # add reports
-git add reports$1 -f
+git add reports -f
 
 # create commit with temporary report folder
 git commit -m "tmp report commit"
