@@ -71,3 +71,14 @@ Dir.glob("reports/javadoc/**/*.html") do |search_file| # note one extra "*"
     file.print buffer
     file.close
 end
+
+# add CHANGELOG header
+    file = File.open("CHANGELOG.md", "r+")
+    buffer = file.read
+    file.rewind
+    file.puts "---"
+    file.puts "layout: modal"
+    file.puts "title: changelog"
+    file.puts "---"
+    file.print buffer
+    file.close
