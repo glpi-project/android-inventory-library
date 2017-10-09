@@ -4,3 +4,12 @@ _site
 .jekyll-metadata
 .DS_Store 
 node_modules
+.gradle/
+.idea/
+build/
+inventory/
+local.properties
+gradlew
+gradlew.bat
+package.json
+package-lock.json
