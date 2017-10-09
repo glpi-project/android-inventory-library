@@ -208,18 +208,18 @@ public class InventoryTask {
             public void run() {
 
                 try {
-<span class="nc" id="L208">                    ArrayList&lt;Categories&gt; mContent = loadCategoriesClass();</span>
-<span class="nc" id="L209">                    final String json = Utils.createJSON(mContent, InventoryTask.this.appVersion);</span>
+<span class="fc" id="L208">                    ArrayList&lt;Categories&gt; mContent = loadCategoriesClass();</span>
+<span class="fc" id="L209">                    final String json = Utils.createJSON(mContent, InventoryTask.this.appVersion);</span>
 
-<span class="nc bnc" id="L211" title="All 2 branches missed.">                    if(storeResult) {</span>
-<span class="nc" id="L212">                        Utils.storeFile(json, fileNameJSON);</span>
+<span class="pc bpc" id="L211" title="1 of 2 branches missed.">                    if(storeResult) {</span>
+<span class="fc" id="L212">                        Utils.storeFile(json, fileNameJSON);</span>
                     }
 
-<span class="nc" id="L215">                    InventoryTask.runOnUI(new Runnable() {</span>
+<span class="fc" id="L215">                    InventoryTask.runOnUI(new Runnable() {</span>
                         public void run() {
-<span class="nc" id="L217">                            running = false;</span>
-<span class="nc" id="L218">                            listener.onTaskSuccess( json );</span>
-<span class="nc" id="L219">                        }</span>
+<span class="fc" id="L217">                            running = false;</span>
+<span class="fc" id="L218">                            listener.onTaskSuccess( json );</span>
+<span class="fc" id="L219">                        }</span>
                     });
 
 <span class="nc" id="L222">                } catch (final Exception ex) {</span>
@@ -229,8 +229,8 @@ public class InventoryTask {
 <span class="nc" id="L226">                            listener.onTaskError( ex.getCause() );</span>
 <span class="nc" id="L227">                        }</span>
                     });
-<span class="nc" id="L229">                }</span>
-<span class="nc" id="L230">            }</span>
+<span class="fc" id="L229">                }</span>
+<span class="fc" id="L230">            }</span>
         });
 <span class="fc" id="L232">        t.start();</span>
 <span class="fc" id="L233">    }</span>
