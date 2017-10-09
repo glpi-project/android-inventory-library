@@ -5,6 +5,7 @@ _site
 .DS_Store 
 node_modules
 .gradle/
+gradle
 .idea/
 build/
 inventory/
