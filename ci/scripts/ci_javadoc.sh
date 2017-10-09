@@ -64,6 +64,9 @@ cp ./css/javadoc.css ./reports/javadoc/stylesheet.css
 # git add javadoc folder
 git add reports/javadoc
 
+# git add
+git add ./reports/javadoc/stylesheet.css
+
 # create commit for documentation
 git commit -m "docs(javadoc): update javadoc"
 
