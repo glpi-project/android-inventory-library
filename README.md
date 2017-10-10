@@ -26,9 +26,9 @@ To get started, check out <https://flyve-mdm.com/>!
 
 ## Synopsis
 
-This library help you to create a complete inventory of your Android devices: both hardware and software informations are collected. You get the data about processor, memory, drives, sensors, etc. and also the list and description of installed application on any devices in a beautifull XML as protocol compatible with FusionInventory for GLPI.
+This library helps you to create a complete inventory of your Android devices: both hardware and software informations are collected. You get the data about processor, memory, drives, sensors, etc., and also the list and description of installed application on any devices in a beautiful XML as protocol compatible with FusionInventory for GLPI.
 
-You can find more information here:
+You can find more information about the Inventory Protocol here:
 <http://fusioninventory.org/documentation/dev/spec/protocol/inventory.html>
 
 **What's included?**
@@ -50,6 +50,8 @@ You can find more information here:
 * Usb
 * Battery
 
+Visit our [website](http://flyve.org/flyve-mdm-android-inventory/) for more information.
+
 ## Build Status
 
 | **Release channel** | **Beta channel** |
@@ -58,7 +60,7 @@ You can find more information here:
 
 ## Installation
 
-Download the latest JAR, grab via Maven or insert on `build.gradle` at app level.
+Download the latest JAR, grab via Maven, insert on `build.gradle` at app level or use Apache Ivy.
 
 ### Maven
 
@@ -76,6 +78,16 @@ Download the latest JAR, grab via Maven or insert on `build.gradle` at app level
 ```groovy
 compile 'org.flyve:inventory:1.0.0'
 ```
+
+### Apache Ivy
+
+```
+<dependency org='org.flyve' name='inventory' rev='0.1.0'>
+  <artifact name='inventory' ext='pom' ></artifact>
+</dependency>
+```
+
+You can also find us on [**Bintray repository**](https://bintray.com/flyve-mdm/inventory/flyve-mdm-android-inventory).
 
 ## Code Example
 
@@ -107,7 +119,7 @@ inventoryTask.execute()
 
 ## Documentation
 
-We share long-form content about the project in the [wiki](https://github.com/flyve-mdm/flyve-mdm-android-inventory/wiki).
+We maintain a detailed documentation of the project on its [website](http://flyve.org/flyve-mdm-android-inventory/).
 
 ## Versioning
 
