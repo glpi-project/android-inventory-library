@@ -9,7 +9,7 @@ All notable changes to this project will be documented in this file. See [standa
 ### Bug Fixes
 
 * **gradle:** remove gnag ([12f6ed1](https://github.com/flyve-mdm/flyve-mdm-android-inventory/commit/12f6ed1))
-* **hardware:** add last logged user information ([6d54dca](https://github.com/flyve-mdm/flyve-mdm-android-inventory/commit/6d54dca))
+* **hardware:** add last logged user information ([47e1df3](https://github.com/flyve-mdm/flyve-mdm-android-inventory/commit/47e1df3))
 * **Sensor:** return unknow instead empty the type function ([378cc8d](https://github.com/flyve-mdm/flyve-mdm-android-inventory/commit/378cc8d))
 * **test:** check if the test is running on emulator for bluetooth ([cfb9832](https://github.com/flyve-mdm/flyve-mdm-android-inventory/commit/cfb9832))
 * **test:** check if the test is running on emulator for Cpus ([2177121](https://github.com/flyve-mdm/flyve-mdm-android-inventory/commit/2177121))
