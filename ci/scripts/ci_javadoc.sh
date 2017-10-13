@@ -26,25 +26,16 @@
 #  ------------------------------------------------------------------------------
 #
 # Generate javadoc this folder must be on .gitignore
-javadoc -d ./reports$1/javadoc -sourcepath ./inventory/src/main/java -subpackages . -nonavbar
+javadoc -d ./reports/javadoc -sourcepath ./inventory/src/main/java -subpackages . -nonavbar
 
 # delete the index.html file
-sudo rm ./reports$1/javadoc/index.html
+sudo rm ./reports/javadoc/index.html
 
 # rename the overview-summary.html file toindex.html
-mv ./reports$1/javadoc/overview-summary.html ./reports$1/javadoc/index.html
-
-# add header
-ruby ci/scripts/add_javadoc_header.rb
-
-# remove default stylesheet.css
-sudo rm ./reports$1/javadoc/stylesheet.css
-
-# get stylesheet.css template
-wget -qO- https://gist.githubusercontent.com/flyve-mdm-bot/78014d4ffe3d5d70585a7b538f7eb84c/raw/fd12955bc582d968472a6d7f8b78ca5b8d4b8a23/stylesheet.css -O ./reports$1/javadoc/stylesheet.css
+mv ./reports/javadoc/overview-summary.html ./reports/javadoc/index.html
 
 # add reports
-git add reports$1 -f
+git add reports -f
 
 # create commit with temporary report folder
 git commit -m "tmp report commit"
@@ -56,16 +47,34 @@ git fetch origin gh-pages
 git checkout gh-pages
 
 # delete old javadoc folder
-sudo rm -R reports$1/javadoc
+sudo rm -R reports/javadoc
 
 # get fresh javadoc folder
-git checkout $CIRCLE_BRANCH reports$1/javadoc
+git checkout $CIRCLE_BRANCH reports/javadoc
+
+# remove default stylesheet.css
+sudo rm ./reports/javadoc/stylesheet.css
+
+# add new css
+cp ./css/javadoc.css ./reports/javadoc/stylesheet.css
 
 # git add javadoc folder
-git add reports$1/javadoc
+git add reports/javadoc
+
+# git add
+git add ./reports/javadoc/stylesheet.css
 
 # create commit for documentation
 git commit -m "docs(javadoc): update javadoc"
+
+# change headers
+ruby ci/add_header.rb
+
+# git add
+git add .
+
+# git commit
+git commit -m "docs(headers): update headers"
 
 # push to branch
 git push origin gh-pages

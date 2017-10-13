@@ -35,7 +35,8 @@ GIT_TAG=$(jq -r ".version" package.json)
 conventional-github-releaser -t $GH_TOKEN 2> /dev/null || true
 
 # Create zip example code
-sudo zip -r $CIRCLE_ARTIFACTS/app_example_code.zip app/*
+sudo zip -r $CIRCLE_ARTIFACTS/java_example_code.zip examples/java*
+sudo zip -r $CIRCLE_ARTIFACTS/kotlin_example_code.zip examples/kotlin*
 
 # Update release name
 github-release edit \
@@ -50,5 +51,13 @@ github-release upload \
 --user $CIRCLE_PROJECT_USERNAME \
 --repo $CIRCLE_PROJECT_REPONAME \
 --tag ${GIT_TAG} \
---name "example.zip" \
---file $CIRCLE_ARTIFACTS/app_example_code.zip
+--name "java_example.zip" \
+--file $CIRCLE_ARTIFACTS/java_example_code.zip
+
+# Upload example code release
+github-release upload \
+--user $CIRCLE_PROJECT_USERNAME \
+--repo $CIRCLE_PROJECT_REPONAME \
+--tag ${GIT_TAG} \
+--name "kotlin_example.zip" \
+--file $CIRCLE_ARTIFACTS/kotlin_example_code.zip
