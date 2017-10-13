@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.3.0"></a>
+# [0.3.0](https://github.com/flyve-mdm/flyve-mdm-android-inventory/compare/0.2.0...0.3.0) (2017-10-13)
+
+
+### Bug Fixes
+
+* **hardware:** add last logged user information ([47e1df3](https://github.com/flyve-mdm/flyve-mdm-android-inventory/commit/47e1df3))
+
+
+### Features
+
+* **examples:** add sample folder for kotlin and java ([042b4d5](https://github.com/flyve-mdm/flyve-mdm-android-inventory/commit/042b4d5))
+
+
+
 <a name="0.2.0"></a>
 # 0.2.0 (2017-10-07)
 
