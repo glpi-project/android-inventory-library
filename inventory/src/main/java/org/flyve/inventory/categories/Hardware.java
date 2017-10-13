@@ -110,7 +110,7 @@ public class Hardware extends Categories {
         Category c = new Category("HARDWARE", "hardware");
 
         c.put("DATELASTLOGGEDUSER", new CategoryValue(getDatelastloggeduser(), "DATELASTLOGGEDUSER", "dateLastLoggedUser") );
-        c.put("LASTLOGGEDUSER", new CategoryValue(getDatelastloggeduser(), "LASTLOGGEDUSER", "dateLastLoggedUser"));
+        c.put("LASTLOGGEDUSER", new CategoryValue(getLastloggeduser(), "LASTLOGGEDUSER", "lastLoggedUser"));
         c.put("NAME", new CategoryValue(getName(), "NAME", "name"));
         c.put("OSNAME", new CategoryValue(OSNAME, "OSNAME", "osName"));
         c.put("OSVERSION", new CategoryValue(getOsversion(), "OSVERSION", "osVersion"));
