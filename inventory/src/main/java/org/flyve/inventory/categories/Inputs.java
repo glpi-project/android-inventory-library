@@ -53,10 +53,10 @@ public class Inputs extends Categories {
 	private Configuration config;
 
 	/**
-     * Indicates whether some other object is "equal to" this one
-     * @param Object obj the reference object with which to compare
-     * @return boolean true if the object is the same as the one given in argument
-     */
+	 * Indicates whether some other object is "equal to" this one
+	 * @param Object obj the reference object with which to compare
+	 * @return boolean true if the object is the same as the one given in argument
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == null) {
@@ -69,9 +69,9 @@ public class Inputs extends Categories {
 	}
 
 	/**
-     * Returns a hash code value for the object
-     * @return int a hash code value for the object
-     */
+	 * Returns a hash code value for the object
+	 * @return int a hash code value for the object
+	 */
 	@Override
 	public int hashCode() {
 		int hash = super.hashCode();
@@ -88,10 +88,21 @@ public class Inputs extends Categories {
 
 		config = xCtx.getResources().getConfiguration();
 
+		if(getKeyboard()) {
+			Category c = new Category("INPUTS", "inputs");
+
+			c.put("CAPTION", new CategoryValue("keyboard", "CAPTION", "caption"));
+			c.put("DESCRIPTION", new CategoryValue("keyboard", "DESCRIPTION", "description"));
+			c.put("TYPE", new CategoryValue("keyboard", "TYPE", "type"));
+
+			this.add(c);
+		}
+
 		Category c = new Category("INPUTS", "inputs");
 
-		c.put("KEYBOARD", new CategoryValue(getKeyboard(), "KEYBOARD", "keyboard"));
-		c.put("TOUCHSCREEN", new CategoryValue(getTouchscreen(), "TOUCHSCREEN", "touchScreen"));
+		c.put("CAPTION", new CategoryValue("Touch Screen", "CAPTION", "caption"));
+		c.put("DESCRIPTION", new CategoryValue("Touch Screen", "DESCRIPTION", "description"));
+		c.put("TYPE", new CategoryValue(getTouchscreen(), "TYPE", "type"));
 
 		this.add(c);
 	}
@@ -100,18 +111,18 @@ public class Inputs extends Categories {
 	 * Get the keyboard
 	 * @return string if the device has a hardware keyboard
 	 */
-	public String getKeyboard() {
+	public Boolean getKeyboard() {
 
-		String val;
+		Boolean val;
 
 		switch (config.keyboard) {
 			case Configuration.KEYBOARD_QWERTY:
 			case Configuration.KEYBOARD_12KEY:
-				val = "YES";
+				val = true;
 				break;
 			case Configuration.KEYBOARD_NOKEYS:
 			default:
-				val = "NO";
+				val = false;
 				break;
 		}
 

@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
 
 /*
  *   Copyright © 2017 Teclib. All rights reserved.
@@ -46,7 +47,7 @@ public class InputsTest {
     @Test
     public void getKeyboard() throws Exception {
         Inputs inputs = new Inputs(appContext);
-        assertNotEquals("", inputs.getKeyboard());
+        assertNotNull(inputs.getKeyboard());
     }
 
     @Test
