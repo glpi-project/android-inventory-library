@@ -91,9 +91,9 @@ public class Inputs extends Categories {
 		if(getKeyboard()) {
 			Category c = new Category("INPUTS", "inputs");
 
-			c.put("CAPTION", new CategoryValue("keyboard", "CAPTION", "caption"));
-			c.put("DESCRIPTION", new CategoryValue("keyboard", "DESCRIPTION", "description"));
-			c.put("TYPE", new CategoryValue("keyboard", "TYPE", "type"));
+			c.put("CAPTION", new CategoryValue("Keyboard", "CAPTION", "caption"));
+			c.put("DESCRIPTION", new CategoryValue("Keyboard", "DESCRIPTION", "description"));
+			c.put("TYPE", new CategoryValue("Keyboard", "TYPE", "type"));
 
 			this.add(c);
 		}
