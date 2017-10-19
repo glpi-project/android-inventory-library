@@ -92,17 +92,19 @@ public class Simcards extends Categories {
         /*
          * Starting SimCards Informations retrieval
          */
-        Category c = new Category("SIMCARDS", "simcards");
+        if(getState().equals("SIM_STATE_UNKNOWN")) {
+            Category c = new Category("SIMCARDS", "simcards");
 
-        c.put("COUNTRY", new CategoryValue(getCountry(), "COUNTRY", "country"));
-        c.put("OPERATOR_CODE", new CategoryValue(getOperatorCode(), "OPERATOR_CODE", "operatorCode"));
-        c.put("OPERATOR_NAME", new CategoryValue(getOperatorName(), "OPERATOR_NAME", "operatorName"));
-        c.put("SERIAL", new CategoryValue(getSerial(), "SERIAL", "serial"));
-        c.put("STATE", new CategoryValue(getState(), "STATE", "state"));
-        c.put("LINE_NUMBER", new CategoryValue(getLineNumber(), "LINE_NUMBER", "lineNumber"));
-        c.put("SUBSCRIBER_ID", new CategoryValue(getSubscriberId(), "SUBSCRIBER_ID", "subscriberId"));
-        
-        this.add(c);
+            c.put("COUNTRY", new CategoryValue(getCountry(), "COUNTRY", "country"));
+            c.put("OPERATOR_CODE", new CategoryValue(getOperatorCode(), "OPERATOR_CODE", "operatorCode"));
+            c.put("OPERATOR_NAME", new CategoryValue(getOperatorName(), "OPERATOR_NAME", "operatorName"));
+            c.put("SERIAL", new CategoryValue(getSerial(), "SERIAL", "serial"));
+            c.put("STATE", new CategoryValue(getState(), "STATE", "state"));
+            c.put("LINE_NUMBER", new CategoryValue(getLineNumber(), "LINE_NUMBER", "lineNumber"));
+            c.put("SUBSCRIBER_ID", new CategoryValue(getSubscriberId(), "SUBSCRIBER_ID", "subscriberId"));
+
+            this.add(c);
+        }
     }
 
     /**
@@ -163,7 +165,7 @@ public class Simcards extends Categories {
                 mState = "SIM_STATE_UNKNOWN";
                 break;
             default:
-                mState = "Unknow";
+                mState = "SIM_STATE_UNKNOWN";
                 break;
         }
         return mState;
