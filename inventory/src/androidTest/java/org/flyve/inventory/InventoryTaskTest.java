@@ -65,6 +65,7 @@ public class InventoryTaskTest {
         task.getXML(new InventoryTask.OnTaskCompleted() {
             @Override
             public void onTaskSuccess(String data) {
+                Log.d("Success Library XML: ", data);
                 assertNotEquals("", data);
             }
 
