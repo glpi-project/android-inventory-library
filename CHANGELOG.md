@@ -1,18 +1,16 @@
----
-layout: modal
-title: changelog
----
 # Change Log
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
 <a name="0.3.1"></a>
-## [0.3.1](https://github.com/flyve-mdm/flyve-mdm-android-inventory/compare/0.3.0...0.3.1) (2017-10-19)
+## [0.3.1](https://github.com/flyve-mdm/flyve-mdm-android-inventory/compare/0.3.0...0.3.1) (2017-10-22)
 
 
 ### Bug Fixes
 
 * **input:** update the input information ([3917419](https://github.com/flyve-mdm/flyve-mdm-android-inventory/commit/3917419))
+* **simcard:** if the state is SIM_STATE_UNKNOWN then not show simcard ([1cee246](https://github.com/flyve-mdm/flyve-mdm-android-inventory/commit/1cee246))
+* **software:** update tag from software to softwares ([661cdfb](https://github.com/flyve-mdm/flyve-mdm-android-inventory/commit/661cdfb))
 
 
 
