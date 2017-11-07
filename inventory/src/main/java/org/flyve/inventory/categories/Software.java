@@ -102,9 +102,10 @@ public class Software extends Categories {
             Category c = new Category("SOFTWARES", "softwares");
 
             c.put("NAME", new CategoryValue(getName(p), "NAME", "name"));
-            c.put("VERSION", new CategoryValue(getVersion(p), "NAME", "name"));
+            c.put("VERSION", new CategoryValue(getVersion(p), "VERSION", "VERSION"));
             c.put("FILESIZE", new CategoryValue(getFilesize(p), "FILESIZE", "fileSize"));
             c.put("FROM", new CategoryValue(FROM, "FROM", "from"));
+            c.put("INSTALLDATE", new CategoryValue(getInstallDate(p), "INSTALLDATE", "installDate"));
 
             this.add(c);
         }
@@ -127,6 +128,24 @@ public class Software extends Categories {
         }
 
         return mName;
+    }
+
+    /**
+     * Get the version of the application
+     * @param ApplicationInfo p
+     * @return string the application version
+     */
+    public String getInstallDate(ApplicationInfo p) {
+        String mInstalled = "";
+
+        try {
+            PackageInfo pi = packageManager.getPackageInfo(p.packageName, PackageManager.GET_META_DATA);
+            mInstalled = String.valueOf(pi.firstInstallTime);
+        } catch (NameNotFoundException e) {
+            FILog.e(e.getMessage());
+        }
+
+        return mInstalled;
     }
 
     /**
