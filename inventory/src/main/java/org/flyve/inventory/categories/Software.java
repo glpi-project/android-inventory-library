@@ -101,13 +101,17 @@ public class Software extends Categories {
 
             Category c = new Category("SOFTWARES", "softwares");
 
+            String fileSize = getFilesize(p);
+
             c.put("NAME", new CategoryValue(getName(p), "NAME", "name"));
             c.put("VERSION", new CategoryValue(getVersion(p), "VERSION", "VERSION"));
-            c.put("FILESIZE", new CategoryValue(getFilesize(p), "FILESIZE", "fileSize"));
+            c.put("FILESIZE", new CategoryValue(fileSize, "FILESIZE", "fileSize"));
             c.put("FROM", new CategoryValue(FROM, "FROM", "from"));
             c.put("INSTALLDATE", new CategoryValue(getInstallDate(p), "INSTALLDATE", "installDate"));
 
-            this.add(c);
+            if(Integer.valueOf(fileSize)>0) {
+                this.add(c);
+            }
         }
     }
 
