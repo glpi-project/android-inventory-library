@@ -2,13 +2,13 @@
 
 ![Flyve MDM banner](https://user-images.githubusercontent.com/663460/26935464-54267e9c-4c6c-11e7-86df-8cfa6658133e.png)
 
-[![License](https://img.shields.io/github/license/flyve-mdm/flyve-mdm-android-inventory.svg?&label=License)](https://github.com/flyve-mdm/flyve-mdm-android-inventory/blob/master/LICENSE.md)
+[![License](https://img.shields.io/github/license/flyve-mdm/android-inventory-library.svg?&label=License)](https://github.com/flyve-mdm/android-inventory-library/blob/master/LICENSE.md)
 [![Follow twitter](https://img.shields.io/twitter/follow/FlyveMDM.svg?style=social&label=Twitter&style=flat-square)](https://twitter.com/FlyveMDM)
 [![Telegram Group](https://img.shields.io/badge/Telegram-Group-blue.svg)](https://t.me/flyvemdm)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
-[![Greenkeeper badge](https://badges.greenkeeper.io/flyve-mdm/flyve-mdm-android-inventory.svg)](https://greenkeeper.io/)
-[![GitHub release](https://img.shields.io/github/release/flyve-mdm/flyve-mdm-android-inventory.svg)](https://github.com/flyve-mdm/flyve-mdm-android-inventory/releases)
-[![Maven Central](https://img.shields.io/maven-central/v/com.flyvemdm/inventory.svg)](https://bintray.com/flyve-mdm/inventory/flyve-mdm-android-inventory/)
+[![Greenkeeper badge](https://badges.greenkeeper.io/flyve-mdm/android-inventory-library.svg)](https://greenkeeper.io/)
+[![GitHub release](https://img.shields.io/github/release/flyve-mdm/android-inventory-library.svg)](https://github.com/flyve-mdm/android-inventory-library/releases)
+[![Maven Central](https://img.shields.io/maven-central/v/com.flyvemdm/inventory.svg)](https://bintray.com/flyve-mdm/inventory/android-inventory-library/)
 
 Flyve MDM is a Mobile device management software that enables you to secure and manage all the mobile devices of your business or family via a web-based console.
 
@@ -51,13 +51,13 @@ You can find more information about the Inventory Protocol here:
 * Usb
 * Battery
 
-Visit our [website](http://flyve.org/flyve-mdm-android-inventory/) for more information.
+Visit our [website](http://flyve.org/android-inventory-library/) for more information.
 
 ## Build Status
 
 | **Release channel** | **Beta channel** |
 |:---:|:---:|
-| [![Build Status](https://circleci.com/gh/flyve-mdm/flyve-mdm-android-inventory/tree/master.svg?style=svg)](https://circleci.com/gh/flyve-mdm/flyve-mdm-android-inventory/tree/master) | [![Build Status](https://circleci.com/gh/flyve-mdm/flyve-mdm-android-inventory/tree/develop.svg?style=svg)](https://circleci.com/gh/flyve-mdm/flyve-mdm-android-inventory/tree/develop) |
+| [![Build Status](https://circleci.com/gh/flyve-mdm/android-inventory-library/tree/master.svg?style=svg)](https://circleci.com/gh/flyve-mdm/android-inventory-library/tree/master) | [![Build Status](https://circleci.com/gh/flyve-mdm/android-inventory-library/tree/develop.svg?style=svg)](https://circleci.com/gh/flyve-mdm/android-inventory-library/tree/develop) |
 
 ## Installation
 
@@ -88,7 +88,7 @@ compile 'org.flyve:inventory:1.0.0'
 </dependency>
 ```
 
-You can also find us on [**Bintray repository**](https://bintray.com/flyve-mdm/inventory/flyve-mdm-android-inventory).
+You can also find us on [**Bintray repository**](https://bintray.com/flyve-mdm/inventory/android-inventory-library).
 
 ## Code Example
 
@@ -120,22 +120,22 @@ inventoryTask.execute()
 
 ## Documentation
 
-We maintain a detailed documentation of the project on its [website](http://flyve.org/flyve-mdm-android-inventory/).
+We maintain a detailed documentation of the project on its [website](http://flyve.org/android-inventory-library/).
 
 ## Versioning
 
 In order to provide transparency on our release cycle and to maintain backward compatibility, Flyve MDM is maintained under [the Semantic Versioning guidelines](http://semver.org/). We are committed to following and complying with the rules, the best we can.
 
-See [the tags section of our GitHub project](http://github.com/flyve-mdm/flyve-mdm-blackberry-admin-dashboard/tags) for changelogs for each release version of Flyve MDM. Release announcement posts on [the official Teclib' blog](http://www.teclib-edition.com/en/communities/blog-posts/) contain summaries of the most noteworthy changes made in each release.
+See [the tags section of our GitHub project](http://github.com/flyve-mdm/android-inventory-library/tags) for changelogs for each release version of Flyve MDM. Release announcement posts on [the official Teclib' blog](http://www.teclib-edition.com/en/communities/blog-posts/) contain summaries of the most noteworthy changes made in each release.
 
 ## Contribute
 
 Want to file a bug, contribute some code, or improve documentation? Excellent! Read up on our
-guidelines for [contributing](./CONTRIBUTING.md) and then check out one of our issues in the [Issues Dashboard](https://github.com/flyve-mdm/flyve-mdm-android-inventory/issues).
+guidelines for [contributing](./CONTRIBUTING.md) and then check out one of our issues in the [Issues Dashboard](https://github.com/flyve-mdm/android-inventory-library/issues).
 
 ## Contact
 
-For notices about major changes and general discussion of Flyve MDM development, subscribe to the [/r/FlyveMDM](http://www.reddit.com/r/FlyveMDM) subreddit. 
+For notices about major changes and general discussion of Flyve MDM development, subscribe to the [/r/FlyveMDM](http://www.reddit.com/r/FlyveMDM) subreddit.
 You can also chat with us via IRC in [#flyve-mdm on freenode](http://webchat.freenode.net/?channels=flyve-mdm).
 Ping me @rafaelje in the IRC chatroom if you get stuck.
 
