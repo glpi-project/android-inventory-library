@@ -60,7 +60,7 @@ public class CreateFileTest {
         mContent.add(categories);
 
         try {
-            String xml = Utils.createXML(mContent, "Agent");
+            String xml = Utils.createXML(appContext, mContent, "Agent");
             assertTrue(true);
         } catch (Exception ex) {
             assertTrue(false);
@@ -78,7 +78,7 @@ public class CreateFileTest {
 
         mContent.add(categories);
 
-        String json = Utils.createJSON(mContent, "Agent");
+        String json = Utils.createJSON(appContext, mContent, "Agent");
 
         try {
             JSONObject objJson = new JSONObject(json);

@@ -80,7 +80,6 @@ public class InventoryTaskTest {
     public void getJSONsyncTest() throws Exception {
         InventoryTask task = new InventoryTask(appContext, "test", true);
         String data = task.getJSONSync();
-        Log.d("Success Library JSON: ", data);
         assertNotEquals("", data);
     }
 
