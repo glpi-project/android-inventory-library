@@ -271,8 +271,8 @@ public class Utils {
 
     /**
      * Logs the message in a directory
-     * @param string the message
-     * @param string the filename
+     * @param message the message
+     * @param filename name of the file
      */
     public static void storeFile(String message, String filename) {
         String state = Environment.getExternalStorageState();
