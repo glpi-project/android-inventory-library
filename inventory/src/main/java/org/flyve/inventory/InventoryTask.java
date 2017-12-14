@@ -166,7 +166,7 @@ public class InventoryTask {
 
                 try {
                     ArrayList<Categories> mContent = loadCategoriesClass();
-                    final String xml = createXML(mContent, InventoryTask.this.appVersion);
+                    final String xml = createXML(ctx, mContent, InventoryTask.this.appVersion);
 
                     if(storeResult) {
                         Utils.storeFile(xml, fileNameXML);
@@ -206,7 +206,7 @@ public class InventoryTask {
 
                 try {
                     ArrayList<Categories> mContent = loadCategoriesClass();
-                    final String json = Utils.createJSON(mContent, InventoryTask.this.appVersion);
+                    final String json = Utils.createJSON(ctx, mContent, InventoryTask.this.appVersion);
 
                     if(storeResult) {
                         Utils.storeFile(json, fileNameJSON);
@@ -238,7 +238,7 @@ public class InventoryTask {
     public String getJSONSync() {
         try {
             ArrayList<Categories> mContent = loadCategoriesClass();
-            String json = Utils.createJSON(mContent, InventoryTask.this.appVersion);
+            String json = Utils.createJSON(ctx, mContent, InventoryTask.this.appVersion);
 
             if(storeResult) {
                 Utils.storeFile(json, fileNameJSON);
@@ -258,7 +258,7 @@ public class InventoryTask {
     public String getXMLSyn() {
         try {
             ArrayList<Categories> mContent = loadCategoriesClass();
-            String xml = Utils.createXML(mContent, InventoryTask.this.appVersion);
+            String xml = Utils.createXML(ctx, mContent, InventoryTask.this.appVersion);
 
             if(storeResult) {
                 Utils.storeFile(xml, fileNameXML);
