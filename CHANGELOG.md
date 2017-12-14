@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.4.0"></a>
+# [0.4.0](https://github.com/flyve-mdm/flyve-mdm-android-inventory/compare/0.3.0...0.4.0) (2017-12-14)
+
+
+### Bug Fixes
+
+* **input:** update the input information ([3917419](https://github.com/flyve-mdm/flyve-mdm-android-inventory/commit/3917419))
+* **package:** update conventional-github-releaser to version 2.0.0 ([47af446](https://github.com/flyve-mdm/flyve-mdm-android-inventory/commit/47af446))
+* **simcard:** if the state is SIM_STATE_UNKNOWN then not show simcard ([1cee246](https://github.com/flyve-mdm/flyve-mdm-android-inventory/commit/1cee246))
+* **software:** update tag from software to softwares ([661cdfb](https://github.com/flyve-mdm/flyve-mdm-android-inventory/commit/661cdfb))
+
+
+### Features
+
+* **inventory:** add mac address on DeviceID tag ([7cabeba](https://github.com/flyve-mdm/flyve-mdm-android-inventory/commit/7cabeba))
+* **software:** add install date ([13ae1a1](https://github.com/flyve-mdm/flyve-mdm-android-inventory/commit/13ae1a1))
+* **software:** validate if filesize is mayor than 0 ([e8149f0](https://github.com/flyve-mdm/flyve-mdm-android-inventory/commit/e8149f0))
+
+
+
 <a name="0.3.0"></a>
 # [0.3.0](https://github.com/flyve-mdm/flyve-mdm-android-inventory/compare/0.2.0...0.3.0) (2017-10-13)
 
