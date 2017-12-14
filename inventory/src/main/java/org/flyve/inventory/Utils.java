@@ -1,5 +1,6 @@
 package org.flyve.inventory;
 
+import android.content.Context;
 import android.os.Build;
 import android.os.Environment;
 import android.text.format.DateFormat;
@@ -7,6 +8,7 @@ import android.util.Log;
 import android.util.Xml;
 
 import org.flyve.inventory.categories.Categories;
+import org.flyve.inventory.categories.Networks;
 import org.json.JSONObject;
 import org.xmlpull.v1.XmlSerializer;
 
@@ -135,13 +137,13 @@ public class Utils {
 
     /**
      * Create a JSON String with al the Categories available
-     * @param mContent ArrayList with the categories
+     * @param categories ArrayList with the categories
      * @param appVersion Name of the agent
      * @return String with JSON
      * @throws FlyveException Exception
      */
 
-    protected static String createJSON(ArrayList<Categories> mContent, String appVersion) throws FlyveException {
+    protected static String createJSON(Context context, ArrayList<Categories> categories, String appVersion) throws FlyveException {
 
         try {
 
@@ -157,14 +159,14 @@ public class Utils {
             content.put("accessLog", jsonAccessLog);
             content.put("accountInfo", jsonAccessLog);
 
-            for (Categories cat : mContent) {
+            for (Categories cat : categories) {
                 cat.toJSON(content);
             }
 
             JSONObject jsonQuery = new JSONObject();
             jsonQuery.put("query", "INVENTORY");
             jsonQuery.put("versionClient", appVersion);
-            jsonQuery.put("deviceId", Build.SERIAL);
+            jsonQuery.put("deviceId", Build.SERIAL + "_" + new Networks(context).getMacaddr());
             jsonQuery.put("content", content);
 
             JSONObject jsonRequest = new JSONObject();
@@ -180,15 +182,15 @@ public class Utils {
 
     /**
      * Create a XML String with al the Categories available
-     * @param mContent ArrayList with the categories
+     * @param categories ArrayList with the categories
      * @param appVersion Name of the agent
      * @return String with XML
      * @throws FlyveException Exception
      */
-    protected static String createXML(ArrayList<Categories> mContent, String appVersion) throws FlyveException {
+    protected static String createXML(Context context, ArrayList<Categories> categories, String appVersion) throws FlyveException {
         FILog.i("createXML: ");
 
-        if (mContent != null) {
+        if (categories != null) {
             XmlSerializer serializer = Xml.newSerializer();
             StringWriter writer = new StringWriter();
 
@@ -212,7 +214,8 @@ public class Utils {
                 serializer.endTag(null, "VERSIONCLIENT");
 
                 serializer.startTag(null, "DEVICEID");
-                serializer.text(Build.SERIAL);
+
+                serializer.text(Build.SERIAL + "_" + new Networks(context).getMacaddr());
                 serializer.endTag(null, "DEVICEID");
 
                 // Start CONTENT
@@ -242,7 +245,7 @@ public class Utils {
                 serializer.endTag(null, "KEYVALUE");
                 serializer.endTag(null, "ACCOUNTINFO");
 
-                for (Categories cat : mContent) {
+                for (Categories cat : categories) {
 
                     cat.toXML(serializer);
                 }
