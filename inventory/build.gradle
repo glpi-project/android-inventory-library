@@ -39,7 +39,7 @@ if(project.rootProject.file('local.properties').exists()) {
 
 ext {
     bintrayRepo = 'inventory'
-    bintrayName = 'flyve-mdm-android-inventory'
+    bintrayName = 'android-inventory-library'
     bintrayUserOrg = "flyve-mdm"
 
     publishedGroupId = 'org.flyve'
@@ -48,8 +48,8 @@ ext {
 
     libraryDescription = 'Inventory client library written in Java for developing applications on Android'
 
-    siteUrl = 'https://github.com/flyve-mdm/flyve-mdm-android-inventory'
-    gitUrl = 'https://github.com/flyve-mdm/flyve-mdm-android-inventory.git'
+    siteUrl = 'https://github.com/flyve-mdm/android-inventory-library'
+    gitUrl = 'https://github.com/flyve-mdm/android-inventory-library.git'
 
     libraryVersion = properties.getProperty("version")
 
