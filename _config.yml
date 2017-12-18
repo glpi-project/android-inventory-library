@@ -1,9 +1,9 @@
 title: android inventory
 email: ml-flyvemdm@teclib.com
 twitter: flyvemdm
-baseurl: "/flyve-mdm-android-inventory"
+baseurl: "/android-inventory-library"
 url: "http://flyve.org"   
-image: http://flyve.org/flyve-mdm-android-inventory/images/logo2.png
+image: http://flyve.org/android-inventory-library/images/logo2.png
 
 # Build settings
 markdown: kramdown
@@ -13,7 +13,7 @@ plugins:
   - jekyll-feed
   - jekyll-sitemap
 
-repository: flyve-mdm/flyve-mdm-android-inventory
+repository: flyve-mdm/android-inventory-library
 
 sass:
     style: compressed
