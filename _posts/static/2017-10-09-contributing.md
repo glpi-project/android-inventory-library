@@ -1,9 +1,9 @@
 ---
 layout: post
-wiki: true
+howtos: true
 published: true
 title: Contributing
-permalink: wiki/contributing
+permalink: howtos/contribute
 description: The guidelines to start
 ---
 Welcome to our ever growing community! We are more than happy to accept external contributions to the [Android Inventory](https://github.com/flyve-mdm/flyve-mdm-android-inventory) project in the form of feedback, bug reports and even better, pull requests!
