@@ -1,13 +1,16 @@
----
-layout: modal
-title: changelog
----
 # Change Log
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-<a name="0.5.3"></a>
-## [0.5.3](https://github.com/flyve-mdm/android-inventory-library/compare/0.5.2...0.5.3) (2017-12-18)
+<a name="0.6.0"></a>
+# [0.6.0](https://github.com/flyve-mdm/android-inventory-library/compare/0.5.2...0.6.0) (2018-01-16)
+
+
+### Features
+
+* **privacy:** add private fields ([f1ff290](https://github.com/flyve-mdm/android-inventory-library/commit/f1ff290))
+* **private:** add private parameter ([137f026](https://github.com/flyve-mdm/android-inventory-library/commit/137f026))
+* **private:** implement private data method ([92fc1eb](https://github.com/flyve-mdm/android-inventory-library/commit/92fc1eb))
 
 
 
