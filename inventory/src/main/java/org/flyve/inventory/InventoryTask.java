@@ -42,8 +42,6 @@ import org.flyve.inventory.categories.Categories;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 
-import static org.flyve.inventory.Utils.createXML;
-
 /**
  * This class generate the XML file
  */
@@ -166,7 +164,47 @@ public class InventoryTask {
 
                 try {
                     ArrayList<Categories> mContent = loadCategoriesClass();
-                    final String xml = createXML(ctx, mContent, InventoryTask.this.appVersion);
+                    final String xml = Utils.createXML(ctx, mContent, InventoryTask.this.appVersion);
+
+                    if(storeResult) {
+                        Utils.storeFile(xml, fileNameXML);
+                    }
+
+                    InventoryTask.runOnUI(new Runnable() {
+                        public void run() {
+                            running = false;
+                            listener.onTaskSuccess( xml );
+                        }
+                    });
+                } catch (final Exception ex) {
+
+                    InventoryTask.runOnUI(new Runnable() {
+                        public void run() {
+                            running = false;
+                            listener.onTaskError( ex.getCause() );
+                        }
+                    });
+
+                }
+            }
+        });
+        t.start();
+    }
+
+    /**
+     * Return a XML String or Error OnTaskCompleted interface
+     * @param listener the interface OnTaskCompleted
+     */
+    public void getXMLWithoutPrivateData(final OnTaskCompleted listener) {
+
+        running = true;
+        Thread t = new Thread(new Runnable()
+        {
+            public void run() {
+
+                try {
+                    ArrayList<Categories> mContent = loadCategoriesClass();
+                    final String xml = Utils.createXMLWithoutPrivateData(ctx, mContent, InventoryTask.this.appVersion);
 
                     if(storeResult) {
                         Utils.storeFile(xml, fileNameXML);
@@ -207,6 +245,45 @@ public class InventoryTask {
                 try {
                     ArrayList<Categories> mContent = loadCategoriesClass();
                     final String json = Utils.createJSON(ctx, mContent, InventoryTask.this.appVersion);
+
+                    if(storeResult) {
+                        Utils.storeFile(json, fileNameJSON);
+                    }
+
+                    InventoryTask.runOnUI(new Runnable() {
+                        public void run() {
+                            running = false;
+                            listener.onTaskSuccess( json );
+                        }
+                    });
+
+                } catch (final Exception ex) {
+                    InventoryTask.runOnUI(new Runnable() {
+                        public void run() {
+                            running = false;
+                            listener.onTaskError( ex.getCause() );
+                        }
+                    });
+                }
+            }
+        });
+        t.start();
+    }
+
+    /**
+     * Return a JSON String or Error OnTaskCompleted interface
+     * @param listener the interface OnTaskCompleted
+     */
+    public void getJSONWithoutPrivateData(final OnTaskCompleted listener) {
+
+        running = true;
+        Thread t = new Thread(new Runnable()
+        {
+            public void run() {
+
+                try {
+                    ArrayList<Categories> mContent = loadCategoriesClass();
+                    final String json = Utils.createJSONWithoutPrivateData(ctx, mContent, InventoryTask.this.appVersion);
 
                     if(storeResult) {
                         Utils.storeFile(json, fileNameJSON);

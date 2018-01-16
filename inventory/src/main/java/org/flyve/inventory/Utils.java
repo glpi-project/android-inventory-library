@@ -181,6 +181,51 @@ public class Utils {
     }
 
     /**
+     * Create a JSON String with al the Categories available
+     * @param categories ArrayList with the categories
+     * @param appVersion Name of the agent
+     * @return String with JSON
+     * @throws FlyveException Exception
+     */
+
+    protected static String createJSONWithoutPrivateData(Context context, ArrayList<Categories> categories, String appVersion) throws FlyveException {
+
+        try {
+
+            JSONObject accountInfo = new JSONObject();
+            accountInfo.put("keyName", "TAG");
+            accountInfo.put("keyValue", "N/A");
+
+            JSONObject jsonAccessLog = new JSONObject();
+            jsonAccessLog.put("logDate", DateFormat.format("yyyy-MM-dd H:mm:ss", new Date()).toString());
+            jsonAccessLog.put("userId", "N/A");
+
+            JSONObject content = new JSONObject();
+            content.put("accessLog", jsonAccessLog);
+            content.put("accountInfo", jsonAccessLog);
+
+            for (Categories cat : categories) {
+                cat.toJSONWithoutPrivateData(content);
+            }
+
+            JSONObject jsonQuery = new JSONObject();
+            jsonQuery.put("query", "INVENTORY");
+            jsonQuery.put("versionClient", appVersion);
+            jsonQuery.put("deviceId", Build.SERIAL + "_" + new Networks(context).getMacaddr());
+            jsonQuery.put("content", content);
+
+            JSONObject jsonRequest = new JSONObject();
+            jsonRequest.put("request", jsonQuery);
+
+            return jsonRequest.toString();
+
+        } catch (Exception ex) {
+            e(ex.getMessage());
+            throw new FlyveException(ex.getMessage(), ex.getCause());
+        }
+    }
+
+    /**
      * Create a XML String with al the Categories available
      * @param categories ArrayList with the categories
      * @param appVersion Name of the agent
@@ -248,6 +293,94 @@ public class Utils {
                 for (Categories cat : categories) {
 
                     cat.toXML(serializer);
+                }
+
+                serializer.endTag(null, "CONTENT");
+                // End CONTENT
+                serializer.endTag(null, "REQUEST");
+                // End REQUEST
+
+                serializer.endDocument();
+
+                // Return XML String
+                return writer.toString();
+
+            } catch (Exception ex) {
+                e(ex.getMessage());
+                throw new FlyveException(ex.getMessage(), ex.getCause());
+            }
+        }
+
+        return "";
+    }
+
+    /**
+     * Create a XML String with al the Categories available
+     * @param categories ArrayList with the categories
+     * @param appVersion Name of the agent
+     * @return String with XML
+     * @throws FlyveException Exception
+     */
+    protected static String createXMLWithoutPrivateData(Context context, ArrayList<Categories> categories, String appVersion) throws FlyveException {
+        FILog.i("createXML: ");
+
+        if (categories != null) {
+            XmlSerializer serializer = Xml.newSerializer();
+            StringWriter writer = new StringWriter();
+
+            try {
+                serializer.setOutput(writer);
+                serializer
+                        .setFeature(
+                                "http://xmlpull.org/v1/doc/features.html#indent-output",
+                                true);
+                // indentation as 3 spaces
+
+                serializer.startDocument("utf-8", true);
+                // Start REQUEST
+                serializer.startTag(null, "REQUEST");
+                serializer.startTag(null, "QUERY");
+                serializer.text("INVENTORY");
+                serializer.endTag(null, "QUERY");
+
+                serializer.startTag(null, "VERSIONCLIENT");
+                serializer.text(appVersion);
+                serializer.endTag(null, "VERSIONCLIENT");
+
+                serializer.startTag(null, "DEVICEID");
+
+                serializer.text(Build.SERIAL + "_" + new Networks(context).getMacaddr());
+                serializer.endTag(null, "DEVICEID");
+
+                // Start CONTENT
+                serializer.startTag(null, "CONTENT");
+
+                // Start ACCESSLOG
+                serializer.startTag(null, "ACCESSLOG");
+
+                serializer.startTag(null, "LOGDATE");
+                serializer.text(DateFormat.format("yyyy-MM-dd H:mm:ss", new Date()).toString());
+                serializer.endTag(null, "LOGDATE");
+
+                serializer.startTag(null, "USERID");
+                serializer.text("N/A");
+                serializer.endTag(null, "USERID");
+
+                serializer.endTag(null, "ACCESSLOG");
+                // End ACCESSLOG
+
+                serializer.startTag(null, "ACCOUNTINFO");
+                serializer.startTag(null, "KEYNAME");
+                serializer.text("TAG");
+                serializer.endTag(null, "KEYNAME");
+                serializer.startTag(null, "KEYVALUE");
+
+                serializer.text("");
+                serializer.endTag(null, "KEYVALUE");
+                serializer.endTag(null, "ACCOUNTINFO");
+
+                for (Categories cat : categories) {
+                    cat.toXMLWithoutPrivateData(serializer);
                 }
 
                 serializer.endTag(null, "CONTENT");

@@ -58,7 +58,7 @@ public class Categories extends ArrayList<Category>{
 
     /**
      * Indicates whether some other object is "equal to" this one
-     * @param Object obj the reference object with which to compare
+     * @param obj the reference object with which to compare
      * @return boolean true if the object is the same as the one given in argument
      */
     @Override
@@ -105,6 +105,20 @@ public class Categories extends ArrayList<Category>{
         }
     }
 
+    /**
+     *  Create a XML object
+     * @param xSerializer object to create XML
+     */
+    public void toXMLWithoutPrivateData(XmlSerializer xSerializer) {
+        try {
+            for( Category c : this) {
+                c.toXMLWithoutPrivateData(xSerializer);
+            }
+        } catch (Exception e) {
+            FILog.e(e.getMessage());
+        }
+    }
+
     public void toJSON(JSONObject json) {
 
         JSONArray jsonArr = new JSONArray();
@@ -113,6 +127,22 @@ public class Categories extends ArrayList<Category>{
             for( Category c : this) {
                 mType = c.getTagName();
                 jsonArr.put(c.toJSON());
+            }
+
+            json.put(mType, jsonArr);
+        } catch (Exception e) {
+            FILog.e(e.getMessage());
+        }
+    }
+
+    public void toJSONWithoutPrivateData(JSONObject json) {
+
+        JSONArray jsonArr = new JSONArray();
+        String mType = "";
+        try {
+            for( Category c : this) {
+                mType = c.getTagName();
+                jsonArr.put(c.toJSONWithoutPrivateData());
             }
 
             json.put(mType, jsonArr);
