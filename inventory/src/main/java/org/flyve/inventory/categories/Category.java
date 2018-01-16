@@ -130,10 +130,10 @@ public class Category extends LinkedHashMap<String, CategoryValue> {
     }
 
     /**
-     * This is a private function that create a XML node with a XmlSerializer object
+     * This is a public function that create a XML node with a XmlSerializer object
      * @param serializer object
      */
-    void toXML(XmlSerializer serializer) throws FlyveException {
+    public void toXML(XmlSerializer serializer) throws FlyveException {
 
         try {
             serializer.startTag(null, mType);
@@ -150,14 +150,48 @@ public class Category extends LinkedHashMap<String, CategoryValue> {
         }
     }
 
+    public void toXMLWithoutPrivateData(XmlSerializer serializer) throws FlyveException {
+        try {
+            serializer.startTag(null, mType);
+
+            for (Map.Entry<String, CategoryValue> entry : this.entrySet()) {
+                if(!this.get(entry.getKey()).isPrivate()) {
+                    serializer.startTag(null, this.get(entry.getKey()).getXmlName());
+                    serializer.text(String.valueOf(this.get(entry.getKey()).getValue()));
+                    serializer.endTag(null, this.get(entry.getKey()).getXmlName());
+                }
+            }
+
+            serializer.endTag(null, mType);
+        } catch (Exception ex) {
+            throw new FlyveException(ex.getMessage(), ex.getCause());
+        }
+    }
+
     /**
-     * This is a private function that create a JSON
+     * This is a public function that create a JSON
      */
-    JSONObject toJSON() throws FlyveException {
+    public JSONObject toJSON() throws FlyveException {
         try {
             JSONObject jsonCategories = new JSONObject();
             for (Map.Entry<String,CategoryValue> entry : this.entrySet()) {
                 jsonCategories.put(this.get(entry.getKey()).getJsonName(), this.get(entry.getKey()).getValue());
+            }
+
+            return jsonCategories;
+        } catch ( Exception ex ) {
+            FILog.e( ex.getMessage() );
+            throw new FlyveException(ex.getMessage(), ex.getCause());
+        }
+    }
+
+    public JSONObject toJSONWithoutPrivateData() throws FlyveException {
+        try {
+            JSONObject jsonCategories = new JSONObject();
+            for (Map.Entry<String,CategoryValue> entry : this.entrySet()) {
+                if(!this.get(entry.getKey()).isPrivate()) {
+                    jsonCategories.put(this.get(entry.getKey()).getJsonName(), this.get(entry.getKey()).getValue());
+                }
             }
 
             return jsonCategories;
