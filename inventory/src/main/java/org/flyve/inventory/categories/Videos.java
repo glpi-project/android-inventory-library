@@ -37,6 +37,8 @@ import android.graphics.Point;
 import android.os.Build;
 import android.view.WindowManager;
 
+import org.flyve.inventory.FILog;
+
 /**
  * This class get all the information of the Video
  */
@@ -89,9 +91,14 @@ public class Videos extends Categories {
     public Videos(Context xCtx) {
         super(xCtx);
         this.xCtx = xCtx;
-        Category c = new Category("VIDEOS", "videos");
-        c.put("RESOLUTION" , new CategoryValue(getResolution(), "RESOLUTION", "resolution"));
-        this.add(c);
+
+        try {
+            Category c = new Category("VIDEOS", "videos");
+            c.put("RESOLUTION", new CategoryValue(getResolution(), "RESOLUTION", "resolution"));
+            this.add(c);
+        } catch (Exception ex) {
+            FILog.e(ex.getMessage());
+        }
     }
 
     /**
@@ -99,17 +106,13 @@ public class Videos extends Categories {
      * @return string the width and height
      */
     public String getResolution() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            WindowManager lWinMgr = (WindowManager) xCtx.getSystemService(Service.WINDOW_SERVICE);
-            Point size = new Point();
-            lWinMgr.getDefaultDisplay().getSize(size);
+        WindowManager lWinMgr = (WindowManager) xCtx.getSystemService(Service.WINDOW_SERVICE);
+        Point size = new Point();
+        lWinMgr.getDefaultDisplay().getSize(size);
 
-            int width = size.x;
-            int height = size.y;
+        int width = size.x;
+        int height = size.y;
 
-            return String.format("%dx%d", width, height);
-        } else {
-            return "";
-        }
+        return String.format("%dx%d", width, height);
     }
 }
