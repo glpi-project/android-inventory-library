@@ -34,6 +34,8 @@ package org.flyve.inventory.categories;
 import android.content.Context;
 import android.telephony.TelephonyManager;
 
+import org.flyve.inventory.FILog;
+
 /**
  * This class get all the information of the Simcards Devices
  */
@@ -55,7 +57,7 @@ public class Simcards extends Categories {
 
     /**
      * Indicates whether some other object is "equal to" this one
-     * @param Object obj the reference object with which to compare
+     * @param obj the reference object with which to compare
      * @return boolean true if the object is the same as the one given in argument
      */
     @Override
@@ -86,24 +88,28 @@ public class Simcards extends Categories {
      */
     public Simcards(Context xCtx) {
         super(xCtx);
-        
-        mTM = (TelephonyManager) xCtx.getSystemService(Context.TELEPHONY_SERVICE);
 
-        /*
-         * Starting SimCards Informations retrieval
-         */
-        if(getState().equals("SIM_STATE_UNKNOWN")) {
-            Category c = new Category("SIMCARDS", "simcards");
+        try {
+            mTM = (TelephonyManager) xCtx.getSystemService(Context.TELEPHONY_SERVICE);
 
-            c.put("COUNTRY", new CategoryValue(getCountry(), "COUNTRY", "country"));
-            c.put("OPERATOR_CODE", new CategoryValue(getOperatorCode(), "OPERATOR_CODE", "operatorCode"));
-            c.put("OPERATOR_NAME", new CategoryValue(getOperatorName(), "OPERATOR_NAME", "operatorName"));
-            c.put("SERIAL", new CategoryValue(getSerial(), "SERIAL", "serial"));
-            c.put("STATE", new CategoryValue(getState(), "STATE", "state"));
-            c.put("LINE_NUMBER", new CategoryValue(getLineNumber(), "LINE_NUMBER", "lineNumber"));
-            c.put("SUBSCRIBER_ID", new CategoryValue(getSubscriberId(), "SUBSCRIBER_ID", "subscriberId"));
+            /*
+             * Starting SimCards information retrieval
+             */
+            if (getState().equals("SIM_STATE_UNKNOWN")) {
+                Category c = new Category("SIMCARDS", "simcards");
 
-            this.add(c);
+                c.put("COUNTRY", new CategoryValue(getCountry(), "COUNTRY", "country"));
+                c.put("OPERATOR_CODE", new CategoryValue(getOperatorCode(), "OPERATOR_CODE", "operatorCode"));
+                c.put("OPERATOR_NAME", new CategoryValue(getOperatorName(), "OPERATOR_NAME", "operatorName"));
+                c.put("SERIAL", new CategoryValue(getSerial(), "SERIAL", "serial"));
+                c.put("STATE", new CategoryValue(getState(), "STATE", "state"));
+                c.put("LINE_NUMBER", new CategoryValue(getLineNumber(), "LINE_NUMBER", "lineNumber"));
+                c.put("SUBSCRIBER_ID", new CategoryValue(getSubscriberId(), "SUBSCRIBER_ID", "subscriberId"));
+
+                this.add(c);
+            }
+        } catch (Exception ex) {
+            FILog.e(ex.getMessage());
         }
     }
 
