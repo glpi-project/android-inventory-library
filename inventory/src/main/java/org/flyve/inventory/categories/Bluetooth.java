@@ -34,6 +34,8 @@ package org.flyve.inventory.categories;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 
+import org.flyve.inventory.FILog;
+
 /**
  * This class get all the information of the Bluetooth
  */
@@ -88,14 +90,18 @@ public class Bluetooth extends Categories {
         adapter = BluetoothAdapter.getDefaultAdapter();
 
         if(adapter != null) {
-            Category c = new Category("BLUETOOTH_ADAPTER", "bluetoothAdapter");
+            try {
+                Category c = new Category("BLUETOOTH_ADAPTER", "bluetoothAdapter");
 
-            // The hardware address of the local Bluetooth adapter.
-            c.put("HMAC", new CategoryValue(getHardwareAddress(),"HMAC","hardwareAddress"));
+                // The hardware address of the local Bluetooth adapter.
+                c.put("HMAC", new CategoryValue(getHardwareAddress(), "HMAC", "hardwareAddress"));
 
-            // This name is visible to remote Bluetooth devices.
-            c.put("NAME", new CategoryValue(getName(),"NAME","name"));
-            this.add(c);
+                // This name is visible to remote Bluetooth devices.
+                c.put("NAME", new CategoryValue(getName(), "NAME", "name"));
+                this.add(c);
+            } catch (Exception ex) {
+                FILog.e(ex.getMessage());
+            }
         }
     }
 
