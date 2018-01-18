@@ -34,7 +34,8 @@ package org.flyve.inventory.categories;
 import android.content.Context;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
-import android.os.Build;
+
+import org.flyve.inventory.FILog;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -64,7 +65,7 @@ public class Usb extends Categories {
         super(xCtx);
         
         //USB inventory comes with SDK level 12 !
-        if(Build.VERSION.SDK_INT > 12) {
+        try {
 
 	        UsbManager manager = (UsbManager) xCtx.getSystemService(Context.USB_SERVICE);
 	        HashMap<String, UsbDevice> devices = manager.getDeviceList();
@@ -80,12 +81,15 @@ public class Usb extends Categories {
 
 				this.add(c);
 			}
-        }
+        } catch (Exception ex) {
+			FILog.e(ex.getMessage());
+		}
+
     }
 
 	/**
 	 * Get the device's class field
-	 * @param UsbDevice mydevice
+	 * @param mydevice UsbDevice
 	 * @return string the device's class
 	 */
 	public String getClass(UsbDevice mydevice) {
@@ -94,7 +98,7 @@ public class Usb extends Categories {
 
 	/**
 	 * Get the product ID
-	 * @param UsbDevice mydevice
+	 * @param mydevice UsbDevice
 	 * @return string the product ID for the device
 	 */
 	public String getProductid(UsbDevice mydevice) {
@@ -103,7 +107,7 @@ public class Usb extends Categories {
 
 	/**
 	 * Get the vendor ID
-	 * @param UsbDevice mydevice
+	 * @param mydevice UsbDevice
 	 * @return string the vendor ID for the device
 	 */
 	public String getVendorid(UsbDevice mydevice) {
@@ -112,7 +116,7 @@ public class Usb extends Categories {
 
 	/**
 	 * Get the device's subclass field
-	 * @param UsbDevice mydevice
+	 * @param mydevice UsbDevice
 	 * @return string the device's subclass
 	 */
 	public String getSubclass(UsbDevice mydevice) {
