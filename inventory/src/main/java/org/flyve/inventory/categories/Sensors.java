@@ -35,6 +35,8 @@ import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 
+import org.flyve.inventory.FILog;
+
 import java.util.List;
 
 /**
@@ -60,25 +62,30 @@ public class Sensors extends Categories {
 	 */
 	public Sensors(Context xCtx) {
 		super(xCtx);
-		SensorManager sensorManager = (SensorManager) xCtx.getSystemService(Context.SENSOR_SERVICE);
-		List<Sensor> sensors = sensorManager.getSensorList(Sensor.TYPE_ALL);
 
-		for (Sensor s : sensors) {
-			Category c = new Category("SENSORS", "sensors");
+		try {
+			SensorManager sensorManager = (SensorManager) xCtx.getSystemService(Context.SENSOR_SERVICE);
+			List<Sensor> sensors = sensorManager.getSensorList(Sensor.TYPE_ALL);
 
-			c.put("NAME", new CategoryValue(getName(s), "NAME", "name"));
-			c.put("MANUFACTURER", new CategoryValue(getManufacturer(s), "NAME", "manufacturer"));
-			c.put("TYPE", new CategoryValue(getType(s), "TYPE", "type"));
-			c.put("POWER", new CategoryValue(getPower(s), "POWER", "power"));
-			c.put("VERSION", new CategoryValue(getVersion(s), "VERSION", "version"));
+			for (Sensor s : sensors) {
+				Category c = new Category("SENSORS", "sensors");
 
-			this.add(c);
+				c.put("NAME", new CategoryValue(getName(s), "NAME", "name"));
+				c.put("MANUFACTURER", new CategoryValue(getManufacturer(s), "NAME", "manufacturer"));
+				c.put("TYPE", new CategoryValue(getType(s), "TYPE", "type"));
+				c.put("POWER", new CategoryValue(getPower(s), "POWER", "power"));
+				c.put("VERSION", new CategoryValue(getVersion(s), "VERSION", "version"));
+
+				this.add(c);
+			}
+		} catch (Exception ex) {
+			FILog.e(ex.getMessage());
 		}
 	}
 
 	/**
 	 * Get the name of the sensor
-	 * @param Sensor s
+	 * @param s Sensor
 	 * @return string the sensor name
 	 */
 	public String getName(Sensor s) {
@@ -87,7 +94,7 @@ public class Sensors extends Categories {
 
 	/**
 	 * Get the Manufacturer of the sensor
-	 * @param Sensor s
+	 * @param s Sensor
 	 * @return string the vendor of the sensor
 	 */
 	public String getManufacturer(Sensor s) {
@@ -96,7 +103,7 @@ public class Sensors extends Categories {
 
 	/**
 	 * Get the type of the sensor
-	 * @param Sensor s
+	 * @param s Sensor
 	 * @return string the sensor type
 	 */
 	public String getType(Sensor s) {
@@ -136,7 +143,7 @@ public class Sensors extends Categories {
 
 	/**
 	 * Get the power of the sensor
-	 * @param Sensor s
+	 * @param s Sensor
 	 * @return string the power used by the sensor while in use
 	 */
 	public String getPower(Sensor s) {
@@ -145,7 +152,7 @@ public class Sensors extends Categories {
 
 	/**
 	 * Get the version of the sensor's module
-	 * @param Sensor s
+	 * @param s Sensor
 	 * @return string the version
 	 */
 	public String getVersion(Sensor s) {
