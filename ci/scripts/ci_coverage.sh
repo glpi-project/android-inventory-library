@@ -27,7 +27,7 @@
 #
 
 # create code coverage report
-./gradlew createDebugCoverageReport
+./gradlew :inventory:createDebugCoverageReport
 
 # move code coverage
 mv -v inventory/build/reports/coverage reports
