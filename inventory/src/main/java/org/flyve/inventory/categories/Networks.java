@@ -95,37 +95,41 @@ public class Networks extends Categories {
 	public Networks(Context xCtx) {
 		super(xCtx);
 
-		WifiManager pWM = (WifiManager) xCtx.getSystemService(Service.WIFI_SERVICE);
-		boolean wasWifiEnabled = pWM.isWifiEnabled();
+		try {
+			WifiManager pWM = (WifiManager) xCtx.getSystemService(Service.WIFI_SERVICE);
+			boolean wasWifiEnabled = pWM.isWifiEnabled();
 
-		// Enable Wifi State if not
-		if (!wasWifiEnabled) {
-			pWM.setWifiEnabled(true);
-		}
-		Category c = new Category("NETWORKS", "networks");
-		c.put("TYPE", new CategoryValue(TYPE, "TYPE", "type"));
+			// Enable Wifi State if not
+			if (!wasWifiEnabled) {
+				pWM.setWifiEnabled(true);
+			}
+			Category c = new Category("NETWORKS", "networks");
+			c.put("TYPE", new CategoryValue(TYPE, "TYPE", "type"));
 
-		dhcp = pWM.getDhcpInfo();
-		wifi = pWM.getConnectionInfo();
+			dhcp = pWM.getDhcpInfo();
+			wifi = pWM.getConnectionInfo();
 
-		FILog.d("<===WIFI DHCP===>");
-		FILog.d("dns1=" + StringUtils.intToIp(dhcp.dns1));
-		FILog.d("dns2=" + StringUtils.intToIp(dhcp.dns2));
-		FILog.d("leaseDuration=" + dhcp.leaseDuration);
+			FILog.d("<===WIFI DHCP===>");
+			FILog.d("dns1=" + StringUtils.intToIp(dhcp.dns1));
+			FILog.d("dns2=" + StringUtils.intToIp(dhcp.dns2));
+			FILog.d("leaseDuration=" + dhcp.leaseDuration);
 
-		c.put("MACADDR", new CategoryValue(getMacaddr(), "MACADDR", "macAddress"));
-		c.put("SPEED", new CategoryValue(getSpeed(), "SPEED", "speed"));
-		c.put("BSSID", new CategoryValue(getBSSID(), "BSSID", "bssid"));
-		c.put("SSID", new CategoryValue(getSSID(), "SSID", "ssid"));
-		c.put("IPGATEWAY", new CategoryValue(getIpgateway(), "IPGATEWAY", "ipGateway"));
-		c.put("IPADDRESS", new CategoryValue(getIpaddress(), "IPADDRESS", "ipAddress", true));
-		c.put("IPMASK", new CategoryValue(getIpmask(), "IPMASK", "ipMask", true));
-		c.put("IPDHCP", new CategoryValue(getIpdhcp(), "IPDHCP", "ipDhcp", true));
+			c.put("MACADDR", new CategoryValue(getMacaddr(), "MACADDR", "macAddress"));
+			c.put("SPEED", new CategoryValue(getSpeed(), "SPEED", "speed"));
+			c.put("BSSID", new CategoryValue(getBSSID(), "BSSID", "bssid"));
+			c.put("SSID", new CategoryValue(getSSID(), "SSID", "ssid"));
+			c.put("IPGATEWAY", new CategoryValue(getIpgateway(), "IPGATEWAY", "ipGateway"));
+			c.put("IPADDRESS", new CategoryValue(getIpaddress(), "IPADDRESS", "ipAddress", true));
+			c.put("IPMASK", new CategoryValue(getIpmask(), "IPMASK", "ipMask", true));
+			c.put("IPDHCP", new CategoryValue(getIpdhcp(), "IPDHCP", "ipDhcp", true));
 
-		this.add(c);
-		// Restore Wifi State
-		if (!wasWifiEnabled) {
-			pWM.setWifiEnabled(false);
+			this.add(c);
+			// Restore Wifi State
+			if (!wasWifiEnabled) {
+				pWM.setWifiEnabled(false);
+			}
+		} catch (Exception ex) {
+			FILog.e(ex.getMessage());
 		}
 	}
 
