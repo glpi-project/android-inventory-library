@@ -34,6 +34,8 @@ package org.flyve.inventory.categories;
 import android.content.Context;
 import android.hardware.Camera;
 
+import org.flyve.inventory.FILog;
+
 import java.util.List;
 
 /**
@@ -63,19 +65,23 @@ public class Cameras
 
         // Get resolutions of the camera
         // Work on Android SDK Version >= 5
-        int count = Camera.getNumberOfCameras();
-        if (count > 0) {
-            for (int i = 0; i < count; i++) {
-                Category c = new Category("CAMERAS", "cameras");
-                c.put("RESOLUTIONS", new CategoryValue(getResolutions(i), "RESOLUTIONS", "resolutions"));
-                this.add(c);
+        try {
+            int count = Camera.getNumberOfCameras();
+            if (count > 0) {
+                for (int i = 0; i < count; i++) {
+                    Category c = new Category("CAMERAS", "cameras");
+                    c.put("RESOLUTIONS", new CategoryValue(getResolutions(i), "RESOLUTIONS", "resolutions"));
+                    this.add(c);
+                }
             }
+        } catch (Exception ex) {
+            FILog.e(ex.getMessage());
         }
     }
 
     /**
      * Get the camera resolutions
-     * @param int index
+     * @param index
      * @return string with the width and height
      */
     public String getResolutions(int index) {
