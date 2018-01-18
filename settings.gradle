@@ -1,1 +1,1 @@
-include ':inventory'
+include ':inventory', ':example_java', ':example_kotlin'
