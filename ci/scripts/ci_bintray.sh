@@ -36,5 +36,5 @@ GIT_TAG=$(jq -r ".version" package.json)
 echo version=$GIT_TAG >> local.properties
 
 # send to bintray
-./gradlew install
-./gradlew bintrayUpload
+./gradlew :inventory:install
+./gradlew :inventory:bintrayUpload
