@@ -69,19 +69,19 @@ public class Memory extends Categories {
      */
 	public Memory(Context xCtx) {
 		super(xCtx);
-		Category c = new Category("MEMORIES", "memories");
 
-        c.put("DESCRIPTION", new CategoryValue(DESCRIPTION, "DESCRIPTION", "description"));
+		try {
+            Category c = new Category("MEMORIES", "memories");
 
-        String capacity = "";
-        try {
-            capacity = getCapacity();
+            c.put("DESCRIPTION", new CategoryValue(DESCRIPTION, "DESCRIPTION", "description"));
+
+            String capacity = getCapacity();
+            c.put("CAPACITY", new CategoryValue(capacity, "CAPACITY", "capacity"));
+
+            this.add(c);
         } catch (Exception ex) {
             FILog.e(ex.getMessage());
         }
-        c.put("CAPACITY", new CategoryValue(capacity, "CAPACITY", "capacity"));
-
-        this.add(c);
 	}
 
     /**
