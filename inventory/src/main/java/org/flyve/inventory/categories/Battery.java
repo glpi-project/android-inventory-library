@@ -37,6 +37,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.BatteryManager;
 
+import org.flyve.inventory.FILog;
+
 /**
  * This class get all the information of the baterry like level, voltage, temperature, status, health, technology
  * The constructor of the class trigger a BroadcastReceiver with the information
@@ -162,17 +164,21 @@ public class Battery extends Categories {
 					health = "Unknown";
 				}
 
-				if(!level.equals("0%")) {
-					// Load the information
-					Category c = new Category("BATTERIES", "batteries");
-					c.put("CHEMISTRY", new CategoryValue(technology, "CHEMISTRY","chemistry"));
-					c.put("TEMPERATURE", new CategoryValue(temperature, "TEMPERATURE","temperature"));
-					c.put("VOLTAGE", new CategoryValue(voltage, "VOLTAGE","voltage"));
-					c.put("LEVEL", new CategoryValue(level, "LEVEL","level"));
-					c.put("HEALTH", new CategoryValue(health, "HEALTH","health"));
-					c.put("STATUS", new CategoryValue(status, "STATUS","status"));
-					Battery.this.add(c);
-				}
+				try {
+                    if (!level.equals("0%")) {
+                        // Load the information
+                        Category c = new Category("BATTERIES", "batteries");
+                        c.put("CHEMISTRY", new CategoryValue(technology, "CHEMISTRY", "chemistry"));
+                        c.put("TEMPERATURE", new CategoryValue(temperature, "TEMPERATURE", "temperature"));
+                        c.put("VOLTAGE", new CategoryValue(voltage, "VOLTAGE", "voltage"));
+                        c.put("LEVEL", new CategoryValue(level, "LEVEL", "level"));
+                        c.put("HEALTH", new CategoryValue(health, "HEALTH", "health"));
+                        c.put("STATUS", new CategoryValue(status, "STATUS", "status"));
+                        Battery.this.add(c);
+                    }
+                } catch (Exception ex) {
+                    FILog.e(ex.getMessage());
+                }
 
 			}
 		}
