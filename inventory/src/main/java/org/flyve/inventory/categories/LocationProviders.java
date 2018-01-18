@@ -36,6 +36,8 @@ import android.content.Context;
 import android.location.LocationManager;
 import android.location.LocationProvider;
 
+import org.flyve.inventory.FILog;
+
 import java.util.List;
 
 /**
@@ -62,23 +64,27 @@ public class LocationProviders extends Categories {
     public LocationProviders(Context xCtx) {
         super(xCtx);
 
-        LocationManager lLocationMgr = (LocationManager) xCtx.getSystemService(Service.LOCATION_SERVICE);
-        
-        List<String> lProvidersName = lLocationMgr.getAllProviders(); 
-        
-        for (String p : lProvidersName) {
-            Category c = new Category("LOCATION_PROVIDERS", "locationProviders");
+        try {
+            LocationManager lLocationMgr = (LocationManager) xCtx.getSystemService(Service.LOCATION_SERVICE);
 
-            LocationProvider lProvider = lLocationMgr.getProvider(p);
-            c.put("NAME" , new CategoryValue(getName(lProvider), "NAME", "name"));
+            List<String> lProvidersName = lLocationMgr.getAllProviders();
 
-            this.add(c);
+            for (String p : lProvidersName) {
+                Category c = new Category("LOCATION_PROVIDERS", "locationProviders");
+
+                LocationProvider lProvider = lLocationMgr.getProvider(p);
+                c.put("NAME", new CategoryValue(getName(lProvider), "NAME", "name"));
+
+                this.add(c);
+            }
+        } catch (Exception ex) {
+            FILog.e(ex.getMessage());
         }
     }
 
     /**
      * Get the provider name
-     * @param LocationProvider lProvider
+     * @param lProvider
      * @return string the name of the provider
      */
     public String getName(LocationProvider lProvider) {
