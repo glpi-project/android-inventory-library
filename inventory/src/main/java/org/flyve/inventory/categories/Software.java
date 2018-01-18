@@ -63,7 +63,7 @@ public class Software extends Categories {
 
     /**
      * Indicates whether some other object is "equal to" this one
-     * @param Object obj the reference object with which to compare
+     * @param obj the reference object with which to compare
      * @return boolean true if the object is the same as the one given in argument
      */
     @Override
@@ -94,30 +94,34 @@ public class Software extends Categories {
     */
     public Software(Context xCtx) {
         super(xCtx);
-        packageManager = xCtx.getPackageManager();
-        List<ApplicationInfo> packages = packageManager.getInstalledApplications(PackageManager.GET_META_DATA);
+        try {
+            packageManager = xCtx.getPackageManager();
+            List<ApplicationInfo> packages = packageManager.getInstalledApplications(PackageManager.GET_META_DATA);
 
-        for (ApplicationInfo p : packages) {
+            for (ApplicationInfo p : packages) {
 
-            Category c = new Category("SOFTWARES", "softwares");
+                Category c = new Category("SOFTWARES", "softwares");
 
-            String fileSize = getFilesize(p);
+                String fileSize = getFilesize(p);
 
-            c.put("NAME", new CategoryValue(getName(p), "NAME", "name"));
-            c.put("VERSION", new CategoryValue(getVersion(p), "VERSION", "VERSION"));
-            c.put("FILESIZE", new CategoryValue(fileSize, "FILESIZE", "fileSize"));
-            c.put("FROM", new CategoryValue(FROM, "FROM", "from"));
-            c.put("INSTALLDATE", new CategoryValue(getInstallDate(p), "INSTALLDATE", "installDate"));
+                c.put("NAME", new CategoryValue(getName(p), "NAME", "name"));
+                c.put("VERSION", new CategoryValue(getVersion(p), "VERSION", "VERSION"));
+                c.put("FILESIZE", new CategoryValue(fileSize, "FILESIZE", "fileSize"));
+                c.put("FROM", new CategoryValue(FROM, "FROM", "from"));
+                c.put("INSTALLDATE", new CategoryValue(getInstallDate(p), "INSTALLDATE", "installDate"));
 
-            if(Integer.valueOf(fileSize)>0) {
-                this.add(c);
+                if (Integer.valueOf(fileSize) > 0) {
+                    this.add(c);
+                }
             }
+        } catch (Exception ex) {
+            FILog.e(ex.getMessage());
         }
     }
 
     /**
      * Get the name of the application
-     * @param ApplicationInfo p
+     * @param p ApplicationInfo
      * @return string the application name
      */
     public String getName(ApplicationInfo p) {
@@ -136,7 +140,7 @@ public class Software extends Categories {
 
     /**
      * Get the version of the application
-     * @param ApplicationInfo p
+     * @param p ApplicationInfo
      * @return string the application version
      */
     public String getInstallDate(ApplicationInfo p) {
@@ -154,7 +158,7 @@ public class Software extends Categories {
 
     /**
      * Get the version of the application
-     * @param ApplicationInfo p
+     * @param p ApplicationInfo
      * @return string the application version
      */
     public String getVersion(ApplicationInfo p) {
@@ -171,7 +175,7 @@ public class Software extends Categories {
 
     /**
      * Get the size of the application
-     * @param ApplicationInfo p
+     * @param p ApplicationInfo
      * @return string the sum of the cache, code and data size of the application
      */
     public String getFilesize(ApplicationInfo p) {
