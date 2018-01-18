@@ -104,28 +104,29 @@ public class Hardware extends Categories {
         super(xCtx);
 
         this.xCtx = xCtx;
-        props = System.getProperties();
-        Memory memory = new Memory(xCtx);
 
-        Category c = new Category("HARDWARE", "hardware");
-
-        c.put("DATELASTLOGGEDUSER", new CategoryValue(getDatelastloggeduser(), "DATELASTLOGGEDUSER", "dateLastLoggedUser") );
-        c.put("LASTLOGGEDUSER", new CategoryValue(getLastloggeduser(), "LASTLOGGEDUSER", "lastLoggedUser"));
-        c.put("NAME", new CategoryValue(getName(), "NAME", "name"));
-        c.put("OSNAME", new CategoryValue(OSNAME, "OSNAME", "osName"));
-        c.put("OSVERSION", new CategoryValue(getOsversion(), "OSVERSION", "osVersion"));
-        c.put("ARCHNAME", new CategoryValue(getArchname(), "ARCHNAME", "archName"));
-        c.put("UUID", new CategoryValue(getUUID(), "UUID", "uuid"));
-
-        String vMemory = "";
         try {
-            vMemory = memory.getCapacity();
+            props = System.getProperties();
+            Memory memory = new Memory(xCtx);
+
+            Category c = new Category("HARDWARE", "hardware");
+
+            c.put("DATELASTLOGGEDUSER", new CategoryValue(getDatelastloggeduser(), "DATELASTLOGGEDUSER", "dateLastLoggedUser"));
+            c.put("LASTLOGGEDUSER", new CategoryValue(getLastloggeduser(), "LASTLOGGEDUSER", "lastLoggedUser"));
+            c.put("NAME", new CategoryValue(getName(), "NAME", "name"));
+            c.put("OSNAME", new CategoryValue(OSNAME, "OSNAME", "osName"));
+            c.put("OSVERSION", new CategoryValue(getOsversion(), "OSVERSION", "osVersion"));
+            c.put("ARCHNAME", new CategoryValue(getArchname(), "ARCHNAME", "archName"));
+            c.put("UUID", new CategoryValue(getUUID(), "UUID", "uuid"));
+
+            String vMemory = memory.getCapacity();
+
+            c.put("MEMORY", new CategoryValue(vMemory, "MEMORY", "memory"));
+
+            this.add(c);
         } catch (Exception ex) {
             FILog.e(ex.getMessage());
         }
-        c.put("MEMORY", new CategoryValue(vMemory, "MEMORY", "memory"));
-
-        this.add(c);
 
     }
 
