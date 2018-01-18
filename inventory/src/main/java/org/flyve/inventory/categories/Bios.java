@@ -71,27 +71,32 @@ public class Bios extends Categories {
 	 */
 	public Bios(Context xCtx) {
 		super(xCtx);
-		Category c = new Category("BIOS", "bios");
 
-		// Bios Date
-		c.put("BDATE", new CategoryValue(getBiosDate(), "BDATE", "biosReleaseDate"));
+		try {
+			Category c = new Category("BIOS", "bios");
 
-		// Bios Manufacturer
-		c.put("BMANUFACTURER", new CategoryValue(getBiosManufacturer(), "BMANUFACTURER", "biosManufacturer"));
+			// Bios Date
+			c.put("BDATE", new CategoryValue(getBiosDate(), "BDATE", "biosReleaseDate"));
 
-		// Bios version
-		c.put("BVERSION", new CategoryValue(getBiosVersion(), "BVERSION", "biosVersion"));
+			// Bios Manufacturer
+			c.put("BMANUFACTURER", new CategoryValue(getBiosManufacturer(), "BMANUFACTURER", "biosManufacturer"));
 
-		// Mother Board Manufacturer
-		c.put("MMANUFACTURER", new CategoryValue(getMotherBoardManufacturer(), "MMANUFACTURER", "motherBoardManufacturer"));
+			// Bios version
+			c.put("BVERSION", new CategoryValue(getBiosVersion(), "BVERSION", "biosVersion"));
 
-		// Mother Board Model
-		c.put("SMODEL", new CategoryValue(getMotherBoardModel(), "SMODEL", "motherBoardModel"));
+			// Mother Board Manufacturer
+			c.put("MMANUFACTURER", new CategoryValue(getMotherBoardManufacturer(), "MMANUFACTURER", "motherBoardManufacturer"));
 
-		// Mother Board Serial Number
-		c.put("SSN", new CategoryValue(getMotherBoardSerialNumber(), "SSN", "motherBoardSerialNumber"));
+			// Mother Board Model
+			c.put("SMODEL", new CategoryValue(getMotherBoardModel(), "SMODEL", "motherBoardModel"));
 
-		this.add(c);
+			// Mother Board Serial Number
+			c.put("SSN", new CategoryValue(getMotherBoardSerialNumber(), "SSN", "motherBoardSerialNumber"));
+
+			this.add(c);
+		} catch (Exception ex) {
+			FILog.e(ex.getMessage());
+		}
 	}
 
 	/**
