@@ -67,27 +67,28 @@ public class Cpus extends Categories {
     public Cpus(Context xCtx) {
         super(xCtx);
 
-        Category c = new Category("CPUS", "cpus");
-
-        // Cpu Name
-        String cpuName = "";
         try {
+            Category c = new Category("CPUS", "cpus");
+
+            // Cpu Name
+            String cpuName;
+
             cpuName = getCpuName();
-        } catch (Exception ex) {
-            FILog.e(ex.getMessage());
-        }
-        c.put("NAME", new CategoryValue(cpuName, "NAME", "name"));
 
-        // Cpu Frequency
-        String cpuFrequency = "";
-        try {
+            c.put("NAME", new CategoryValue(cpuName, "NAME", "name"));
+
+            // Cpu Frequency
+            String cpuFrequency;
+
             cpuFrequency = getCpuFrequency();
+            c.put("SPEED", new CategoryValue(cpuFrequency, "SPEED", "cpuFrequency"));
+
+            this.add(c);
+
         } catch (Exception ex) {
             FILog.e(ex.getMessage());
         }
-        c.put("SPEED", new CategoryValue(cpuFrequency, "SPEED","cpuFrequency"));
 
-        this.add(c);
     }
 
     /**
