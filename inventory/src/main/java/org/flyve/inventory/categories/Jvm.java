@@ -33,6 +33,8 @@ package org.flyve.inventory.categories;
 
 import android.content.Context;
 
+import org.flyve.inventory.FILog;
+
 import java.util.Properties;
 
 /**
@@ -59,8 +61,9 @@ public class Jvm extends Categories {
 	public Jvm(Context xCtx) {
         super(xCtx);
 
-        Category c = new Category("JVMS", "jvms");
-        Properties props = System.getProperties();
+        try {
+            Category c = new Category("JVMS", "jvms");
+            Properties props = System.getProperties();
 
             c.put("NAME", new CategoryValue(getName(props), "NAME", "name"));
             c.put("LANGUAGE", new CategoryValue(getLanguage(props), "LANGUAGE", "language"));
@@ -70,12 +73,15 @@ public class Jvm extends Categories {
             c.put("VERSION", new CategoryValue(getVersion(props), "VERSION", "version"));
             c.put("CLASSPATH", new CategoryValue(getmClasspath(props), "CLASSPATH", "classPath"));
 
-        this.add(c);
+            this.add(c);
+        } catch (Exception ex) {
+            FILog.e(ex.getMessage());
+        }
     }
 
     /**
      * Get the name of the Java Virtual Machine (JVM)
-     * @param Properties props
+     * @param props
      * @return string the JVM implementation name
      */
     public String getName(Properties props) {
@@ -84,7 +90,7 @@ public class Jvm extends Categories {
 
     /**
      * Get the vendor of the JVM
-     * @param Properties props
+     * @param props
      * @return string the JVM vendor
      */
     public String getVendor(Properties props) {
@@ -93,7 +99,7 @@ public class Jvm extends Categories {
 
     /**
      * Get the language
-     * @param Properties props
+     * @param props
      * @return string the JVM locale language
      */
     public String getLanguage(Properties props) {
@@ -107,7 +113,7 @@ public class Jvm extends Categories {
 
     /**
      * Get the runtime version
-     * @param Properties props
+     * @param props
      * @return string the java runtime version
      */
     public String getRuntime(Properties props) {
@@ -116,7 +122,7 @@ public class Jvm extends Categories {
 
     /**
      * Get the java directory
-     * @param Properties props
+     * @param props
      * @return string the installation directory
      */
     public String getHome(Properties props) {
@@ -125,7 +131,7 @@ public class Jvm extends Categories {
 
     /**
      * Get the JVM version
-     * @param Properties props
+     * @param props
      * @return string the JVM implementation version
      */
     public String getVersion(Properties props) {
@@ -134,7 +140,7 @@ public class Jvm extends Categories {
 
     /**
      * Get the java class path
-     * @param Properties props
+     * @param props
      * @return string the class path
      */
     public String getmClasspath(Properties props) {
