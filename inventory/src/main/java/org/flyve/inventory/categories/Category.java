@@ -34,8 +34,6 @@ package org.flyve.inventory.categories;
 import android.os.Build;
 
 import org.flyve.inventory.FILog;
-import org.flyve.inventory.FlyveException;
-
 import org.json.JSONObject;
 import org.xmlpull.v1.XmlSerializer;
 
@@ -133,8 +131,7 @@ public class Category extends LinkedHashMap<String, CategoryValue> {
      * This is a public function that create a XML node with a XmlSerializer object
      * @param serializer object
      */
-    public void toXML(XmlSerializer serializer) throws FlyveException {
-
+    public void toXML(XmlSerializer serializer) {
         try {
             serializer.startTag(null, mType);
 
@@ -146,11 +143,11 @@ public class Category extends LinkedHashMap<String, CategoryValue> {
 
             serializer.endTag(null, mType);
         } catch (Exception ex) {
-            throw new FlyveException(ex.getMessage(), ex.getCause());
+            FILog.d(ex.getMessage());
         }
     }
 
-    public void toXMLWithoutPrivateData(XmlSerializer serializer) throws FlyveException {
+    public void toXMLWithoutPrivateData(XmlSerializer serializer) {
         try {
             serializer.startTag(null, mType);
 
@@ -164,14 +161,14 @@ public class Category extends LinkedHashMap<String, CategoryValue> {
 
             serializer.endTag(null, mType);
         } catch (Exception ex) {
-            throw new FlyveException(ex.getMessage(), ex.getCause());
+            FILog.d(ex.getMessage());
         }
     }
 
     /**
      * This is a public function that create a JSON
      */
-    public JSONObject toJSON() throws FlyveException {
+    public JSONObject toJSON() {
         try {
             JSONObject jsonCategories = new JSONObject();
             for (Map.Entry<String,CategoryValue> entry : this.entrySet()) {
@@ -181,11 +178,11 @@ public class Category extends LinkedHashMap<String, CategoryValue> {
             return jsonCategories;
         } catch ( Exception ex ) {
             FILog.e( ex.getMessage() );
-            throw new FlyveException(ex.getMessage(), ex.getCause());
+            return new JSONObject();
         }
     }
 
-    public JSONObject toJSONWithoutPrivateData() throws FlyveException {
+    public JSONObject toJSONWithoutPrivateData() {
         try {
             JSONObject jsonCategories = new JSONObject();
             for (Map.Entry<String,CategoryValue> entry : this.entrySet()) {
@@ -197,7 +194,7 @@ public class Category extends LinkedHashMap<String, CategoryValue> {
             return jsonCategories;
         } catch ( Exception ex ) {
             FILog.e( ex.getMessage() );
-            throw new FlyveException(ex.getMessage(), ex.getCause());
+            return new JSONObject();
         }
     }
 }
