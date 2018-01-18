@@ -65,12 +65,11 @@ public class PhoneStatus extends Categories {
         //TODO Solved the problem Thread inside other Thread to make PhoenStatus works
         // The problem here is with a the PhoneStateListener and the
         // AsyncTask we got a Thread inside other Thread
+        try {
 
         final Category c = new Category("PHONE_STATUS", "phoneStatus");
 
         TelephonyManager telMng = (TelephonyManager)xCtx.getSystemService(Context.TELEPHONY_SERVICE);
-
-        try {
             telMng.listen(new PhoneStateListener() {
                 @Override
                 public void onServiceStateChanged(ServiceState serviceState) {
