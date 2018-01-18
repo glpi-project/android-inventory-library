@@ -1,7 +1,4 @@
----
-layout: coverage
----
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../resources/report.css" type="text/css"/><link rel="shortcut icon" href="../resources/report.gif" type="image/gif"/><title>Usb.java</title><link rel="stylesheet" href="../resources/prettify.css" type="text/css"/><script type="text/javascript" src="../resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory.categories</a> &gt; <span class="el_source">Usb.java</span></div><h1>Usb.java</h1><pre class="source lang-java linenums">/**
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Usb.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory.categories</a> &gt; <span class="el_source">Usb.java</span></div><h1>Usb.java</h1><pre class="source lang-java linenums">/**
  *
  * Copyright 2017 Teclib.
  * Copyright 2010-2016 by the FusionInventory Development
@@ -37,7 +34,8 @@ package org.flyve.inventory.categories;
 import android.content.Context;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
-import android.os.Build;
+
+import org.flyve.inventory.FILog;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -64,62 +62,65 @@ public class Usb extends Categories {
 	 * @param xCtx Context where this class work
 	 */
     public Usb(Context xCtx) {
-<span class="fc" id="L64">        super(xCtx);</span>
+<span class="fc" id="L65">        super(xCtx);</span>
         
         //USB inventory comes with SDK level 12 !
-<span class="pc bpc" id="L67" title="1 of 2 branches missed.">        if(Build.VERSION.SDK_INT &gt; 12) {</span>
+        try {
 
-<span class="fc" id="L69">	        UsbManager manager = (UsbManager) xCtx.getSystemService(Context.USB_SERVICE);</span>
-<span class="fc" id="L70">	        HashMap&lt;String, UsbDevice&gt; devices = manager.getDeviceList();</span>
-<span class="pc bpc" id="L71" title="1 of 2 branches missed.">			for (Map.Entry&lt;String, UsbDevice&gt; entry : devices.entrySet()) {</span>
+<span class="fc" id="L70">	        UsbManager manager = (UsbManager) xCtx.getSystemService(Context.USB_SERVICE);</span>
+<span class="fc" id="L71">	        HashMap&lt;String, UsbDevice&gt; devices = manager.getDeviceList();</span>
+<span class="pc bpc" id="L72" title="1 of 2 branches missed.">			for (Map.Entry&lt;String, UsbDevice&gt; entry : devices.entrySet()) {</span>
 
-<span class="nc" id="L73">				UsbDevice mydevice = devices.get(entry.getKey());</span>
-<span class="nc" id="L74">				Category c = new Category(&quot;USBDEVICES&quot;, &quot;usbDevices&quot;);</span>
+<span class="nc" id="L74">				UsbDevice mydevice = devices.get(entry.getKey());</span>
+<span class="nc" id="L75">				Category c = new Category(&quot;USBDEVICES&quot;, &quot;usbDevices&quot;);</span>
 
-<span class="nc" id="L76">				c.put(&quot;CLASS&quot;, new CategoryValue(getClass(mydevice), &quot;CLASS&quot;, &quot;class&quot;));</span>
-<span class="nc" id="L77">				c.put(&quot;PRODUCTID&quot;, new CategoryValue(getProductid(mydevice), &quot;PRODUCTID&quot;, &quot;productId&quot;));</span>
-<span class="nc" id="L78">				c.put(&quot;VENDORID&quot;, new CategoryValue(getVendorid(mydevice), &quot;VENDORID&quot;, &quot;vendorId&quot;));</span>
-<span class="nc" id="L79">				c.put(&quot;SUBCLASS&quot;, new CategoryValue(getSubclass(mydevice), &quot;SUBCLASS&quot;, &quot;subClass&quot;));</span>
+<span class="nc" id="L77">				c.put(&quot;CLASS&quot;, new CategoryValue(getClass(mydevice), &quot;CLASS&quot;, &quot;class&quot;));</span>
+<span class="nc" id="L78">				c.put(&quot;PRODUCTID&quot;, new CategoryValue(getProductid(mydevice), &quot;PRODUCTID&quot;, &quot;productId&quot;));</span>
+<span class="nc" id="L79">				c.put(&quot;VENDORID&quot;, new CategoryValue(getVendorid(mydevice), &quot;VENDORID&quot;, &quot;vendorId&quot;));</span>
+<span class="nc" id="L80">				c.put(&quot;SUBCLASS&quot;, new CategoryValue(getSubclass(mydevice), &quot;SUBCLASS&quot;, &quot;subClass&quot;));</span>
 
-<span class="nc" id="L81">				this.add(c);</span>
-<span class="nc" id="L82">			}</span>
-        }
-<span class="fc" id="L84">    }</span>
+<span class="nc" id="L82">				this.add(c);</span>
+<span class="nc" id="L83">			}</span>
+<span class="nc" id="L84">        } catch (Exception ex) {</span>
+<span class="nc" id="L85">			FILog.e(ex.getMessage());</span>
+<span class="fc" id="L86">		}</span>
+
+<span class="fc" id="L88">    }</span>
 
 	/**
 	 * Get the device's class field
-	 * @param UsbDevice mydevice
+	 * @param mydevice UsbDevice
 	 * @return string the device's class
 	 */
 	public String getClass(UsbDevice mydevice) {
-<span class="nc" id="L92">		return Integer.toString(mydevice.getDeviceClass());</span>
+<span class="nc" id="L96">		return Integer.toString(mydevice.getDeviceClass());</span>
 	}
 
 	/**
 	 * Get the product ID
-	 * @param UsbDevice mydevice
+	 * @param mydevice UsbDevice
 	 * @return string the product ID for the device
 	 */
 	public String getProductid(UsbDevice mydevice) {
-<span class="nc" id="L101">		return Integer.toString(mydevice.getProductId());</span>
+<span class="nc" id="L105">		return Integer.toString(mydevice.getProductId());</span>
 	}
 
 	/**
 	 * Get the vendor ID
-	 * @param UsbDevice mydevice
+	 * @param mydevice UsbDevice
 	 * @return string the vendor ID for the device
 	 */
 	public String getVendorid(UsbDevice mydevice) {
-<span class="nc" id="L110">		return Integer.toString(mydevice.getVendorId());</span>
+<span class="nc" id="L114">		return Integer.toString(mydevice.getVendorId());</span>
 	}
 
 	/**
 	 * Get the device's subclass field
-	 * @param UsbDevice mydevice
+	 * @param mydevice UsbDevice
 	 * @return string the device's subclass
 	 */
 	public String getSubclass(UsbDevice mydevice) {
-<span class="nc" id="L119">		return Integer.toString(mydevice.getDeviceSubclass());</span>
+<span class="nc" id="L123">		return Integer.toString(mydevice.getDeviceSubclass());</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span>Generated by the Android Gradle plugin 2.2.0</div></body></html>

@@ -1,7 +1,4 @@
----
-layout: coverage
----
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../resources/report.css" type="text/css"/><link rel="shortcut icon" href="../resources/report.gif" type="image/gif"/><title>Bluetooth.java</title><link rel="stylesheet" href="../resources/prettify.css" type="text/css"/><script type="text/javascript" src="../resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory.categories</a> &gt; <span class="el_source">Bluetooth.java</span></div><h1>Bluetooth.java</h1><pre class="source lang-java linenums">/**
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Bluetooth.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory.categories</a> &gt; <span class="el_source">Bluetooth.java</span></div><h1>Bluetooth.java</h1><pre class="source lang-java linenums">/**
  * FusionInventory
  *
  * Copyright (C) 2010-2017 by the FusionInventory Development Team.
@@ -37,6 +34,8 @@ package org.flyve.inventory.categories;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 
+import org.flyve.inventory.FILog;
+
 /**
  * This class get all the information of the Bluetooth
  */
@@ -62,13 +61,13 @@ public class Bluetooth extends Categories {
      */
     @Override
     public boolean equals(Object obj) {
-<span class="nc bnc" id="L62" title="All 2 branches missed.">        if (obj == null) {</span>
-<span class="nc" id="L63">            return false;</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">        if (obj == null) {</span>
+<span class="nc" id="L65">            return false;</span>
         }
-<span class="nc bnc" id="L65" title="All 2 branches missed.">        if (getClass() != obj.getClass()) {</span>
-<span class="nc" id="L66">            return false;</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">        if (getClass() != obj.getClass()) {</span>
+<span class="nc" id="L68">            return false;</span>
         }
-<span class="nc bnc" id="L68" title="All 2 branches missed.">        return (!super.equals(obj));</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">        return (!super.equals(obj));</span>
     }
 
     /**
@@ -77,37 +76,41 @@ public class Bluetooth extends Categories {
      */
     @Override
     public int hashCode() {
-<span class="nc" id="L77">        int hash = super.hashCode();</span>
-<span class="nc bnc" id="L78" title="All 2 branches missed.">        hash = 89 * hash + (this.adapter != null ? this.adapter.hashCode() : 0);</span>
-<span class="nc" id="L79">        return hash;</span>
+<span class="nc" id="L79">        int hash = super.hashCode();</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">        hash = 89 * hash + (this.adapter != null ? this.adapter.hashCode() : 0);</span>
+<span class="nc" id="L81">        return hash;</span>
     }
     /**
      * This constructor get all the information about Bluetooth
      * @param xCtx Context where this class work
      */
     public Bluetooth(Context xCtx) {
-<span class="nc" id="L86">        super(xCtx);</span>
+<span class="nc" id="L88">        super(xCtx);</span>
 
-<span class="nc" id="L88">        adapter = BluetoothAdapter.getDefaultAdapter();</span>
+<span class="nc" id="L90">        adapter = BluetoothAdapter.getDefaultAdapter();</span>
 
-<span class="nc bnc" id="L90" title="All 2 branches missed.">        if(adapter != null) {</span>
-<span class="nc" id="L91">            Category c = new Category(&quot;BLUETOOTH_ADAPTER&quot;, &quot;bluetoothAdapter&quot;);</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">        if(adapter != null) {</span>
+            try {
+<span class="nc" id="L94">                Category c = new Category(&quot;BLUETOOTH_ADAPTER&quot;, &quot;bluetoothAdapter&quot;);</span>
 
-            // The hardware address of the local Bluetooth adapter.
-<span class="nc" id="L94">            c.put(&quot;HMAC&quot;, new CategoryValue(getHardwareAddress(),&quot;HMAC&quot;,&quot;hardwareAddress&quot;));</span>
+                // The hardware address of the local Bluetooth adapter.
+<span class="nc" id="L97">                c.put(&quot;HMAC&quot;, new CategoryValue(getHardwareAddress(), &quot;HMAC&quot;, &quot;hardwareAddress&quot;));</span>
 
-            // This name is visible to remote Bluetooth devices.
-<span class="nc" id="L97">            c.put(&quot;NAME&quot;, new CategoryValue(getName(),&quot;NAME&quot;,&quot;name&quot;));</span>
-<span class="nc" id="L98">            this.add(c);</span>
+                // This name is visible to remote Bluetooth devices.
+<span class="nc" id="L100">                c.put(&quot;NAME&quot;, new CategoryValue(getName(), &quot;NAME&quot;, &quot;name&quot;));</span>
+<span class="nc" id="L101">                this.add(c);</span>
+<span class="nc" id="L102">            } catch (Exception ex) {</span>
+<span class="nc" id="L103">                FILog.e(ex.getMessage());</span>
+<span class="nc" id="L104">            }</span>
         }
-<span class="nc" id="L100">    }</span>
+<span class="nc" id="L106">    }</span>
 
     /**
      * Get the hardware address of the local bluetooth adapter
      * @return string with the hardware address
      */
     public String getHardwareAddress() {
-<span class="nc" id="L107">        return adapter.getAddress();</span>
+<span class="nc" id="L113">        return adapter.getAddress();</span>
     }
 
     /**
@@ -115,7 +118,7 @@ public class Bluetooth extends Categories {
      * @return string the name of the adapter
      */
     public String getName() {
-<span class="nc" id="L115">        return adapter.getName();</span>
+<span class="nc" id="L121">        return adapter.getName();</span>
     }
 
 }

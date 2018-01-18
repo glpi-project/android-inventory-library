@@ -1,7 +1,4 @@
----
-layout: coverage
----
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../resources/report.css" type="text/css"/><link rel="shortcut icon" href="../resources/report.gif" type="image/gif"/><title>Jvm.java</title><link rel="stylesheet" href="../resources/prettify.css" type="text/css"/><script type="text/javascript" src="../resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory.categories</a> &gt; <span class="el_source">Jvm.java</span></div><h1>Jvm.java</h1><pre class="source lang-java linenums">/**
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Jvm.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory.categories</a> &gt; <span class="el_source">Jvm.java</span></div><h1>Jvm.java</h1><pre class="source lang-java linenums">/**
  *
  * Copyright 2017 Teclib.
  * Copyright 2010-2016 by the FusionInventory Development
@@ -36,6 +33,8 @@ package org.flyve.inventory.categories;
 
 import android.content.Context;
 
+import org.flyve.inventory.FILog;
+
 import java.util.Properties;
 
 /**
@@ -60,88 +59,92 @@ public class Jvm extends Categories {
      * @param xCtx Context where this class work
      */
 	public Jvm(Context xCtx) {
-<span class="fc" id="L60">        super(xCtx);</span>
+<span class="fc" id="L62">        super(xCtx);</span>
 
-<span class="fc" id="L62">        Category c = new Category(&quot;JVMS&quot;, &quot;jvms&quot;);</span>
-<span class="fc" id="L63">        Properties props = System.getProperties();</span>
+        try {
+<span class="fc" id="L65">            Category c = new Category(&quot;JVMS&quot;, &quot;jvms&quot;);</span>
+<span class="fc" id="L66">            Properties props = System.getProperties();</span>
 
-<span class="fc" id="L65">            c.put(&quot;NAME&quot;, new CategoryValue(getName(props), &quot;NAME&quot;, &quot;name&quot;));</span>
-<span class="fc" id="L66">            c.put(&quot;LANGUAGE&quot;, new CategoryValue(getLanguage(props), &quot;LANGUAGE&quot;, &quot;language&quot;));</span>
-<span class="fc" id="L67">            c.put(&quot;VENDOR&quot;, new CategoryValue(getVendor(props), &quot;VENDOR&quot;, &quot;vendor&quot;));</span>
-<span class="fc" id="L68">            c.put(&quot;RUNTIME&quot;, new CategoryValue(getRuntime(props), &quot;RUNTIME&quot;, &quot;runtime&quot;));</span>
-<span class="fc" id="L69">            c.put(&quot;HOME&quot;, new CategoryValue(getHome(props), &quot;HOME&quot;, &quot;home&quot;));</span>
-<span class="fc" id="L70">            c.put(&quot;VERSION&quot;, new CategoryValue(getVersion(props), &quot;VERSION&quot;, &quot;version&quot;));</span>
-<span class="fc" id="L71">            c.put(&quot;CLASSPATH&quot;, new CategoryValue(getmClasspath(props), &quot;CLASSPATH&quot;, &quot;classPath&quot;));</span>
+<span class="fc" id="L68">            c.put(&quot;NAME&quot;, new CategoryValue(getName(props), &quot;NAME&quot;, &quot;name&quot;));</span>
+<span class="fc" id="L69">            c.put(&quot;LANGUAGE&quot;, new CategoryValue(getLanguage(props), &quot;LANGUAGE&quot;, &quot;language&quot;));</span>
+<span class="fc" id="L70">            c.put(&quot;VENDOR&quot;, new CategoryValue(getVendor(props), &quot;VENDOR&quot;, &quot;vendor&quot;));</span>
+<span class="fc" id="L71">            c.put(&quot;RUNTIME&quot;, new CategoryValue(getRuntime(props), &quot;RUNTIME&quot;, &quot;runtime&quot;));</span>
+<span class="fc" id="L72">            c.put(&quot;HOME&quot;, new CategoryValue(getHome(props), &quot;HOME&quot;, &quot;home&quot;));</span>
+<span class="fc" id="L73">            c.put(&quot;VERSION&quot;, new CategoryValue(getVersion(props), &quot;VERSION&quot;, &quot;version&quot;));</span>
+<span class="fc" id="L74">            c.put(&quot;CLASSPATH&quot;, new CategoryValue(getmClasspath(props), &quot;CLASSPATH&quot;, &quot;classPath&quot;));</span>
 
-<span class="fc" id="L73">        this.add(c);</span>
-<span class="fc" id="L74">    }</span>
+<span class="fc" id="L76">            this.add(c);</span>
+<span class="nc" id="L77">        } catch (Exception ex) {</span>
+<span class="nc" id="L78">            FILog.e(ex.getMessage());</span>
+<span class="fc" id="L79">        }</span>
+<span class="fc" id="L80">    }</span>
 
     /**
      * Get the name of the Java Virtual Machine (JVM)
-     * @param Properties props
+     * @param props
      * @return string the JVM implementation name
      */
     public String getName(Properties props) {
-<span class="fc" id="L82">        return props.getProperty(&quot;java.vm.name&quot;);</span>
+<span class="fc" id="L88">        return props.getProperty(&quot;java.vm.name&quot;);</span>
     }
 
     /**
      * Get the vendor of the JVM
-     * @param Properties props
+     * @param props
      * @return string the JVM vendor
      */
     public String getVendor(Properties props) {
-<span class="fc" id="L91">        return props.getProperty(&quot;java.vm.vendor&quot;);</span>
+<span class="fc" id="L97">        return props.getProperty(&quot;java.vm.vendor&quot;);</span>
     }
 
     /**
      * Get the language
-     * @param Properties props
+     * @param props
      * @return string the JVM locale language
      */
     public String getLanguage(Properties props) {
 
-<span class="fc" id="L101">        String language = props.getProperty(&quot;user.language&quot;);</span>
-<span class="fc" id="L102">        language += &quot;_&quot;;</span>
-<span class="fc" id="L103">        language += props.getProperty(&quot;user.region&quot;);</span>
+<span class="fc" id="L107">        String language = props.getProperty(&quot;user.language&quot;);</span>
+<span class="fc" id="L108">        language += &quot;_&quot;;</span>
+<span class="fc" id="L109">        language += props.getProperty(&quot;user.region&quot;);</span>
 
-<span class="fc" id="L105">        return language;</span>
+<span class="fc" id="L111">        return language;</span>
     }
 
     /**
      * Get the runtime version
-     * @param Properties props
+     * @param props
      * @return string the java runtime version
      */
     public String getRuntime(Properties props) {
-<span class="fc" id="L114">        return props.getProperty(&quot;java.runtime.version&quot;);</span>
+<span class="fc" id="L120">        return props.getProperty(&quot;java.runtime.version&quot;);</span>
     }
 
     /**
      * Get the java directory
-     * @param Properties props
+     * @param props
      * @return string the installation directory
      */
     public String getHome(Properties props) {
-<span class="fc" id="L123">        return props.getProperty(&quot;java.home&quot;);</span>
+<span class="fc" id="L129">        return props.getProperty(&quot;java.home&quot;);</span>
     }
 
     /**
      * Get the JVM version
-     * @param Properties props
+     * @param props
      * @return string the JVM implementation version
      */
     public String getVersion(Properties props) {
-<span class="fc" id="L132">        return props.getProperty(&quot;java.vm.version&quot;);</span>
+<span class="fc" id="L138">        return props.getProperty(&quot;java.vm.version&quot;);</span>
     }
 
     /**
      * Get the java class path
-     * @param Properties props
+     * @param props
      * @return string the class path
      */
     public String getmClasspath(Properties props) {
-<span class="fc" id="L141">        return props.getProperty(&quot;java.class.path&quot;);</span>
+<span class="fc" id="L147">        return props.getProperty(&quot;java.class.path&quot;);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span>Generated by the Android Gradle plugin 2.2.0</div></body></html>

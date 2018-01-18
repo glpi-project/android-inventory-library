@@ -1,7 +1,4 @@
----
-layout: coverage
----
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../resources/report.css" type="text/css"/><link rel="shortcut icon" href="../resources/report.gif" type="image/gif"/><title>Software.java</title><link rel="stylesheet" href="../resources/prettify.css" type="text/css"/><script type="text/javascript" src="../resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory.categories</a> &gt; <span class="el_source">Software.java</span></div><h1>Software.java</h1><pre class="source lang-java linenums">/**
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Software.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory.categories</a> &gt; <span class="el_source">Software.java</span></div><h1>Software.java</h1><pre class="source lang-java linenums">/**
  *
  * Copyright 2017 Teclib.
  * Copyright 2010-2016 by the FusionInventory Development
@@ -66,7 +63,7 @@ public class Software extends Categories {
 
     /**
      * Indicates whether some other object is &quot;equal to&quot; this one
-     * @param Object obj the reference object with which to compare
+     * @param obj the reference object with which to compare
      * @return boolean true if the object is the same as the one given in argument
      */
     @Override
@@ -97,89 +94,93 @@ public class Software extends Categories {
     */
     public Software(Context xCtx) {
 <span class="fc" id="L96">        super(xCtx);</span>
-<span class="fc" id="L97">        packageManager = xCtx.getPackageManager();</span>
-<span class="fc" id="L98">        List&lt;ApplicationInfo&gt; packages = packageManager.getInstalledApplications(PackageManager.GET_META_DATA);</span>
+        try {
+<span class="fc" id="L98">            packageManager = xCtx.getPackageManager();</span>
+<span class="fc" id="L99">            List&lt;ApplicationInfo&gt; packages = packageManager.getInstalledApplications(PackageManager.GET_META_DATA);</span>
 
-<span class="fc bfc" id="L100" title="All 2 branches covered.">        for (ApplicationInfo p : packages) {</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">            for (ApplicationInfo p : packages) {</span>
 
-<span class="fc" id="L102">            Category c = new Category(&quot;SOFTWARES&quot;, &quot;softwares&quot;);</span>
+<span class="fc" id="L103">                Category c = new Category(&quot;SOFTWARES&quot;, &quot;softwares&quot;);</span>
 
-<span class="fc" id="L104">            String fileSize = getFilesize(p);</span>
+<span class="fc" id="L105">                String fileSize = getFilesize(p);</span>
 
-<span class="fc" id="L106">            c.put(&quot;NAME&quot;, new CategoryValue(getName(p), &quot;NAME&quot;, &quot;name&quot;));</span>
-<span class="fc" id="L107">            c.put(&quot;VERSION&quot;, new CategoryValue(getVersion(p), &quot;VERSION&quot;, &quot;VERSION&quot;));</span>
-<span class="fc" id="L108">            c.put(&quot;FILESIZE&quot;, new CategoryValue(fileSize, &quot;FILESIZE&quot;, &quot;fileSize&quot;));</span>
-<span class="fc" id="L109">            c.put(&quot;FROM&quot;, new CategoryValue(FROM, &quot;FROM&quot;, &quot;from&quot;));</span>
-<span class="fc" id="L110">            c.put(&quot;INSTALLDATE&quot;, new CategoryValue(getInstallDate(p), &quot;INSTALLDATE&quot;, &quot;installDate&quot;));</span>
+<span class="fc" id="L107">                c.put(&quot;NAME&quot;, new CategoryValue(getName(p), &quot;NAME&quot;, &quot;name&quot;));</span>
+<span class="fc" id="L108">                c.put(&quot;VERSION&quot;, new CategoryValue(getVersion(p), &quot;VERSION&quot;, &quot;VERSION&quot;));</span>
+<span class="fc" id="L109">                c.put(&quot;FILESIZE&quot;, new CategoryValue(fileSize, &quot;FILESIZE&quot;, &quot;fileSize&quot;));</span>
+<span class="fc" id="L110">                c.put(&quot;FROM&quot;, new CategoryValue(FROM, &quot;FROM&quot;, &quot;from&quot;));</span>
+<span class="fc" id="L111">                c.put(&quot;INSTALLDATE&quot;, new CategoryValue(getInstallDate(p), &quot;INSTALLDATE&quot;, &quot;installDate&quot;));</span>
 
-<span class="pc bpc" id="L112" title="1 of 2 branches missed.">            if(Integer.valueOf(fileSize)&gt;0) {</span>
-<span class="nc" id="L113">                this.add(c);</span>
-            }
-<span class="fc" id="L115">        }</span>
-<span class="fc" id="L116">    }</span>
+<span class="pc bpc" id="L113" title="1 of 2 branches missed.">                if (Integer.valueOf(fileSize) &gt; 0) {</span>
+<span class="nc" id="L114">                    this.add(c);</span>
+                }
+<span class="fc" id="L116">            }</span>
+<span class="nc" id="L117">        } catch (Exception ex) {</span>
+<span class="nc" id="L118">            FILog.e(ex.getMessage());</span>
+<span class="fc" id="L119">        }</span>
+<span class="fc" id="L120">    }</span>
 
     /**
      * Get the name of the application
-     * @param ApplicationInfo p
+     * @param p ApplicationInfo
      * @return string the application name
      */
     public String getName(ApplicationInfo p) {
-<span class="fc" id="L124">        String mName = &quot;&quot;;</span>
+<span class="fc" id="L128">        String mName = &quot;&quot;;</span>
 
-<span class="pc bpc" id="L126" title="1 of 2 branches missed.">        if (p.name != null) {</span>
-<span class="nc" id="L127">            mName = p.name;</span>
-<span class="fc bfc" id="L128" title="All 2 branches covered.">        } else if (p.className != null) {</span>
-<span class="fc" id="L129">            mName = p.className;</span>
-<span class="pc bpc" id="L130" title="1 of 2 branches missed.">        } else if (p.packageName != null) {</span>
-<span class="fc" id="L131">            mName = p.packageName;</span>
+<span class="pc bpc" id="L130" title="1 of 2 branches missed.">        if (p.name != null) {</span>
+<span class="nc" id="L131">            mName = p.name;</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">        } else if (p.className != null) {</span>
+<span class="fc" id="L133">            mName = p.className;</span>
+<span class="pc bpc" id="L134" title="1 of 2 branches missed.">        } else if (p.packageName != null) {</span>
+<span class="fc" id="L135">            mName = p.packageName;</span>
         }
 
-<span class="fc" id="L134">        return mName;</span>
+<span class="fc" id="L138">        return mName;</span>
     }
 
     /**
      * Get the version of the application
-     * @param ApplicationInfo p
+     * @param p ApplicationInfo
      * @return string the application version
      */
     public String getInstallDate(ApplicationInfo p) {
-<span class="fc" id="L143">        String mInstalled = &quot;&quot;;</span>
+<span class="fc" id="L147">        String mInstalled = &quot;&quot;;</span>
 
         try {
-<span class="fc" id="L146">            PackageInfo pi = packageManager.getPackageInfo(p.packageName, PackageManager.GET_META_DATA);</span>
-<span class="fc" id="L147">            mInstalled = String.valueOf(pi.firstInstallTime);</span>
-<span class="nc" id="L148">        } catch (NameNotFoundException e) {</span>
-<span class="nc" id="L149">            FILog.e(e.getMessage());</span>
-<span class="fc" id="L150">        }</span>
+<span class="fc" id="L150">            PackageInfo pi = packageManager.getPackageInfo(p.packageName, PackageManager.GET_META_DATA);</span>
+<span class="fc" id="L151">            mInstalled = String.valueOf(pi.firstInstallTime);</span>
+<span class="nc" id="L152">        } catch (NameNotFoundException e) {</span>
+<span class="nc" id="L153">            FILog.e(e.getMessage());</span>
+<span class="fc" id="L154">        }</span>
 
-<span class="fc" id="L152">        return mInstalled;</span>
+<span class="fc" id="L156">        return mInstalled;</span>
     }
 
     /**
      * Get the version of the application
-     * @param ApplicationInfo p
+     * @param p ApplicationInfo
      * @return string the application version
      */
     public String getVersion(ApplicationInfo p) {
-<span class="fc" id="L161">        String mVersion = &quot;&quot;;</span>
+<span class="fc" id="L165">        String mVersion = &quot;&quot;;</span>
         try {
-<span class="fc" id="L163">            PackageInfo pi = packageManager.getPackageInfo(p.packageName, PackageManager.GET_META_DATA);</span>
-<span class="fc" id="L164">            mVersion = pi.versionName;</span>
-<span class="nc" id="L165">        } catch (NameNotFoundException e) {</span>
-<span class="nc" id="L166">            FILog.e(e.getMessage());</span>
-<span class="fc" id="L167">        }</span>
+<span class="fc" id="L167">            PackageInfo pi = packageManager.getPackageInfo(p.packageName, PackageManager.GET_META_DATA);</span>
+<span class="fc" id="L168">            mVersion = pi.versionName;</span>
+<span class="nc" id="L169">        } catch (NameNotFoundException e) {</span>
+<span class="nc" id="L170">            FILog.e(e.getMessage());</span>
+<span class="fc" id="L171">        }</span>
 
-<span class="fc" id="L169">        return mVersion;</span>
+<span class="fc" id="L173">        return mVersion;</span>
     }
 
     /**
      * Get the size of the application
-     * @param ApplicationInfo p
+     * @param p ApplicationInfo
      * @return string the sum of the cache, code and data size of the application
      */
     public String getFilesize(ApplicationInfo p) {
-<span class="fc" id="L178">        PackageStats stats = new PackageStats(p.packageName);</span>
-<span class="fc" id="L179">        return String.valueOf(stats.cacheSize + stats.codeSize + stats.dataSize);</span>
+<span class="fc" id="L182">        PackageStats stats = new PackageStats(p.packageName);</span>
+<span class="fc" id="L183">        return String.valueOf(stats.cacheSize + stats.codeSize + stats.dataSize);</span>
 
     }
 }

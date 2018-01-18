@@ -1,7 +1,4 @@
----
-layout: coverage
----
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../resources/report.css" type="text/css"/><link rel="shortcut icon" href="../resources/report.gif" type="image/gif"/><title>Cpus.java</title><link rel="stylesheet" href="../resources/prettify.css" type="text/css"/><script type="text/javascript" src="../resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory.categories</a> &gt; <span class="el_source">Cpus.java</span></div><h1>Cpus.java</h1><pre class="source lang-java linenums">/**
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Cpus.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory.categories</a> &gt; <span class="el_source">Cpus.java</span></div><h1>Cpus.java</h1><pre class="source lang-java linenums">/**
  *
  * Copyright 2017 Teclib.
  * Copyright 2010-2016 by the FusionInventory Development
@@ -70,28 +67,29 @@ public class Cpus extends Categories {
     public Cpus(Context xCtx) {
 <span class="fc" id="L68">        super(xCtx);</span>
 
-<span class="fc" id="L70">        Category c = new Category(&quot;CPUS&quot;, &quot;cpus&quot;);</span>
-
-        // Cpu Name
-<span class="fc" id="L73">        String cpuName = &quot;&quot;;</span>
         try {
-<span class="fc" id="L75">            cpuName = getCpuName();</span>
-<span class="nc" id="L76">        } catch (Exception ex) {</span>
-<span class="nc" id="L77">            FILog.e(ex.getMessage());</span>
-<span class="fc" id="L78">        }</span>
-<span class="fc" id="L79">        c.put(&quot;NAME&quot;, new CategoryValue(cpuName, &quot;NAME&quot;, &quot;name&quot;));</span>
+<span class="fc" id="L71">            Category c = new Category(&quot;CPUS&quot;, &quot;cpus&quot;);</span>
 
-        // Cpu Frequency
-<span class="fc" id="L82">        String cpuFrequency = &quot;&quot;;</span>
-        try {
-<span class="fc" id="L84">            cpuFrequency = getCpuFrequency();</span>
-<span class="nc" id="L85">        } catch (Exception ex) {</span>
-<span class="nc" id="L86">            FILog.e(ex.getMessage());</span>
-<span class="fc" id="L87">        }</span>
-<span class="fc" id="L88">        c.put(&quot;SPEED&quot;, new CategoryValue(cpuFrequency, &quot;SPEED&quot;,&quot;cpuFrequency&quot;));</span>
+            // Cpu Name
+            String cpuName;
 
-<span class="fc" id="L90">        this.add(c);</span>
-<span class="fc" id="L91">    }</span>
+<span class="fc" id="L76">            cpuName = getCpuName();</span>
+
+<span class="fc" id="L78">            c.put(&quot;NAME&quot;, new CategoryValue(cpuName, &quot;NAME&quot;, &quot;name&quot;));</span>
+
+            // Cpu Frequency
+            String cpuFrequency;
+
+<span class="fc" id="L83">            cpuFrequency = getCpuFrequency();</span>
+<span class="fc" id="L84">            c.put(&quot;SPEED&quot;, new CategoryValue(cpuFrequency, &quot;SPEED&quot;, &quot;cpuFrequency&quot;));</span>
+
+<span class="fc" id="L86">            this.add(c);</span>
+
+<span class="nc" id="L88">        } catch (Exception ex) {</span>
+<span class="nc" id="L89">            FILog.e(ex.getMessage());</span>
+<span class="fc" id="L90">        }</span>
+
+<span class="fc" id="L92">    }</span>
 
     /**
      * Get the CPU Name
@@ -100,26 +98,26 @@ public class Cpus extends Categories {
      */
 
     public String getCpuName() throws IOException {
-<span class="fc" id="L100">        String cpuname = &quot;&quot;;</span>
-<span class="fc" id="L101">        FileReader fr = null;</span>
-<span class="fc" id="L102">        BufferedReader br = null;</span>
+<span class="fc" id="L101">        String cpuname = &quot;&quot;;</span>
+<span class="fc" id="L102">        FileReader fr = null;</span>
+<span class="fc" id="L103">        BufferedReader br = null;</span>
         try {
-<span class="fc" id="L104">            File f = new File(CPUINFO);</span>
-<span class="fc" id="L105">            fr = new FileReader(f);</span>
-<span class="fc" id="L106">            br = new BufferedReader(fr, 8 * 1024);</span>
-<span class="fc" id="L107">            String infos = br.readLine();</span>
-<span class="fc" id="L108">            cpuname = infos.replaceAll(&quot;(.*):\\ (.*)&quot;, &quot;$2&quot;);</span>
-<span class="nc" id="L109">        } catch (IOException e) {</span>
-<span class="nc" id="L110">            FILog.e(e.getMessage());</span>
+<span class="fc" id="L105">            File f = new File(CPUINFO);</span>
+<span class="fc" id="L106">            fr = new FileReader(f);</span>
+<span class="fc" id="L107">            br = new BufferedReader(fr, 8 * 1024);</span>
+<span class="fc" id="L108">            String infos = br.readLine();</span>
+<span class="fc" id="L109">            cpuname = infos.replaceAll(&quot;(.*):\\ (.*)&quot;, &quot;$2&quot;);</span>
+<span class="nc" id="L110">        } catch (IOException e) {</span>
+<span class="nc" id="L111">            FILog.e(e.getMessage());</span>
         } finally {
-<span class="pc bpc" id="L112" title="5 of 6 branches missed.">            if(fr != null) {</span>
-<span class="pc" id="L113">                fr.close();</span>
+<span class="pc bpc" id="L113" title="5 of 6 branches missed.">            if(fr != null) {</span>
+<span class="pc" id="L114">                fr.close();</span>
             }
-<span class="pc bpc" id="L115" title="5 of 6 branches missed.">            if(br != null) {</span>
-<span class="pc" id="L116">                br.close();</span>
+<span class="pc bpc" id="L116" title="5 of 6 branches missed.">            if(br != null) {</span>
+<span class="pc" id="L117">                br.close();</span>
             }
         }
-<span class="fc" id="L119">        return cpuname;</span>
+<span class="fc" id="L120">        return cpuname;</span>
     }
 
     /**
@@ -128,20 +126,20 @@ public class Cpus extends Categories {
      * @throws IOException return exception
      */
     public String getCpuFrequency() throws IOException {
-<span class="fc" id="L128">        String cpuFrequency = &quot;&quot;;</span>
-<span class="fc" id="L129">        RandomAccessFile reader = null;</span>
+<span class="fc" id="L129">        String cpuFrequency = &quot;&quot;;</span>
+<span class="fc" id="L130">        RandomAccessFile reader = null;</span>
         try {
-<span class="nc" id="L131">            reader = new RandomAccessFile(CPUINFO_MAX_FREQ, &quot;r&quot;);</span>
-<span class="nc" id="L132">            cpuFrequency = String.valueOf(Integer.valueOf(reader.readLine()) / 1000);</span>
-<span class="nc" id="L133">            reader.close();</span>
-<span class="fc" id="L134">        } catch (IOException e) {</span>
-<span class="fc" id="L135">            FILog.e(e.getMessage());</span>
+<span class="nc" id="L132">            reader = new RandomAccessFile(CPUINFO_MAX_FREQ, &quot;r&quot;);</span>
+<span class="nc" id="L133">            cpuFrequency = String.valueOf(Integer.valueOf(reader.readLine()) / 1000);</span>
+<span class="nc" id="L134">            reader.close();</span>
+<span class="fc" id="L135">        } catch (IOException e) {</span>
+<span class="fc" id="L136">            FILog.e(e.getMessage());</span>
         } finally {
-<span class="pc bpc" id="L137" title="5 of 6 branches missed.">            if(reader != null) {</span>
-<span class="nc" id="L138">                reader.close();</span>
+<span class="pc bpc" id="L138" title="5 of 6 branches missed.">            if(reader != null) {</span>
+<span class="nc" id="L139">                reader.close();</span>
             }
         }
-<span class="fc" id="L141">        return cpuFrequency;</span>
+<span class="fc" id="L142">        return cpuFrequency;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span>Generated by the Android Gradle plugin 2.2.0</div></body></html>

@@ -1,7 +1,4 @@
----
-layout: coverage
----
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../resources/report.css" type="text/css"/><link rel="shortcut icon" href="../resources/report.gif" type="image/gif"/><title>Hardware.java</title><link rel="stylesheet" href="../resources/prettify.css" type="text/css"/><script type="text/javascript" src="../resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory.categories</a> &gt; <span class="el_source">Hardware.java</span></div><h1>Hardware.java</h1><pre class="source lang-java linenums">/**
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Hardware.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory.categories</a> &gt; <span class="el_source">Hardware.java</span></div><h1>Hardware.java</h1><pre class="source lang-java linenums">/**
  *
  * Copyright 2017 Teclib.
  * Copyright 2010-2016 by the FusionInventory Development
@@ -107,37 +104,38 @@ public class Hardware extends Categories {
 <span class="fc" id="L104">        super(xCtx);</span>
 
 <span class="fc" id="L106">        this.xCtx = xCtx;</span>
-<span class="fc" id="L107">        props = System.getProperties();</span>
-<span class="fc" id="L108">        Memory memory = new Memory(xCtx);</span>
 
-<span class="fc" id="L110">        Category c = new Category(&quot;HARDWARE&quot;, &quot;hardware&quot;);</span>
-
-<span class="fc" id="L112">        c.put(&quot;DATELASTLOGGEDUSER&quot;, new CategoryValue(getDatelastloggeduser(), &quot;DATELASTLOGGEDUSER&quot;, &quot;dateLastLoggedUser&quot;) );</span>
-<span class="fc" id="L113">        c.put(&quot;LASTLOGGEDUSER&quot;, new CategoryValue(getLastloggeduser(), &quot;LASTLOGGEDUSER&quot;, &quot;lastLoggedUser&quot;));</span>
-<span class="fc" id="L114">        c.put(&quot;NAME&quot;, new CategoryValue(getName(), &quot;NAME&quot;, &quot;name&quot;));</span>
-<span class="fc" id="L115">        c.put(&quot;OSNAME&quot;, new CategoryValue(OSNAME, &quot;OSNAME&quot;, &quot;osName&quot;));</span>
-<span class="fc" id="L116">        c.put(&quot;OSVERSION&quot;, new CategoryValue(getOsversion(), &quot;OSVERSION&quot;, &quot;osVersion&quot;));</span>
-<span class="fc" id="L117">        c.put(&quot;ARCHNAME&quot;, new CategoryValue(getArchname(), &quot;ARCHNAME&quot;, &quot;archName&quot;));</span>
-<span class="fc" id="L118">        c.put(&quot;UUID&quot;, new CategoryValue(getUUID(), &quot;UUID&quot;, &quot;uuid&quot;));</span>
-
-<span class="fc" id="L120">        String vMemory = &quot;&quot;;</span>
         try {
-<span class="fc" id="L122">            vMemory = memory.getCapacity();</span>
-<span class="nc" id="L123">        } catch (Exception ex) {</span>
-<span class="nc" id="L124">            FILog.e(ex.getMessage());</span>
-<span class="fc" id="L125">        }</span>
-<span class="fc" id="L126">        c.put(&quot;MEMORY&quot;, new CategoryValue(vMemory, &quot;MEMORY&quot;, &quot;memory&quot;));</span>
+<span class="fc" id="L109">            props = System.getProperties();</span>
+<span class="fc" id="L110">            Memory memory = new Memory(xCtx);</span>
 
-<span class="fc" id="L128">        this.add(c);</span>
+<span class="fc" id="L112">            Category c = new Category(&quot;HARDWARE&quot;, &quot;hardware&quot;);</span>
 
-<span class="fc" id="L130">    }</span>
+<span class="fc" id="L114">            c.put(&quot;DATELASTLOGGEDUSER&quot;, new CategoryValue(getDatelastloggeduser(), &quot;DATELASTLOGGEDUSER&quot;, &quot;dateLastLoggedUser&quot;));</span>
+<span class="fc" id="L115">            c.put(&quot;LASTLOGGEDUSER&quot;, new CategoryValue(getLastloggeduser(), &quot;LASTLOGGEDUSER&quot;, &quot;lastLoggedUser&quot;));</span>
+<span class="fc" id="L116">            c.put(&quot;NAME&quot;, new CategoryValue(getName(), &quot;NAME&quot;, &quot;name&quot;));</span>
+<span class="fc" id="L117">            c.put(&quot;OSNAME&quot;, new CategoryValue(OSNAME, &quot;OSNAME&quot;, &quot;osName&quot;));</span>
+<span class="fc" id="L118">            c.put(&quot;OSVERSION&quot;, new CategoryValue(getOsversion(), &quot;OSVERSION&quot;, &quot;osVersion&quot;));</span>
+<span class="fc" id="L119">            c.put(&quot;ARCHNAME&quot;, new CategoryValue(getArchname(), &quot;ARCHNAME&quot;, &quot;archName&quot;));</span>
+<span class="fc" id="L120">            c.put(&quot;UUID&quot;, new CategoryValue(getUUID(), &quot;UUID&quot;, &quot;uuid&quot;));</span>
+
+<span class="fc" id="L122">            String vMemory = memory.getCapacity();</span>
+
+<span class="fc" id="L124">            c.put(&quot;MEMORY&quot;, new CategoryValue(vMemory, &quot;MEMORY&quot;, &quot;memory&quot;));</span>
+
+<span class="fc" id="L126">            this.add(c);</span>
+<span class="nc" id="L127">        } catch (Exception ex) {</span>
+<span class="nc" id="L128">            FILog.e(ex.getMessage());</span>
+<span class="fc" id="L129">        }</span>
+
+<span class="fc" id="L131">    }</span>
 
     /**
      * Get the date of the last time the user logged
      * @return string the date in simple format
      */
     public String getDatelastloggeduser() {
-<span class="fc" id="L137">        return String.valueOf(DateFormat.format(&quot;MM/dd/yy&quot;, Build.TIME));</span>
+<span class="fc" id="L138">        return String.valueOf(DateFormat.format(&quot;MM/dd/yy&quot;, Build.TIME));</span>
     }
 
     /**
@@ -145,17 +143,17 @@ public class Hardware extends Categories {
      * @return string the user name
      */
     public String getLastloggeduser() {
-<span class="fc" id="L145">        String mLastloggeduser = &quot;&quot;;</span>
-<span class="pc bpc" id="L146" title="1 of 2 branches missed.">        if (!Build.USER.equals(Build.UNKNOWN)) {</span>
-<span class="fc" id="L147">            mLastloggeduser = Build.USER;</span>
+<span class="fc" id="L146">        String mLastloggeduser = &quot;&quot;;</span>
+<span class="pc bpc" id="L147" title="1 of 2 branches missed.">        if (!Build.USER.equals(Build.UNKNOWN)) {</span>
+<span class="fc" id="L148">            mLastloggeduser = Build.USER;</span>
         } else {
-<span class="nc" id="L149">            String user = props.getProperty(&quot;user.name&quot;);</span>
-<span class="nc bnc" id="L150" title="All 2 branches missed.">            if (!user.equals(&quot;&quot;)) {</span>
-<span class="nc" id="L151">                mLastloggeduser = props.getProperty(&quot;user.name&quot;);</span>
+<span class="nc" id="L150">            String user = props.getProperty(&quot;user.name&quot;);</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">            if (!user.equals(&quot;&quot;)) {</span>
+<span class="nc" id="L152">                mLastloggeduser = props.getProperty(&quot;user.name&quot;);</span>
             }
         }
 
-<span class="fc" id="L155">        return mLastloggeduser;</span>
+<span class="fc" id="L156">        return mLastloggeduser;</span>
     }
 
     /**
@@ -163,7 +161,7 @@ public class Hardware extends Categories {
      * @return string with the model
      */
     public String getName() {
-<span class="fc" id="L163">        return Build.MODEL;</span>
+<span class="fc" id="L164">        return Build.MODEL;</span>
     }
 
     /**
@@ -171,7 +169,7 @@ public class Hardware extends Categories {
      * @return string the version
      */
     public String getOsversion() {
-<span class="fc" id="L171">        return Build.VERSION.RELEASE;</span>
+<span class="fc" id="L172">        return Build.VERSION.RELEASE;</span>
     }
 
     /**
@@ -179,7 +177,7 @@ public class Hardware extends Categories {
      * @return string the OS architecture
      */
     public String getArchname() {
-<span class="fc" id="L179">        return props.getProperty(&quot;os.arch&quot;);</span>
+<span class="fc" id="L180">        return props.getProperty(&quot;os.arch&quot;);</span>
     }
 
     /**
@@ -187,7 +185,7 @@ public class Hardware extends Categories {
      * @return string the Android ID
      */
     public String getUUID() {
-<span class="fc" id="L187">        return Secure.getString(xCtx.getContentResolver(), Secure.ANDROID_ID);</span>
+<span class="fc" id="L188">        return Secure.getString(xCtx.getContentResolver(), Secure.ANDROID_ID);</span>
     }
 
 }

@@ -1,7 +1,4 @@
----
-layout: coverage
----
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../resources/report.css" type="text/css"/><link rel="shortcut icon" href="../resources/report.gif" type="image/gif"/><title>Simcards.java</title><link rel="stylesheet" href="../resources/prettify.css" type="text/css"/><script type="text/javascript" src="../resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory.categories</a> &gt; <span class="el_source">Simcards.java</span></div><h1>Simcards.java</h1><pre class="source lang-java linenums">/**
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Simcards.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory.categories</a> &gt; <span class="el_source">Simcards.java</span></div><h1>Simcards.java</h1><pre class="source lang-java linenums">/**
  *
  * Copyright 2017 Teclib.
  * Copyright 2010-2016 by the FusionInventory Development
@@ -37,6 +34,8 @@ package org.flyve.inventory.categories;
 import android.content.Context;
 import android.telephony.TelephonyManager;
 
+import org.flyve.inventory.FILog;
+
 /**
  * This class get all the information of the Simcards Devices
  */
@@ -58,18 +57,18 @@ public class Simcards extends Categories {
 
     /**
      * Indicates whether some other object is &quot;equal to&quot; this one
-     * @param Object obj the reference object with which to compare
+     * @param obj the reference object with which to compare
      * @return boolean true if the object is the same as the one given in argument
      */
     @Override
     public boolean equals(Object obj) {
-<span class="nc bnc" id="L63" title="All 2 branches missed.">        if (obj == null) {</span>
-<span class="nc" id="L64">            return false;</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">        if (obj == null) {</span>
+<span class="nc" id="L66">            return false;</span>
         }
-<span class="nc bnc" id="L66" title="All 2 branches missed.">        if (getClass() != obj.getClass()) {</span>
-<span class="nc" id="L67">            return false;</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">        if (getClass() != obj.getClass()) {</span>
+<span class="nc" id="L69">            return false;</span>
         }
-<span class="nc bnc" id="L69" title="All 2 branches missed.">        return (!super.equals(obj));</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">        return (!super.equals(obj));</span>
     }
 
     /**
@@ -78,9 +77,9 @@ public class Simcards extends Categories {
      */
     @Override
     public int hashCode() {
-<span class="nc" id="L78">        int hash = super.hashCode();</span>
-<span class="nc bnc" id="L79" title="All 2 branches missed.">        hash = 89 * hash + (this.mTM != null ? this.mTM.hashCode() : 0);</span>
-<span class="nc" id="L80">        return hash;</span>
+<span class="nc" id="L80">        int hash = super.hashCode();</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">        hash = 89 * hash + (this.mTM != null ? this.mTM.hashCode() : 0);</span>
+<span class="nc" id="L82">        return hash;</span>
     }
 
     /**
@@ -88,34 +87,38 @@ public class Simcards extends Categories {
      * @param xCtx Context where this class work
      */
     public Simcards(Context xCtx) {
-<span class="fc" id="L88">        super(xCtx);</span>
-        
-<span class="fc" id="L90">        mTM = (TelephonyManager) xCtx.getSystemService(Context.TELEPHONY_SERVICE);</span>
+<span class="fc" id="L90">        super(xCtx);</span>
 
-        /*
-         * Starting SimCards Informations retrieval
-         */
-<span class="pc bpc" id="L95" title="1 of 2 branches missed.">        if(getState().equals(&quot;SIM_STATE_UNKNOWN&quot;)) {</span>
-<span class="nc" id="L96">            Category c = new Category(&quot;SIMCARDS&quot;, &quot;simcards&quot;);</span>
+        try {
+<span class="fc" id="L93">            mTM = (TelephonyManager) xCtx.getSystemService(Context.TELEPHONY_SERVICE);</span>
 
-<span class="nc" id="L98">            c.put(&quot;COUNTRY&quot;, new CategoryValue(getCountry(), &quot;COUNTRY&quot;, &quot;country&quot;));</span>
-<span class="nc" id="L99">            c.put(&quot;OPERATOR_CODE&quot;, new CategoryValue(getOperatorCode(), &quot;OPERATOR_CODE&quot;, &quot;operatorCode&quot;));</span>
-<span class="nc" id="L100">            c.put(&quot;OPERATOR_NAME&quot;, new CategoryValue(getOperatorName(), &quot;OPERATOR_NAME&quot;, &quot;operatorName&quot;));</span>
-<span class="nc" id="L101">            c.put(&quot;SERIAL&quot;, new CategoryValue(getSerial(), &quot;SERIAL&quot;, &quot;serial&quot;));</span>
-<span class="nc" id="L102">            c.put(&quot;STATE&quot;, new CategoryValue(getState(), &quot;STATE&quot;, &quot;state&quot;));</span>
-<span class="nc" id="L103">            c.put(&quot;LINE_NUMBER&quot;, new CategoryValue(getLineNumber(), &quot;LINE_NUMBER&quot;, &quot;lineNumber&quot;));</span>
-<span class="nc" id="L104">            c.put(&quot;SUBSCRIBER_ID&quot;, new CategoryValue(getSubscriberId(), &quot;SUBSCRIBER_ID&quot;, &quot;subscriberId&quot;));</span>
+            /*
+             * Starting SimCards information retrieval
+             */
+<span class="pc bpc" id="L98" title="1 of 2 branches missed.">            if (getState().equals(&quot;SIM_STATE_UNKNOWN&quot;)) {</span>
+<span class="nc" id="L99">                Category c = new Category(&quot;SIMCARDS&quot;, &quot;simcards&quot;);</span>
 
-<span class="nc" id="L106">            this.add(c);</span>
-        }
-<span class="fc" id="L108">    }</span>
+<span class="nc" id="L101">                c.put(&quot;COUNTRY&quot;, new CategoryValue(getCountry(), &quot;COUNTRY&quot;, &quot;country&quot;));</span>
+<span class="nc" id="L102">                c.put(&quot;OPERATOR_CODE&quot;, new CategoryValue(getOperatorCode(), &quot;OPERATOR_CODE&quot;, &quot;operatorCode&quot;));</span>
+<span class="nc" id="L103">                c.put(&quot;OPERATOR_NAME&quot;, new CategoryValue(getOperatorName(), &quot;OPERATOR_NAME&quot;, &quot;operatorName&quot;));</span>
+<span class="nc" id="L104">                c.put(&quot;SERIAL&quot;, new CategoryValue(getSerial(), &quot;SERIAL&quot;, &quot;serial&quot;));</span>
+<span class="nc" id="L105">                c.put(&quot;STATE&quot;, new CategoryValue(getState(), &quot;STATE&quot;, &quot;state&quot;));</span>
+<span class="nc" id="L106">                c.put(&quot;LINE_NUMBER&quot;, new CategoryValue(getLineNumber(), &quot;LINE_NUMBER&quot;, &quot;lineNumber&quot;));</span>
+<span class="nc" id="L107">                c.put(&quot;SUBSCRIBER_ID&quot;, new CategoryValue(getSubscriberId(), &quot;SUBSCRIBER_ID&quot;, &quot;subscriberId&quot;));</span>
+
+<span class="nc" id="L109">                this.add(c);</span>
+            }
+<span class="nc" id="L111">        } catch (Exception ex) {</span>
+<span class="nc" id="L112">            FILog.e(ex.getMessage());</span>
+<span class="fc" id="L113">        }</span>
+<span class="fc" id="L114">    }</span>
 
     /**
      * Get the country
      * @return string the ISO country code
      */
     public String getCountry() {
-<span class="fc" id="L115">        return mTM.getSimCountryIso();</span>
+<span class="fc" id="L121">        return mTM.getSimCountryIso();</span>
     }
 
     /**
@@ -123,7 +126,7 @@ public class Simcards extends Categories {
      * @return the Mobile Country Code and Mobile Network Code of the provider of the sim
      */
     public String getOperatorCode() {
-<span class="fc" id="L123">        return mTM.getSimOperator();</span>
+<span class="fc" id="L129">        return mTM.getSimOperator();</span>
     }
 
     /**
@@ -131,7 +134,7 @@ public class Simcards extends Categories {
      * @return string the Service Provider Name
      */
     public String getOperatorName() {
-<span class="fc" id="L131">        return mTM.getSimOperatorName();</span>
+<span class="fc" id="L137">        return mTM.getSimOperatorName();</span>
     }
 
     /**
@@ -139,7 +142,7 @@ public class Simcards extends Categories {
      * @return string the serial number
      */
     public String getSerial() {
-<span class="fc" id="L139">        return mTM.getSimSerialNumber();</span>
+<span class="fc" id="L145">        return mTM.getSimSerialNumber();</span>
     }
 
     /**
@@ -147,31 +150,31 @@ public class Simcards extends Categories {
      * @return string the Simcard state
      */
     public String getState() {
-<span class="fc" id="L147">        String mState = &quot;&quot;;</span>
-<span class="pc bpc" id="L148" title="6 of 7 branches missed.">        switch(mTM.getSimState()) {</span>
+<span class="fc" id="L153">        String mState = &quot;&quot;;</span>
+<span class="pc bpc" id="L154" title="6 of 7 branches missed.">        switch(mTM.getSimState()) {</span>
             case TelephonyManager.SIM_STATE_ABSENT:
-<span class="nc" id="L150">                mState = &quot;SIM_STATE_ABSENT&quot;;</span>
-<span class="nc" id="L151">                break;</span>
-            case TelephonyManager.SIM_STATE_NETWORK_LOCKED:
-<span class="nc" id="L153">                mState = &quot;SIM_STATE_NETWORK_LOCKED&quot;;</span>
-<span class="nc" id="L154">                break;</span>
-            case TelephonyManager.SIM_STATE_PIN_REQUIRED:
-<span class="nc" id="L156">                mState = &quot;SIM_STATE_PIN_REQUIRED&quot;;</span>
+<span class="nc" id="L156">                mState = &quot;SIM_STATE_ABSENT&quot;;</span>
 <span class="nc" id="L157">                break;</span>
-            case TelephonyManager.SIM_STATE_PUK_REQUIRED:
-<span class="nc" id="L159">                mState = &quot;SIM_STATE_PUK_REQUIRED&quot;;</span>
+            case TelephonyManager.SIM_STATE_NETWORK_LOCKED:
+<span class="nc" id="L159">                mState = &quot;SIM_STATE_NETWORK_LOCKED&quot;;</span>
 <span class="nc" id="L160">                break;</span>
-            case TelephonyManager.SIM_STATE_READY:
-<span class="fc" id="L162">                mState = &quot;SIM_STATE_READY&quot;;</span>
-<span class="fc" id="L163">                break;</span>
-            case TelephonyManager.SIM_STATE_UNKNOWN:
-<span class="nc" id="L165">                mState = &quot;SIM_STATE_UNKNOWN&quot;;</span>
+            case TelephonyManager.SIM_STATE_PIN_REQUIRED:
+<span class="nc" id="L162">                mState = &quot;SIM_STATE_PIN_REQUIRED&quot;;</span>
+<span class="nc" id="L163">                break;</span>
+            case TelephonyManager.SIM_STATE_PUK_REQUIRED:
+<span class="nc" id="L165">                mState = &quot;SIM_STATE_PUK_REQUIRED&quot;;</span>
 <span class="nc" id="L166">                break;</span>
+            case TelephonyManager.SIM_STATE_READY:
+<span class="fc" id="L168">                mState = &quot;SIM_STATE_READY&quot;;</span>
+<span class="fc" id="L169">                break;</span>
+            case TelephonyManager.SIM_STATE_UNKNOWN:
+<span class="nc" id="L171">                mState = &quot;SIM_STATE_UNKNOWN&quot;;</span>
+<span class="nc" id="L172">                break;</span>
             default:
-<span class="nc" id="L168">                mState = &quot;SIM_STATE_UNKNOWN&quot;;</span>
+<span class="nc" id="L174">                mState = &quot;SIM_STATE_UNKNOWN&quot;;</span>
                 break;
         }
-<span class="fc" id="L171">        return mState;</span>
+<span class="fc" id="L177">        return mState;</span>
     }
 
     /**
@@ -179,7 +182,7 @@ public class Simcards extends Categories {
      * @return string the phone number for line 1
      */
     public String getLineNumber() {
-<span class="fc" id="L179">        return mTM.getLine1Number();</span>
+<span class="fc" id="L185">        return mTM.getLine1Number();</span>
     }
 
     /**
@@ -187,7 +190,7 @@ public class Simcards extends Categories {
      * @return string the unique subscriber ID
      */
     public String getSubscriberId() {
-<span class="fc" id="L187">        return mTM.getSubscriberId();</span>
+<span class="fc" id="L193">        return mTM.getSubscriberId();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span>Generated by the Android Gradle plugin 2.2.0</div></body></html>

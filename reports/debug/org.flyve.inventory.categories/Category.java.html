@@ -1,7 +1,4 @@
----
-layout: coverage
----
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../resources/report.css" type="text/css"/><link rel="shortcut icon" href="../resources/report.gif" type="image/gif"/><title>Category.java</title><link rel="stylesheet" href="../resources/prettify.css" type="text/css"/><script type="text/javascript" src="../resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory.categories</a> &gt; <span class="el_source">Category.java</span></div><h1>Category.java</h1><pre class="source lang-java linenums">/**
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Category.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory.categories</a> &gt; <span class="el_source">Category.java</span></div><h1>Category.java</h1><pre class="source lang-java linenums">/**
  * FusionInventory
  *
  * Copyright (C) 2010-2017 by the FusionInventory Development Team.
@@ -37,8 +34,6 @@ package org.flyve.inventory.categories;
 import android.os.Build;
 
 import org.flyve.inventory.FILog;
-import org.flyve.inventory.FlyveException;
-
 import org.json.JSONObject;
 import org.xmlpull.v1.XmlSerializer;
 
@@ -71,13 +66,13 @@ public class Category extends LinkedHashMap&lt;String, CategoryValue&gt; {
      */
     @Override
     public boolean equals(Object obj) {
-<span class="nc bnc" id="L71" title="All 2 branches missed.">        if (obj == null) {</span>
-<span class="nc" id="L72">            return false;</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">        if (obj == null) {</span>
+<span class="nc" id="L70">            return false;</span>
         }
-<span class="nc bnc" id="L74" title="All 2 branches missed.">        if (getClass() != obj.getClass()) {</span>
-<span class="nc" id="L75">            return false;</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">        if (getClass() != obj.getClass()) {</span>
+<span class="nc" id="L73">            return false;</span>
         }
-<span class="nc bnc" id="L77" title="All 2 branches missed.">        return (!super.equals(obj));</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">        return (!super.equals(obj));</span>
     }
 
     /**
@@ -86,26 +81,26 @@ public class Category extends LinkedHashMap&lt;String, CategoryValue&gt; {
      */
     @Override
     public int hashCode() {
-<span class="nc" id="L86">        int hash = super.hashCode();</span>
-<span class="nc bnc" id="L87" title="All 2 branches missed.">        hash = 89 * hash + (this.mType != null ? this.mType.hashCode() : 0);</span>
-<span class="nc" id="L88">        return hash;</span>
+<span class="nc" id="L84">        int hash = super.hashCode();</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">        hash = 89 * hash + (this.mType != null ? this.mType.hashCode() : 0);</span>
+<span class="nc" id="L86">        return hash;</span>
     }
 
     /**
      * This constructor load the Context of the instance and the name of the node in XML
      * @param xType name of the node
      */
-<span class="fc" id="L95">    public Category(String xType, String tagName) {</span>
-<span class="fc" id="L96">        mType = xType;</span>
-<span class="fc" id="L97">        mtagName = tagName;</span>
-<span class="fc" id="L98">    }</span>
+<span class="fc" id="L93">    public Category(String xType, String tagName) {</span>
+<span class="fc" id="L94">        mType = xType;</span>
+<span class="fc" id="L95">        mtagName = tagName;</span>
+<span class="fc" id="L96">    }</span>
 
     /**
      * Return the type of category
      * @return String with the category
      */
     public String getType() {
-<span class="nc" id="L105">        return mType;</span>
+<span class="nc" id="L103">        return mType;</span>
     }
 
     /**
@@ -113,7 +108,7 @@ public class Category extends LinkedHashMap&lt;String, CategoryValue&gt; {
      * @return String with the category
      */
     public String getTagName() {
-<span class="fc" id="L113">        return mtagName;</span>
+<span class="fc" id="L111">        return mtagName;</span>
     }
 
     /**
@@ -125,10 +120,10 @@ public class Category extends LinkedHashMap&lt;String, CategoryValue&gt; {
      */
     public CategoryValue put(String key, CategoryValue value) {
        //Do not add value if it's null, blank or &quot;unknow&quot;
-<span class="pc bpc" id="L125" title="1 of 6 branches missed.">       if (value != null &amp;&amp; !value.getValue().equals(&quot;&quot;) &amp;&amp; !value.getValue().equals(Build.UNKNOWN)) {</span>
-<span class="fc" id="L126">    	   return super.put(key, value);</span>
+<span class="pc bpc" id="L123" title="1 of 6 branches missed.">       if (value != null &amp;&amp; !value.getValue().equals(&quot;&quot;) &amp;&amp; !value.getValue().equals(Build.UNKNOWN)) {</span>
+<span class="fc" id="L124">    	   return super.put(key, value);</span>
        } else {
-<span class="fc" id="L128">    	   return null;</span>
+<span class="fc" id="L126">    	   return null;</span>
        }
     }
 
@@ -136,71 +131,70 @@ public class Category extends LinkedHashMap&lt;String, CategoryValue&gt; {
      * This is a public function that create a XML node with a XmlSerializer object
      * @param serializer object
      */
-    public void toXML(XmlSerializer serializer) throws FlyveException {
-
+    public void toXML(XmlSerializer serializer) {
         try {
-<span class="fc" id="L139">            serializer.startTag(null, mType);</span>
+<span class="fc" id="L136">            serializer.startTag(null, mType);</span>
 
-<span class="fc bfc" id="L141" title="All 2 branches covered.">            for (Map.Entry&lt;String, CategoryValue&gt; entry : this.entrySet()) {</span>
-<span class="fc" id="L142">                serializer.startTag(null, this.get(entry.getKey()).getXmlName());</span>
-<span class="fc" id="L143">                serializer.text(String.valueOf(this.get(entry.getKey()).getValue()));</span>
-<span class="fc" id="L144">                serializer.endTag(null, this.get(entry.getKey()).getXmlName());</span>
-<span class="fc" id="L145">            }</span>
+<span class="fc bfc" id="L138" title="All 2 branches covered.">            for (Map.Entry&lt;String, CategoryValue&gt; entry : this.entrySet()) {</span>
+<span class="fc" id="L139">                serializer.startTag(null, this.get(entry.getKey()).getXmlName());</span>
+<span class="fc" id="L140">                serializer.text(String.valueOf(this.get(entry.getKey()).getValue()));</span>
+<span class="fc" id="L141">                serializer.endTag(null, this.get(entry.getKey()).getXmlName());</span>
+<span class="fc" id="L142">            }</span>
 
-<span class="fc" id="L147">            serializer.endTag(null, mType);</span>
-<span class="nc" id="L148">        } catch (Exception ex) {</span>
-<span class="nc" id="L149">            throw new FlyveException(ex.getMessage(), ex.getCause());</span>
-<span class="fc" id="L150">        }</span>
-<span class="fc" id="L151">    }</span>
+<span class="fc" id="L144">            serializer.endTag(null, mType);</span>
+<span class="nc" id="L145">        } catch (Exception ex) {</span>
+<span class="nc" id="L146">            FILog.d(ex.getMessage());</span>
+<span class="fc" id="L147">        }</span>
+<span class="fc" id="L148">    }</span>
 
-    public void toXMLWithoutPrivateData(XmlSerializer serializer) throws FlyveException {
+    public void toXMLWithoutPrivateData(XmlSerializer serializer) {
         try {
-<span class="nc" id="L155">            serializer.startTag(null, mType);</span>
+<span class="nc" id="L152">            serializer.startTag(null, mType);</span>
 
-<span class="nc bnc" id="L157" title="All 2 branches missed.">            for (Map.Entry&lt;String, CategoryValue&gt; entry : this.entrySet()) {</span>
-<span class="nc bnc" id="L158" title="All 2 branches missed.">                if(!this.get(entry.getKey()).isPrivate()) {</span>
-<span class="nc" id="L159">                    serializer.startTag(null, this.get(entry.getKey()).getXmlName());</span>
-<span class="nc" id="L160">                    serializer.text(String.valueOf(this.get(entry.getKey()).getValue()));</span>
-<span class="nc" id="L161">                    serializer.endTag(null, this.get(entry.getKey()).getXmlName());</span>
+<span class="nc bnc" id="L154" title="All 2 branches missed.">            for (Map.Entry&lt;String, CategoryValue&gt; entry : this.entrySet()) {</span>
+<span class="nc bnc" id="L155" title="All 2 branches missed.">                if(!this.get(entry.getKey()).isPrivate()) {</span>
+<span class="nc" id="L156">                    serializer.startTag(null, this.get(entry.getKey()).getXmlName());</span>
+<span class="nc" id="L157">                    serializer.text(String.valueOf(this.get(entry.getKey()).getValue()));</span>
+<span class="nc" id="L158">                    serializer.endTag(null, this.get(entry.getKey()).getXmlName());</span>
                 }
-<span class="nc" id="L163">            }</span>
+<span class="nc" id="L160">            }</span>
 
-<span class="nc" id="L165">            serializer.endTag(null, mType);</span>
-<span class="nc" id="L166">        } catch (Exception ex) {</span>
-<span class="nc" id="L167">            throw new FlyveException(ex.getMessage(), ex.getCause());</span>
-<span class="nc" id="L168">        }</span>
-<span class="nc" id="L169">    }</span>
+<span class="nc" id="L162">            serializer.endTag(null, mType);</span>
+<span class="nc" id="L163">        } catch (Exception ex) {</span>
+<span class="nc" id="L164">            FILog.d(ex.getMessage());</span>
+<span class="nc" id="L165">        }</span>
+<span class="nc" id="L166">    }</span>
 
     /**
      * This is a public function that create a JSON
      */
-    public JSONObject toJSON() throws FlyveException {
+    public JSONObject toJSON() {
         try {
-<span class="fc" id="L176">            JSONObject jsonCategories = new JSONObject();</span>
-<span class="fc bfc" id="L177" title="All 2 branches covered.">            for (Map.Entry&lt;String,CategoryValue&gt; entry : this.entrySet()) {</span>
-<span class="fc" id="L178">                jsonCategories.put(this.get(entry.getKey()).getJsonName(), this.get(entry.getKey()).getValue());</span>
-<span class="fc" id="L179">            }</span>
+<span class="fc" id="L173">            JSONObject jsonCategories = new JSONObject();</span>
+<span class="fc bfc" id="L174" title="All 2 branches covered.">            for (Map.Entry&lt;String,CategoryValue&gt; entry : this.entrySet()) {</span>
+<span class="fc" id="L175">                jsonCategories.put(this.get(entry.getKey()).getJsonName(), this.get(entry.getKey()).getValue());</span>
+<span class="fc" id="L176">            }</span>
 
-<span class="fc" id="L181">            return jsonCategories;</span>
-<span class="nc" id="L182">        } catch ( Exception ex ) {</span>
-<span class="nc" id="L183">            FILog.e( ex.getMessage() );</span>
-<span class="nc" id="L184">            throw new FlyveException(ex.getMessage(), ex.getCause());</span>
+<span class="fc" id="L178">            return jsonCategories;</span>
+<span class="nc" id="L179">        } catch ( Exception ex ) {</span>
+<span class="nc" id="L180">            FILog.e( ex.getMessage() );</span>
+<span class="nc" id="L181">            return new JSONObject();</span>
         }
     }
 
-    public JSONObject toJSONWithoutPrivateData() throws FlyveException {
+    public JSONObject toJSONWithoutPrivateData() {
         try {
-<span class="nc" id="L190">            JSONObject jsonCategories = new JSONObject();</span>
-<span class="nc bnc" id="L191" title="All 2 branches missed.">            for (Map.Entry&lt;String,CategoryValue&gt; entry : this.entrySet()) {</span>
-<span class="nc bnc" id="L192" title="All 2 branches missed.">                if(!this.get(entry.getKey()).isPrivate()) {</span>
-<span class="nc" id="L193">                    jsonCategories.put(this.get(entry.getKey()).getJsonName(), this.get(entry.getKey()).getValue());</span>
+<span class="nc" id="L187">            JSONObject jsonCategories = new JSONObject();</span>
+<span class="nc bnc" id="L188" title="All 2 branches missed.">            for (Map.Entry&lt;String,CategoryValue&gt; entry : this.entrySet()) {</span>
+<span class="nc bnc" id="L189" title="All 2 branches missed.">                if(!this.get(entry.getKey()).isPrivate()) {</span>
+<span class="nc" id="L190">                    jsonCategories.put(this.get(entry.getKey()).getJsonName(), this.get(entry.getKey()).getValue());</span>
                 }
-<span class="nc" id="L195">            }</span>
+<span class="nc" id="L192">            }</span>
 
-<span class="nc" id="L197">            return jsonCategories;</span>
-<span class="nc" id="L198">        } catch ( Exception ex ) {</span>
-<span class="nc" id="L199">            FILog.e( ex.getMessage() );</span>
-<span class="nc" id="L200">            throw new FlyveException(ex.getMessage(), ex.getCause());</span>
+<span class="nc" id="L194">            return jsonCategories;</span>
+<span class="nc" id="L195">        } catch ( Exception ex ) {</span>
+<span class="nc" id="L196">            FILog.e( ex.getMessage() );</span>
+<span class="nc" id="L197">            return new JSONObject();</span>
         }
     }
 }

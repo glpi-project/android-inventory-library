@@ -1,7 +1,4 @@
----
-layout: coverage
----
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../resources/report.css" type="text/css"/><link rel="shortcut icon" href="../resources/report.gif" type="image/gif"/><title>PhoneStatus.java</title><link rel="stylesheet" href="../resources/prettify.css" type="text/css"/><script type="text/javascript" src="../resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory.categories</a> &gt; <span class="el_source">PhoneStatus.java</span></div><h1>PhoneStatus.java</h1><pre class="source lang-java linenums">/**
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>PhoneStatus.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory.categories</a> &gt; <span class="el_source">PhoneStatus.java</span></div><h1>PhoneStatus.java</h1><pre class="source lang-java linenums">/**
  *
  * Copyright 2017 Teclib.
  * Copyright 2010-2016 by the FusionInventory Development
@@ -68,48 +65,47 @@ public class PhoneStatus extends Categories {
         //TODO Solved the problem Thread inside other Thread to make PhoenStatus works
         // The problem here is with a the PhoneStateListener and the
         // AsyncTask we got a Thread inside other Thread
-
-<span class="nc" id="L69">        final Category c = new Category(&quot;PHONE_STATUS&quot;, &quot;phoneStatus&quot;);</span>
-
-<span class="nc" id="L71">        TelephonyManager telMng = (TelephonyManager)xCtx.getSystemService(Context.TELEPHONY_SERVICE);</span>
-
         try {
-<span class="nc" id="L74">            telMng.listen(new PhoneStateListener() {</span>
+
+<span class="nc" id="L70">        final Category c = new Category(&quot;PHONE_STATUS&quot;, &quot;phoneStatus&quot;);</span>
+
+<span class="nc" id="L72">        TelephonyManager telMng = (TelephonyManager)xCtx.getSystemService(Context.TELEPHONY_SERVICE);</span>
+<span class="nc" id="L73">            telMng.listen(new PhoneStateListener() {</span>
                 @Override
                 public void onServiceStateChanged(ServiceState serviceState) {
-<span class="nc" id="L77">                    super.onServiceStateChanged(serviceState);</span>
+<span class="nc" id="L76">                    super.onServiceStateChanged(serviceState);</span>
                     String phoneState;
 
-<span class="nc bnc" id="L80" title="All 5 branches missed.">                    switch (serviceState.getState()) {</span>
+<span class="nc bnc" id="L79" title="All 5 branches missed.">                    switch (serviceState.getState()) {</span>
                         case ServiceState.STATE_EMERGENCY_ONLY:
-<span class="nc" id="L82">                            phoneState = &quot;STATE_EMERGENCY_ONLY&quot;;</span>
-<span class="nc" id="L83">                            break;</span>
+<span class="nc" id="L81">                            phoneState = &quot;STATE_EMERGENCY_ONLY&quot;;</span>
+<span class="nc" id="L82">                            break;</span>
                         case ServiceState.STATE_IN_SERVICE:
-<span class="nc" id="L85">                            phoneState = &quot;STATE_IN_SERVICE&quot;;</span>
-<span class="nc" id="L86">                            break;</span>
+<span class="nc" id="L84">                            phoneState = &quot;STATE_IN_SERVICE&quot;;</span>
+<span class="nc" id="L85">                            break;</span>
                         case ServiceState.STATE_OUT_OF_SERVICE:
-<span class="nc" id="L88">                            phoneState = &quot;STATE_OUT_OF_SERVICE&quot;;</span>
-<span class="nc" id="L89">                            break;</span>
+<span class="nc" id="L87">                            phoneState = &quot;STATE_OUT_OF_SERVICE&quot;;</span>
+<span class="nc" id="L88">                            break;</span>
                         case ServiceState.STATE_POWER_OFF:
-<span class="nc" id="L91">                            phoneState = &quot;STATE_POWER_OFF&quot;;</span>
-<span class="nc" id="L92">                            break;</span>
+<span class="nc" id="L90">                            phoneState = &quot;STATE_POWER_OFF&quot;;</span>
+<span class="nc" id="L91">                            break;</span>
                         default:
-<span class="nc" id="L94">                            phoneState = &quot;Unknown&quot;;</span>
+<span class="nc" id="L93">                            phoneState = &quot;Unknown&quot;;</span>
                             break;
                     }
 
-<span class="nc" id="L98">                    c.put(&quot;STATE&quot;, new CategoryValue(phoneState, &quot;STATE&quot;, &quot;state&quot;));</span>
-<span class="nc" id="L99">                    c.put(&quot;OPERATOR_ALPHA&quot;, new CategoryValue(serviceState.getOperatorAlphaLong(), &quot;OPERATOR_ALPHA&quot;, &quot;operatorAlpha&quot;));</span>
-<span class="nc" id="L100">                    c.put(&quot;OPERATOR_NUMERIC&quot;, new CategoryValue(serviceState.getOperatorNumeric(), &quot;OPERATOR_NUMERIC&quot;, &quot;operatorNumeric&quot;));</span>
-<span class="nc" id="L101">                    c.put(&quot;ROAMING&quot;, new CategoryValue(Boolean.valueOf(serviceState.getRoaming()).toString(), &quot;ROAMING&quot;, &quot;roaming&quot;));</span>
-<span class="nc bnc" id="L102" title="All 2 branches missed.">                    c.put(&quot;NETWORK_SELECTION&quot;, new CategoryValue(serviceState.getIsManualSelection() ? &quot;NETWORK_SELECTION&quot; : &quot;AUTO&quot;, &quot;NETWORK_SELECTION&quot;, &quot;networkSelection&quot;));</span>
+<span class="nc" id="L97">                    c.put(&quot;STATE&quot;, new CategoryValue(phoneState, &quot;STATE&quot;, &quot;state&quot;));</span>
+<span class="nc" id="L98">                    c.put(&quot;OPERATOR_ALPHA&quot;, new CategoryValue(serviceState.getOperatorAlphaLong(), &quot;OPERATOR_ALPHA&quot;, &quot;operatorAlpha&quot;));</span>
+<span class="nc" id="L99">                    c.put(&quot;OPERATOR_NUMERIC&quot;, new CategoryValue(serviceState.getOperatorNumeric(), &quot;OPERATOR_NUMERIC&quot;, &quot;operatorNumeric&quot;));</span>
+<span class="nc" id="L100">                    c.put(&quot;ROAMING&quot;, new CategoryValue(Boolean.valueOf(serviceState.getRoaming()).toString(), &quot;ROAMING&quot;, &quot;roaming&quot;));</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">                    c.put(&quot;NETWORK_SELECTION&quot;, new CategoryValue(serviceState.getIsManualSelection() ? &quot;NETWORK_SELECTION&quot; : &quot;AUTO&quot;, &quot;NETWORK_SELECTION&quot;, &quot;networkSelection&quot;));</span>
 
-<span class="nc" id="L104">                    PhoneStatus.this.add(c);</span>
-<span class="nc" id="L105">                }</span>
+<span class="nc" id="L103">                    PhoneStatus.this.add(c);</span>
+<span class="nc" id="L104">                }</span>
             }, PhoneStateListener.LISTEN_SERVICE_STATE);
-<span class="nc" id="L107">        } catch (Exception ex) {</span>
-<span class="nc" id="L108">            FILog.e(ex.getMessage());</span>
-<span class="nc" id="L109">        }</span>
-<span class="nc" id="L110">    }</span>
+<span class="nc" id="L106">        } catch (Exception ex) {</span>
+<span class="nc" id="L107">            FILog.e(ex.getMessage());</span>
+<span class="nc" id="L108">        }</span>
+<span class="nc" id="L109">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span>Generated by the Android Gradle plugin 2.2.0</div></body></html>

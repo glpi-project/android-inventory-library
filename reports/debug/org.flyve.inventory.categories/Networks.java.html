@@ -1,7 +1,4 @@
----
-layout: coverage
----
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../resources/report.css" type="text/css"/><link rel="shortcut icon" href="../resources/report.gif" type="image/gif"/><title>Networks.java</title><link rel="stylesheet" href="../resources/prettify.css" type="text/css"/><script type="text/javascript" src="../resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory.categories</a> &gt; <span class="el_source">Networks.java</span></div><h1>Networks.java</h1><pre class="source lang-java linenums">/**
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Networks.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory.categories</a> &gt; <span class="el_source">Networks.java</span></div><h1>Networks.java</h1><pre class="source lang-java linenums">/**
  *
  * Copyright 2017 Teclib.
  * Copyright 2010-2016 by the FusionInventory Development
@@ -98,46 +95,50 @@ public class Networks extends Categories {
 	public Networks(Context xCtx) {
 <span class="fc" id="L96">		super(xCtx);</span>
 
-<span class="fc" id="L98">		WifiManager pWM = (WifiManager) xCtx.getSystemService(Service.WIFI_SERVICE);</span>
-<span class="fc" id="L99">		boolean wasWifiEnabled = pWM.isWifiEnabled();</span>
+		try {
+<span class="fc" id="L99">			WifiManager pWM = (WifiManager) xCtx.getSystemService(Service.WIFI_SERVICE);</span>
+<span class="fc" id="L100">			boolean wasWifiEnabled = pWM.isWifiEnabled();</span>
 
-		// Enable Wifi State if not
-<span class="pc bpc" id="L102" title="1 of 2 branches missed.">		if (!wasWifiEnabled) {</span>
-<span class="fc" id="L103">			pWM.setWifiEnabled(true);</span>
-		}
-<span class="fc" id="L105">		Category c = new Category(&quot;NETWORKS&quot;, &quot;networks&quot;);</span>
-<span class="fc" id="L106">		c.put(&quot;TYPE&quot;, new CategoryValue(TYPE, &quot;TYPE&quot;, &quot;type&quot;));</span>
+			// Enable Wifi State if not
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">			if (!wasWifiEnabled) {</span>
+<span class="fc" id="L104">				pWM.setWifiEnabled(true);</span>
+			}
+<span class="fc" id="L106">			Category c = new Category(&quot;NETWORKS&quot;, &quot;networks&quot;);</span>
+<span class="fc" id="L107">			c.put(&quot;TYPE&quot;, new CategoryValue(TYPE, &quot;TYPE&quot;, &quot;type&quot;));</span>
 
-<span class="fc" id="L108">		dhcp = pWM.getDhcpInfo();</span>
-<span class="fc" id="L109">		wifi = pWM.getConnectionInfo();</span>
+<span class="fc" id="L109">			dhcp = pWM.getDhcpInfo();</span>
+<span class="fc" id="L110">			wifi = pWM.getConnectionInfo();</span>
 
-<span class="fc" id="L111">		FILog.d(&quot;&lt;===WIFI DHCP===&gt;&quot;);</span>
-<span class="fc" id="L112">		FILog.d(&quot;dns1=&quot; + StringUtils.intToIp(dhcp.dns1));</span>
-<span class="fc" id="L113">		FILog.d(&quot;dns2=&quot; + StringUtils.intToIp(dhcp.dns2));</span>
-<span class="fc" id="L114">		FILog.d(&quot;leaseDuration=&quot; + dhcp.leaseDuration);</span>
+<span class="fc" id="L112">			FILog.d(&quot;&lt;===WIFI DHCP===&gt;&quot;);</span>
+<span class="fc" id="L113">			FILog.d(&quot;dns1=&quot; + StringUtils.intToIp(dhcp.dns1));</span>
+<span class="fc" id="L114">			FILog.d(&quot;dns2=&quot; + StringUtils.intToIp(dhcp.dns2));</span>
+<span class="fc" id="L115">			FILog.d(&quot;leaseDuration=&quot; + dhcp.leaseDuration);</span>
 
-<span class="fc" id="L116">		c.put(&quot;MACADDR&quot;, new CategoryValue(getMacaddr(), &quot;MACADDR&quot;, &quot;macAddress&quot;));</span>
-<span class="fc" id="L117">		c.put(&quot;SPEED&quot;, new CategoryValue(getSpeed(), &quot;SPEED&quot;, &quot;speed&quot;));</span>
-<span class="fc" id="L118">		c.put(&quot;BSSID&quot;, new CategoryValue(getBSSID(), &quot;BSSID&quot;, &quot;bssid&quot;));</span>
-<span class="fc" id="L119">		c.put(&quot;SSID&quot;, new CategoryValue(getSSID(), &quot;SSID&quot;, &quot;ssid&quot;));</span>
-<span class="fc" id="L120">		c.put(&quot;IPGATEWAY&quot;, new CategoryValue(getIpgateway(), &quot;IPGATEWAY&quot;, &quot;ipGateway&quot;));</span>
-<span class="fc" id="L121">		c.put(&quot;IPADDRESS&quot;, new CategoryValue(getIpaddress(), &quot;IPADDRESS&quot;, &quot;ipAddress&quot;, true));</span>
-<span class="fc" id="L122">		c.put(&quot;IPMASK&quot;, new CategoryValue(getIpmask(), &quot;IPMASK&quot;, &quot;ipMask&quot;, true));</span>
-<span class="fc" id="L123">		c.put(&quot;IPDHCP&quot;, new CategoryValue(getIpdhcp(), &quot;IPDHCP&quot;, &quot;ipDhcp&quot;, true));</span>
+<span class="fc" id="L117">			c.put(&quot;MACADDR&quot;, new CategoryValue(getMacaddr(), &quot;MACADDR&quot;, &quot;macAddress&quot;));</span>
+<span class="fc" id="L118">			c.put(&quot;SPEED&quot;, new CategoryValue(getSpeed(), &quot;SPEED&quot;, &quot;speed&quot;));</span>
+<span class="fc" id="L119">			c.put(&quot;BSSID&quot;, new CategoryValue(getBSSID(), &quot;BSSID&quot;, &quot;bssid&quot;));</span>
+<span class="fc" id="L120">			c.put(&quot;SSID&quot;, new CategoryValue(getSSID(), &quot;SSID&quot;, &quot;ssid&quot;));</span>
+<span class="fc" id="L121">			c.put(&quot;IPGATEWAY&quot;, new CategoryValue(getIpgateway(), &quot;IPGATEWAY&quot;, &quot;ipGateway&quot;));</span>
+<span class="fc" id="L122">			c.put(&quot;IPADDRESS&quot;, new CategoryValue(getIpaddress(), &quot;IPADDRESS&quot;, &quot;ipAddress&quot;, true));</span>
+<span class="fc" id="L123">			c.put(&quot;IPMASK&quot;, new CategoryValue(getIpmask(), &quot;IPMASK&quot;, &quot;ipMask&quot;, true));</span>
+<span class="fc" id="L124">			c.put(&quot;IPDHCP&quot;, new CategoryValue(getIpdhcp(), &quot;IPDHCP&quot;, &quot;ipDhcp&quot;, true));</span>
 
-<span class="fc" id="L125">		this.add(c);</span>
-		// Restore Wifi State
-<span class="pc bpc" id="L127" title="1 of 2 branches missed.">		if (!wasWifiEnabled) {</span>
-<span class="fc" id="L128">			pWM.setWifiEnabled(false);</span>
-		}
-<span class="fc" id="L130">	}</span>
+<span class="fc" id="L126">			this.add(c);</span>
+			// Restore Wifi State
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">			if (!wasWifiEnabled) {</span>
+<span class="fc" id="L129">				pWM.setWifiEnabled(false);</span>
+			}
+<span class="nc" id="L131">		} catch (Exception ex) {</span>
+<span class="nc" id="L132">			FILog.e(ex.getMessage());</span>
+<span class="fc" id="L133">		}</span>
+<span class="fc" id="L134">	}</span>
 
 	/**
 	 * Get the Media Access Control address
 	 * @return string the MAC address
 	 */
 	public String getMacaddr() {
-<span class="fc" id="L137">		return wifi.getMacAddress();</span>
+<span class="fc" id="L141">		return wifi.getMacAddress();</span>
 	}
 
 	/**
@@ -145,7 +146,7 @@ public class Networks extends Categories {
 	 * @return string the current speed in Mbps
 	 */
 	public String getSpeed() {
-<span class="fc" id="L145">		return String.valueOf(wifi.getLinkSpeed());</span>
+<span class="fc" id="L149">		return String.valueOf(wifi.getLinkSpeed());</span>
 	}
 
 	/**
@@ -153,7 +154,7 @@ public class Networks extends Categories {
 	 * @return string the BSSID of the current access point
 	 */
 	public String getBSSID() {
-<span class="fc" id="L153">		return String.valueOf(wifi.getBSSID());</span>
+<span class="fc" id="L157">		return String.valueOf(wifi.getBSSID());</span>
 	}
 
 	/**
@@ -162,7 +163,7 @@ public class Networks extends Categories {
 	 * 
 	 */
 	public String getSSID() {
-<span class="fc" id="L162">		return String.valueOf(wifi.getBSSID());</span>
+<span class="fc" id="L166">		return String.valueOf(wifi.getBSSID());</span>
 	}
 
 	/**
@@ -170,7 +171,7 @@ public class Networks extends Categories {
 	 * @return string the gateway IP address
 	 */
 	public String getIpgateway() {
-<span class="fc" id="L170">		return StringUtils.intToIp(dhcp.gateway);</span>
+<span class="fc" id="L174">		return StringUtils.intToIp(dhcp.gateway);</span>
 	}
 
 	/**
@@ -178,7 +179,7 @@ public class Networks extends Categories {
 	 * @return string the current IP address
 	 */
 	public String getIpaddress() {
-<span class="fc" id="L178">		return StringUtils.intToIp(dhcp.ipAddress);</span>
+<span class="fc" id="L182">		return StringUtils.intToIp(dhcp.ipAddress);</span>
 	}
 
 	/**
@@ -186,7 +187,7 @@ public class Networks extends Categories {
 	 * @return string the netmask
 	 */
 	public String getIpmask() {
-<span class="fc" id="L186">		return StringUtils.intToIp(dhcp.netmask);</span>
+<span class="fc" id="L190">		return StringUtils.intToIp(dhcp.netmask);</span>
 	}
 
 	/**
@@ -194,7 +195,7 @@ public class Networks extends Categories {
 	 * @return string the server address
 	 */
 	public String getIpdhcp() {
-<span class="fc" id="L194">		return StringUtils.intToIp(dhcp.serverAddress);</span>
+<span class="fc" id="L198">		return StringUtils.intToIp(dhcp.serverAddress);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span>Generated by the Android Gradle plugin 2.2.0</div></body></html>

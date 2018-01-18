@@ -1,7 +1,4 @@
----
-layout: coverage
----
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../resources/report.css" type="text/css"/><link rel="shortcut icon" href="../resources/report.gif" type="image/gif"/><title>Cameras.java</title><link rel="stylesheet" href="../resources/prettify.css" type="text/css"/><script type="text/javascript" src="../resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory.categories</a> &gt; <span class="el_source">Cameras.java</span></div><h1>Cameras.java</h1><pre class="source lang-java linenums">/**
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Cameras.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory.categories</a> &gt; <span class="el_source">Cameras.java</span></div><h1>Cameras.java</h1><pre class="source lang-java linenums">/**
  *
  * Copyright 2017 Teclib.
  * Copyright 2010-2016 by the FusionInventory Development
@@ -37,6 +34,8 @@ package org.flyve.inventory.categories;
 import android.content.Context;
 import android.hardware.Camera;
 
+import org.flyve.inventory.FILog;
+
 import java.util.List;
 
 /**
@@ -62,46 +61,50 @@ public class Cameras
      * @param xCtx Context where this class work
      */
 	public Cameras(Context xCtx) {
-<span class="fc" id="L62">        super(xCtx);</span>
+<span class="fc" id="L64">        super(xCtx);</span>
 
         // Get resolutions of the camera
         // Work on Android SDK Version &gt;= 5
-<span class="fc" id="L66">        int count = Camera.getNumberOfCameras();</span>
-<span class="pc bpc" id="L67" title="1 of 2 branches missed.">        if (count &gt; 0) {</span>
-<span class="fc bfc" id="L68" title="All 2 branches covered.">            for (int i = 0; i &lt; count; i++) {</span>
-<span class="fc" id="L69">                Category c = new Category(&quot;CAMERAS&quot;, &quot;cameras&quot;);</span>
-<span class="fc" id="L70">                c.put(&quot;RESOLUTIONS&quot;, new CategoryValue(getResolutions(i), &quot;RESOLUTIONS&quot;, &quot;resolutions&quot;));</span>
-<span class="fc" id="L71">                this.add(c);</span>
+        try {
+<span class="fc" id="L69">            int count = Camera.getNumberOfCameras();</span>
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">            if (count &gt; 0) {</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">                for (int i = 0; i &lt; count; i++) {</span>
+<span class="fc" id="L72">                    Category c = new Category(&quot;CAMERAS&quot;, &quot;cameras&quot;);</span>
+<span class="fc" id="L73">                    c.put(&quot;RESOLUTIONS&quot;, new CategoryValue(getResolutions(i), &quot;RESOLUTIONS&quot;, &quot;resolutions&quot;));</span>
+<span class="fc" id="L74">                    this.add(c);</span>
+                }
             }
-        }
-<span class="fc" id="L74">    }</span>
+<span class="nc" id="L77">        } catch (Exception ex) {</span>
+<span class="nc" id="L78">            FILog.e(ex.getMessage());</span>
+<span class="fc" id="L79">        }</span>
+<span class="fc" id="L80">    }</span>
 
     /**
      * Get the camera resolutions
-     * @param int index
+     * @param index
      * @return string with the width and height
      */
     public String getResolutions(int index) {
-<span class="fc" id="L82">        Camera cam = Camera.open(index);</span>
-<span class="pc bpc" id="L83" title="1 of 2 branches missed.">        if(cam != null) {</span>
-<span class="fc" id="L84">            Camera.Parameters params = cam.getParameters();</span>
+<span class="fc" id="L88">        Camera cam = Camera.open(index);</span>
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">        if(cam != null) {</span>
+<span class="fc" id="L90">            Camera.Parameters params = cam.getParameters();</span>
             List&lt;Camera.Size&gt; list;
 
-<span class="fc" id="L87">            list = params.getSupportedPictureSizes();</span>
-<span class="fc" id="L88">            int width = 0;</span>
-<span class="fc" id="L89">            int height = 0;</span>
-<span class="fc bfc" id="L90" title="All 2 branches covered.">            for (Camera.Size size : list) {</span>
-<span class="fc bfc" id="L91" title="All 2 branches covered.">                if ((size.width * size.height) &gt; (width * height)) {</span>
-<span class="fc" id="L92">                    width = size.width;</span>
-<span class="fc" id="L93">                    height = size.height;</span>
+<span class="fc" id="L93">            list = params.getSupportedPictureSizes();</span>
+<span class="fc" id="L94">            int width = 0;</span>
+<span class="fc" id="L95">            int height = 0;</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">            for (Camera.Size size : list) {</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">                if ((size.width * size.height) &gt; (width * height)) {</span>
+<span class="fc" id="L98">                    width = size.width;</span>
+<span class="fc" id="L99">                    height = size.height;</span>
                 }
-<span class="fc" id="L95">            }</span>
-<span class="fc" id="L96">            cam.release();</span>
+<span class="fc" id="L101">            }</span>
+<span class="fc" id="L102">            cam.release();</span>
 
             // cam resolution width x height
-<span class="fc" id="L99">            return String.format(&quot;%dx%d&quot;, width, height);</span>
+<span class="fc" id="L105">            return String.format(&quot;%dx%d&quot;, width, height);</span>
         } else {
-<span class="nc" id="L101">         return &quot;&quot;;</span>
+<span class="nc" id="L107">         return &quot;&quot;;</span>
         }
     }
 
