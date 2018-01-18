@@ -79,18 +79,22 @@ public class Drives extends Categories {
      */
     private void addStorage(File f) {
 
-    	Category c = new Category("DRIVES", "drives");
+        try {
+            Category c = new Category("DRIVES", "drives");
 
-        c.put("VOLUMN", new CategoryValue(getVolumn(f), "VOLUMN", "path"));
-        c.put("TOTAL", new CategoryValue(getTotal(f), "TOTAL", "total"));
-        c.put("FREE", new CategoryValue(getFree(f), "FREE", "free"));
+            c.put("VOLUMN", new CategoryValue(getVolumn(f), "VOLUMN", "path"));
+            c.put("TOTAL", new CategoryValue(getTotal(f), "TOTAL", "total"));
+            c.put("FREE", new CategoryValue(getFree(f), "FREE", "free"));
 
-        this.add(c);
+            this.add(c);
+        } catch (Exception ex) {
+            FILog.e(ex.getMessage());
+        }
     }
 
     /**
      * Get the volume of the storage
-     * @param File f
+     * @param f file
      * @return string with the volume
      */
     public String getVolumn(File f) {
@@ -108,7 +112,7 @@ public class Drives extends Categories {
 
     /**
      * Get the total space of the drive
-     * @param File f
+     * @param f file
      * @return string the total space
      */
     public String getTotal(File f) {
@@ -127,7 +131,7 @@ public class Drives extends Categories {
 
     /**
      * Get the free space of the drive
-     * @param File f
+     * @param f file
      * @return string the free space
      */
     public String getFree(File f) {
