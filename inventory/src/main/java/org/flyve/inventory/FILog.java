@@ -34,63 +34,90 @@ package org.flyve.inventory;
 
 import android.util.Log;
 
+import com.orhanobut.logger.Logger;
+
 /**
  * This is a Utils class grapper for Log
  */
 public final class FILog {
 
     // This is the tag to search on console
-    static final String TAGLOG = "FlyveMDMInventory";
+    static final String TAG = "InventoryLibrary";
 
-    // private constructor to prevent instance of this class
+    /**
+     * private constructor to prevent instances of this class
+     */
     private FILog() {
     }
 
     /**
-     * Create a log for debug
-     * @param msg String message
+     * Sends a DEBUG log message
+     * @param message to log
      */
-    public static void d(String msg) {
-        if(msg == null) {
-            return;
+    public static void d(String message) {
+        if(message != null) {
+            Logger.d(TAG, message);
         }
-
-        Log.d(TAGLOG, msg);
     }
 
     /**
-     * Create a log for error
-     * @param msg String message
+     * Sends a VERBOSE log message
+     * @param message to log
      */
-    public static void e(String msg) {
-        if(msg == null) {
-            return;
+    public static void v(String message) {
+        if(message != null) {
+            Logger.v(TAG, message);
         }
-
-        Log.e(TAGLOG, msg);
     }
 
     /**
-     * Create a log for information
-     * @param msg String message
+     * Sends an INFO log message
+     * @param message to log
      */
-    public static void i(String msg) {
-        if(msg == null) {
-            return;
+    public static void i(String message) {
+        if(message != null) {
+            Logger.i(TAG, message);
         }
-        Log.i(TAGLOG, msg);
     }
 
     /**
-     * Create a log for verbose
-     * @param msg String message
+     * Sends an ERROR log message
+     * @param message to log
      */
-    public static void v(String msg) {
-        if(msg == null) {
-            return;
+    public static void e(String message) {
+        if(message != null) {
+            Logger.e(TAG, message);
         }
-
-        Log.v(TAGLOG, msg);
     }
 
+    /**
+     * Sends a WARN log message
+     * @param message to log
+     */
+    public static void w(String message) {
+        if(message != null) {
+            Logger.w(TAG, message);
+        }
+    }
+
+    /**
+     * Reports a condition that should never happen, wts (What a Terrible Failure)
+     * @param message to log
+     */
+    public static void wtf(String message) {
+        if(message != null) {
+            Logger.wtf(TAG, message);
+        }
+    }
+
+    /**
+     * Sends a low level calling log
+     * @param obj the name of the class
+     * @param msg the log message
+     * @param level the priority/type of the log message
+     */
+    public static void log(Object obj, String msg, int level) {
+        String final_msg = String.format("[%s] %s", obj.getClass().getName(), msg);
+        Log.println(level, "InventoryAgent", final_msg);
+    }
 }
