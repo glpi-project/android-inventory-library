@@ -40,8 +40,8 @@ public class FlyveException extends Exception
 
     /**
      * The superclass constructor with a matching argument is called
-     * @param string message
-     * @param throwable cause
+     * @param message
+     * @param cause
      */
     public FlyveException(String message, Throwable cause)
     {
