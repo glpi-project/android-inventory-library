@@ -402,33 +402,54 @@ public class Utils {
         return "";
     }
 
+    /* Checks if external storage is available for read and write */
+    private static boolean isExternalStorageWritable() {
+        String state = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state)) {
+            return true;
+        }
+        return false;
+    }
+
     /**
      * Logs the message in a directory
      * @param message the message
      * @param filename name of the file
      */
-    public static void storeFile(String message, String filename) {
-        String state = Environment.getExternalStorageState();
+    public static void storeFile(Context context, String message, String filename) {
 
-        File dir = new File("/sdcard/FlyveMDM");
+        String path = context.getCacheDir().getAbsolutePath();
+        File dir = new File(path);
+
+        String state = Environment.getExternalStorageState();
         if (Environment.MEDIA_MOUNTED.equals(state)) {
+
             if(!dir.exists()) {
-                Log.d("Dir created ", "Dir created ");
-                dir.mkdirs();
+                if(dir.mkdirs()) {
+                    FILog.d("create path");
+                } else {
+                    FILog.e("cannot create path");
+                    return;
+                }
             }
 
-            File logFile = new File("/sdcard/FlyveMDM/" + filename);
+            File logFile = new File(path + "/" + filename);
 
             if (!logFile.exists())  {
                 try  {
-                    Log.d("File created ", "File created ");
-                    logFile.createNewFile();
+                    if(logFile.createNewFile()) {
+                        FILog.d("File created");
+                    } else {
+                        FILog.d("Cannot create file");
+                        return;
+                    }
                 } catch (IOException ex) {
-                    Log.e("Inventory", ex.getMessage());
+                    FILog.e(ex.getMessage());
                 }
             }
 
             FileWriter fw = null;
+
             try {
                 //BufferedWriter for performance, true to set append to file flag
                 fw = new FileWriter(logFile, true);
@@ -439,19 +460,22 @@ public class Utils {
                 buf.flush();
                 buf.close();
                 fw.close();
+                FILog.d("Inventory stored");
             }
             catch (IOException ex) {
-                e(ex.getMessage());
+                FILog.e(ex.getMessage());
             }
             finally {
                 if(fw!=null) {
                     try {
                         fw.close();
                     } catch(Exception ex) {
-                        Log.e("Inventory", ex.getMessage());
+                        FILog.e(ex.getMessage());
                     }
                 }
             }
+        } else {
+            FILog.d("External Storage is not available");
         }
     }
 
