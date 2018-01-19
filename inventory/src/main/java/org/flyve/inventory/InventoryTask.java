@@ -37,6 +37,11 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.FormatStrategy;
+import com.orhanobut.logger.Logger;
+import com.orhanobut.logger.PrettyFormatStrategy;
+
 import org.flyve.inventory.categories.Categories;
 
 import java.lang.reflect.Constructor;
@@ -77,6 +82,14 @@ public class InventoryTask {
     public InventoryTask(Context context, String appVersion) {
         this.appVersion = appVersion;
         ctx = context;
+
+        try {
+            FormatStrategy formatStrategy = PrettyFormatStrategy.newBuilder()
+                    .build();
+            Logger.addLogAdapter(new AndroidLogAdapter(formatStrategy));
+        } catch (Exception ex) {
+            ex.getStackTrace();
+        }
     }
 
     /**
@@ -167,7 +180,7 @@ public class InventoryTask {
                     final String xml = Utils.createXML(ctx, mContent, InventoryTask.this.appVersion);
 
                     if(storeResult) {
-                        Utils.storeFile(xml, fileNameXML);
+                        Utils.storeFile(ctx, xml, fileNameXML);
                     }
 
                     InventoryTask.runOnUI(new Runnable() {
@@ -207,7 +220,7 @@ public class InventoryTask {
                     final String xml = Utils.createXMLWithoutPrivateData(ctx, mContent, InventoryTask.this.appVersion);
 
                     if(storeResult) {
-                        Utils.storeFile(xml, fileNameXML);
+                        Utils.storeFile(ctx, xml, fileNameXML);
                     }
 
                     InventoryTask.runOnUI(new Runnable() {
@@ -247,7 +260,7 @@ public class InventoryTask {
                     final String json = Utils.createJSON(ctx, mContent, InventoryTask.this.appVersion);
 
                     if(storeResult) {
-                        Utils.storeFile(json, fileNameJSON);
+                        Utils.storeFile(ctx, json, fileNameJSON);
                     }
 
                     InventoryTask.runOnUI(new Runnable() {
@@ -286,7 +299,7 @@ public class InventoryTask {
                     final String json = Utils.createJSONWithoutPrivateData(ctx, mContent, InventoryTask.this.appVersion);
 
                     if(storeResult) {
-                        Utils.storeFile(json, fileNameJSON);
+                        Utils.storeFile(ctx, json, fileNameJSON);
                     }
 
                     InventoryTask.runOnUI(new Runnable() {
@@ -318,7 +331,7 @@ public class InventoryTask {
             String json = Utils.createJSON(ctx, mContent, InventoryTask.this.appVersion);
 
             if(storeResult) {
-                Utils.storeFile(json, fileNameJSON);
+                Utils.storeFile(ctx, json, fileNameJSON);
             }
 
             return json;
@@ -338,7 +351,7 @@ public class InventoryTask {
             String xml = Utils.createXML(ctx, mContent, InventoryTask.this.appVersion);
 
             if(storeResult) {
-                Utils.storeFile(xml, fileNameXML);
+                Utils.storeFile(ctx, xml, fileNameXML);
             }
 
             return xml;
@@ -347,6 +360,16 @@ public class InventoryTask {
             Log.e("Library Exception", ex.getLocalizedMessage());
             return null;
         }
+    }
+
+    public String getCacheFilePath(String type) {
+        String path = ctx.getCacheDir().getAbsolutePath() + "/";
+        if(type.equalsIgnoreCase("json")) {
+            path = path + fileNameXML;
+        } else if(type.equalsIgnoreCase("xml"))  {
+            path = path + fileNameJSON;
+        }
+        return path;
     }
 
     /**
