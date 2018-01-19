@@ -2,6 +2,35 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.6.2"></a>
+## [0.6.2](https://github.com/flyve-mdm/android-inventory-library/compare/0.6.1...0.6.2) (2018-01-19)
+
+
+### Bug Fixes
+
+* **battery:** manage exceptions ([c10e644](https://github.com/flyve-mdm/android-inventory-library/commit/c10e644))
+* **bios:** manage exceptions ([975945b](https://github.com/flyve-mdm/android-inventory-library/commit/975945b))
+* **bluetooh:** manage exceptions ([7a41c39](https://github.com/flyve-mdm/android-inventory-library/commit/7a41c39))
+* **camera:** manage exceptions ([57d8aac](https://github.com/flyve-mdm/android-inventory-library/commit/57d8aac))
+* **category:** logging error ([a05b1c9](https://github.com/flyve-mdm/android-inventory-library/commit/a05b1c9))
+* **cpus:** manage exceptions ([6dcbf0b](https://github.com/flyve-mdm/android-inventory-library/commit/6dcbf0b))
+* **drives:** manage exceptions ([4cbde3b](https://github.com/flyve-mdm/android-inventory-library/commit/4cbde3b))
+* **envs:** manage exceptions ([3056820](https://github.com/flyve-mdm/android-inventory-library/commit/3056820))
+* **hardware:** manage exceptions ([a6097d9](https://github.com/flyve-mdm/android-inventory-library/commit/a6097d9))
+* **inputs:** manage exceptions ([43a1792](https://github.com/flyve-mdm/android-inventory-library/commit/43a1792))
+* **jvm:** manage exceptions ([2c82b33](https://github.com/flyve-mdm/android-inventory-library/commit/2c82b33))
+* **location:** manage exceptions ([45f8f28](https://github.com/flyve-mdm/android-inventory-library/commit/45f8f28))
+* **memory:** manage exceptions ([6437c0d](https://github.com/flyve-mdm/android-inventory-library/commit/6437c0d))
+* **networks:** manage exceptions ([160c240](https://github.com/flyve-mdm/android-inventory-library/commit/160c240))
+* **phonestatus:** manage exceptions ([997cdec](https://github.com/flyve-mdm/android-inventory-library/commit/997cdec))
+* **sensors:** manage exceptions ([8aa543c](https://github.com/flyve-mdm/android-inventory-library/commit/8aa543c))
+* **simcards:** manage exceptions ([01ac5a0](https://github.com/flyve-mdm/android-inventory-library/commit/01ac5a0))
+* **software:** manage exceptions ([120d18b](https://github.com/flyve-mdm/android-inventory-library/commit/120d18b))
+* **usb:** manage exceptions ([92e5042](https://github.com/flyve-mdm/android-inventory-library/commit/92e5042))
+* **videos:** manage exceptions ([d97352a](https://github.com/flyve-mdm/android-inventory-library/commit/d97352a))
+
+
+
 <a name="0.6.1"></a>
 ## [0.6.1](https://github.com/flyve-mdm/android-inventory-library/compare/0.6.0...0.6.1) (2018-01-16)
 
