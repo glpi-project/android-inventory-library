@@ -30,6 +30,7 @@ dependencies {
     })
     testCompile 'junit:junit:4.12'
     testCompile 'com.android.support.test:runner:1.0.1'
+    compile 'com.orhanobut:logger:2.1.1'
 }
 
 Properties properties = new Properties()
