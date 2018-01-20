@@ -1,7 +1,4 @@
----
-layout: coverage
----
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../resources/report.css" type="text/css"/><link rel="shortcut icon" href="../resources/report.gif" type="image/gif"/><title>Utils.java</title><link rel="stylesheet" href="../resources/prettify.css" type="text/css"/><script type="text/javascript" src="../resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory</a> &gt; <span class="el_source">Utils.java</span></div><h1>Utils.java</h1><pre class="source lang-java linenums">package org.flyve.inventory;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Utils.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory</a> &gt; <span class="el_source">Utils.java</span></div><h1>Utils.java</h1><pre class="source lang-java linenums">package org.flyve.inventory;
 
 import android.content.Context;
 import android.os.Build;
@@ -405,58 +402,82 @@ public class Utils {
 <span class="nc" id="L402">        return &quot;&quot;;</span>
     }
 
+    /* Checks if external storage is available for read and write */
+    private static boolean isExternalStorageWritable() {
+<span class="nc" id="L407">        String state = Environment.getExternalStorageState();</span>
+<span class="nc bnc" id="L408" title="All 2 branches missed.">        if (Environment.MEDIA_MOUNTED.equals(state)) {</span>
+<span class="nc" id="L409">            return true;</span>
+        }
+<span class="nc" id="L411">        return false;</span>
+    }
+
     /**
      * Logs the message in a directory
      * @param message the message
      * @param filename name of the file
      */
-    public static void storeFile(String message, String filename) {
-<span class="fc" id="L411">        String state = Environment.getExternalStorageState();</span>
+    public static void storeFile(Context context, String message, String filename) {
 
-<span class="fc" id="L413">        File dir = new File(&quot;/sdcard/FlyveMDM&quot;);</span>
-<span class="pc bpc" id="L414" title="1 of 2 branches missed.">        if (Environment.MEDIA_MOUNTED.equals(state)) {</span>
-<span class="nc bnc" id="L415" title="All 2 branches missed.">            if(!dir.exists()) {</span>
-<span class="nc" id="L416">                Log.d(&quot;Dir created &quot;, &quot;Dir created &quot;);</span>
-<span class="nc" id="L417">                dir.mkdirs();</span>
-            }
+<span class="fc" id="L421">        String path = context.getCacheDir().getAbsolutePath();</span>
+<span class="fc" id="L422">        File dir = new File(path);</span>
 
-<span class="nc" id="L420">            File logFile = new File(&quot;/sdcard/FlyveMDM/&quot; + filename);</span>
+<span class="fc" id="L424">        String state = Environment.getExternalStorageState();</span>
+<span class="pc bpc" id="L425" title="1 of 2 branches missed.">        if (Environment.MEDIA_MOUNTED.equals(state)) {</span>
 
-<span class="nc bnc" id="L422" title="All 2 branches missed.">            if (!logFile.exists())  {</span>
-                try  {
-<span class="nc" id="L424">                    Log.d(&quot;File created &quot;, &quot;File created &quot;);</span>
-<span class="nc" id="L425">                    logFile.createNewFile();</span>
-<span class="nc" id="L426">                } catch (IOException ex) {</span>
-<span class="nc" id="L427">                    Log.e(&quot;Inventory&quot;, ex.getMessage());</span>
-<span class="nc" id="L428">                }</span>
-            }
-
-<span class="nc" id="L431">            FileWriter fw = null;</span>
-            try {
-                //BufferedWriter for performance, true to set append to file flag
-<span class="nc" id="L434">                fw = new FileWriter(logFile, true);</span>
-<span class="nc" id="L435">                BufferedWriter buf = new BufferedWriter(fw);</span>
-
-<span class="nc" id="L437">                buf.write(message);</span>
-<span class="nc" id="L438">                buf.newLine();</span>
-<span class="nc" id="L439">                buf.flush();</span>
-<span class="nc" id="L440">                buf.close();</span>
-<span class="nc" id="L441">                fw.close();</span>
-            }
-<span class="nc" id="L443">            catch (IOException ex) {</span>
-<span class="nc" id="L444">                e(ex.getMessage());</span>
-            }
-            finally {
-<span class="nc bnc" id="L447" title="All 6 branches missed.">                if(fw!=null) {</span>
-                    try {
-<span class="nc" id="L449">                        fw.close();</span>
-<span class="nc" id="L450">                    } catch(Exception ex) {</span>
-<span class="nc" id="L451">                        Log.e(&quot;Inventory&quot;, ex.getMessage());</span>
-<span class="nc" id="L452">                    }</span>
+<span class="nc bnc" id="L427" title="All 2 branches missed.">            if(!dir.exists()) {</span>
+<span class="nc bnc" id="L428" title="All 2 branches missed.">                if(dir.mkdirs()) {</span>
+<span class="nc" id="L429">                    FILog.d(&quot;create path&quot;);</span>
+                } else {
+<span class="nc" id="L431">                    FILog.e(&quot;cannot create path&quot;);</span>
+<span class="nc" id="L432">                    return;</span>
                 }
             }
+
+<span class="nc" id="L436">            File logFile = new File(path + &quot;/&quot; + filename);</span>
+
+<span class="nc bnc" id="L438" title="All 2 branches missed.">            if (!logFile.exists())  {</span>
+                try  {
+<span class="nc bnc" id="L440" title="All 2 branches missed.">                    if(logFile.createNewFile()) {</span>
+<span class="nc" id="L441">                        FILog.d(&quot;File created&quot;);</span>
+                    } else {
+<span class="nc" id="L443">                        FILog.d(&quot;Cannot create file&quot;);</span>
+<span class="nc" id="L444">                        return;</span>
+                    }
+<span class="nc" id="L446">                } catch (IOException ex) {</span>
+<span class="nc" id="L447">                    FILog.e(ex.getMessage());</span>
+<span class="nc" id="L448">                }</span>
+            }
+
+<span class="nc" id="L451">            FileWriter fw = null;</span>
+
+            try {
+                //BufferedWriter for performance, true to set append to file flag
+<span class="nc" id="L455">                fw = new FileWriter(logFile, true);</span>
+<span class="nc" id="L456">                BufferedWriter buf = new BufferedWriter(fw);</span>
+
+<span class="nc" id="L458">                buf.write(message);</span>
+<span class="nc" id="L459">                buf.newLine();</span>
+<span class="nc" id="L460">                buf.flush();</span>
+<span class="nc" id="L461">                buf.close();</span>
+<span class="nc" id="L462">                fw.close();</span>
+<span class="nc" id="L463">                FILog.d(&quot;Inventory stored&quot;);</span>
+            }
+<span class="nc" id="L465">            catch (IOException ex) {</span>
+<span class="nc" id="L466">                FILog.e(ex.getMessage());</span>
+            }
+            finally {
+<span class="nc bnc" id="L469" title="All 6 branches missed.">                if(fw!=null) {</span>
+                    try {
+<span class="nc" id="L471">                        fw.close();</span>
+<span class="nc" id="L472">                    } catch(Exception ex) {</span>
+<span class="nc" id="L473">                        FILog.e(ex.getMessage());</span>
+<span class="nc" id="L474">                    }</span>
+                }
+            }
+<span class="nc" id="L477">        } else {</span>
+<span class="fc" id="L478">            FILog.d(&quot;External Storage is not available&quot;);</span>
         }
-<span class="fc" id="L456">    }</span>
+<span class="fc" id="L480">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span>Generated by the Android Gradle plugin 2.2.0</div></body></html>
