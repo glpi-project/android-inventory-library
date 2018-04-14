@@ -104,6 +104,7 @@ public class InventoryTask {
 //                "PhoneStatus",
                 "Hardware",
                 "User",
+                "Storage",
                 "Bios",
                 "Memory",
                 "Inputs",
