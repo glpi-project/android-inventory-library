@@ -103,6 +103,7 @@ public class InventoryTask {
         String[] categories = {
 //                "PhoneStatus",
                 "Hardware",
+                "User",
                 "Bios",
                 "Memory",
                 "Inputs",
