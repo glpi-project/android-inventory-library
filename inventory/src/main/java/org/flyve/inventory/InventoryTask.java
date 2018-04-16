@@ -118,6 +118,7 @@ public class InventoryTask {
                 "Hardware",
                 "User",
                 "Storage",
+                "OperatingSystem",
                 "Bios",
                 "Memory",
                 "Inputs",
