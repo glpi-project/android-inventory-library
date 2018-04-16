@@ -1,18 +1,21 @@
----
-layout: modal
-title: changelog
----
 # Change Log
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-<a name="0.6.3"></a>
-## [0.6.3](https://github.com/flyve-mdm/android-inventory-library/compare/0.6.2...0.6.3) (2018-03-09)
+<a name="0.7.0"></a>
+# [0.7.0](https://github.com/flyve-mdm/android-inventory-library/compare/0.6.2...0.7.0) (2018-04-16)
 
 
 ### Bug Fixes
 
 * **inventory:** add get cache file path method ([bec9a0d](https://github.com/flyve-mdm/android-inventory-library/commit/bec9a0d))
+
+
+### Features
+
+* **categories:** add operating system category ([c2ec530](https://github.com/flyve-mdm/android-inventory-library/commit/c2ec530))
+* **storage:** add storage category ([0bf5bfe](https://github.com/flyve-mdm/android-inventory-library/commit/0bf5bfe))
+* **user:** add user category ([8f2f42e](https://github.com/flyve-mdm/android-inventory-library/commit/8f2f42e))
 
 
 
