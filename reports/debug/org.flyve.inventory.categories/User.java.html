@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>User.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory.categories</a> &gt; <span class="el_source">User.java</span></div><h1>User.java</h1><pre class="source lang-java linenums">/**
+ *
+ * Copyright 2017 Teclib.
+ * Copyright 2010-2016 by the FusionInventory Development
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-android
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * ------------------------------------------------------------------------------
+ * @update    07/06/2017
+ * @license   GPLv2 https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * @link      https://github.com/fusioninventory/fusioninventory-android
+ * @link      http://www.fusioninventory.org/
+ * ------------------------------------------------------------------------------
+ */
+
+package org.flyve.inventory.categories;
+
+import android.content.Context;
+import android.os.Build;
+import android.os.UserManager;
+
+import org.flyve.inventory.FILog;
+
+import java.util.Properties;
+
+/**
+ * This class get all the information of the Environment
+ */
+public class User extends Categories {
+
+    /*
+     * The serialization runtime associates with each serializable class a version number,
+     * called a serialVersionUID, which is used during deserialization to verify that the sender
+     * and receiver of a serialized object have loaded classes for that object that are compatible
+     * with respect to serialization. If the receiver has loaded a class for the object that has a
+     * different serialVersionUID than that of the corresponding sender's class, then deserialization
+     * will result in an  InvalidClassException
+     *
+     *  from: https://stackoverflow.com/questions/285793/what-is-a-serialversionuid-and-why-should-i-use-it
+     */
+    private static final long serialVersionUID = 3528873342443549732L;
+
+    private Properties props;
+    private Context xCtx;
+
+    /**
+     * Indicates whether some other object is &quot;equal to&quot; this one
+     * @param obj the reference object with which to compare
+     * @return boolean true if the object is the same as the one given in argument
+     */
+    @Override
+    public boolean equals(Object obj) {
+<span class="nc bnc" id="L69" title="All 2 branches missed.">        if (obj == null) {</span>
+<span class="nc" id="L70">            return false;</span>
+        }
+<span class="nc bnc" id="L72" title="All 2 branches missed.">        if (getClass() != obj.getClass()) {</span>
+<span class="nc" id="L73">            return false;</span>
+        }
+<span class="nc bnc" id="L75" title="All 2 branches missed.">        return (!super.equals(obj));</span>
+    }
+
+    /**
+     * Returns a hash code value for the object
+     * @return int a hash code value for the object
+     */
+    @Override
+    public int hashCode() {
+<span class="nc" id="L84">        int hash = super.hashCode();</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">        hash = 89 * hash + (this.xCtx != null ? this.xCtx.hashCode() : 0);</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">        hash = 89 * hash + (this.props != null ? this.props.hashCode() : 0);</span>
+<span class="nc" id="L87">        return hash;</span>
+    }
+
+    /**
+     * This constructor load the context and the Hardware information
+     * @param xCtx Context where this class work
+     */
+    public User(Context xCtx) {
+<span class="fc" id="L95">        super(xCtx);</span>
+
+<span class="fc" id="L97">        this.xCtx = xCtx;</span>
+
+        try {
+<span class="fc" id="L100">            props = System.getProperties();</span>
+
+<span class="fc" id="L102">            Category c = new Category(&quot;USER&quot;, &quot;user&quot;);</span>
+<span class="fc" id="L103">            c.put(&quot;LOGIN&quot;, new CategoryValue(userName(), &quot;LOGIN&quot;, &quot;login&quot;));</span>
+
+<span class="fc" id="L105">            this.add(c);</span>
+<span class="nc" id="L106">        } catch (Exception ex) {</span>
+<span class="nc" id="L107">            FILog.e(ex.getMessage());</span>
+<span class="fc" id="L108">        }</span>
+
+<span class="fc" id="L110">    }</span>
+
+    /**
+     * Get the user name
+     */
+    public String userName() {
+        String userName;
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">        if(Build.VERSION.SDK_INT &gt;= 17) {</span>
+<span class="nc" id="L118">            UserManager userMgr = (UserManager) xCtx.getSystemService(Context.USER_SERVICE);</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">            if (userMgr != null) {</span>
+                try {
+                    // validate permission exception
+<span class="nc" id="L122">                    userName = userMgr.getUserName();</span>
+<span class="nc" id="L123">                } catch (Exception ex) {</span>
+<span class="nc" id="L124">                    FILog.e(ex.getMessage());</span>
+<span class="nc" id="L125">                    userName = Build.USER;</span>
+<span class="nc" id="L126">                }</span>
+            } else {
+<span class="nc" id="L128">                userName = Build.USER;</span>
+            }
+<span class="nc" id="L130">        } else {</span>
+<span class="fc" id="L131">            userName = Build.USER;</span>
+        }
+
+<span class="fc" id="L134">        return userName;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span>Generated by the Android Gradle plugin 2.2.0</div></body></html>

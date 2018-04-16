@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>OperatingSystem.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory.categories</a> &gt; <span class="el_source">OperatingSystem.java</span></div><h1>OperatingSystem.java</h1><pre class="source lang-java linenums">/**
+ *
+ * Copyright 2017 Teclib.
+ * Copyright 2010-2016 by the FusionInventory Development
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-android
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * ------------------------------------------------------------------------------
+ * @update    07/06/2017
+ * @license   GPLv2 https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * @link      https://github.com/fusioninventory/fusioninventory-android
+ * @link      http://www.fusioninventory.org/
+ * ------------------------------------------------------------------------------
+ */
+
+package org.flyve.inventory.categories;
+
+import android.content.Context;
+import android.os.Build;
+
+import org.flyve.inventory.FILog;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Properties;
+
+/**
+ * This class get all the information of the Environment
+ */
+public class OperatingSystem extends Categories {
+
+    /*
+     * The serialization runtime associates with each serializable class a version number,
+     * called a serialVersionUID, which is used during deserialization to verify that the sender
+     * and receiver of a serialized object have loaded classes for that object that are compatible
+     * with respect to serialization. If the receiver has loaded a class for the object that has a
+     * different serialVersionUID than that of the corresponding sender's class, then deserialization
+     * will result in an  InvalidClassException
+     *
+     *  from: https://stackoverflow.com/questions/285793/what-is-a-serialversionuid-and-why-should-i-use-it
+     */
+    private static final long serialVersionUID = 3528873342443549732L;
+
+    private Properties props;
+    private Context xCtx;
+
+    /**
+     * Indicates whether some other object is &quot;equal to&quot; this one
+     *
+     * @param obj the reference object with which to compare
+     * @return boolean true if the object is the same as the one given in argument
+     */
+    @Override
+    public boolean equals(Object obj) {
+<span class="nc bnc" id="L75" title="All 2 branches missed.">        if (obj == null) {</span>
+<span class="nc" id="L76">            return false;</span>
+        }
+<span class="nc bnc" id="L78" title="All 2 branches missed.">        if (getClass() != obj.getClass()) {</span>
+<span class="nc" id="L79">            return false;</span>
+        }
+<span class="nc bnc" id="L81" title="All 2 branches missed.">        return (!super.equals(obj));</span>
+    }
+
+    /**
+     * Returns a hash code value for the object
+     *
+     * @return int a hash code value for the object
+     */
+    @Override
+    public int hashCode() {
+<span class="nc" id="L91">        int hash = super.hashCode();</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">        hash = 89 * hash + (this.xCtx != null ? this.xCtx.hashCode() : 0);</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">        hash = 89 * hash + (this.props != null ? this.props.hashCode() : 0);</span>
+<span class="nc" id="L94">        return hash;</span>
+    }
+
+    /**
+     * This constructor load the context and the Hardware information
+     *
+     * @param xCtx Context where this class work
+     */
+    public OperatingSystem(Context xCtx) {
+<span class="fc" id="L103">        super(xCtx);</span>
+
+<span class="fc" id="L105">        this.xCtx = xCtx;</span>
+
+        try {
+<span class="fc" id="L108">            props = System.getProperties();</span>
+
+<span class="fc" id="L110">            Category c = new Category(&quot;OPERATINGSYSTEM&quot;, &quot;operatingSystem&quot;);</span>
+<span class="fc" id="L111">            String architecture = &quot;&quot;;</span>
+
+<span class="fc" id="L113">            ArrayList&lt;HashMap&lt;String, String&gt;&gt; arr = getDeviceProperties();</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">            for (int i = 0; i &lt; arr.size(); i++) {</span>
+<span class="fc" id="L115">                HashMap&lt;String, String&gt; map = arr.get(i);</span>
+
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">                if (map.get(&quot;ro.product.cpu.abilist&quot;)!=null) {</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">                    if(architecture.trim().isEmpty()) {</span>
+<span class="nc" id="L119">                        architecture = map.get(&quot;ro.product.cpu.abilist&quot;);</span>
+                    }
+                }
+
+<span class="pc bpc" id="L123" title="1 of 2 branches missed.">                if (map.get(&quot;ro.product.cpu.abilist64&quot;)!=null) {</span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">                    if(architecture.trim().isEmpty()) {</span>
+<span class="nc" id="L125">                        architecture = map.get(&quot;ro.product.cpu.abilist64&quot;);</span>
+                    }
+                }
+            }
+
+<span class="fc" id="L130">            c.put(&quot;ARCH&quot;, new CategoryValue(architecture.trim(), &quot;ARCH&quot;, &quot;architecture&quot;));</span>
+            // review SystemClock.elapsedRealtime()
+<span class="fc" id="L132">            c.put(&quot;BOOT_TIME&quot;, new CategoryValue(&quot; &quot;, &quot;BOOT_TIME&quot;, &quot;bootTime&quot;));</span>
+<span class="fc" id="L133">            c.put(&quot;DNS_DOMAIN&quot;, new CategoryValue(&quot; &quot;, &quot;DNS_DOMAIN&quot;, &quot;dnsDomain&quot;));</span>
+<span class="fc" id="L134">            c.put(&quot;FQDN&quot;, new CategoryValue(&quot; &quot;, &quot;FQDN&quot;, &quot;FQDN&quot;));</span>
+<span class="fc" id="L135">            c.put(&quot;FULL_NAME&quot;, new CategoryValue(getAndroidVersion(Build.VERSION.SDK_INT) + &quot; api &quot; + Build.VERSION.SDK_INT , &quot;FULL_NAME&quot;, &quot;fullName&quot;));</span>
+<span class="fc" id="L136">            c.put(&quot;HOSTID&quot;, new CategoryValue(&quot; &quot;, &quot;HOSTID&quot;, &quot;hostId&quot;));</span>
+<span class="fc" id="L137">            c.put(&quot;KERNEL_NAME&quot;, new CategoryValue(&quot;linux&quot;, &quot;KERNEL_NAME&quot;, &quot;kernelName&quot;));</span>
+<span class="fc" id="L138">            c.put(&quot;KERNEL_VERSION&quot;, new CategoryValue(getKernelVersion(), &quot;KERNEL_VERSION&quot;, &quot;kernelVersion&quot;));</span>
+<span class="fc" id="L139">            c.put(&quot;NAME&quot;, new CategoryValue(getAndroidVersion(Build.VERSION.SDK_INT), &quot;NAME&quot;, &quot;Name&quot;));</span>
+<span class="fc" id="L140">            c.put(&quot;SSH_KEY&quot;, new CategoryValue(&quot; &quot;, &quot;SSH_KEY&quot;, &quot;sshKey&quot;));</span>
+<span class="fc" id="L141">            c.put(&quot;VERSION&quot;, new CategoryValue(String.valueOf(Build.VERSION.SDK_INT), &quot;VERSION&quot;, &quot;Version&quot;));</span>
+
+<span class="fc" id="L143">            this.add(c);</span>
+
+<span class="nc" id="L145">        } catch (Exception ex) {</span>
+<span class="nc" id="L146">            FILog.e(ex.getMessage());</span>
+<span class="fc" id="L147">        }</span>
+<span class="fc" id="L148">    }</span>
+
+
+    private ArrayList&lt;HashMap&lt;String, String&gt;&gt; getDeviceProperties() {
+        try {
+            // Run the command
+<span class="fc" id="L154">            Process process = Runtime.getRuntime().exec(&quot;getprop&quot;);</span>
+<span class="fc" id="L155">            BufferedReader bufferedReader = new BufferedReader(</span>
+<span class="fc" id="L156">                    new InputStreamReader(process.getInputStream()));</span>
+
+            // Grab the results
+<span class="fc" id="L159">            ArrayList&lt;HashMap&lt;String, String&gt;&gt; arr = new ArrayList&lt;&gt;();</span>
+            String line;
+<span class="fc bfc" id="L161" title="All 2 branches covered.">            while ((line = bufferedReader.readLine()) != null) {</span>
+<span class="fc" id="L162">                String[] value = line.split(&quot;:&quot;);</span>
+<span class="fc" id="L163">                HashMap&lt;String, String&gt; map = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L164">                map.put(removeBraket(value[0]), removeBraket(value[1]));</span>
+<span class="fc" id="L165">                arr.add(map);</span>
+<span class="fc" id="L166">            }</span>
+
+<span class="fc" id="L168">            return arr;</span>
+<span class="nc" id="L169">        } catch (IOException ex) {</span>
+<span class="nc" id="L170">            FILog.e(ex.getMessage());</span>
+        }
+
+<span class="nc" id="L173">        return new ArrayList&lt;&gt;();</span>
+    }
+
+    private String removeBraket(String str) {
+<span class="fc" id="L177">        return str.replaceAll(&quot;\\[&quot;, &quot;&quot;).replaceAll(&quot;]&quot;, &quot;&quot;);</span>
+    }
+
+    public static String getKernelVersion() {
+        try {
+<span class="nc" id="L182">            Process p = Runtime.getRuntime().exec(&quot;uname -a&quot;);</span>
+<span class="nc" id="L183">            InputStream is = null;</span>
+<span class="nc bnc" id="L184" title="All 2 branches missed.">            if (p.waitFor() == 0) {</span>
+<span class="nc" id="L185">                is = p.getInputStream();</span>
+            } else {
+<span class="nc" id="L187">                is = p.getErrorStream();</span>
+            }
+<span class="nc" id="L189">            BufferedReader br = new BufferedReader(new InputStreamReader(is),</span>
+                    64);
+<span class="nc" id="L191">            String line = br.readLine();</span>
+<span class="nc" id="L192">            br.close();</span>
+<span class="nc" id="L193">            return line;</span>
+<span class="fc" id="L194">        } catch (Exception ex) {</span>
+<span class="fc" id="L195">            return &quot;ERROR: &quot; + ex.getMessage();</span>
+        }
+    }
+
+    private String getAndroidVersion(int sdk) {
+<span class="pc bpc" id="L200" title="27 of 28 branches missed.">        switch (sdk) {</span>
+            case 1:
+<span class="nc" id="L202">                return &quot;Android 1.0&quot;;</span>
+            case 2:
+<span class="nc" id="L204">                return &quot;Petit Four (Android 1.1)&quot;;</span>
+            case 3:
+<span class="nc" id="L206">                return &quot;Cupcake (Android 1.5)&quot;;</span>
+            case 4:
+<span class="nc" id="L208">                return &quot;Donut (Android 1.6)&quot;;</span>
+            case 5:
+<span class="nc" id="L210">                return &quot;Eclair (Android 2.0)&quot;;</span>
+            case 6:
+<span class="nc" id="L212">                return &quot;Eclair (Android 2.0.1)&quot;;</span>
+            case 7:
+<span class="nc" id="L214">                return &quot;Eclair (Android 2.1)&quot;;</span>
+            case 8:
+<span class="nc" id="L216">                return &quot;Froyo (Android 2.2)&quot;;</span>
+            case 9:
+<span class="nc" id="L218">                return &quot;Gingerbread (Android 2.3)&quot;;</span>
+            case 10:
+<span class="nc" id="L220">                return &quot;Gingerbread (Android 2.3.3)&quot;;</span>
+            case 11:
+<span class="nc" id="L222">                return &quot;Honeycomb (Android 3.0)&quot;;</span>
+            case 12:
+<span class="nc" id="L224">                return &quot;Honeycomb (Android 3.1)&quot;;</span>
+            case 13:
+<span class="nc" id="L226">                return &quot;Honeycomb (Android 3.2)&quot;;</span>
+            case 14:
+<span class="nc" id="L228">                return &quot;Ice Cream Sandwich (Android 4.0)&quot;;</span>
+            case 15:
+<span class="nc" id="L230">                return &quot;Ice Cream Sandwich (Android 4.0.3)&quot;;</span>
+            case 16:
+<span class="fc" id="L232">                return &quot;Jelly Bean (Android 4.1)&quot;;</span>
+            case 17:
+<span class="nc" id="L234">                return &quot;Jelly Bean (Android 4.2)&quot;;</span>
+            case 18:
+<span class="nc" id="L236">                return &quot;Jelly Bean (Android 4.3)&quot;;</span>
+            case 19:
+<span class="nc" id="L238">                return &quot;KitKat (Android 4.4)&quot;;</span>
+            case 20:
+<span class="nc" id="L240">                return &quot;KitKat Watch (Android 4.4)&quot;;</span>
+            case 21:
+<span class="nc" id="L242">                return &quot;Lollipop (Android 5.0)&quot;;</span>
+            case 22:
+<span class="nc" id="L244">                return &quot;Lollipop (Android 5.1)&quot;;</span>
+            case 23:
+<span class="nc" id="L246">                return &quot;Marshmallow (Android 6.0)&quot;;</span>
+            case 24:
+<span class="nc" id="L248">                return &quot;Nougat (Android 7.0)&quot;;</span>
+            case 25:
+<span class="nc" id="L250">                return &quot;Nougat (Android 7.1.1)&quot;;</span>
+            case 26:
+<span class="nc" id="L252">                return &quot;Oreo (Android 8.0)&quot;;</span>
+            case 27:
+<span class="nc" id="L254">                return &quot;Oreo (Android 8.1)&quot;;</span>
+            default:
+<span class="nc" id="L256">                return &quot;&quot;;</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span>Generated by the Android Gradle plugin 2.2.0</div></body></html>
