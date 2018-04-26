@@ -124,17 +124,7 @@ public class Software extends Categories {
      * @return string the application name
      */
     public String getName(ApplicationInfo p) {
-        String mName = "";
-
-        if (p.name != null) {
-            mName = p.name;
-        } else if (p.className != null) {
-            mName = p.className;
-        } else if (p.packageName != null) {
-            mName = p.packageName;
-        }
-
-        return mName;
+        return packageManager.getApplicationLabel(p).toString();
     }
 
     /**
