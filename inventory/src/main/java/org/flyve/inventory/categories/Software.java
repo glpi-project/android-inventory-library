@@ -105,6 +105,7 @@ public class Software extends Categories {
                 String fileSize = getFilesize(p);
 
                 c.put("NAME", new CategoryValue(getName(p), "NAME", "name"));
+                c.put("COMMENTS", new CategoryValue(getPackage(p), "COMMENTS", "comments"));
                 c.put("VERSION", new CategoryValue(getVersion(p), "VERSION", "VERSION"));
                 c.put("FILESIZE", new CategoryValue(fileSize, "FILESIZE", "fileSize"));
                 c.put("FROM", new CategoryValue(FROM, "FROM", "from"));
@@ -125,6 +126,10 @@ public class Software extends Categories {
      */
     public String getName(ApplicationInfo p) {
         return packageManager.getApplicationLabel(p).toString();
+    }
+
+    public String getPackage(ApplicationInfo p) {
+        return p.packageName;
     }
 
     /**
