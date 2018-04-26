@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.7.0"></a>
+# [0.7.0](https://github.com/flyve-mdm/android-inventory-library/compare/0.6.2...0.7.0) (2018-04-26)
+
+
+### Bug Fixes
+
+* **inventory:** add get cache file path method ([bec9a0d](https://github.com/flyve-mdm/android-inventory-library/commit/bec9a0d))
+* **software:** remove size limitation ([d9f8735](https://github.com/flyve-mdm/android-inventory-library/commit/d9f8735))
+
+
+### Features
+
+* **categories:** add operating system category ([c2ec530](https://github.com/flyve-mdm/android-inventory-library/commit/c2ec530))
+* **example:** request permission ([894f724](https://github.com/flyve-mdm/android-inventory-library/commit/894f724))
+* **software:** add comments ([c027979](https://github.com/flyve-mdm/android-inventory-library/commit/c027979))
+* **software:** update name information ([688aa73](https://github.com/flyve-mdm/android-inventory-library/commit/688aa73))
+* **storage:** add storage category ([0bf5bfe](https://github.com/flyve-mdm/android-inventory-library/commit/0bf5bfe))
+* **user:** add user category ([8f2f42e](https://github.com/flyve-mdm/android-inventory-library/commit/8f2f42e))
+
+
+
 <a name="0.6.2"></a>
 ## [0.6.2](https://github.com/flyve-mdm/android-inventory-library/compare/0.6.1...0.6.2) (2018-01-19)
 
