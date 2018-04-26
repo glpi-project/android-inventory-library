@@ -110,9 +110,8 @@ public class Software extends Categories {
                 c.put("FROM", new CategoryValue(FROM, "FROM", "from"));
                 c.put("INSTALLDATE", new CategoryValue(getInstallDate(p), "INSTALLDATE", "installDate"));
 
-                if (Integer.valueOf(fileSize) > 0) {
-                    this.add(c);
-                }
+                this.add(c);
+
             }
         } catch (Exception ex) {
             FILog.e(ex.getMessage());
