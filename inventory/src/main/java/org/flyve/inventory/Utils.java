@@ -452,7 +452,7 @@ public class Utils {
 
             try {
                 //BufferedWriter for performance, true to set append to file flag
-                fw = new FileWriter(logFile, true);
+                fw = new FileWriter(logFile, false);
                 BufferedWriter buf = new BufferedWriter(fw);
 
                 buf.write(message);
