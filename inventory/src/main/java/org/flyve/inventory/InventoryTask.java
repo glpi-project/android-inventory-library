@@ -69,6 +69,8 @@ public class InventoryTask {
     private String fileNameXML = "Inventory.xml";
     private String fileNameJSON = "Inventory.json";
     private Boolean storeResult = false;
+    private String TAG = "";
+    private boolean privateData = false;
 
     public Boolean isRunning() {
         return running;
@@ -167,11 +169,27 @@ public class InventoryTask {
         return mContent;
     }
 
+    public void setTag(String tag) {
+        TAG = tag;
+    }
+
+    public String getTag() {
+        return TAG;
+    }
+
+    public void setPrivateData(boolean enable) {
+        privateData = enable;
+    }
+
+    public boolean getPrivateData() {
+        return privateData;
+    }
+
     /**
      * Return a XML String or Error OnTaskCompleted interface
      * @param listener the interface OnTaskCompleted
      */
-    public void getXML(final boolean isPrivate, final OnTaskCompleted listener) {
+    public void getXML(final OnTaskCompleted listener) {
 
         running = true;
         Thread t = new Thread(new Runnable()
@@ -180,7 +198,7 @@ public class InventoryTask {
 
                 try {
                     ArrayList<Categories> mContent = loadCategoriesClass();
-                    final String xml = Utils.createXML(ctx, mContent, InventoryTask.this.appVersion, isPrivate);
+                    final String xml = Utils.createXML(ctx, mContent, InventoryTask.this.appVersion, getPrivateData(), getTag());
 
                     if(storeResult) {
                         Utils.storeFile(ctx, xml, fileNameXML);
@@ -211,7 +229,7 @@ public class InventoryTask {
      * Return a JSON String or Error OnTaskCompleted interface
      * @param listener the interface OnTaskCompleted
      */
-    public void getJSON(final Boolean isPrivate, final OnTaskCompleted listener) {
+    public void getJSON(final OnTaskCompleted listener) {
         running = true;
         Thread t = new Thread(new Runnable()
         {
@@ -219,7 +237,7 @@ public class InventoryTask {
 
                 try {
                     ArrayList<Categories> mContent = loadCategoriesClass();
-                    final String json = Utils.createJSON(ctx, mContent, InventoryTask.this.appVersion, isPrivate);
+                    final String json = Utils.createJSON(ctx, mContent, InventoryTask.this.appVersion, getPrivateData(), getTag());
 
                     if(storeResult) {
                         Utils.storeFile(ctx, json, fileNameJSON);
@@ -248,10 +266,10 @@ public class InventoryTask {
     /**
      * Return a JSON String synchronously
      */
-    public String getJSONSync(boolean isPrivate) {
+    public String getJSONSync() {
         try {
             ArrayList<Categories> mContent = loadCategoriesClass();
-            String json = Utils.createJSON(ctx, mContent, InventoryTask.this.appVersion, isPrivate);
+            String json = Utils.createJSON(ctx, mContent, InventoryTask.this.appVersion, getPrivateData(), getTag());
 
             if(storeResult) {
                 Utils.storeFile(ctx, json, fileNameJSON);
@@ -268,10 +286,10 @@ public class InventoryTask {
     /**
      * Return a XML String synchronously
      */
-    public String getXMLSyn(boolean isPrivate) {
+    public String getXMLSyn() {
         try {
             ArrayList<Categories> mContent = loadCategoriesClass();
-            String xml = Utils.createXML(ctx, mContent, InventoryTask.this.appVersion, isPrivate);
+            String xml = Utils.createXML(ctx, mContent, InventoryTask.this.appVersion, getPrivateData(), getTag());
 
             if(storeResult) {
                 Utils.storeFile(ctx, xml, fileNameXML);
