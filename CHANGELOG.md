@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.8.0"></a>
+# [0.8.0](https://github.com/flyve-mdm/android-inventory-library/compare/0.7.1...0.8.0) (2018-05-01)
+
+
+### Features
+
+* **tag:** add possibility to add tag ([243150c](https://github.com/flyve-mdm/android-inventory-library/commit/243150c))
+
+
+
 <a name="0.7.1"></a>
 ## [0.7.1](https://github.com/flyve-mdm/android-inventory-library/compare/0.7.0...0.7.1) (2018-04-29)
 
