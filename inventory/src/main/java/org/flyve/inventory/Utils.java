@@ -290,8 +290,8 @@ public class Utils {
      * @param message the message
      * @param filename name of the file
      */
-    public static void storeFile(Context context, String message, String filename) {
-        String path = context.getCacheDir().getAbsolutePath();
+    public static void storeFile(String message, String filename) {
+        String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
         File dir = new File(path);
 
         String state = Environment.getExternalStorageState();
