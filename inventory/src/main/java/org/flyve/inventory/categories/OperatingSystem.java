@@ -180,11 +180,11 @@ public class OperatingSystem extends Categories {
     public static String getKernelVersion() {
         try {
             Process p = Runtime.getRuntime().exec("uname -a");
-            InputStream is = null;
+            InputStream is;
             if (p.waitFor() == 0) {
                 is = p.getInputStream();
             } else {
-                is = p.getErrorStream();
+                return "";
             }
             BufferedReader br = new BufferedReader(new InputStreamReader(is),
                     64);
