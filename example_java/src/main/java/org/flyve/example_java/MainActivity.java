@@ -1,8 +1,6 @@
 package org.flyve.example_java;
 
 import android.Manifest;
-import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -41,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onTaskSuccess(String data) {
                         Log.d(TAG, data);
-                        share(MainActivity.this, data, 0);
+                        inventoryTask.shareInventory( 1);
                         Toast.makeText(MainActivity.this, "Inventory Success, check the log", Toast.LENGTH_SHORT).show();
                     }
 
@@ -53,20 +51,6 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         });
-    }
-
-    public void share(Context context, String message, int type){
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_TEXT, message);
-
-        if(type==1) {
-            intent.putExtra(Intent.EXTRA_STREAM, inventoryTask.getCacheFilePath("json"));
-        } else {
-            intent.putExtra(Intent.EXTRA_STREAM, inventoryTask.getCacheFilePath("xml"));
-        }
-
-        context.startActivity(Intent.createChooser(intent, "Share your inventory"));
     }
 
     @Override
