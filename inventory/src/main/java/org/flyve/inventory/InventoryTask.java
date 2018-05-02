@@ -33,6 +33,9 @@
 package org.flyve.inventory;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -44,6 +47,7 @@ import com.orhanobut.logger.PrettyFormatStrategy;
 
 import org.flyve.inventory.categories.Categories;
 
+import java.io.File;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 
@@ -201,7 +205,7 @@ public class InventoryTask {
                     final String xml = Utils.createXML(ctx, mContent, InventoryTask.this.appVersion, getPrivateData(), getTag());
 
                     if(storeResult) {
-                        Utils.storeFile(ctx, xml, fileNameXML);
+                        Utils.storeFile(xml, fileNameXML);
                     }
 
                     InventoryTask.runOnUI(new Runnable() {
@@ -240,7 +244,7 @@ public class InventoryTask {
                     final String json = Utils.createJSON(ctx, mContent, InventoryTask.this.appVersion, getPrivateData(), getTag());
 
                     if(storeResult) {
-                        Utils.storeFile(ctx, json, fileNameJSON);
+                        Utils.storeFile(json, fileNameJSON);
                     }
 
                     InventoryTask.runOnUI(new Runnable() {
@@ -272,7 +276,7 @@ public class InventoryTask {
             String json = Utils.createJSON(ctx, mContent, InventoryTask.this.appVersion, getPrivateData(), getTag());
 
             if(storeResult) {
-                Utils.storeFile(ctx, json, fileNameJSON);
+                Utils.storeFile(json, fileNameJSON);
             }
 
             return json;
@@ -292,7 +296,7 @@ public class InventoryTask {
             String xml = Utils.createXML(ctx, mContent, InventoryTask.this.appVersion, getPrivateData(), getTag());
 
             if(storeResult) {
-                Utils.storeFile(ctx, xml, fileNameXML);
+                Utils.storeFile(xml, fileNameXML);
             }
 
             return xml;
@@ -303,14 +307,16 @@ public class InventoryTask {
         }
     }
 
-    public String getCacheFilePath(String type) {
-        String path = ctx.getCacheDir().getAbsolutePath() + "/";
-        if(type.equalsIgnoreCase("json")) {
-            path = path + fileNameXML;
-        } else if(type.equalsIgnoreCase("xml"))  {
-            path = path + fileNameJSON;
+    public void shareInventory(int type){
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
+        if(type==1) {
+            intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(path + "/Inventory.json")));
+        } else {
+            intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(path + "/Inventory.xml")));
         }
-        return path;
+        this.ctx.startActivity(Intent.createChooser(intent, "Share your inventory"));
     }
 
     /**
