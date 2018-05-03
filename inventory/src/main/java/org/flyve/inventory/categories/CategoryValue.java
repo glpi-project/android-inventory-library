@@ -32,6 +32,7 @@ public class CategoryValue {
     private String jsonName;
     private String xmlName;
     private Boolean isPrivate;
+    private Boolean hasCDATA;
 
     public CategoryValue(){
 
@@ -54,9 +55,10 @@ public class CategoryValue {
         this.jsonName = jsonName;
         this.xmlName = xmlName;
         this.isPrivate = false;
+        this.hasCDATA = false;
     }
 
-    public CategoryValue(String value, String xmlName, String jsonName, Boolean isPrivate) {
+    public CategoryValue(String value, String xmlName, String jsonName, Boolean isPrivate, Boolean hasCDATA) {
         if(value==null) {
             value = "";
         }
@@ -73,6 +75,7 @@ public class CategoryValue {
         this.jsonName = jsonName;
         this.xmlName = xmlName;
         this.isPrivate = isPrivate;
+        this.hasCDATA = hasCDATA;
     }
 
     public String getValue() {
@@ -91,4 +94,7 @@ public class CategoryValue {
         return isPrivate;
     }
 
+    public Boolean hasCDATA() {
+        return hasCDATA;
+    }
 }
