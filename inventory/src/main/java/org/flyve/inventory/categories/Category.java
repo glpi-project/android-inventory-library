@@ -137,7 +137,15 @@ public class Category extends LinkedHashMap<String, CategoryValue> {
 
             for (Map.Entry<String, CategoryValue> entry : this.entrySet()) {
                 serializer.startTag(null, this.get(entry.getKey()).getXmlName());
-                serializer.text(String.valueOf(this.get(entry.getKey()).getValue()));
+
+                String value;
+                if(this.get(entry.getKey()).hasCDATA()) {
+                    value = "<![CDATA[" + String.valueOf(this.get(entry.getKey()).getValue()) + "]]>";
+                } else {
+                    value = String.valueOf(this.get(entry.getKey()).getValue());
+                }
+
+                serializer.text(value);
                 serializer.endTag(null, this.get(entry.getKey()).getXmlName());
             }
 
