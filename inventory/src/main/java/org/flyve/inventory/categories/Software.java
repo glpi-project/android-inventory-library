@@ -104,7 +104,7 @@ public class Software extends Categories {
 
                 String fileSize = getFilesize(p);
 
-                c.put("NAME", new CategoryValue(getName(p), "NAME", "name"));
+                c.put("NAME", new CategoryValue(getName(p), "NAME", "name", false, true));
                 c.put("COMMENTS", new CategoryValue(getPackage(p), "COMMENTS", "comments"));
                 c.put("VERSION", new CategoryValue(getVersion(p), "VERSION", "version"));
                 c.put("FILESIZE", new CategoryValue(fileSize, "FILESIZE", "fileSize"));
