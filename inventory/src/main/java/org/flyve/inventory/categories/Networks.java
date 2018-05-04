@@ -119,9 +119,9 @@ public class Networks extends Categories {
 			c.put("BSSID", new CategoryValue(getBSSID(), "BSSID", "bssid"));
 			c.put("SSID", new CategoryValue(getSSID(), "SSID", "ssid"));
 			c.put("IPGATEWAY", new CategoryValue(getIpgateway(), "IPGATEWAY", "ipGateway"));
-			c.put("IPADDRESS", new CategoryValue(getIpaddress(), "IPADDRESS", "ipAddress", true));
-			c.put("IPMASK", new CategoryValue(getIpmask(), "IPMASK", "ipMask", true));
-			c.put("IPDHCP", new CategoryValue(getIpdhcp(), "IPDHCP", "ipDhcp", true));
+			c.put("IPADDRESS", new CategoryValue(getIpaddress(), "IPADDRESS", "ipAddress", true, false));
+			c.put("IPMASK", new CategoryValue(getIpmask(), "IPMASK", "ipMask", true, false));
+			c.put("IPDHCP", new CategoryValue(getIpdhcp(), "IPDHCP", "ipDhcp", true, false));
 
 			this.add(c);
 			// Restore Wifi State
