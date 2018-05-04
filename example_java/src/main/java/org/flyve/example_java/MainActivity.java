@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onTaskSuccess(String data) {
                         Log.d(TAG, data);
-                        inventoryTask.shareInventory( 1);
+                        inventoryTask.shareInventory( 2);
                         Toast.makeText(MainActivity.this, "Inventory Success, check the log", Toast.LENGTH_SHORT).show();
                     }
 
