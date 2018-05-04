@@ -202,16 +202,20 @@ public class InventoryTask {
 
                 try {
                     ArrayList<Categories> mContent = loadCategoriesClass();
-                    final String xml = Utils.createXML(ctx, mContent, InventoryTask.this.appVersion, getPrivateData(), getTag());
+                    String xml = Utils.createXML(ctx, mContent, InventoryTask.this.appVersion, getPrivateData(), getTag());
+                    xml = xml.replaceAll("&lt;", "<");
+                    xml = xml.replaceAll("&gt;", ">");
+                    xml = xml.replaceAll("&", "");
 
                     if(storeResult) {
                         Utils.storeFile(xml, fileNameXML);
                     }
 
+                    final String finalXml = xml;
                     InventoryTask.runOnUI(new Runnable() {
                         public void run() {
                             running = false;
-                            listener.onTaskSuccess( xml );
+                            listener.onTaskSuccess(finalXml);
                         }
                     });
                 } catch (final Exception ex) {
