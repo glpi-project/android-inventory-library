@@ -5,6 +5,8 @@ published: true
 title: Installation
 permalink: howtos/installation
 description: Get it now
+category: user
+date: 2017-12-29
 ---
 There are three ways to install the Inventory Library for Android by downloading the latest JAR, grab via Maven, insert on `build.gradle` at app level or use Apache Ivy.
 
