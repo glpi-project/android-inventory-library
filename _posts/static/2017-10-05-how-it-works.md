@@ -5,6 +5,8 @@ published: true
 title: How it works
 permalink: howtos/how-it-works
 description: A brief introduction
+category: user
+date:  2017-10-27
 ---
 The Android Inventory library helps you to create a complete inventory of your Android device: both hardware and software informations are collected. You get the data about networks, memory, drives, sensors, etc., and also the list and description of installed applications on any devices in a beautifull XML as protocol compatible with Fusion Inventory for GLPI.
 
