@@ -1,13 +1,9 @@
----
-layout: modal
-title: changelog
----
 # Change Log
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
 <a name="0.8.5"></a>
-## [0.8.5](https://github.com/flyve-mdm/android-inventory-library/compare/0.8.4...0.8.5) (2018-05-04)
+## [0.8.5](https://github.com/flyve-mdm/android-inventory-library/compare/0.8.4...0.8.5) (2018-05-14)
 
 
 
