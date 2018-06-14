@@ -36,7 +36,12 @@ import android.content.Context;
 import android.net.DhcpInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+
 import org.flyve.inventory.FILog;
+
+import java.net.NetworkInterface;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * This class get all the information of the Network
@@ -138,7 +143,39 @@ public class Networks extends Categories {
 	 * @return string the MAC address
 	 */
 	public String getMacaddr() {
-		return wifi.getMacAddress();
+
+		String macAddress = wifi.getMacAddress();
+
+		// if get default mac address
+		if(macAddress.contains("02:00:00:00:00:00")) {
+			macAddress = getMACAddress("wlan0");
+			if(macAddress.isEmpty()) {
+				macAddress = getMACAddress("eth0");
+			}
+		}
+
+		return macAddress;
+	}
+
+	public String getMACAddress(String interfaceName) {
+		try {
+			List<NetworkInterface> interfaces = Collections.list(NetworkInterface.getNetworkInterfaces());
+			for (NetworkInterface intf : interfaces) {
+				if (interfaceName != null) {
+					if (!intf.getName().equalsIgnoreCase(interfaceName)) continue;
+				}
+				byte[] mac = intf.getHardwareAddress();
+				if (mac==null) return "";
+				StringBuilder buf = new StringBuilder();
+				for (byte aMac : mac) buf.append(String.format("%02X:",aMac));
+				if (buf.length()>0) buf.deleteCharAt(buf.length()-1);
+				return buf.toString();
+			}
+		} catch (Exception ex) {
+			FILog.e(ex.getMessage());
+		}
+
+		return "";
 	}
 
 	/**
