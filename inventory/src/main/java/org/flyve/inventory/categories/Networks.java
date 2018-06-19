@@ -147,7 +147,7 @@ public class Networks extends Categories {
 		String macAddress = wifi.getMacAddress();
 
 		// if get default mac address
-		if(macAddress.contains("02:00:00:00:00:00")) {
+		if(macAddress == null || macAddress.contains("02:00:00:00:00:00")) {
 			macAddress = getMACAddress("wlan0");
 			if(macAddress.isEmpty()) {
 				macAddress = getMACAddress("eth0");
