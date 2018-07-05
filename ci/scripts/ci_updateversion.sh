@@ -25,7 +25,11 @@
 #  @link      https://flyve-mdm.com/
 #  ------------------------------------------------------------------------------
 #
-# increment version code, need to be unique to send to store
 
 # increment version on package.json, create tag and commit with changelog
-npm run release -- -m "ci(release): generate CHANGELOG.md for version %s"
+yarn run release -m "ci(release): generate CHANGELOG.md for version %s"
+
+GIT_TAG=$(jq -r ".version" package.json)
+
+# send changelog only when merged in master branch
+yarn gh-pages --dist ./ --src CHANGELOG.md --dest ./_includes/ --add -m "docs(changelog): update changelog$1 with version ${GIT_TAG}"
