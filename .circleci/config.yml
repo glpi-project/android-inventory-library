@@ -92,23 +92,11 @@ jobs:
         - restore_cache:
             key: jars-{{ checksum "build.gradle" }}-{{ checksum  "inventory/build.gradle" }}
         - run:
-            name: Validate
-            command: source ci/scripts/ci_validate_workflow.sh
-        - run:
             name: Setup environment
             command: source ci/scripts/ci_setup.sh
         - run:
-            name: Update version and code
-            command: source ci/scripts/ci_updateversion.sh
-        - run:
-            name: Push changes to github
-            command: source ci/scripts/ci_push_changes.sh
-        - run:
-            name: Create a github release
-            command: source ci/scripts/ci_github_release.sh
-        - run:
-            name: Deploy to Bintray
-            command: source ci/scripts/ci_bintray.sh
+            name: Deploy production
+            command: source ci/scripts/ci_deploy_production.sh
         - save_cache:
             paths:
               - ~/.gradle
@@ -128,9 +116,6 @@ jobs:
             name: Setup environment
             command: source ci/scripts/ci_setup.sh
         - run:
-            name: Update version and code
-            command: source ci/scripts/ci_updateversion.sh
-        - run:
             name: Setup emulator
             command: sdkmanager "system-images;android-16;default;armeabi-v7a" && echo "no" | avdmanager create avd -n test -k "system-images;android-16;default;armeabi-v7a"
         - run:
@@ -146,14 +131,8 @@ jobs:
               sleep 30
               adb shell input keyevent 82
         - run:
-            name: Send changelog to gh-page
-            command: source ci/scripts/ci_changelog.sh
-        - run:
-            name: Coverage
-            command: source ci/scripts/ci_coverage.sh
-        - run:
-            name: Javadoc
-            command: source ci/scripts/ci_javadoc.sh
+            name: Documentation
+            command: source ci/scripts/ci_documentation.sh
         - save_cache:
             paths:
               - ~/.gradle
@@ -169,8 +148,8 @@ workflows:
             - build
           filters:
             branches:
-              only:
-                - develop
+              ignore:
+                - master
       - documentation:
           requires:
             - test_api_v16
