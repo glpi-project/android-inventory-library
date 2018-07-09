@@ -28,18 +28,15 @@
 
 GIT_TAG=$(jq -r ".version" package.json)
 
-# Push commits and tags to origin branch
-# git push --follow-tags origin $CIRCLE_BRANCH
-
 # push tag to github
-conventional-github-releaser -t $GH_TOKEN 2> /dev/null || true
+yarn conventional-github-releaser -t $GH_TOKEN 2> /dev/null || true
 
 # Create zip example code
 sudo zip -r $CIRCLE_ARTIFACTS/java_example_code.zip example_java*
 sudo zip -r $CIRCLE_ARTIFACTS/kotlin_example_code.zip example_kotlin*
 
 # Update release name
-github-release edit \
+yarn github-release edit \
 --user $CIRCLE_PROJECT_USERNAME \
 --repo $CIRCLE_PROJECT_REPONAME \
 --tag ${GIT_TAG} \
@@ -47,7 +44,7 @@ github-release edit \
 --description "$(git log -1 --pretty=%B)"
 
 # Upload example code release
-github-release upload \
+yarn github-release upload \
 --user $CIRCLE_PROJECT_USERNAME \
 --repo $CIRCLE_PROJECT_REPONAME \
 --tag ${GIT_TAG} \
@@ -55,7 +52,7 @@ github-release upload \
 --file $CIRCLE_ARTIFACTS/java_example_code.zip
 
 # Upload example code release
-github-release upload \
+yarn github-release upload \
 --user $CIRCLE_PROJECT_USERNAME \
 --repo $CIRCLE_PROJECT_REPONAME \
 --tag ${GIT_TAG} \
