@@ -8,8 +8,8 @@ git push --follow-tags origin $CIRCLE_BRANCH
 # go to develop
 git checkout develop
 
-# merge with master
-git merge master
+# rebase with master
+git rebase master
 
 # push develop
 git push origin develop
