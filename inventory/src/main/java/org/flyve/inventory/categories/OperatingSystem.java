@@ -192,7 +192,8 @@ public class OperatingSystem extends Categories {
             br.close();
             return line;
         } catch (Exception ex) {
-            return "ERROR: " + ex.getMessage();
+            FILog.e(ex.getMessage());
+            return "N/A";
         }
     }
 
