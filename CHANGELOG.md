@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.8.5"></a>
+## [0.8.5](https://github.com/flyve-mdm/android-inventory-library/compare/0.8.4...0.8.5) (2018-06-19)
+
+
+### Bug Fixes
+
+* **network:** check mac address null value ([#122](https://github.com/flyve-mdm/android-inventory-library/issues/122)) ([5891d76](https://github.com/flyve-mdm/android-inventory-library/commit/5891d76))
+* **network:** implement new method to collect the MAC Address ([1b148a6](https://github.com/flyve-mdm/android-inventory-library/commit/1b148a6))
+* **package:** update conventional-github-releaser to version 3.0.0 ([59a6587](https://github.com/flyve-mdm/android-inventory-library/commit/59a6587))
+
+
+
 <a name="0.8.4"></a>
 ## [0.8.4](https://github.com/flyve-mdm/android-inventory-library/compare/0.8.3...0.8.4) (2018-05-04)
 
