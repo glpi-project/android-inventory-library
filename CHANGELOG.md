@@ -1,13 +1,14 @@
----
-layout: modal
-title: changelog
----
 # Change Log
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
 <a name="0.8.6"></a>
-## [0.8.6](https://github.com/flyve-mdm/android-inventory-library/compare/0.8.5...0.8.6) (2018-06-19)
+## [0.8.6](https://github.com/flyve-mdm/android-inventory-library/compare/0.8.5...0.8.6) (2018-07-11)
+
+
+### Bug Fixes
+
+* **kernel:** remove error message from kernel version ([030333e](https://github.com/flyve-mdm/android-inventory-library/commit/030333e))
 
 
 
