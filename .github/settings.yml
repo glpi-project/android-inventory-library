@@ -1,7 +1,7 @@
 repository:
-  name: flyve-mdm-android-inventory
+  name: android-inventory-library
   description: Inventory client library written in Java for developing applications on Android
-  homepage: http://flyve.org/flyve-mdm-android-inventory/
+  homepage: http://flyve.org/android-inventory-library/
   topics: flyve-mdm, android-inventory, library
   private: false
   has_issues: true
