@@ -95,7 +95,7 @@ public class Simcards extends Categories {
             /*
              * Starting SimCards information retrieval
              */
-            if (getState().equals("SIM_STATE_UNKNOWN")) {
+            if (getState().equals("SIM_STATE_READY")) {
                 Category c = new Category("SIMCARDS", "simcards");
 
                 c.put("COUNTRY", new CategoryValue(getCountry(), "COUNTRY", "country"));
