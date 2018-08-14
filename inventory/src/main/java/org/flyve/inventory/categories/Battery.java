@@ -36,6 +36,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.BatteryManager;
+import android.os.Build;
 
 import org.flyve.inventory.FILog;
 
@@ -65,6 +66,7 @@ public class Battery extends Categories {
 	private String status = "";
 	private String health = "";
 	private String technology = "";
+    private String capacity = "";
 
 	/**
      * Indicates whether some other object is "equal to" this one
@@ -95,6 +97,7 @@ public class Battery extends Categories {
 		hash = 89 * hash + (this.status != null ? this.status.hashCode() : 0);
 		hash = 89 * hash + (this.health != null ? this.health.hashCode() : 0);
 		hash = 89 * hash + (this.technology != null ? this.technology.hashCode() : 0);
+		hash = 89 * hash + (this.capacity != null ? this.capacity.hashCode() : 0);
 		return hash;
 	}
 
@@ -109,8 +112,7 @@ public class Battery extends Categories {
 		xCtx.registerReceiver(this.myBatteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
 		this.myBatteryReceiver.onReceive(xCtx, new Intent(Intent.ACTION_BATTERY_CHANGED));
 	}
-
-	/**
+    /**
 	 *  This BroadcastReceiver load the information of the component
 	 */
 	private BroadcastReceiver myBatteryReceiver = new BroadcastReceiver() {
@@ -131,6 +133,8 @@ public class Battery extends Categories {
 						+ "c";
 
 				technology = intent.getStringExtra("technology");
+
+                capacity = String.valueOf(getBatteryVoltage(context));
 
 				// get battery status
 				int intstatus = intent.getIntExtra("status",
@@ -174,6 +178,7 @@ public class Battery extends Categories {
                         c.put("LEVEL", new CategoryValue(level, "LEVEL", "level"));
                         c.put("HEALTH", new CategoryValue(health, "HEALTH", "health"));
                         c.put("STATUS", new CategoryValue(status, "STATUS", "status"));
+                        c.put("CAPACITY", new CategoryValue(capacity, "CAPACITY", "capacity"));
                         Battery.this.add(c);
                     }
                 } catch (Exception ex) {
@@ -183,5 +188,38 @@ public class Battery extends Categories {
 			}
 		}
 
-	};
+    };
+
+    private long getBatteryVoltage(Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            BatteryManager mBatteryManager = (BatteryManager) context.getSystemService(Context.BATTERY_SERVICE);
+            Integer chargeCounter = mBatteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CHARGE_COUNTER);
+            Integer capacity = mBatteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY);
+
+            if(chargeCounter == Integer.MIN_VALUE || capacity == Integer.MIN_VALUE)
+                return 0;
+
+            return (chargeCounter/capacity) *100;
+        } else {
+            Object mPowerProfile;
+            double batteryCapacity = 0;
+            final String POWER_PROFILE_CLASS = "com.android.internal.os.PowerProfile";
+
+            try {
+                mPowerProfile = Class.forName(POWER_PROFILE_CLASS)
+                        .getConstructor(Context.class)
+                        .newInstance(context);
+
+                batteryCapacity = (double) Class
+                        .forName(POWER_PROFILE_CLASS)
+                        .getMethod("getBatteryCapacity")
+                        .invoke(mPowerProfile);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return (long) batteryCapacity;
+        }
+    }
 }
