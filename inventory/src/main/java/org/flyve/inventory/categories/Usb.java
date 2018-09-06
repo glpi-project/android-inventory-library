@@ -64,6 +64,7 @@ public class Usb extends Categories {
      *  from: https://stackoverflow.com/questions/285793/what-is-a-serialversionuid-and-why-should-i-use-it
      */
     private static final long serialVersionUID = 4846706700566208666L;
+	private SysBusUsbDevice usb;
 
 	/**
 	 * This constructor load the context and the Usb information
@@ -74,16 +75,16 @@ public class Usb extends Categories {
         
         //USB inventory comes with SDK level 12 !
         try {
-			SysBusUsbDevice usb = getSysBusUsbDevice();
+			usb = getSysBusUsbDevice();
 
 			Category c = new Category("USBDEVICES", "usbDevices");
-			c.put("CLASS", new CategoryValue(usb.getServiceClass(), "CLASS", "class"));
-			c.put("PRODUCTID", new CategoryValue(usb.getPid(), "PRODUCTID", "productId"));
-			c.put("VENDORID", new CategoryValue(usb.getVid(), "VENDORID", "vendorId"));
-			c.put("SUBCLASS", new CategoryValue(usb.getDeviceSubClass(), "SUBCLASS", "subClass"));
-			c.put("MANUFACTURER", new CategoryValue(usb.getReportedProductName(), "MANUFACTURER", "manufacturer"));
-			c.put("CAPTION", new CategoryValue(usb.getUsbVersion(), "CAPTION", "caption"));
-			c.put("SERIAL", new CategoryValue(usb.getSerialNumber(), "SERIAL", "serial"));
+			c.put("CLASS", new CategoryValue(getServiceClass(), "CLASS", "class"));
+			c.put("PRODUCTID", new CategoryValue(getPid(), "PRODUCTID", "productId"));
+			c.put("VENDORID", new CategoryValue(getVid(), "VENDORID", "vendorId"));
+			c.put("SUBCLASS", new CategoryValue(getDeviceSubClass(), "SUBCLASS", "subClass"));
+			c.put("MANUFACTURER", new CategoryValue(getReportedProductName(), "MANUFACTURER", "manufacturer"));
+			c.put("CAPTION", new CategoryValue(getUsbVersion(), "CAPTION", "caption"));
+			c.put("SERIAL", new CategoryValue(getSerialNumber(), "SERIAL", "serial"));
 
 			this.add(c);
 		} catch (Exception ex) {
@@ -96,5 +97,33 @@ public class Usb extends Categories {
 		SysBusUsbManager usbManager = new SysBusUsbManager("/sys/bus/usb/devices/");
 		Map<String, SysBusUsbDevice> devices = usbManager.getUsbDevices();
 		return devices.get("usb1");
+	}
+
+	public String getServiceClass() {
+		return usb == null ? "N/A" : usb.getServiceClass();
+	}
+
+	public String getPid() {
+		return usb == null ? "N/A" : usb.getPid();
+	}
+
+	public String getVid() {
+		return usb == null ? "N/A" : usb.getVid();
+	}
+
+	public String getDeviceSubClass() {
+		return usb == null ? "N/A" : usb.getDeviceSubClass();
+	}
+
+	public String getReportedProductName() {
+		return usb == null ? "N/A" : usb.getReportedProductName();
+	}
+
+	public String getUsbVersion() {
+		return usb == null ? "N/A" : usb.getUsbVersion();
+	}
+
+	public String getSerialNumber() {
+		return usb == null ? "N/A" : usb.getSerialNumber();
 	}
 }
