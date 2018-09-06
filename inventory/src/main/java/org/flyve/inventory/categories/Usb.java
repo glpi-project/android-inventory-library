@@ -34,9 +34,17 @@ package org.flyve.inventory.categories;
 import android.content.Context;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
+import android.os.Build;
+import android.util.Log;
 
 import org.flyve.inventory.FILog;
+import org.flyve.inventory.usbManager.SysBusUsbDevice;
+import org.flyve.inventory.usbManager.SysBusUsbManager;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -66,60 +74,27 @@ public class Usb extends Categories {
         
         //USB inventory comes with SDK level 12 !
         try {
+			SysBusUsbDevice usb = getSysBusUsbDevice();
 
-	        UsbManager manager = (UsbManager) xCtx.getSystemService(Context.USB_SERVICE);
-	        HashMap<String, UsbDevice> devices = manager.getDeviceList();
-			for (Map.Entry<String, UsbDevice> entry : devices.entrySet()) {
+			Category c = new Category("USBDEVICES", "usbDevices");
+			c.put("CLASS", new CategoryValue(usb.getServiceClass(), "CLASS", "class"));
+			c.put("PRODUCTID", new CategoryValue(usb.getPid(), "PRODUCTID", "productId"));
+			c.put("VENDORID", new CategoryValue(usb.getVid(), "VENDORID", "vendorId"));
+			c.put("SUBCLASS", new CategoryValue(usb.getDeviceSubClass(), "SUBCLASS", "subClass"));
+			c.put("MANUFACTURER", new CategoryValue(usb.getReportedProductName(), "MANUFACTURER", "manufacturer"));
+			c.put("CAPTION", new CategoryValue(usb.getUsbVersion(), "CAPTION", "caption"));
+			c.put("SERIAL", new CategoryValue(usb.getSerialNumber(), "SERIAL", "serial"));
 
-				UsbDevice mydevice = devices.get(entry.getKey());
-				Category c = new Category("USBDEVICES", "usbDevices");
-
-				c.put("CLASS", new CategoryValue(getClass(mydevice), "CLASS", "class"));
-				c.put("PRODUCTID", new CategoryValue(getProductid(mydevice), "PRODUCTID", "productId"));
-				c.put("VENDORID", new CategoryValue(getVendorid(mydevice), "VENDORID", "vendorId"));
-				c.put("SUBCLASS", new CategoryValue(getSubclass(mydevice), "SUBCLASS", "subClass"));
-
-				this.add(c);
-			}
-        } catch (Exception ex) {
+			this.add(c);
+		} catch (Exception ex) {
 			FILog.e(ex.getMessage());
 		}
 
     }
 
-	/**
-	 * Get the device's class field
-	 * @param mydevice UsbDevice
-	 * @return string the device's class
-	 */
-	public String getClass(UsbDevice mydevice) {
-		return Integer.toString(mydevice.getDeviceClass());
-	}
-
-	/**
-	 * Get the product ID
-	 * @param mydevice UsbDevice
-	 * @return string the product ID for the device
-	 */
-	public String getProductid(UsbDevice mydevice) {
-		return Integer.toString(mydevice.getProductId());
-	}
-
-	/**
-	 * Get the vendor ID
-	 * @param mydevice UsbDevice
-	 * @return string the vendor ID for the device
-	 */
-	public String getVendorid(UsbDevice mydevice) {
-		return Integer.toString(mydevice.getVendorId());
-	}
-
-	/**
-	 * Get the device's subclass field
-	 * @param mydevice UsbDevice
-	 * @return string the device's subclass
-	 */
-	public String getSubclass(UsbDevice mydevice) {
-		return Integer.toString(mydevice.getDeviceSubclass());
+	public SysBusUsbDevice getSysBusUsbDevice() {
+		SysBusUsbManager usbManager = new SysBusUsbManager("/sys/bus/usb/devices/");
+		Map<String, SysBusUsbDevice> devices = usbManager.getUsbDevices();
+		return devices.get("usb1");
 	}
 }
