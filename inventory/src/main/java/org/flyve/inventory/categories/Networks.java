@@ -36,12 +36,23 @@ import android.content.Context;
 import android.net.DhcpInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.telephony.PhoneStateListener;
+import android.telephony.TelephonyManager;
+import android.util.Log;
 
 import org.flyve.inventory.FILog;
 
+import java.io.File;
+import java.math.BigInteger;
+import java.net.InetAddress;
 import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.util.Collections;
 import java.util.List;
+import java.util.Scanner;
+
+import static android.content.Context.TELEPHONY_SERVICE;
 
 /**
  * This class get all the information of the Network
@@ -101,7 +112,7 @@ public class Networks extends Categories {
 		super(xCtx);
 
 		try {
-			WifiManager pWM = (WifiManager) xCtx.getSystemService(Service.WIFI_SERVICE);
+			WifiManager pWM = (WifiManager) xCtx.getApplicationContext().getSystemService(Service.WIFI_SERVICE);
 			boolean wasWifiEnabled = pWM.isWifiEnabled();
 
 			// Enable Wifi State if not
@@ -127,6 +138,9 @@ public class Networks extends Categories {
 			c.put("IPADDRESS", new CategoryValue(getIpaddress(), "IPADDRESS", "ipAddress", true, false));
 			c.put("IPMASK", new CategoryValue(getIpmask(), "IPMASK", "ipMask", true, false));
 			c.put("IPDHCP", new CategoryValue(getIpdhcp(), "IPDHCP", "ipDhcp", true, false));
+			c.put("IPSUBNET", new CategoryValue(getIpSubnet(), "IPSUBNET", "ipSubnet", true, false));
+			c.put("STATUS", new CategoryValue(getStatus(), "STATUS", "status", true, false));
+			c.put("DESCRIPTION", new CategoryValue(getDescription(), "DESCRIPTION", "description", true, false));
 
 			this.add(c);
 			// Restore Wifi State
@@ -200,7 +214,7 @@ public class Networks extends Categories {
 	 * 
 	 */
 	public String getSSID() {
-		return String.valueOf(wifi.getBSSID());
+		return String.valueOf(wifi.getSSID());
 	}
 
 	/**
@@ -233,5 +247,47 @@ public class Networks extends Categories {
 	 */
 	public String getIpdhcp() {
 		return StringUtils.intToIp(dhcp.serverAddress);
+	}
+
+	/**
+	 * Get the IP Subnet of the wifi connection info
+	 * @return string the IP Subnet
+	 */
+	public String getIpSubnet() {
+		return StringUtils.getSubNet(wifi.getIpAddress());
+	}
+
+	/**
+	 * Get the IP Subnet of the wifi connection info
+	 * @return string the IP Subnet
+	 */
+	public String getStatus() {
+		return getCatInfo("/sys/class/net/wlan0/operstate");
+	}
+
+	public String getDescription() {
+		int ipAddress = wifi.getIpAddress();
+		byte[] bytes = BigInteger.valueOf(ipAddress).toByteArray();
+		try {
+			InetAddress addr = InetAddress.getByAddress(bytes);
+			NetworkInterface netInterface = NetworkInterface.getByInetAddress(addr);
+			return netInterface.getDisplayName();
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		} catch (SocketException e) {
+			e.printStackTrace();
+		}
+		return "";
+	}
+
+	private String getCatInfo(String path) {
+		String value = "";
+		try {
+			Scanner s = new Scanner(new File(path));
+			value = s.next();
+		} catch (Exception e) {
+			Log.e("getCatInfo", Log.getStackTraceString(e));
+		}
+		return value;
 	}
 }
