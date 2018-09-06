@@ -33,16 +33,26 @@ package org.flyve.inventory.categories;
 
 import android.content.Context;
 import android.os.Build;
+import android.os.SystemClock;
+import android.provider.Settings;
 
 import org.flyve.inventory.FILog;
+import org.flyve.inventory.Utils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Properties;
+import java.util.TimeZone;
 
 /**
  * This class get all the information of the Environment
@@ -109,8 +119,9 @@ public class OperatingSystem extends Categories {
 
             Category c = new Category("OPERATINGSYSTEM", "operatingSystem");
             String architecture = "";
+            String hostId = "";
 
-            ArrayList<HashMap<String, String>> arr = getDeviceProperties();
+            ArrayList<HashMap<String, String>> arr = Utils.getDeviceProperties();
             for (int i = 0; i < arr.size(); i++) {
                 HashMap<String, String> map = arr.get(i);
 
@@ -125,15 +136,21 @@ public class OperatingSystem extends Categories {
                         architecture = map.get("ro.product.cpu.abilist64");
                     }
                 }
+
+                if (map.get("net.hostname") != null) {
+                    if (architecture.trim().isEmpty()) {
+                        hostId = map.get("net.hostname");
+                    }
+                }
             }
 
             c.put("ARCH", new CategoryValue(architecture.trim(), "ARCH", "architecture"));
             // review SystemClock.elapsedRealtime()
-            c.put("BOOT_TIME", new CategoryValue(" ", "BOOT_TIME", "bootTime"));
+            c.put("BOOT_TIME", new CategoryValue(getBootTime(), "BOOT_TIME", "bootTime"));
             c.put("DNS_DOMAIN", new CategoryValue(" ", "DNS_DOMAIN", "dnsDomain"));
             c.put("FQDN", new CategoryValue(" ", "FQDN", "FQDN"));
             c.put("FULL_NAME", new CategoryValue(getAndroidVersion(Build.VERSION.SDK_INT) + " api " + Build.VERSION.SDK_INT , "FULL_NAME", "fullName"));
-            c.put("HOSTID", new CategoryValue(" ", "HOSTID", "hostId"));
+            c.put("HOSTID", new CategoryValue(hostId, "HOSTID", "hostId"));
             c.put("KERNEL_NAME", new CategoryValue("linux", "KERNEL_NAME", "kernelName"));
             c.put("KERNEL_VERSION", new CategoryValue(getKernelVersion(), "KERNEL_VERSION", "kernelVersion"));
             c.put("NAME", new CategoryValue(getAndroidVersion(Build.VERSION.SDK_INT), "NAME", "Name"));
@@ -147,34 +164,12 @@ public class OperatingSystem extends Categories {
         }
     }
 
-
-    private ArrayList<HashMap<String, String>> getDeviceProperties() {
-        try {
-            // Run the command
-            Process process = Runtime.getRuntime().exec("getprop");
-            BufferedReader bufferedReader = new BufferedReader(
-                    new InputStreamReader(process.getInputStream()));
-
-            // Grab the results
-            ArrayList<HashMap<String, String>> arr = new ArrayList<>();
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                String[] value = line.split(":");
-                HashMap<String, String> map = new HashMap<>();
-                map.put(removeBraket(value[0]), removeBraket(value[1]));
-                arr.add(map);
-            }
-
-            return arr;
-        } catch (IOException ex) {
-            FILog.e(ex.getMessage());
-        }
-
-        return new ArrayList<>();
-    }
-
-    private String removeBraket(String str) {
-        return str.replaceAll("\\[", "").replaceAll("]", "");
+    private String getBootTime() {
+        long milliSeconds = System.currentTimeMillis() - SystemClock.elapsedRealtime();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd HH:mm", Locale.getDefault());
+        Date resultDate = new Date(milliSeconds);
+        String format = sdf.format(resultDate);
+        return format;
     }
 
     public static String getKernelVersion() {
