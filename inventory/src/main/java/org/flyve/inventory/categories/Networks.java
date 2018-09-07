@@ -43,12 +43,16 @@ import android.util.Log;
 import org.flyve.inventory.FILog;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.math.BigInteger;
+import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Scanner;
 
@@ -141,6 +145,7 @@ public class Networks extends Categories {
 			c.put("IPSUBNET", new CategoryValue(getIpSubnet(), "IPSUBNET", "ipSubnet", true, false));
 			c.put("STATUS", new CategoryValue(getStatus(), "STATUS", "status", true, false));
 			c.put("DESCRIPTION", new CategoryValue(getDescription(), "DESCRIPTION", "description", true, false));
+			c.put("IPADDRESS6", new CategoryValue(getLocalIpV6(), "IPADDRESS6", "ipaddress6", true, false));
 
 			this.add(c);
 			// Restore Wifi State
@@ -171,7 +176,7 @@ public class Networks extends Categories {
 		return macAddress;
 	}
 
-	public String getMACAddress(String interfaceName) {
+	private String getMACAddress(String interfaceName) {
 		try {
 			List<NetworkInterface> interfaces = Collections.list(NetworkInterface.getNetworkInterfaces());
 			for (NetworkInterface intf : interfaces) {
@@ -265,29 +270,55 @@ public class Networks extends Categories {
 		return getCatInfo("/sys/class/net/wlan0/operstate");
 	}
 
-	public String getDescription() {
-		int ipAddress = wifi.getIpAddress();
-		byte[] bytes = BigInteger.valueOf(ipAddress).toByteArray();
-		try {
-			InetAddress addr = InetAddress.getByAddress(bytes);
-			NetworkInterface netInterface = NetworkInterface.getByInetAddress(addr);
-			return netInterface.getDisplayName();
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-		} catch (SocketException e) {
-			e.printStackTrace();
-		}
-		return "";
-	}
-
 	private String getCatInfo(String path) {
-		String value = "";
+		String value = "N/A";
 		try {
 			Scanner s = new Scanner(new File(path));
 			value = s.next();
+		} catch (FileNotFoundException e) {
+			FILog.e(e.getMessage());
 		} catch (Exception e) {
-			Log.e("getCatInfo", Log.getStackTraceString(e));
+			FILog.e(e.getMessage());
 		}
 		return value;
+	}
+
+	public String getDescription() {
+		String name = "N/A";
+		int ipAddress = wifi.getIpAddress();
+		byte[] ip = BigInteger.valueOf(ipAddress).toByteArray();
+		try {
+			InetAddress inetAddress = InetAddress.getByAddress(ip);
+			NetworkInterface netInterface = NetworkInterface.getByInetAddress(inetAddress);
+			name = netInterface.getDisplayName();
+			return name;
+		} catch (UnknownHostException e) {
+			FILog.e(e.getMessage());
+		} catch (SocketException e) {
+			FILog.e(e.getMessage());
+		}
+		return name;
+	}
+
+	public String getLocalIpV6() {
+		try {
+			for (Enumeration<NetworkInterface> en = NetworkInterface
+					.getNetworkInterfaces(); en.hasMoreElements(); ) {
+				NetworkInterface intf = en.nextElement();
+				for (Enumeration<InetAddress> enumIpAddr = intf
+						.getInetAddresses(); enumIpAddr.hasMoreElements(); ) {
+					InetAddress inetAddress = enumIpAddr.nextElement();
+					System.out.println("ip1--:" + inetAddress);
+					System.out.println("ip2--:" + inetAddress.getHostAddress());
+
+					if (!inetAddress.isLoopbackAddress() && inetAddress instanceof Inet6Address) {
+						return inetAddress.getHostAddress();
+					}
+				}
+			}
+		} catch (Exception ex) {
+			Log.e("IP Address", ex.toString());
+		}
+		return "N/A";
 	}
 }

@@ -91,4 +91,28 @@ public class NetworksTest {
         assertNotEquals("", networks.getIpdhcp());
     }
 
+    @Test
+    public void getIpSubnet() throws Exception {
+        Networks networks = new Networks(appContext);
+        assertNotEquals("", networks.getIpSubnet());
+    }
+
+    @Test
+    public void getStatus() throws Exception {
+        Networks networks = new Networks(appContext);
+        assertNotEquals("", networks.getStatus());
+    }
+
+    @Test
+    public void getDescription() throws Exception {
+        Networks networks = new Networks(appContext);
+        assertNotEquals("", networks.getDescription());
+    }
+
+    @Test
+    public void getLocalIpV6() throws Exception {
+        Networks networks = new Networks(appContext);
+        assertNotEquals("", networks.getLocalIpV6());
+    }
+
 }
