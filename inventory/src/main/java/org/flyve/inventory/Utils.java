@@ -12,15 +12,18 @@ import org.flyve.inventory.categories.Networks;
 import org.json.JSONObject;
 import org.xmlpull.v1.XmlSerializer;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Date;
-
-import static org.flyve.inventory.FILog.e;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
 
 /*
  *   Copyright © 2017 Teclib. All rights reserved.
@@ -274,6 +277,52 @@ public class Utils {
         }
 
         return "";
+    }
+
+    public static String getSystemProperty(String type) {
+        ArrayList<HashMap<String, String>> arr = getDeviceProperties();
+        for (int i = 0; i < arr.size(); i++) {
+            HashMap<String, String> map = arr.get(i);
+
+            switch (type) {
+                case "Manufacturer":
+                    if (map.get("ro.product.manufacturer") != null)
+                        return map.get("ro.product.manufacturer");
+                    break;
+            }
+        }
+        return "";
+    }
+
+    public static ArrayList<HashMap<String, String>> getDeviceProperties() {
+        try {
+            // Run the command
+            Process process = Runtime.getRuntime().exec("getprop");
+            BufferedReader bufferedReader = new BufferedReader(
+                    new InputStreamReader(process.getInputStream()));
+
+            // Grab the results
+            ArrayList<HashMap<String, String>> arr = new ArrayList<>();
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                String[] value = line.split(":");
+                HashMap<String, String> map = new HashMap<>();
+                if (value.length >= 2) {
+                    map.put(removeBracket(value[0]), removeBracket(value[1]));
+                    arr.add(map);
+                }
+            }
+
+            return arr;
+        } catch (IOException ex) {
+            FILog.e(ex.getMessage());
+        }
+
+        return new ArrayList<>();
+    }
+
+    private static String removeBracket(String str) {
+        return str.replaceAll("\\[", "").replaceAll("]", "");
     }
 
     /* Checks if external storage is available for read and write */
