@@ -9,6 +9,7 @@ import android.support.test.runner.AndroidJUnit4;
 
 import org.flyve.inventory.categories.Usb;
 
+import org.flyve.inventory.usbManager.SysBusUsbDevice;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -50,54 +51,38 @@ public class UsbTest {
 
     @Test
     public void getClassTest() throws Exception {
-        if(Build.VERSION.SDK_INT > 12) {
-            Usb usb = new Usb(appContext);
-            UsbManager manager = (UsbManager) appContext.getSystemService(Context.USB_SERVICE);
-            HashMap<String, UsbDevice> devices = manager.getDeviceList();
-            for (String key : devices.keySet()) {
-                UsbDevice mydevice = devices.get(key);
-                assertNotEquals("", usb.getClass(mydevice));
-            }
-        }
+        Usb usb = new Usb(appContext);
+        assertNotEquals("", usb.getServiceClass());
     }
 
     @Test
     public void getProductid() throws Exception {
-        if(Build.VERSION.SDK_INT > 12) {
-            Usb usb = new Usb(appContext);
-            UsbManager manager = (UsbManager) appContext.getSystemService(Context.USB_SERVICE);
-            HashMap<String, UsbDevice> devices = manager.getDeviceList();
-            for (String key : devices.keySet()) {
-                UsbDevice mydevice = devices.get(key);
-                assertNotEquals("", usb.getProductid(mydevice));
-            }
-        }
+        Usb usb = new Usb(appContext);
+        assertNotEquals("", usb.getPid());
     }
 
     @Test
     public void getVendorid() throws Exception {
-        if(Build.VERSION.SDK_INT > 12) {
-            Usb usb = new Usb(appContext);
-            UsbManager manager = (UsbManager) appContext.getSystemService(Context.USB_SERVICE);
-            HashMap<String, UsbDevice> devices = manager.getDeviceList();
-            for (String key : devices.keySet()) {
-                UsbDevice mydevice = devices.get(key);
-                assertNotEquals("", usb.getVendorid(mydevice));
-            }
-        }
+        Usb usb = new Usb(appContext);
+        assertNotEquals("", usb.getVid());
     }
 
     @Test
     public void getSubclass() throws Exception {
-        if(Build.VERSION.SDK_INT > 12) {
-            Usb usb = new Usb(appContext);
-            UsbManager manager = (UsbManager) appContext.getSystemService(Context.USB_SERVICE);
-            HashMap<String, UsbDevice> devices = manager.getDeviceList();
-            for (String key : devices.keySet()) {
-                UsbDevice mydevice = devices.get(key);
-                assertNotEquals("", usb.getSubclass(mydevice));
-            }
-        }
+        Usb usb = new Usb(appContext);
+        assertNotEquals("", usb.getDeviceSubClass());
+    }
+
+    @Test
+    public void getManufacturer() throws Exception {
+        Usb usb = new Usb(appContext);
+        assertNotEquals("", usb.getReportedProductName());
+    }
+
+    @Test
+    public void getCaption() throws Exception {
+        Usb usb = new Usb(appContext);
+        assertNotEquals("", usb.getUsbVersion());
     }
 
 }

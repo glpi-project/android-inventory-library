@@ -112,4 +112,16 @@ public class StringUtils {
 
         return (StringUtils.join(stack, ".", true));
     }
+
+    /**
+     * Convert ipAddress int to SubNetMask
+     * @param ipAddress Integer value
+     * @return String
+     */
+    public static String getSubNet(int ipAddress) {
+        return  ((ipAddress & 0xFF) + "." +
+                ((ipAddress >>>= 8) & 0xFF) + "." +
+                ((ipAddress >>>= 8) & 0xFF) + "." +
+                ((ipAddress >>>= 8) & 0xFF));
+    }
 }

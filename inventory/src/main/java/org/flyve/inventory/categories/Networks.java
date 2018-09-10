@@ -36,12 +36,27 @@ import android.content.Context;
 import android.net.DhcpInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.telephony.PhoneStateListener;
+import android.telephony.TelephonyManager;
+import android.util.Log;
 
 import org.flyve.inventory.FILog;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.math.BigInteger;
+import java.net.Inet6Address;
+import java.net.InetAddress;
 import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.List;
+import java.util.Scanner;
+
+import static android.content.Context.TELEPHONY_SERVICE;
 
 /**
  * This class get all the information of the Network
@@ -101,7 +116,7 @@ public class Networks extends Categories {
 		super(xCtx);
 
 		try {
-			WifiManager pWM = (WifiManager) xCtx.getSystemService(Service.WIFI_SERVICE);
+			WifiManager pWM = (WifiManager) xCtx.getApplicationContext().getSystemService(Service.WIFI_SERVICE);
 			boolean wasWifiEnabled = pWM.isWifiEnabled();
 
 			// Enable Wifi State if not
@@ -127,6 +142,10 @@ public class Networks extends Categories {
 			c.put("IPADDRESS", new CategoryValue(getIpaddress(), "IPADDRESS", "ipAddress", true, false));
 			c.put("IPMASK", new CategoryValue(getIpmask(), "IPMASK", "ipMask", true, false));
 			c.put("IPDHCP", new CategoryValue(getIpdhcp(), "IPDHCP", "ipDhcp", true, false));
+			c.put("IPSUBNET", new CategoryValue(getIpSubnet(), "IPSUBNET", "ipSubnet", true, false));
+			c.put("STATUS", new CategoryValue(getStatus(), "STATUS", "status", true, false));
+			c.put("DESCRIPTION", new CategoryValue(getDescription(), "DESCRIPTION", "description", true, false));
+			c.put("IPADDRESS6", new CategoryValue(getLocalIpV6(), "IPADDRESS6", "ipaddress6", true, false));
 
 			this.add(c);
 			// Restore Wifi State
@@ -157,7 +176,7 @@ public class Networks extends Categories {
 		return macAddress;
 	}
 
-	public String getMACAddress(String interfaceName) {
+	private String getMACAddress(String interfaceName) {
 		try {
 			List<NetworkInterface> interfaces = Collections.list(NetworkInterface.getNetworkInterfaces());
 			for (NetworkInterface intf : interfaces) {
@@ -200,7 +219,7 @@ public class Networks extends Categories {
 	 * 
 	 */
 	public String getSSID() {
-		return String.valueOf(wifi.getBSSID());
+		return String.valueOf(wifi.getSSID());
 	}
 
 	/**
@@ -233,5 +252,73 @@ public class Networks extends Categories {
 	 */
 	public String getIpdhcp() {
 		return StringUtils.intToIp(dhcp.serverAddress);
+	}
+
+	/**
+	 * Get the IP Subnet of the wifi connection info
+	 * @return string the IP Subnet
+	 */
+	public String getIpSubnet() {
+		return StringUtils.getSubNet(wifi.getIpAddress());
+	}
+
+	/**
+	 * Get the IP Subnet of the wifi connection info
+	 * @return string the IP Subnet
+	 */
+	public String getStatus() {
+		return getCatInfo("/sys/class/net/wlan0/operstate");
+	}
+
+	private String getCatInfo(String path) {
+		String value = "N/A";
+		try {
+			Scanner s = new Scanner(new File(path));
+			value = s.next();
+		} catch (FileNotFoundException e) {
+			FILog.e(e.getMessage());
+		} catch (Exception e) {
+			FILog.e(e.getMessage());
+		}
+		return value;
+	}
+
+	public String getDescription() {
+		String name = "N/A";
+		int ipAddress = wifi.getIpAddress();
+		byte[] ip = BigInteger.valueOf(ipAddress).toByteArray();
+		try {
+			InetAddress inetAddress = InetAddress.getByAddress(ip);
+			NetworkInterface netInterface = NetworkInterface.getByInetAddress(inetAddress);
+			name = netInterface.getDisplayName();
+			return name;
+		} catch (UnknownHostException e) {
+			FILog.e(e.getMessage());
+		} catch (SocketException e) {
+			FILog.e(e.getMessage());
+		}
+		return name;
+	}
+
+	public String getLocalIpV6() {
+		try {
+			for (Enumeration<NetworkInterface> en = NetworkInterface
+					.getNetworkInterfaces(); en.hasMoreElements(); ) {
+				NetworkInterface intf = en.nextElement();
+				for (Enumeration<InetAddress> enumIpAddr = intf
+						.getInetAddresses(); enumIpAddr.hasMoreElements(); ) {
+					InetAddress inetAddress = enumIpAddr.nextElement();
+					System.out.println("ip1--:" + inetAddress);
+					System.out.println("ip2--:" + inetAddress.getHostAddress());
+
+					if (!inetAddress.isLoopbackAddress() && inetAddress instanceof Inet6Address) {
+						return inetAddress.getHostAddress();
+					}
+				}
+			}
+		} catch (Exception ex) {
+			Log.e("IP Address", ex.toString());
+		}
+		return "N/A";
 	}
 }
