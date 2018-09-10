@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Environment;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.util.Xml;
 
 import org.flyve.inventory.categories.Categories;
@@ -22,7 +21,6 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 
 /*
@@ -279,17 +277,22 @@ public class Utils {
         return "";
     }
 
+    public static String getCatInfo(String path) {
+        try {
+            Scanner s = new Scanner(new File(path));
+            return s.next();
+        } catch (Exception e) {
+            FILog.e(e.getMessage());
+        }
+        return null;
+    }
+
     public static String getSystemProperty(String type) {
         ArrayList<HashMap<String, String>> arr = getDeviceProperties();
         for (int i = 0; i < arr.size(); i++) {
             HashMap<String, String> map = arr.get(i);
-
-            switch (type) {
-                case "Manufacturer":
-                    if (map.get("ro.product.manufacturer") != null)
-                        return map.get("ro.product.manufacturer");
-                    break;
-            }
+            if (map.get(type) != null)
+                return map.get(type);
         }
         return "";
     }
