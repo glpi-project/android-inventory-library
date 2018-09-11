@@ -171,9 +171,9 @@ public class Drives extends Categories {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            FILog.e(e.getMessage() + "");
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            FILog.e(e.getMessage() + "");
         }
         return fileSystem;
     }
