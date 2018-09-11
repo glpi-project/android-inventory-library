@@ -90,7 +90,6 @@ public class Memory extends Categories {
 
     /**
      *  Get total memory of the device
-     *  ````
      * @return String Total Memory
      * @throws IOException return exception
      */
