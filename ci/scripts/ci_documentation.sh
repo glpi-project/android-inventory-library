@@ -33,6 +33,7 @@ if [[ $GH_COMMIT_MESSAGE != *"ci(release): generate CHANGELOG.md for version"* &
 
 # run generatedocumentation script
 ci/scripts/ci_generate_documentation.sh
+ci/scripts/ci_coverage.sh
 
 # Update layouts and styles of development folder for correct display on project site
 
@@ -46,16 +47,16 @@ git checkout gh-pages
 sudo git clean -fdx
 
 # remove default stylesheet.css
-sudo rm ./development/code-documentation/stylesheet.css
-sudo rm ./development/coverage/resources/report.css
-sudo rm ./development/test-reports/css/base-style.css
-sudo rm ./development/test-reports/css/style.css
+sudo rm ./development/code-documentation/$CIRCLE_BRANCH/stylesheet.css
+sudo rm ./development/coverage/$CIRCLE_BRANCH/resources/report.css
+sudo rm ./development/test-report/$CIRCLE_BRANCH/css/base-style.css
+sudo rm ./development/test-report/$CIRCLE_BRANCH/css/style.css
 
 # add new css
-cp ./css/codeDocumentation.css ./development/code-documentation/stylesheet.css
-cp ./css/coverage.css ./development/coverage/resources/report.css
-cp ./css/testReports.css ./development/test-reports/css/style.css
-touch ./development/test-reports/css/base-style.css
+cp ./css/codeDocumentation.css ./development/code-documentation/$CIRCLE_BRANCH/stylesheet.css
+cp ./css/coverage.css ./development/coverage/$CIRCLE_BRANCH/resources/report.css
+cp ./css/testReports.css ./development/test-report/$CIRCLE_BRANCH/css/style.css
+touch ./development/test-report/$CIRCLE_BRANCH/css/base-style.css
 
 # change headers
 ruby ci/add_header.rb
