@@ -45,6 +45,42 @@ public class CpusTest {
     Context appContext = InstrumentationRegistry.getTargetContext();
 
     @Test
+    public void getArch() throws Exception {
+        Cpus cpus = new Cpus(appContext);
+        assertNotEquals("", cpus.getArch());
+    }
+
+    @Test
+    public void getCPUCore() throws Exception {
+        Cpus cpus = new Cpus(appContext);
+        assertNotEquals("", cpus.getCPUCore());
+    }
+
+    @Test
+    public void getFamilyName() throws Exception {
+        Cpus cpus = new Cpus(appContext);
+        assertNotEquals("", cpus.getFamilyName());
+    }
+
+    @Test
+    public void getFamilyNumber() throws Exception {
+        Cpus cpus = new Cpus(appContext);
+        assertNotEquals("", cpus.getFamilyNumber());
+    }
+
+    @Test
+    public void getManufacturer() throws Exception {
+        Cpus cpus = new Cpus(appContext);
+        assertNotEquals("", cpus.getManufacturer());
+    }
+
+    @Test
+    public void getModel() throws Exception {
+        Cpus cpus = new Cpus(appContext);
+        assertNotEquals("", cpus.getModel());
+    }
+
+    @Test
     public void getCpuName() throws Exception {
         Cpus cpus = new Cpus(appContext);
         assertNotEquals("", cpus.getCpuName());
