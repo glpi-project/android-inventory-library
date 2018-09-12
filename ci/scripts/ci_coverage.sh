@@ -27,19 +27,24 @@
 #  --------------------------------------------------------------------------------
 #
 
-DOC_PATH="development/code-documentation/$CIRCLE_BRANCH"
+COVERAGE_PATH="development/coverage/$CIRCLE_BRANCH"
+TEST_PATH="development/test-report/$CIRCLE_BRANCH"
 
-# Generate javadoc this folder must be on .gitignore
-javadoc -d $DOC_PATH -sourcepath ./inventory/src/main/java -subpackages .
+# create code coverage report
+./gradlew :inventory:createDebugCoverageReport
 
-# delete the index.html file
-sudo rm $DOC_PATH/index.html
-
-# rename the overview-summary.html file to index.html
-mv $DOC_PATH/overview-summary.html $DOC_PATH/index.html
+# replace .resources with resource because github doesn't support folders with "_" or "." at the beginning
+mv inventory/build/reports/coverage/debug/.resources inventory/build/reports/coverage/debug/resources
 
 # find and replace links to the old name of file
-grep -rl overview-summary.html $DOC_PATH | xargs sed -i 's|overview-summary.html|index.html|g'
+grep -rl .resources inventory/build/reports/coverage/debug/ | xargs sed -i 's|.resources|resources|g'
 
-# send development folder to project site with the documentation updated, also removes the folder with old docs
-yarn gh-pages --dist $DOC_PATH --dest $DOC_PATH -m "docs(development): update code documentation"
+# replace .sessions
+mv inventory/build/reports/coverage/debug/.sessions.html inventory/build/reports/coverage/debug/sessions.html
+
+# find and replace links to the old name of file
+grep -rl .sessions.html inventory/build/reports/coverage/debug/ | xargs sed -i 's|.sessions.html|sessions.html|g'
+
+yarn gh-pages --dist inventory/build/reports/coverage/debug/  --dest $COVERAGE_PATH -m "docs(development): update coverage"
+
+yarn gh-pages --dist inventory/build/reports/androidTests/connected/ --dest $TEST_PATH -m "docs(development): update coverage"
