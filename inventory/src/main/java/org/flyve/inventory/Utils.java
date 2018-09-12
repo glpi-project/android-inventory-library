@@ -14,13 +14,16 @@ import org.xmlpull.v1.XmlSerializer;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 /*
@@ -277,6 +280,27 @@ public class Utils {
         return "";
     }
 
+    public static Map<String, String> getCatMapInfo(String path) throws FileNotFoundException {
+        Map<String, String> map = new HashMap<>();
+        Scanner s = new Scanner(new File(path));
+        while (s.hasNextLine()) {
+            String[] values = s.nextLine().split(": ");
+            if (values.length > 1) {
+                map.put(values[0].trim(), values[1].trim());
+            }
+        }
+        return map;
+    }
+
+    public static String getValueMapInfo(Map<String, String> mapInfo, String name) {
+        for (String s : mapInfo.keySet()) {
+            if (s.equalsIgnoreCase(name)) {
+                return mapInfo.get(s);
+            }
+        }
+        return "";
+    }
+
     public static String getCatInfo(String path) {
         try {
             Scanner s = new Scanner(new File(path));
@@ -327,6 +351,23 @@ public class Utils {
     private static String removeBracket(String str) {
         return str.replaceAll("\\[", "").replaceAll("]", "");
     }
+
+    public static String loadJSONFromAsset(Context context, String name) {
+        String json;
+        try {
+            InputStream is = context.getAssets().open(name);
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            json = new String(buffer, "UTF-8");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+        return json;
+    }
+
 
     /* Checks if external storage is available for read and write */
     private static boolean isExternalStorageWritable() {

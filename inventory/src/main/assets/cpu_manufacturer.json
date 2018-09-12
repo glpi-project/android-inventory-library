@@ -1,0 +1,10 @@
+[
+	{"id": ["mt", "mediatek"], "name": "Mediatek"},
+	{"id": ["rk"], "name": "Rockchip"},
+	{"id": ["qcom", "msm", "apq"], "name": "Qualcomm"},
+	{"id": ["sc"], "name": "Spreadtrum"},
+	{"id": ["exynos", "smdk", "samsung"], "name": "Samsung"},
+	{"id": ["hi"], "name": "HiSilicon"},
+	{"id": ["pxa"], "name": "Marvell"},
+	{"id": ["amlogic"], "name": "Amlogic"}
+]
