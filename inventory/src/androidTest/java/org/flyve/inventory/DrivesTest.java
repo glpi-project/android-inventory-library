@@ -67,10 +67,19 @@ import static org.junit.Assert.assertNotEquals;
     @Test
     public void getFree() throws Exception {
         Drives drives = new Drives(appContext);
-        assertNotEquals("", drives.getFree(froot));
-        assertNotEquals("", drives.getFree(fexternal));
-        assertNotEquals("", drives.getFree(fdata));
-        assertNotEquals("", drives.getFree(fcache));
+        assertNotEquals("", drives.getFreeSpace(froot));
+        assertNotEquals("", drives.getFreeSpace(fexternal));
+        assertNotEquals("", drives.getFreeSpace(fdata));
+        assertNotEquals("", drives.getFreeSpace(fcache));
+    }
+
+    @Test
+    public void getFileSystem() throws Exception {
+        Drives drives = new Drives(appContext);
+        assertNotEquals("", drives.getFileSystem(froot));
+        assertNotEquals("", drives.getFileSystem(fexternal));
+        assertNotEquals("", drives.getFileSystem(fdata));
+        assertNotEquals("", drives.getFileSystem(fcache));
     }
 
 }

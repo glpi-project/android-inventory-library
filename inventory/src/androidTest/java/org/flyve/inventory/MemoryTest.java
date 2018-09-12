@@ -49,4 +49,16 @@ public class MemoryTest {
         assertNotEquals("", memory.getCapacity());
     }
 
+    @Test
+    public void getType() throws Exception {
+        Memory memory = new Memory(appContext);
+        assertNotEquals("", memory.getType());
+    }
+
+    @Test
+    public void getSpeed() throws Exception {
+        Memory memory = new Memory(appContext);
+        assertNotEquals("", memory.getSpeed());
+    }
+
 }

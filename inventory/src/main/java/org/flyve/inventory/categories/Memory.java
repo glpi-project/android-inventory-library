@@ -35,6 +35,7 @@ package org.flyve.inventory.categories;
 import android.content.Context;
 
 import org.flyve.inventory.FILog;
+import org.flyve.inventory.Utils;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -62,27 +63,30 @@ public class Memory extends Categories {
     // Properties of this component
     private static final String DESCRIPTION = "Memory";
     private static final String MEMINFO = "/proc/meminfo";
+    private String[] ramInfo = new String[2];
 
     /**
      * This constructor load the context and the Memory information
+     *
      * @param xCtx Context where this class work
      */
-	public Memory(Context xCtx) {
-		super(xCtx);
+    public Memory(Context xCtx) {
+        super(xCtx);
 
-		try {
+        try {
+            getRamInfo();
             Category c = new Category("MEMORIES", "memories");
 
             c.put("DESCRIPTION", new CategoryValue(DESCRIPTION, "DESCRIPTION", "description"));
-
-            String capacity = getCapacity();
-            c.put("CAPACITY", new CategoryValue(capacity, "CAPACITY", "capacity"));
+            c.put("CAPACITY", new CategoryValue(getCapacity(), "CAPACITY", "capacity"));
+            c.put("TYPE", new CategoryValue(getType(), "TYPE", "type"));
+            c.put("SPEED", new CategoryValue(getSpeed(), "SPEED", "speed"));
 
             this.add(c);
         } catch (Exception ex) {
             FILog.e(ex.getMessage());
         }
-	}
+    }
 
     /**
      *  Get total memory of the device
@@ -118,4 +122,49 @@ public class Memory extends Categories {
         }
         return capacity;
 	}
+
+    private void getRamInfo() {
+        String infoCat = Utils.getCatInfo("/sys/bus/platform/drivers/ddr_type/ddr_type");
+        if (infoCat != null) {
+            splitRamInfo(infoCat);
+        } else {
+            String infoProp = getRamProp();
+            if (infoProp != null){
+                splitRamInfo(infoProp);
+            } else {
+                ramInfo[0] = "N/A";
+                ramInfo[1] = "N/A";
+            }
+        }
+    }
+
+    private void splitRamInfo(String info) {
+        if (info.contains("_")) {
+            String[] partRam = info.split("_", 2);
+            ramInfo[0] = partRam[0];
+            ramInfo[1] = partRam[1];
+        } else {
+            ramInfo[0] = info;
+            ramInfo[1] = "N/A";
+        }
+    }
+
+    private String getRamProp() {
+        String a = Utils.getSystemProperty("ro.boot.hardware.ddr");
+        if (!(a == null || a.isEmpty())) {
+            int indexOf = a.indexOf("LPDDR");
+            if (indexOf > 0) {
+                return a.substring(indexOf);
+            }
+        }
+        return null;
+    }
+
+    public String getType() {
+        return ramInfo[0];
+    }
+
+    public String getSpeed() {
+        return ramInfo[1];
+    }
 }

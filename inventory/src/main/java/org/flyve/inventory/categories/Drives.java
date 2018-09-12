@@ -33,10 +33,14 @@ package org.flyve.inventory.categories;
 
 import android.content.Context;
 import android.os.Environment;
+import android.os.StatFs;
 
 import org.flyve.inventory.FILog;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 /**
  * This class get all the information of the Drives
@@ -56,9 +60,6 @@ public class Drives extends Categories {
      */
 	private static final long serialVersionUID = 6073387379988815108L;
 
-    // Properties of this component
-    private static int toMega = 1048576;
-
     /**
      * This constructor load the context and load the Drivers information
      * @param xCtx Context where this class work
@@ -66,7 +67,6 @@ public class Drives extends Categories {
 
 	public Drives(Context xCtx) {
         super(xCtx);
-        
         this.addStorage(Environment.getRootDirectory());
         this.addStorage(Environment.getExternalStorageDirectory());
 	    this.addStorage(Environment.getDataDirectory());
@@ -84,7 +84,8 @@ public class Drives extends Categories {
 
             c.put("VOLUMN", new CategoryValue(getVolumn(f), "VOLUMN", "path"));
             c.put("TOTAL", new CategoryValue(getTotal(f), "TOTAL", "total"));
-            c.put("FREE", new CategoryValue(getFree(f), "FREE", "free"));
+            c.put("FREE", new CategoryValue(getFreeSpace(f), "FREE", "free"));
+            c.put("FILESYSTEM", new CategoryValue(getFileSystem(f), "FILESYSTEM", "filesystem"));
 
             this.add(c);
         } catch (Exception ex) {
@@ -120,6 +121,7 @@ public class Drives extends Categories {
 
         try {
             Long total = f.getTotalSpace();
+            int toMega = 1048576;
             total = total / toMega;
             val = total.toString();
         } catch (Exception ex) {
@@ -134,16 +136,45 @@ public class Drives extends Categories {
      * @param f file
      * @return string the free space
      */
-    public String getFree(File f) {
-        String val = "";
-        try {
-            Long free = f.getFreeSpace();
-            free = free / toMega;
-            val = free.toString();
-        } catch (Exception ex) {
-            FILog.e(ex.getMessage());
+    public String getFreeSpace(File f) {
+        StatFs stat = new StatFs(f.getPath());
+        long bytesAvailable;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            bytesAvailable = stat.getBlockSizeLong() * stat.getAvailableBlocksLong();
+        } else {
+            bytesAvailable = (long) stat.getBlockSize() * (long) stat.getAvailableBlocks();
         }
+        long value = bytesAvailable / (1024 * 1024);
+        return String.valueOf(value);
+    }
 
-        return val;
+    /**
+     * Get the filesystem space of the drive
+     * @param f file
+     * @return string the filesystem
+     */
+    public String getFileSystem(File f) {
+        String fileSystem = "N/A";
+        try {
+            Process mount = Runtime.getRuntime().exec("mount");
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(mount.getInputStream()));
+            mount.waitFor();
+
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                String[] split = line.split("\\s+");
+                for (int i = 0; i < split.length - 1; i++) {
+                    if (split[i].contentEquals(f.getAbsolutePath())) {
+                        String strMount = split[i];
+                        fileSystem = split[i + 1];
+                    }
+                }
+            }
+        } catch (IOException e) {
+            FILog.e(e.getMessage());
+        } catch (InterruptedException e) {
+            FILog.e(e.getMessage());
+        }
+        return fileSystem;
     }
 }
