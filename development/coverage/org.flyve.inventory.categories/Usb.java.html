@@ -1,6 +1,3 @@
----
-layout: coverage
----
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../resources/report.css" type="text/css"/><link rel="shortcut icon" href="../resources/report.gif" type="image/gif"/><title>Usb.java</title><link rel="stylesheet" href="../resources/prettify.css" type="text/css"/><script type="text/javascript" src="../resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory.categories</a> &gt; <span class="el_source">Usb.java</span></div><h1>Usb.java</h1><pre class="source lang-java linenums">/**
  *
  * Copyright 2017 Teclib.
@@ -37,17 +34,9 @@ package org.flyve.inventory.categories;
 import android.content.Context;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
-import android.os.Build;
-import android.util.Log;
 
 import org.flyve.inventory.FILog;
-import org.flyve.inventory.usbManager.SysBusUsbDevice;
-import org.flyve.inventory.usbManager.SysBusUsbManager;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -67,67 +56,71 @@ public class Usb extends Categories {
      *  from: https://stackoverflow.com/questions/285793/what-is-a-serialversionuid-and-why-should-i-use-it
      */
     private static final long serialVersionUID = 4846706700566208666L;
-	private SysBusUsbDevice usb;
 
 	/**
 	 * This constructor load the context and the Usb information
 	 * @param xCtx Context where this class work
 	 */
     public Usb(Context xCtx) {
-<span class="fc" id="L74">        super(xCtx);</span>
+<span class="fc" id="L65">        super(xCtx);</span>
         
         //USB inventory comes with SDK level 12 !
         try {
-<span class="fc" id="L78">			usb = getSysBusUsbDevice();</span>
 
-<span class="fc" id="L80">			Category c = new Category(&quot;USBDEVICES&quot;, &quot;usbDevices&quot;);</span>
-<span class="fc" id="L81">			c.put(&quot;CLASS&quot;, new CategoryValue(getServiceClass(), &quot;CLASS&quot;, &quot;class&quot;));</span>
-<span class="fc" id="L82">			c.put(&quot;PRODUCTID&quot;, new CategoryValue(getPid(), &quot;PRODUCTID&quot;, &quot;productId&quot;));</span>
-<span class="fc" id="L83">			c.put(&quot;VENDORID&quot;, new CategoryValue(getVid(), &quot;VENDORID&quot;, &quot;vendorId&quot;));</span>
-<span class="fc" id="L84">			c.put(&quot;SUBCLASS&quot;, new CategoryValue(getDeviceSubClass(), &quot;SUBCLASS&quot;, &quot;subClass&quot;));</span>
-<span class="fc" id="L85">			c.put(&quot;MANUFACTURER&quot;, new CategoryValue(getReportedProductName(), &quot;MANUFACTURER&quot;, &quot;manufacturer&quot;));</span>
-<span class="fc" id="L86">			c.put(&quot;CAPTION&quot;, new CategoryValue(getUsbVersion(), &quot;CAPTION&quot;, &quot;caption&quot;));</span>
-<span class="fc" id="L87">			c.put(&quot;SERIAL&quot;, new CategoryValue(getSerialNumber(), &quot;SERIAL&quot;, &quot;serial&quot;));</span>
+<span class="fc" id="L70">	        UsbManager manager = (UsbManager) xCtx.getSystemService(Context.USB_SERVICE);</span>
+<span class="fc" id="L71">	        HashMap&lt;String, UsbDevice&gt; devices = manager.getDeviceList();</span>
+<span class="pc bpc" id="L72" title="1 of 2 branches missed.">			for (Map.Entry&lt;String, UsbDevice&gt; entry : devices.entrySet()) {</span>
 
-<span class="fc" id="L89">			this.add(c);</span>
-<span class="nc" id="L90">		} catch (Exception ex) {</span>
-<span class="nc" id="L91">			FILog.e(ex.getMessage());</span>
-<span class="fc" id="L92">		}</span>
+<span class="nc" id="L74">				UsbDevice mydevice = devices.get(entry.getKey());</span>
+<span class="nc" id="L75">				Category c = new Category(&quot;USBDEVICES&quot;, &quot;usbDevices&quot;);</span>
 
-<span class="fc" id="L94">    }</span>
+<span class="nc" id="L77">				c.put(&quot;CLASS&quot;, new CategoryValue(getClass(mydevice), &quot;CLASS&quot;, &quot;class&quot;));</span>
+<span class="nc" id="L78">				c.put(&quot;PRODUCTID&quot;, new CategoryValue(getProductid(mydevice), &quot;PRODUCTID&quot;, &quot;productId&quot;));</span>
+<span class="nc" id="L79">				c.put(&quot;VENDORID&quot;, new CategoryValue(getVendorid(mydevice), &quot;VENDORID&quot;, &quot;vendorId&quot;));</span>
+<span class="nc" id="L80">				c.put(&quot;SUBCLASS&quot;, new CategoryValue(getSubclass(mydevice), &quot;SUBCLASS&quot;, &quot;subClass&quot;));</span>
 
-	public SysBusUsbDevice getSysBusUsbDevice() {
-<span class="fc" id="L97">		SysBusUsbManager usbManager = new SysBusUsbManager(&quot;/sys/bus/usb/devices/&quot;);</span>
-<span class="fc" id="L98">		Map&lt;String, SysBusUsbDevice&gt; devices = usbManager.getUsbDevices();</span>
-<span class="fc" id="L99">		return devices.get(&quot;usb1&quot;);</span>
+<span class="nc" id="L82">				this.add(c);</span>
+<span class="nc" id="L83">			}</span>
+<span class="nc" id="L84">        } catch (Exception ex) {</span>
+<span class="nc" id="L85">			FILog.e(ex.getMessage());</span>
+<span class="fc" id="L86">		}</span>
+
+<span class="fc" id="L88">    }</span>
+
+	/**
+	 * Get the device's class field
+	 * @param mydevice UsbDevice
+	 * @return string the device's class
+	 */
+	public String getClass(UsbDevice mydevice) {
+<span class="nc" id="L96">		return Integer.toString(mydevice.getDeviceClass());</span>
 	}
 
-	public String getServiceClass() {
-<span class="pc bpc" id="L103" title="1 of 2 branches missed.">		return usb == null ? &quot;N/A&quot; : usb.getServiceClass();</span>
+	/**
+	 * Get the product ID
+	 * @param mydevice UsbDevice
+	 * @return string the product ID for the device
+	 */
+	public String getProductid(UsbDevice mydevice) {
+<span class="nc" id="L105">		return Integer.toString(mydevice.getProductId());</span>
 	}
 
-	public String getPid() {
-<span class="pc bpc" id="L107" title="1 of 2 branches missed.">		return usb == null ? &quot;N/A&quot; : usb.getPid();</span>
+	/**
+	 * Get the vendor ID
+	 * @param mydevice UsbDevice
+	 * @return string the vendor ID for the device
+	 */
+	public String getVendorid(UsbDevice mydevice) {
+<span class="nc" id="L114">		return Integer.toString(mydevice.getVendorId());</span>
 	}
 
-	public String getVid() {
-<span class="pc bpc" id="L111" title="1 of 2 branches missed.">		return usb == null ? &quot;N/A&quot; : usb.getVid();</span>
-	}
-
-	public String getDeviceSubClass() {
-<span class="pc bpc" id="L115" title="1 of 2 branches missed.">		return usb == null ? &quot;N/A&quot; : usb.getDeviceSubClass();</span>
-	}
-
-	public String getReportedProductName() {
-<span class="pc bpc" id="L119" title="1 of 2 branches missed.">		return usb == null ? &quot;N/A&quot; : usb.getReportedProductName();</span>
-	}
-
-	public String getUsbVersion() {
-<span class="pc bpc" id="L123" title="1 of 2 branches missed.">		return usb == null ? &quot;N/A&quot; : usb.getUsbVersion();</span>
-	}
-
-	public String getSerialNumber() {
-<span class="pc bpc" id="L127" title="1 of 2 branches missed.">		return usb == null ? &quot;N/A&quot; : usb.getSerialNumber();</span>
+	/**
+	 * Get the device's subclass field
+	 * @param mydevice UsbDevice
+	 * @return string the device's subclass
+	 */
+	public String getSubclass(UsbDevice mydevice) {
+<span class="nc" id="L123">		return Integer.toString(mydevice.getDeviceSubclass());</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span>Generated by the Android Gradle plugin 2.2.0</div></body></html>

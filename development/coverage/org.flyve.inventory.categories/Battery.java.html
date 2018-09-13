@@ -1,6 +1,3 @@
----
-layout: coverage
----
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../resources/report.css" type="text/css"/><link rel="shortcut icon" href="../resources/report.gif" type="image/gif"/><title>Battery.java</title><link rel="stylesheet" href="../resources/prettify.css" type="text/css"/><script type="text/javascript" src="../resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory.categories</a> &gt; <span class="el_source">Battery.java</span></div><h1>Battery.java</h1><pre class="source lang-java linenums">/**
  *
  * Copyright 2017 Teclib.
@@ -39,7 +36,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.BatteryManager;
-import android.os.Build;
 
 import org.flyve.inventory.FILog;
 
@@ -63,13 +59,12 @@ public class Battery extends Categories {
 	private static final long serialVersionUID = -4096347994131285426L;
 
 	// Properties of this component
-<span class="fc" id="L63">	private String level = &quot;&quot;;</span>
-<span class="fc" id="L64">	private String voltage = &quot;&quot;;</span>
-<span class="fc" id="L65">	private String temperature = &quot;&quot;;</span>
-<span class="fc" id="L66">	private String status = &quot;&quot;;</span>
-<span class="fc" id="L67">	private String health = &quot;&quot;;</span>
-<span class="fc" id="L68">	private String technology = &quot;&quot;;</span>
-<span class="fc" id="L69">    private String capacity = &quot;&quot;;</span>
+<span class="fc" id="L62">	private String level = &quot;&quot;;</span>
+<span class="fc" id="L63">	private String voltage = &quot;&quot;;</span>
+<span class="fc" id="L64">	private String temperature = &quot;&quot;;</span>
+<span class="fc" id="L65">	private String status = &quot;&quot;;</span>
+<span class="fc" id="L66">	private String health = &quot;&quot;;</span>
+<span class="fc" id="L67">	private String technology = &quot;&quot;;</span>
 
 	/**
      * Indicates whether some other object is &quot;equal to&quot; this one
@@ -78,13 +73,13 @@ public class Battery extends Categories {
      */
 	@Override
 	public boolean equals(Object obj) {
-<span class="nc bnc" id="L78" title="All 2 branches missed.">		if (obj == null) {</span>
-<span class="nc" id="L79">			return false;</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">		if (obj == null) {</span>
+<span class="nc" id="L77">			return false;</span>
 		}
-<span class="nc bnc" id="L81" title="All 2 branches missed.">		if (getClass() != obj.getClass()) {</span>
-<span class="nc" id="L82">			return false;</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">		if (getClass() != obj.getClass()) {</span>
+<span class="nc" id="L80">			return false;</span>
 		}
-<span class="nc bnc" id="L84" title="All 2 branches missed.">		return (!super.equals(obj));</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">		return (!super.equals(obj));</span>
 	}
 
     /**
@@ -93,15 +88,14 @@ public class Battery extends Categories {
      */
 	@Override
 	public int hashCode() {
-<span class="nc" id="L93">		int hash = super.hashCode();</span>
-<span class="nc bnc" id="L94" title="All 2 branches missed.">		hash = 89 * hash + (this.level != null ? this.level.hashCode() : 0);</span>
-<span class="nc bnc" id="L95" title="All 2 branches missed.">		hash = 89 * hash + (this.voltage != null ? this.voltage.hashCode() : 0);</span>
-<span class="nc bnc" id="L96" title="All 2 branches missed.">		hash = 89 * hash + (this.temperature != null ? this.temperature.hashCode() : 0);</span>
-<span class="nc bnc" id="L97" title="All 2 branches missed.">		hash = 89 * hash + (this.status != null ? this.status.hashCode() : 0);</span>
-<span class="nc bnc" id="L98" title="All 2 branches missed.">		hash = 89 * hash + (this.health != null ? this.health.hashCode() : 0);</span>
-<span class="nc bnc" id="L99" title="All 2 branches missed.">		hash = 89 * hash + (this.technology != null ? this.technology.hashCode() : 0);</span>
-<span class="nc bnc" id="L100" title="All 2 branches missed.">		hash = 89 * hash + (this.capacity != null ? this.capacity.hashCode() : 0);</span>
-<span class="nc" id="L101">		return hash;</span>
+<span class="nc" id="L91">		int hash = super.hashCode();</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">		hash = 89 * hash + (this.level != null ? this.level.hashCode() : 0);</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">		hash = 89 * hash + (this.voltage != null ? this.voltage.hashCode() : 0);</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">		hash = 89 * hash + (this.temperature != null ? this.temperature.hashCode() : 0);</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">		hash = 89 * hash + (this.status != null ? this.status.hashCode() : 0);</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">		hash = 89 * hash + (this.health != null ? this.health.hashCode() : 0);</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">		hash = 89 * hash + (this.technology != null ? this.technology.hashCode() : 0);</span>
+<span class="nc" id="L98">		return hash;</span>
 	}
 
 	/**
@@ -109,121 +103,86 @@ public class Battery extends Categories {
 	 * @param xCtx Context where this class work
 	 */
 	public Battery(Context xCtx) {
-<span class="fc" id="L109">		super(xCtx);</span>
+<span class="fc" id="L106">		super(xCtx);</span>
 
 		// Trigger BroadcastReceiver
-<span class="fc" id="L112">		xCtx.registerReceiver(this.myBatteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));</span>
-<span class="fc" id="L113">		this.myBatteryReceiver.onReceive(xCtx, new Intent(Intent.ACTION_BATTERY_CHANGED));</span>
-<span class="fc" id="L114">	}</span>
-    /**
+<span class="fc" id="L109">		xCtx.registerReceiver(this.myBatteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));</span>
+<span class="fc" id="L110">		this.myBatteryReceiver.onReceive(xCtx, new Intent(Intent.ACTION_BATTERY_CHANGED));</span>
+<span class="fc" id="L111">	}</span>
+
+	/**
 	 *  This BroadcastReceiver load the information of the component
 	 */
-<span class="fc" id="L118">	private BroadcastReceiver myBatteryReceiver = new BroadcastReceiver() {</span>
+<span class="fc" id="L116">	private BroadcastReceiver myBatteryReceiver = new BroadcastReceiver() {</span>
 
 		@Override
 		public void onReceive(Context context, Intent intent) {
 
-<span class="pc bpc" id="L123" title="1 of 2 branches missed.">			if (intent.getAction().equals(Intent.ACTION_BATTERY_CHANGED)) {</span>
+<span class="pc bpc" id="L121" title="1 of 2 branches missed.">			if (intent.getAction().equals(Intent.ACTION_BATTERY_CHANGED)) {</span>
 
-<span class="fc" id="L125">				level = String.valueOf(intent.getIntExtra(&quot;level&quot;, 0)) + &quot;%&quot;;</span>
+<span class="fc" id="L123">				level = String.valueOf(intent.getIntExtra(&quot;level&quot;, 0)) + &quot;%&quot;;</span>
 
-<span class="fc" id="L127">				voltage = String</span>
-<span class="fc" id="L128">						.valueOf((float) intent.getIntExtra(&quot;voltage&quot;, 0) / 1000)</span>
+<span class="fc" id="L125">				voltage = String</span>
+<span class="fc" id="L126">						.valueOf((float) intent.getIntExtra(&quot;voltage&quot;, 0) / 1000)</span>
 						+ &quot;V&quot;;
 
-<span class="fc" id="L131">				temperature = String.valueOf((float) intent.getIntExtra(</span>
+<span class="fc" id="L129">				temperature = String.valueOf((float) intent.getIntExtra(</span>
 						&quot;temperature&quot;, 0) / 10)
 						+ &quot;c&quot;;
 
-<span class="fc" id="L135">				technology = intent.getStringExtra(&quot;technology&quot;);</span>
-
-<span class="fc" id="L137">                capacity = String.valueOf(getBatteryVoltage(context));</span>
+<span class="fc" id="L133">				technology = intent.getStringExtra(&quot;technology&quot;);</span>
 
 				// get battery status
-<span class="fc" id="L140">				int intstatus = intent.getIntExtra(&quot;status&quot;,</span>
+<span class="fc" id="L136">				int intstatus = intent.getIntExtra(&quot;status&quot;,</span>
 						BatteryManager.BATTERY_STATUS_UNKNOWN);
-<span class="fc bfc" id="L142" title="All 2 branches covered.">				if (intstatus == BatteryManager.BATTERY_STATUS_CHARGING) {</span>
-<span class="fc" id="L143">					status = &quot;Charging&quot;;</span>
-<span class="pc bpc" id="L144" title="1 of 2 branches missed.">				} else if (intstatus == BatteryManager.BATTERY_STATUS_DISCHARGING) {</span>
-<span class="nc" id="L145">					status = &quot;Dis-charging&quot;;</span>
-<span class="pc bpc" id="L146" title="1 of 2 branches missed.">				} else if (intstatus == BatteryManager.BATTERY_STATUS_NOT_CHARGING) {</span>
-<span class="nc" id="L147">					status = &quot;Not charging&quot;;</span>
-<span class="pc bpc" id="L148" title="1 of 2 branches missed.">				} else if (intstatus == BatteryManager.BATTERY_STATUS_FULL) {</span>
-<span class="nc" id="L149">					status = &quot;Full&quot;;</span>
+<span class="fc bfc" id="L138" title="All 2 branches covered.">				if (intstatus == BatteryManager.BATTERY_STATUS_CHARGING) {</span>
+<span class="fc" id="L139">					status = &quot;Charging&quot;;</span>
+<span class="pc bpc" id="L140" title="1 of 2 branches missed.">				} else if (intstatus == BatteryManager.BATTERY_STATUS_DISCHARGING) {</span>
+<span class="nc" id="L141">					status = &quot;Dis-charging&quot;;</span>
+<span class="pc bpc" id="L142" title="1 of 2 branches missed.">				} else if (intstatus == BatteryManager.BATTERY_STATUS_NOT_CHARGING) {</span>
+<span class="nc" id="L143">					status = &quot;Not charging&quot;;</span>
+<span class="pc bpc" id="L144" title="1 of 2 branches missed.">				} else if (intstatus == BatteryManager.BATTERY_STATUS_FULL) {</span>
+<span class="nc" id="L145">					status = &quot;Full&quot;;</span>
 				} else {
-<span class="fc" id="L151">					status = &quot;Unknown&quot;;</span>
+<span class="fc" id="L147">					status = &quot;Unknown&quot;;</span>
 				}
 
 				// get battery health
-<span class="fc" id="L155">				int inthealth = intent.getIntExtra(&quot;health&quot;,</span>
+<span class="fc" id="L151">				int inthealth = intent.getIntExtra(&quot;health&quot;,</span>
 						BatteryManager.BATTERY_HEALTH_UNKNOWN);
-<span class="fc bfc" id="L157" title="All 2 branches covered.">				if (inthealth == BatteryManager.BATTERY_HEALTH_GOOD) {</span>
-<span class="fc" id="L158">					health = &quot;Good&quot;;</span>
-<span class="pc bpc" id="L159" title="1 of 2 branches missed.">				} else if (inthealth == BatteryManager.BATTERY_HEALTH_OVERHEAT) {</span>
-<span class="nc" id="L160">					health = &quot;Over Heat&quot;;</span>
-<span class="pc bpc" id="L161" title="1 of 2 branches missed.">				} else if (inthealth == BatteryManager.BATTERY_HEALTH_DEAD) {</span>
-<span class="nc" id="L162">					health = &quot;Dead&quot;;</span>
-<span class="pc bpc" id="L163" title="1 of 2 branches missed.">				} else if (inthealth == BatteryManager.BATTERY_HEALTH_OVER_VOLTAGE) {</span>
-<span class="nc" id="L164">					health = &quot;Over Voltage&quot;;</span>
-<span class="pc bpc" id="L165" title="1 of 2 branches missed.">				} else if (inthealth == BatteryManager.BATTERY_HEALTH_UNSPECIFIED_FAILURE) {</span>
-<span class="nc" id="L166">					health = &quot;Unspecified Failure&quot;;</span>
+<span class="fc bfc" id="L153" title="All 2 branches covered.">				if (inthealth == BatteryManager.BATTERY_HEALTH_GOOD) {</span>
+<span class="fc" id="L154">					health = &quot;Good&quot;;</span>
+<span class="pc bpc" id="L155" title="1 of 2 branches missed.">				} else if (inthealth == BatteryManager.BATTERY_HEALTH_OVERHEAT) {</span>
+<span class="nc" id="L156">					health = &quot;Over Heat&quot;;</span>
+<span class="pc bpc" id="L157" title="1 of 2 branches missed.">				} else if (inthealth == BatteryManager.BATTERY_HEALTH_DEAD) {</span>
+<span class="nc" id="L158">					health = &quot;Dead&quot;;</span>
+<span class="pc bpc" id="L159" title="1 of 2 branches missed.">				} else if (inthealth == BatteryManager.BATTERY_HEALTH_OVER_VOLTAGE) {</span>
+<span class="nc" id="L160">					health = &quot;Over Voltage&quot;;</span>
+<span class="pc bpc" id="L161" title="1 of 2 branches missed.">				} else if (inthealth == BatteryManager.BATTERY_HEALTH_UNSPECIFIED_FAILURE) {</span>
+<span class="nc" id="L162">					health = &quot;Unspecified Failure&quot;;</span>
 				} else {
-<span class="fc" id="L168">					health = &quot;Unknown&quot;;</span>
+<span class="fc" id="L164">					health = &quot;Unknown&quot;;</span>
 				}
 
 				try {
-<span class="fc bfc" id="L172" title="All 2 branches covered.">                    if (!level.equals(&quot;0%&quot;)) {</span>
+<span class="fc bfc" id="L168" title="All 2 branches covered.">                    if (!level.equals(&quot;0%&quot;)) {</span>
                         // Load the information
-<span class="fc" id="L174">                        Category c = new Category(&quot;BATTERIES&quot;, &quot;batteries&quot;);</span>
-<span class="fc" id="L175">                        c.put(&quot;CHEMISTRY&quot;, new CategoryValue(technology, &quot;CHEMISTRY&quot;, &quot;chemistry&quot;));</span>
-<span class="fc" id="L176">                        c.put(&quot;TEMPERATURE&quot;, new CategoryValue(temperature, &quot;TEMPERATURE&quot;, &quot;temperature&quot;));</span>
-<span class="fc" id="L177">                        c.put(&quot;VOLTAGE&quot;, new CategoryValue(voltage, &quot;VOLTAGE&quot;, &quot;voltage&quot;));</span>
-<span class="fc" id="L178">                        c.put(&quot;LEVEL&quot;, new CategoryValue(level, &quot;LEVEL&quot;, &quot;level&quot;));</span>
-<span class="fc" id="L179">                        c.put(&quot;HEALTH&quot;, new CategoryValue(health, &quot;HEALTH&quot;, &quot;health&quot;));</span>
-<span class="fc" id="L180">                        c.put(&quot;STATUS&quot;, new CategoryValue(status, &quot;STATUS&quot;, &quot;status&quot;));</span>
-<span class="fc" id="L181">                        c.put(&quot;CAPACITY&quot;, new CategoryValue(capacity, &quot;CAPACITY&quot;, &quot;capacity&quot;));</span>
-<span class="fc" id="L182">                        Battery.this.add(c);</span>
+<span class="fc" id="L170">                        Category c = new Category(&quot;BATTERIES&quot;, &quot;batteries&quot;);</span>
+<span class="fc" id="L171">                        c.put(&quot;CHEMISTRY&quot;, new CategoryValue(technology, &quot;CHEMISTRY&quot;, &quot;chemistry&quot;));</span>
+<span class="fc" id="L172">                        c.put(&quot;TEMPERATURE&quot;, new CategoryValue(temperature, &quot;TEMPERATURE&quot;, &quot;temperature&quot;));</span>
+<span class="fc" id="L173">                        c.put(&quot;VOLTAGE&quot;, new CategoryValue(voltage, &quot;VOLTAGE&quot;, &quot;voltage&quot;));</span>
+<span class="fc" id="L174">                        c.put(&quot;LEVEL&quot;, new CategoryValue(level, &quot;LEVEL&quot;, &quot;level&quot;));</span>
+<span class="fc" id="L175">                        c.put(&quot;HEALTH&quot;, new CategoryValue(health, &quot;HEALTH&quot;, &quot;health&quot;));</span>
+<span class="fc" id="L176">                        c.put(&quot;STATUS&quot;, new CategoryValue(status, &quot;STATUS&quot;, &quot;status&quot;));</span>
+<span class="fc" id="L177">                        Battery.this.add(c);</span>
                     }
-<span class="nc" id="L184">                } catch (Exception ex) {</span>
-<span class="nc" id="L185">                    FILog.e(ex.getMessage());</span>
-<span class="fc" id="L186">                }</span>
+<span class="nc" id="L179">                } catch (Exception ex) {</span>
+<span class="nc" id="L180">                    FILog.e(ex.getMessage());</span>
+<span class="fc" id="L181">                }</span>
 
 			}
-<span class="fc" id="L189">		}</span>
+<span class="fc" id="L184">		}</span>
 
-    };
-
-    private long getBatteryVoltage(Context context) {
-<span class="pc bpc" id="L194" title="1 of 2 branches missed.">        if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.LOLLIPOP) {</span>
-<span class="nc" id="L195">            BatteryManager mBatteryManager = (BatteryManager) context.getSystemService(Context.BATTERY_SERVICE);</span>
-<span class="nc" id="L196">            Integer chargeCounter = mBatteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CHARGE_COUNTER);</span>
-<span class="nc" id="L197">            Integer capacity = mBatteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY);</span>
-
-<span class="nc bnc" id="L199" title="All 4 branches missed.">            if(chargeCounter == Integer.MIN_VALUE || capacity == Integer.MIN_VALUE)</span>
-<span class="nc" id="L200">                return 0;</span>
-
-<span class="nc" id="L202">            return (chargeCounter/capacity) *100;</span>
-        } else {
-            Object mPowerProfile;
-<span class="fc" id="L205">            double batteryCapacity = 0;</span>
-<span class="fc" id="L206">            final String POWER_PROFILE_CLASS = &quot;com.android.internal.os.PowerProfile&quot;;</span>
-
-            try {
-<span class="fc" id="L209">                mPowerProfile = Class.forName(POWER_PROFILE_CLASS)</span>
-<span class="fc" id="L210">                        .getConstructor(Context.class)</span>
-<span class="fc" id="L211">                        .newInstance(context);</span>
-
-<span class="fc" id="L213">                batteryCapacity = (double) Class</span>
-<span class="fc" id="L214">                        .forName(POWER_PROFILE_CLASS)</span>
-<span class="fc" id="L215">                        .getMethod(&quot;getBatteryCapacity&quot;)</span>
-<span class="fc" id="L216">                        .invoke(mPowerProfile);</span>
-
-<span class="nc" id="L218">            } catch (Exception e) {</span>
-<span class="nc" id="L219">                e.printStackTrace();</span>
-<span class="fc" id="L220">            }</span>
-
-<span class="fc" id="L222">            return (long) batteryCapacity;</span>
-        }
-    }
+	};
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span>Generated by the Android Gradle plugin 2.2.0</div></body></html>
