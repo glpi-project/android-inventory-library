@@ -140,7 +140,8 @@ public class InventoryTask {
                 "Jvm",
                 "Software",
                 "Usb",
-                "Battery"
+                "Battery",
+                "Controllers"
         };
 
         Class<Categories> catClass = null;
