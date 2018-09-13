@@ -32,14 +32,22 @@
 package org.flyve.inventory.categories;
 
 import android.content.Context;
+import android.os.Build;
 
 import org.flyve.inventory.FILog;
+import org.flyve.inventory.Utils;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileFilter;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.util.Map;
+import java.util.regex.Pattern;
 
 /**
  * This class get all the information of the Cpus
@@ -59,6 +67,8 @@ public class Cpus extends Categories {
     private static final long serialVersionUID = 4846706700566208666L;
     private static final String CPUINFO = "/proc/cpuinfo";
     private static final String CPUINFO_MAX_FREQ = "/sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_max_freq";
+    private String cpuFamily;
+    private String cpuManufacturer;
 
     /**
      * This constructor trigger get all the information about Cpus
@@ -68,20 +78,18 @@ public class Cpus extends Categories {
         super(xCtx);
 
         try {
+            cpuFamily = Utils.loadJSONFromAsset(xCtx, "cpu_family.json");
+            cpuManufacturer = Utils.loadJSONFromAsset(xCtx, "cpu_manufacturer.json");
+
             Category c = new Category("CPUS", "cpus");
-
-            // Cpu Name
-            String cpuName;
-
-            cpuName = getCpuName();
-
-            c.put("NAME", new CategoryValue(cpuName, "NAME", "name"));
-
-            // Cpu Frequency
-            String cpuFrequency;
-
-            cpuFrequency = getCpuFrequency();
-            c.put("SPEED", new CategoryValue(cpuFrequency, "SPEED", "cpuFrequency"));
+            c.put("ARCH", new CategoryValue(getArch(), "ARCH", "arch"));
+            c.put("CORE", new CategoryValue(getCPUCore(), "CORE", "core"));
+            c.put("FAMILYNAME", new CategoryValue(getFamilyName(), "FAMILYNAME", "familyname"));
+            c.put("FAMILYNUMBER", new CategoryValue(getFamilyNumber(), "FAMILYNUMBER", "familynumber"));
+            c.put("MANUFACTURER", new CategoryValue(getManufacturer(), "MANUFACTURER", "manufacturer"));
+            c.put("MODEL", new CategoryValue(getModel(), "MODEL", "model"));
+            c.put("NAME", new CategoryValue(getCpuName(), "NAME", "name"));
+            c.put("SPEED", new CategoryValue(getCpuFrequency(), "SPEED", "cpuFrequency"));
 
             this.add(c);
 
@@ -89,6 +97,144 @@ public class Cpus extends Categories {
             FILog.e(ex.getMessage());
         }
 
+    }
+
+    /**
+     * Get the CPU Architecture
+     *
+     * @return String with the Cpu Architecture
+     */
+    public String getArch() {
+        return System.getProperty("os.arch");
+    }
+
+    /**
+     * Get the CPU Number Core
+     *
+     * @return String with the Cpu Core
+     */
+    public String getCPUCore() {
+        if (Build.VERSION.SDK_INT >= 17) {
+            return String.valueOf(Runtime.getRuntime().availableProcessors());
+        } else {
+            return String.valueOf(getNumCoresOldPhones());
+        }
+    }
+
+    /**
+     * Gets the number of cores available in this device, across all processors.
+     *
+     * @return The number of cores, or 1 if failed to get result
+     */
+    private int getNumCoresOldPhones() {
+        class CpuFilter implements FileFilter {
+            @Override
+            public boolean accept(File pathname) {
+                return Pattern.matches("cpu[0-9]+", pathname.getName());
+            }
+        }
+
+        try {
+            File dir = new File("/sys/devices/system/cpu/");
+            File[] files = dir.listFiles(new CpuFilter());
+            //Return the number of cores (virtual CPU devices)
+            return files.length;
+        } catch (Exception e) {
+            //Default to return 1 core
+            return 1;
+        }
+    }
+
+    /**
+     * Get the CPU Family Name
+     *
+     * @return String with the Cpu Family Name
+     */
+    public String getFamilyName() {
+        String value = "N/A";
+        try {
+            Map<String, String> cpuInfo = Utils.getCatMapInfo("/proc/cpuinfo");
+            String shortFamily = Utils.getValueMapInfo(cpuInfo, "CPU part");
+            if (!"".equals(shortFamily)) {
+                JSONArray jr = new JSONArray(cpuFamily);
+                for (int i = 0; i < jr.length(); i++) {
+                    JSONObject c = jr.getJSONObject(i);
+                    String id = c.getString("id");
+                    if (id.startsWith(shortFamily)) {
+                        value = c.getString("name");
+                        break;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            FILog.e(e.getMessage());
+        }
+        return value;
+    }
+
+    /**
+     * Get the CPU Family Name
+     *
+     * @return String with the Cpu Family Name
+     */
+    public String getFamilyNumber() {
+        String value = "N/A";
+        try {
+            Map<String, String> cpuInfo = Utils.getCatMapInfo("/proc/cpuinfo");
+            String cpuFamily = Utils.getValueMapInfo(cpuInfo, "cpu family").trim();
+            if (!"".equals(cpuFamily)) {
+                value = cpuFamily;
+            }
+        } catch (Exception e) {
+            FILog.e(e.getMessage());
+        }
+        return value;
+    }
+
+    /**
+     * Get the CPU Manufacturer
+     *
+     * @return String with the Cpu Manufacturer
+     */
+    public String getManufacturer() {
+        String value = "N/A";
+        try {
+            String cpuPart = Utils.getSystemProperty("ro.board.platform").trim();
+            JSONArray jr = new JSONArray(cpuManufacturer);
+            for (int i = 0; i < jr.length(); i++) {
+                JSONObject c = jr.getJSONObject(i);
+                JSONArray ids = c.getJSONArray("id");
+                for (int j = 0; j < ids.length(); j++) {
+                    String idObject = ids.getString(j);
+                    if (cpuPart.toLowerCase().startsWith(idObject)) {
+                        value = c.getString("name");
+                        break;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            FILog.e(e.getMessage());
+        }
+        return value;
+    }
+
+    /**
+     * Get the CPU Model
+     *
+     * @return String with the Cpu Model
+     */
+    public String getModel() {
+        String value = "N/A";
+        try {
+            Map<String, String> cpuInfo = Utils.getCatMapInfo("/proc/cpuinfo");
+            String hardware = Utils.getValueMapInfo(cpuInfo, "Hardware").trim();
+            if (!"".equals(hardware)){
+                value = hardware;
+            }
+        } catch (FileNotFoundException e) {
+            FILog.e(e.getMessage());
+        }
+        return value;
     }
 
     /**
@@ -126,7 +272,7 @@ public class Cpus extends Categories {
      * @throws IOException return exception
      */
     public String getCpuFrequency() throws IOException {
-        String cpuFrequency = "";
+        String cpuFrequency = "N/A";
         RandomAccessFile reader = null;
         try {
             reader = new RandomAccessFile(CPUINFO_MAX_FREQ, "r");
