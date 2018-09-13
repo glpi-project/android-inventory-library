@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import static org.junit.Assert.assertNotEquals;
 
 /*
- *   Copyright © 2017 Teclib. All rights reserved.
+ *   Copyright © 2017-2018 Teclib. All rights reserved.
  *
  *   This file is part of flyve-mdm-android
  *
@@ -31,10 +31,11 @@ import static org.junit.Assert.assertNotEquals;
  * GNU General Public License for more details.
  * ------------------------------------------------------------------------------
  * @author    Ivan Del Pino
- * @date      13/9/18
+ * @email     idelpino@teclib.com
+ * @date      13/9/2018
  * @copyright Copyright © 2017 Teclib. All rights reserved.
  * @license   GPLv3 https://www.gnu.org/licenses/gpl-3.0.html
- * @link      https://github.com/flyve-mdm/flyve-mdm-android
+ * @link      https://github.com/flyve-mdm/android-inventory-library
  * @link      https://flyve-mdm.com
  * ------------------------------------------------------------------------------
  */
