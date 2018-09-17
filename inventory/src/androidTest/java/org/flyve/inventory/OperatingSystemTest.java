@@ -4,11 +4,9 @@ import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
-import org.flyve.inventory.categories.Controllers;
+import org.flyve.inventory.categories.OperatingSystem;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import java.util.ArrayList;
 
 import static org.junit.Assert.assertNotEquals;
 
@@ -32,7 +30,7 @@ import static org.junit.Assert.assertNotEquals;
  * ------------------------------------------------------------------------------
  * @author    Ivan Del Pino
  * @email     idelpino@teclib.com
- * @date      13/9/2018
+ * @date      17/9/2018
  * @copyright Copyright © 2017 Teclib. All rights reserved.
  * @license   GPLv3 https://www.gnu.org/licenses/gpl-3.0.html
  * @link      https://github.com/flyve-mdm/android-inventory-library
@@ -41,15 +39,27 @@ import static org.junit.Assert.assertNotEquals;
  */
 
 @RunWith(AndroidJUnit4.class)
-public class ControllersTest {
+public class OperatingSystemTest {
 
     Context appContext = InstrumentationRegistry.getTargetContext();
 
     @Test
-    public void getDriver() {
-        ArrayList<String> drivers = new Controllers(appContext).getDrivers();
-        for (String driver : drivers) {
-            assertNotEquals("", driver);
-        }
+    public void getBootTime() {
+        assertNotEquals("", new OperatingSystem(appContext).getBootTime());
+    }
+
+    @Test
+    public void getKernelVersion() {
+        assertNotEquals("", new OperatingSystem(appContext).getKernelVersion());
+    }
+
+    @Test
+    public void getTimeZoneShortName() {
+        assertNotEquals("", new OperatingSystem(appContext).getTimeZoneShortName());
+    }
+
+    @Test
+    public void getCurrentTimezoneOffset() {
+        assertNotEquals("", new OperatingSystem(appContext).getCurrentTimezoneOffset());
     }
 }

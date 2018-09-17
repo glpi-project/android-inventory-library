@@ -33,9 +33,10 @@ public class CategoryValue {
     private String xmlName;
     private Boolean isPrivate;
     private Boolean hasCDATA;
+    private Category category;
 
-    public CategoryValue(){
-
+    public CategoryValue(Category category){
+        this.category = category;
     }
 
     public CategoryValue(String value, String xmlName, String jsonName) {
@@ -78,6 +79,10 @@ public class CategoryValue {
         this.hasCDATA = hasCDATA;
     }
 
+    public CategoryValue(String value) {
+        this.value = value;
+    }
+
     public String getValue() {
         return value;
     }
@@ -96,5 +101,9 @@ public class CategoryValue {
 
     public Boolean hasCDATA() {
         return hasCDATA;
+    }
+
+    public Category getCategory() {
+        return category;
     }
 }
