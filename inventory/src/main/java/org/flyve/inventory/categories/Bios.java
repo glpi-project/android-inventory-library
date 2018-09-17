@@ -35,13 +35,13 @@ import android.content.Context;
 import android.os.Build;
 
 import org.flyve.inventory.FILog;
+import org.flyve.inventory.Utils;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Method;
-import java.text.SimpleDateFormat;
 
 /**
  * This class get all the information of the Bios
@@ -91,7 +91,13 @@ public class Bios extends Categories {
 			c.put("SMODEL", new CategoryValue(getMotherBoardModel(), "SMODEL", "motherBoardModel"));
 
 			// Mother Board Serial Number
-			c.put("SSN", new CategoryValue(getMotherBoardSerialNumber(), "SSN", "motherBoardSerialNumber"));
+			c.put("SSN", new CategoryValue(getSystemSerialNumber(xCtx), "SSN", "motherBoardSerialNumber"));
+
+			// Build Tag
+			c.put("ASSETTAG", new CategoryValue(getBuildTag(), "ASSETTAG", "assettag"));
+
+			// Build Tag
+			c.put("MSN", new CategoryValue(getMotherBoardSerial(), "MSN", "msn"));
 
 			this.add(c);
 		} catch (Exception ex) {
@@ -104,8 +110,8 @@ public class Bios extends Categories {
 	 * @return string with the date in simple format
 	 */
 	public String getBiosDate() {
-		SimpleDateFormat format = new SimpleDateFormat("MM/dd/yy");
-		return format.format(Build.TIME);
+		String dateInfo = Utils.getCatInfo("/sys/devices/virtual/dmi/id/bios_date");
+		return dateInfo != null ? dateInfo : "N/A";
 	}
 
 	/**
@@ -121,7 +127,8 @@ public class Bios extends Categories {
 	 * @return string with the bootloader version
 	 */
 	public String getBiosVersion() {
-		return Build.BOOTLOADER;
+		String dateInfo = Utils.getCatInfo("/sys/devices/virtual/dmi/id/bios_version");
+		return dateInfo != null ? dateInfo : "N/A";
 	}
 
 	/**
@@ -141,16 +148,34 @@ public class Bios extends Categories {
 	}
 
 	/**
-	 * Get the Mother Board serial number
-	 * @return string with the serial number
+	 * Get the Build Tag
+	 * @return string with the model
 	 */
-	public String getMotherBoardSerialNumber() {
-		String motherBoardSerialNumber = "Unknown";
+	public String getBuildTag() {
+		return Build.TAGS;
+	}
+
+	/**
+	 * Get the serial mother board
+	 * @return string with the serial mother board
+	 */
+	public String getMotherBoardSerial() {
+		String dateInfo = Utils.getCatInfo("/sys/devices/virtual/dmi/id/board_serial");
+		return dateInfo != null ? dateInfo : "N/A";
+	}
+
+	/**
+	 * Get the System serial number
+	 * @return string with the serial number
+	 * @param xCtx
+	 */
+	public String getSystemSerialNumber(Context xCtx) {
+		String systemSerialNumber = "Unknown";
 
 		if (!Build.SERIAL.equals(Build.UNKNOWN)) {
 			// Mother Board Serial Number
 			// Since in 2.3.3 a.k.a gingerbread
-			motherBoardSerialNumber = Build.SERIAL;
+			systemSerialNumber = Build.SERIAL;
 		} else {
 			//Try to get the serial by reading /proc/cpuinfo
 			String serial = "";
@@ -161,17 +186,17 @@ public class Bios extends Categories {
 			}
 
 			if (!serial.equals("") && !serial.equals("0000000000000000")) {
-				motherBoardSerialNumber = serial;
+				systemSerialNumber = serial;
 			} else {
 				//Last try, use the hidden API!
 				serial = getSerialFromPrivateAPI();
 				if (!serial.equals("")) {
-					motherBoardSerialNumber = serial;
+					systemSerialNumber = serial;
 				}
 			}
 		}
 
-		return motherBoardSerialNumber;
+		return systemSerialNumber;
 	}
 
 	/**
