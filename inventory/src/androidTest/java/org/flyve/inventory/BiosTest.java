@@ -71,9 +71,21 @@ public class BiosTest {
     }
 
     @Test
-    public void getMother_board_serial_number() throws Exception {
+    public void getSystemSerialNumber() throws Exception {
         Bios bios = new Bios(appContext);
-        assertNotEquals("", bios.getMotherBoardSerialNumber() );
+        assertNotEquals("", bios.getSystemSerialNumber(appContext) );
+    }
+
+    @Test
+    public void getMotherBoardSerial() throws Exception {
+        Bios bios = new Bios(appContext);
+        assertNotEquals("", bios.getMotherBoardSerial() );
+    }
+
+    @Test
+    public void getTag() throws Exception {
+        Bios bios = new Bios(appContext);
+        assertNotEquals("", bios.getBuildTag() );
     }
 
 }
