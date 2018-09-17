@@ -1,7 +1,32 @@
----
-layout: coverage
----
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../resources/report.css" type="text/css"/><link rel="shortcut icon" href="../resources/report.gif" type="image/gif"/><title>SysBusUsbDeviceFactory.java</title><link rel="stylesheet" href="../resources/prettify.css" type="text/css"/><script type="text/javascript" src="../resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory.usbManager</a> &gt; <span class="el_source">SysBusUsbDeviceFactory.java</span></div><h1>SysBusUsbDeviceFactory.java</h1><pre class="source lang-java linenums">package  org.flyve.inventory.usbManager;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../resources/report.css" type="text/css"/><link rel="shortcut icon" href="../resources/report.gif" type="image/gif"/><title>SysBusUsbDeviceFactory.java</title><link rel="stylesheet" href="../resources/prettify.css" type="text/css"/><script type="text/javascript" src="../resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory.usbManager</a> &gt; <span class="el_source">SysBusUsbDeviceFactory.java</span></div><h1>SysBusUsbDeviceFactory.java</h1><pre class="source lang-java linenums">/**
+ *  LICENSE
+ * 
+ *  This file is part of Flyve MDM Inventory Library for Android.
+ *
+ *  Inventory Library for Android is a subproject of Flyve MDM.
+ *  Flyve MDM is a mobile device management software.
+ * 
+ *  Flyve MDM is free software: you can redistribute it and/or
+ *  modify it under the terms of the GNU General Public License
+ *  as published by the Free Software Foundation; either version 3
+ *  of the License, or (at your option) any later version.
+ *
+ *  Flyve MDM is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *  ---------------------------------------------------------------------
+ *  @author    Rafael Hernandez - &lt;rhernandez@teclib.com&gt;
+ *  @author    Ivan del Pino    - &lt;idelpino@teclib.com&gt;
+ *  @copyright Copyright Teclib. All rights reserved.
+ *  @license   GPLv3 https://www.gnu.org/licenses/gpl-3.0.html
+ *  @link      https://github.com/flyve-mdm/android-inventory-library
+ *  @link      http://flyve.org/android-inventory-library/
+ *  @link      https://flyve-mdm.com
+ *  ---------------------------------------------------------------------
+ */
+
+package  org.flyve.inventory.usbManager;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -14,135 +39,135 @@ class SysBusUsbDeviceFactory {
     private static class ContentsReader {
         private final String basePath;
 
-<span class="nc" id="L14">        ContentsReader(String basePath) {</span>
-<span class="nc" id="L15">            this.basePath = basePath;</span>
-<span class="nc" id="L16">        }</span>
+<span class="nc" id="L42">        ContentsReader(String basePath) {</span>
+<span class="nc" id="L43">            this.basePath = basePath;</span>
+<span class="nc" id="L44">        }</span>
 
         private String read(UsbProperty property) {
             IOException e;
             FileNotFoundException e2;
             Throwable th;
-<span class="nc" id="L22">            File file = new File(this.basePath + property.getFileName());</span>
-<span class="nc" id="L23">            StringBuilder fileContents = new StringBuilder(1000);</span>
-<span class="nc bnc" id="L24" title="All 4 branches missed.">            if (file.exists() &amp;&amp; !file.isDirectory()) {</span>
-<span class="nc" id="L25">                BufferedReader reader = null;</span>
+<span class="nc" id="L50">            File file = new File(this.basePath + property.getFileName());</span>
+<span class="nc" id="L51">            StringBuilder fileContents = new StringBuilder(1000);</span>
+<span class="nc bnc" id="L52" title="All 4 branches missed.">            if (file.exists() &amp;&amp; !file.isDirectory()) {</span>
+<span class="nc" id="L53">                BufferedReader reader = null;</span>
                 try {
-<span class="nc" id="L27">                    BufferedReader reader2 = new BufferedReader(new FileReader(file));</span>
+<span class="nc" id="L55">                    BufferedReader reader2 = new BufferedReader(new FileReader(file));</span>
                     try {
-<span class="nc" id="L29">                        char[] buf = new char[1024];</span>
+<span class="nc" id="L57">                        char[] buf = new char[1024];</span>
                         while (true) {
-<span class="nc" id="L31">                            int numRead = reader2.read(buf);</span>
-<span class="nc bnc" id="L32" title="All 2 branches missed.">                            if (numRead == -1) {</span>
-<span class="nc" id="L33">                                break;</span>
+<span class="nc" id="L59">                            int numRead = reader2.read(buf);</span>
+<span class="nc bnc" id="L60" title="All 2 branches missed.">                            if (numRead == -1) {</span>
+<span class="nc" id="L61">                                break;</span>
                             }
-<span class="nc" id="L35">                            fileContents.append(String.valueOf(buf, 0, numRead));</span>
-<span class="nc" id="L36">                            buf = new char[1024];</span>
-<span class="nc" id="L37">                        }</span>
-<span class="nc bnc" id="L38" title="All 2 branches missed.">                        if (reader2 != null) {</span>
+<span class="nc" id="L63">                            fileContents.append(String.valueOf(buf, 0, numRead));</span>
+<span class="nc" id="L64">                            buf = new char[1024];</span>
+<span class="nc" id="L65">                        }</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">                        if (reader2 != null) {</span>
                             try {
-<span class="nc" id="L40">                                reader2.close();</span>
-<span class="nc" id="L41">                            } catch (IOException e3) {</span>
-<span class="nc" id="L42">                                e3.printStackTrace();</span>
-<span class="nc" id="L43">                            }</span>
+<span class="nc" id="L68">                                reader2.close();</span>
+<span class="nc" id="L69">                            } catch (IOException e3) {</span>
+<span class="nc" id="L70">                                e3.printStackTrace();</span>
+<span class="nc" id="L71">                            }</span>
                         }
-<span class="nc" id="L45">                    } catch (FileNotFoundException e4) {</span>
-<span class="nc" id="L46">                        e2 = e4;</span>
-<span class="nc" id="L47">                        reader = reader2;</span>
+<span class="nc" id="L73">                    } catch (FileNotFoundException e4) {</span>
+<span class="nc" id="L74">                        e2 = e4;</span>
+<span class="nc" id="L75">                        reader = reader2;</span>
                         try {
-<span class="nc" id="L49">                            fileContents.setLength(0);</span>
-<span class="nc" id="L50">                            e2.printStackTrace();</span>
-<span class="nc bnc" id="L51" title="All 2 branches missed.">                            if (reader != null) {</span>
+<span class="nc" id="L77">                            fileContents.setLength(0);</span>
+<span class="nc" id="L78">                            e2.printStackTrace();</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">                            if (reader != null) {</span>
                                 try {
-<span class="nc" id="L53">                                    reader.close();</span>
-<span class="nc" id="L54">                                } catch (IOException e32) {</span>
-<span class="nc" id="L55">                                    e32.printStackTrace();</span>
-<span class="nc" id="L56">                                }</span>
+<span class="nc" id="L81">                                    reader.close();</span>
+<span class="nc" id="L82">                                } catch (IOException e32) {</span>
+<span class="nc" id="L83">                                    e32.printStackTrace();</span>
+<span class="nc" id="L84">                                }</span>
                             }
-<span class="nc" id="L58">                            return fileContents.toString().trim();</span>
-<span class="nc" id="L59">                        } catch (Throwable th2) {</span>
-<span class="nc bnc" id="L60" title="All 2 branches missed.">                            if (reader != null) {</span>
+<span class="nc" id="L86">                            return fileContents.toString().trim();</span>
+<span class="nc" id="L87">                        } catch (Throwable th2) {</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">                            if (reader != null) {</span>
                                 try {
-<span class="nc" id="L62">                                    reader.close();</span>
-<span class="nc" id="L63">                                } catch (IOException e322) {</span>
-<span class="nc" id="L64">                                    e322.printStackTrace();</span>
-<span class="nc" id="L65">                                }</span>
+<span class="nc" id="L90">                                    reader.close();</span>
+<span class="nc" id="L91">                                } catch (IOException e322) {</span>
+<span class="nc" id="L92">                                    e322.printStackTrace();</span>
+<span class="nc" id="L93">                                }</span>
                             }
-<span class="nc" id="L67">                            throw th2;</span>
+<span class="nc" id="L95">                            throw th2;</span>
                         }
-<span class="nc" id="L69">                    } catch (IOException e5) {</span>
-<span class="nc" id="L70">                        reader = reader2;</span>
-<span class="nc" id="L71">                        fileContents.setLength(0);</span>
-<span class="nc" id="L72">                        e5.printStackTrace();</span>
-<span class="nc bnc" id="L73" title="All 2 branches missed.">                        if (reader != null) {</span>
+<span class="nc" id="L97">                    } catch (IOException e5) {</span>
+<span class="nc" id="L98">                        reader = reader2;</span>
+<span class="nc" id="L99">                        fileContents.setLength(0);</span>
+<span class="nc" id="L100">                        e5.printStackTrace();</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">                        if (reader != null) {</span>
                             try {
-<span class="nc" id="L75">                                reader.close();</span>
-<span class="nc" id="L76">                            } catch (IOException e3222) {</span>
-<span class="nc" id="L77">                                e3222.printStackTrace();</span>
-<span class="nc" id="L78">                            }</span>
+<span class="nc" id="L103">                                reader.close();</span>
+<span class="nc" id="L104">                            } catch (IOException e3222) {</span>
+<span class="nc" id="L105">                                e3222.printStackTrace();</span>
+<span class="nc" id="L106">                            }</span>
                         }
-<span class="nc" id="L80">                        return fileContents.toString().trim();</span>
-<span class="nc" id="L81">                    } catch (Throwable th3) {</span>
-<span class="nc" id="L82">                        reader = reader2;</span>
-<span class="nc bnc" id="L83" title="All 2 branches missed.">                        if (reader != null) {</span>
-<span class="nc" id="L84">                            reader.close();</span>
+<span class="nc" id="L108">                        return fileContents.toString().trim();</span>
+<span class="nc" id="L109">                    } catch (Throwable th3) {</span>
+<span class="nc" id="L110">                        reader = reader2;</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">                        if (reader != null) {</span>
+<span class="nc" id="L112">                            reader.close();</span>
                         }
-<span class="nc" id="L86">                        throw th3;</span>
-<span class="nc" id="L87">                    }</span>
-<span class="nc" id="L88">                } catch (FileNotFoundException e6) {</span>
-<span class="nc" id="L89">                    e2 = e6;</span>
-<span class="nc" id="L90">                    fileContents.setLength(0);</span>
-<span class="nc" id="L91">                    e2.printStackTrace();</span>
-<span class="nc bnc" id="L92" title="All 2 branches missed.">                    if (reader != null) {</span>
+<span class="nc" id="L114">                        throw th3;</span>
+<span class="nc" id="L115">                    }</span>
+<span class="nc" id="L116">                } catch (FileNotFoundException e6) {</span>
+<span class="nc" id="L117">                    e2 = e6;</span>
+<span class="nc" id="L118">                    fileContents.setLength(0);</span>
+<span class="nc" id="L119">                    e2.printStackTrace();</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">                    if (reader != null) {</span>
                         try {
-<span class="nc" id="L94">                            reader.close();</span>
-<span class="nc" id="L95">                        } catch (IOException e1) {</span>
-<span class="nc" id="L96">                            e1.printStackTrace();</span>
-<span class="nc" id="L97">                        }</span>
+<span class="nc" id="L122">                            reader.close();</span>
+<span class="nc" id="L123">                        } catch (IOException e1) {</span>
+<span class="nc" id="L124">                            e1.printStackTrace();</span>
+<span class="nc" id="L125">                        }</span>
                     }
-<span class="nc" id="L99">                    return fileContents.toString().trim();</span>
-<span class="nc" id="L100">                } catch (IOException e7) {</span>
-<span class="nc" id="L101">                    fileContents.setLength(0);</span>
-<span class="nc" id="L102">                    e7.printStackTrace();</span>
-<span class="nc bnc" id="L103" title="All 2 branches missed.">                    if (reader != null) {</span>
+<span class="nc" id="L127">                    return fileContents.toString().trim();</span>
+<span class="nc" id="L128">                } catch (IOException e7) {</span>
+<span class="nc" id="L129">                    fileContents.setLength(0);</span>
+<span class="nc" id="L130">                    e7.printStackTrace();</span>
+<span class="nc bnc" id="L131" title="All 2 branches missed.">                    if (reader != null) {</span>
                         try {
-<span class="nc" id="L105">                            reader.close();</span>
-<span class="nc" id="L106">                        } catch (IOException e1) {</span>
-<span class="nc" id="L107">                            e1.printStackTrace();</span>
-<span class="nc" id="L108">                        }</span>
+<span class="nc" id="L133">                            reader.close();</span>
+<span class="nc" id="L134">                        } catch (IOException e1) {</span>
+<span class="nc" id="L135">                            e1.printStackTrace();</span>
+<span class="nc" id="L136">                        }</span>
                     }
-<span class="nc" id="L110">                    return fileContents.toString().trim();</span>
-<span class="nc" id="L111">                }</span>
+<span class="nc" id="L138">                    return fileContents.toString().trim();</span>
+<span class="nc" id="L139">                }</span>
             }
-<span class="nc" id="L113">            return fileContents.toString().trim();</span>
+<span class="nc" id="L141">            return fileContents.toString().trim();</span>
         }
     }
 
-<span class="fc" id="L117">    SysBusUsbDeviceFactory() {</span>
-<span class="fc" id="L118">    }</span>
+<span class="fc" id="L145">    SysBusUsbDeviceFactory() {</span>
+<span class="fc" id="L146">    }</span>
 
     public SysBusUsbDevice create(File usbDeviceDir) {
-<span class="nc" id="L121">        String devicePath = usbDeviceDir.getAbsolutePath() + File.separator;</span>
-<span class="nc" id="L122">        ContentsReader reader = new ContentsReader(devicePath);</span>
-<span class="nc" id="L123">        String busNumber = reader.read(UsbProperty.BUS_NUMBER);</span>
-<span class="nc" id="L124">        String deviceNumber = reader.read(UsbProperty.DEVICE_NUMBER);</span>
-<span class="nc bnc" id="L125" title="All 4 branches missed.">        if (busNumber.isEmpty() || deviceNumber.isEmpty()) {</span>
-<span class="nc" id="L126">            return null;</span>
+<span class="nc" id="L149">        String devicePath = usbDeviceDir.getAbsolutePath() + File.separator;</span>
+<span class="nc" id="L150">        ContentsReader reader = new ContentsReader(devicePath);</span>
+<span class="nc" id="L151">        String busNumber = reader.read(UsbProperty.BUS_NUMBER);</span>
+<span class="nc" id="L152">        String deviceNumber = reader.read(UsbProperty.DEVICE_NUMBER);</span>
+<span class="nc bnc" id="L153" title="All 4 branches missed.">        if (busNumber.isEmpty() || deviceNumber.isEmpty()) {</span>
+<span class="nc" id="L154">            return null;</span>
         }
-<span class="nc" id="L128">        return new SysBusUsbDevice.Builder().withDevicePath(devicePath)</span>
-<span class="nc" id="L129">                .withBusNumber(busNumber)</span>
-<span class="nc" id="L130">                .withDeviceNumber(deviceNumber)</span>
-<span class="nc" id="L131">                .withServiceClass(reader.read(UsbProperty.DEVICE_CLASS))</span>
-<span class="nc" id="L132">                .withDeviceProtocol(reader.read(UsbProperty.DEVICE_PROTOCOL))</span>
-<span class="nc" id="L133">                .withDeviceSubClass(reader.read(UsbProperty.DEVICE_SUBCLASS))</span>
-<span class="nc" id="L134">                .withMaxPower(reader.read(UsbProperty.MAX_POWER))</span>
-<span class="nc" id="L135">                .withPid(reader.read(UsbProperty.PID))</span>
-<span class="nc" id="L136">                .withReportedProductName(reader.read(UsbProperty.PRODUCT))</span>
-<span class="nc" id="L137">                .withReportedVendorName(reader.read(UsbProperty.MANUFACTURER))</span>
-<span class="nc" id="L138">                .withSerialNumber(reader.read(UsbProperty.SERIAL))</span>
-<span class="nc" id="L139">                .withSpeed(reader.read(UsbProperty.SPEED))</span>
-<span class="nc" id="L140">                .withVid(reader.read(UsbProperty.VID))</span>
-<span class="nc" id="L141">                .withUsbVersion(reader.read(UsbProperty.VERSION))</span>
-<span class="nc" id="L142">                .build();</span>
+<span class="nc" id="L156">        return new SysBusUsbDevice.Builder().withDevicePath(devicePath)</span>
+<span class="nc" id="L157">                .withBusNumber(busNumber)</span>
+<span class="nc" id="L158">                .withDeviceNumber(deviceNumber)</span>
+<span class="nc" id="L159">                .withServiceClass(reader.read(UsbProperty.DEVICE_CLASS))</span>
+<span class="nc" id="L160">                .withDeviceProtocol(reader.read(UsbProperty.DEVICE_PROTOCOL))</span>
+<span class="nc" id="L161">                .withDeviceSubClass(reader.read(UsbProperty.DEVICE_SUBCLASS))</span>
+<span class="nc" id="L162">                .withMaxPower(reader.read(UsbProperty.MAX_POWER))</span>
+<span class="nc" id="L163">                .withPid(reader.read(UsbProperty.PID))</span>
+<span class="nc" id="L164">                .withReportedProductName(reader.read(UsbProperty.PRODUCT))</span>
+<span class="nc" id="L165">                .withReportedVendorName(reader.read(UsbProperty.MANUFACTURER))</span>
+<span class="nc" id="L166">                .withSerialNumber(reader.read(UsbProperty.SERIAL))</span>
+<span class="nc" id="L167">                .withSpeed(reader.read(UsbProperty.SPEED))</span>
+<span class="nc" id="L168">                .withVid(reader.read(UsbProperty.VID))</span>
+<span class="nc" id="L169">                .withUsbVersion(reader.read(UsbProperty.VERSION))</span>
+<span class="nc" id="L170">                .build();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span>Generated by the Android Gradle plugin 2.2.0</div></body></html>

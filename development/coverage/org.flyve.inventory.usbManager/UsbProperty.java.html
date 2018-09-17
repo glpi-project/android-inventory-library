@@ -1,42 +1,67 @@
----
-layout: coverage
----
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../resources/report.css" type="text/css"/><link rel="shortcut icon" href="../resources/report.gif" type="image/gif"/><title>UsbProperty.java</title><link rel="stylesheet" href="../resources/prettify.css" type="text/css"/><script type="text/javascript" src="../resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory.usbManager</a> &gt; <span class="el_source">UsbProperty.java</span></div><h1>UsbProperty.java</h1><pre class="source lang-java linenums">package  org.flyve.inventory.usbManager;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../resources/report.css" type="text/css"/><link rel="shortcut icon" href="../resources/report.gif" type="image/gif"/><title>UsbProperty.java</title><link rel="stylesheet" href="../resources/prettify.css" type="text/css"/><script type="text/javascript" src="../resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory.usbManager</a> &gt; <span class="el_source">UsbProperty.java</span></div><h1>UsbProperty.java</h1><pre class="source lang-java linenums">/**
+ *  LICENSE
+ * 
+ *  This file is part of Flyve MDM Inventory Library for Android.
+ *
+ *  Inventory Library for Android is a subproject of Flyve MDM.
+ *  Flyve MDM is a mobile device management software.
+ * 
+ *  Flyve MDM is free software: you can redistribute it and/or
+ *  modify it under the terms of the GNU General Public License
+ *  as published by the Free Software Foundation; either version 3
+ *  of the License, or (at your option) any later version.
+ *
+ *  Flyve MDM is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *  ---------------------------------------------------------------------
+ *  @author    Rafael Hernandez - &lt;rhernandez@teclib.com&gt;
+ *  @author    Ivan del Pino    - &lt;idelpino@teclib.com&gt;
+ *  @copyright Copyright Teclib. All rights reserved.
+ *  @license   GPLv3 https://www.gnu.org/licenses/gpl-3.0.html
+ *  @link      https://github.com/flyve-mdm/android-inventory-library
+ *  @link      http://flyve.org/android-inventory-library/
+ *  @link      https://flyve-mdm.com
+ *  ---------------------------------------------------------------------
+ */
 
-<span class="nc" id="L3">public enum UsbProperty {</span>
-<span class="nc" id="L4">    PID(&quot;idProduct&quot;),</span>
-<span class="nc" id="L5">    VID(&quot;idVendor&quot;),</span>
-<span class="nc" id="L6">    MANUFACTURER(&quot;manufacturer&quot;),</span>
-<span class="nc" id="L7">    PRODUCT(&quot;product&quot;),</span>
-<span class="nc" id="L8">    VERSION(&quot;version&quot;),</span>
-<span class="nc" id="L9">    DEVICE_CLASS(&quot;bDeviceClass&quot;),</span>
-<span class="nc" id="L10">    DEVICE_SUBCLASS(&quot;bDeviceSubClass&quot;),</span>
-<span class="nc" id="L11">    DEVICE_NUMBER(&quot;devnum&quot;),</span>
-<span class="nc" id="L12">    DEVICE_PROTOCOL(&quot;bDeviceProtocol&quot;),</span>
-<span class="nc" id="L13">    MAX_POWER(&quot;bMaxPower&quot;),</span>
-<span class="nc" id="L14">    BUS_NUMBER(&quot;busnum&quot;),</span>
-<span class="nc" id="L15">    SERIAL(&quot;serial&quot;),</span>
-<span class="nc" id="L16">    SPEED(&quot;speed&quot;),</span>
-<span class="nc" id="L17">    SUPPORTS_AUTOSUSPEND(&quot;supports_autosuspend&quot;),</span>
-<span class="nc" id="L18">    AUTHORIZED(&quot;authorized&quot;),</span>
-<span class="nc" id="L19">    MODALIAS(&quot;modalias&quot;),</span>
-<span class="nc" id="L20">    ALTERNATIVE_SETTING(&quot;bAlternateSetting&quot;),</span>
-<span class="nc" id="L21">    NUM_INTERFACES(&quot;bNumInterfaces&quot;),</span>
-<span class="nc" id="L22">    NUM_ENDPOINTS(&quot;bNumEndpoints&quot;),</span>
-<span class="nc" id="L23">    INTERFACE(&quot;interface&quot;),</span>
-<span class="nc" id="L24">    INTERFACE_CLASS(&quot;bInterfaceClass&quot;),</span>
-<span class="nc" id="L25">    INTERFACE_NUMBER(&quot;bInterfaceNumber&quot;),</span>
-<span class="nc" id="L26">    INTERFACE_PROTOCOL(&quot;bInterfaceProtocol&quot;),</span>
-<span class="nc" id="L27">    INTERFACE_SUBCLASS(&quot;bInterfaceSubClass&quot;);</span>
+package  org.flyve.inventory.usbManager;
+
+<span class="nc" id="L31">public enum UsbProperty {</span>
+<span class="nc" id="L32">    PID(&quot;idProduct&quot;),</span>
+<span class="nc" id="L33">    VID(&quot;idVendor&quot;),</span>
+<span class="nc" id="L34">    MANUFACTURER(&quot;manufacturer&quot;),</span>
+<span class="nc" id="L35">    PRODUCT(&quot;product&quot;),</span>
+<span class="nc" id="L36">    VERSION(&quot;version&quot;),</span>
+<span class="nc" id="L37">    DEVICE_CLASS(&quot;bDeviceClass&quot;),</span>
+<span class="nc" id="L38">    DEVICE_SUBCLASS(&quot;bDeviceSubClass&quot;),</span>
+<span class="nc" id="L39">    DEVICE_NUMBER(&quot;devnum&quot;),</span>
+<span class="nc" id="L40">    DEVICE_PROTOCOL(&quot;bDeviceProtocol&quot;),</span>
+<span class="nc" id="L41">    MAX_POWER(&quot;bMaxPower&quot;),</span>
+<span class="nc" id="L42">    BUS_NUMBER(&quot;busnum&quot;),</span>
+<span class="nc" id="L43">    SERIAL(&quot;serial&quot;),</span>
+<span class="nc" id="L44">    SPEED(&quot;speed&quot;),</span>
+<span class="nc" id="L45">    SUPPORTS_AUTOSUSPEND(&quot;supports_autosuspend&quot;),</span>
+<span class="nc" id="L46">    AUTHORIZED(&quot;authorized&quot;),</span>
+<span class="nc" id="L47">    MODALIAS(&quot;modalias&quot;),</span>
+<span class="nc" id="L48">    ALTERNATIVE_SETTING(&quot;bAlternateSetting&quot;),</span>
+<span class="nc" id="L49">    NUM_INTERFACES(&quot;bNumInterfaces&quot;),</span>
+<span class="nc" id="L50">    NUM_ENDPOINTS(&quot;bNumEndpoints&quot;),</span>
+<span class="nc" id="L51">    INTERFACE(&quot;interface&quot;),</span>
+<span class="nc" id="L52">    INTERFACE_CLASS(&quot;bInterfaceClass&quot;),</span>
+<span class="nc" id="L53">    INTERFACE_NUMBER(&quot;bInterfaceNumber&quot;),</span>
+<span class="nc" id="L54">    INTERFACE_PROTOCOL(&quot;bInterfaceProtocol&quot;),</span>
+<span class="nc" id="L55">    INTERFACE_SUBCLASS(&quot;bInterfaceSubClass&quot;);</span>
     
     private final String fileName;
 
-<span class="nc" id="L31">    private UsbProperty(String fileName) {</span>
-<span class="nc" id="L32">        this.fileName = fileName;</span>
-<span class="nc" id="L33">    }</span>
+<span class="nc" id="L59">    private UsbProperty(String fileName) {</span>
+<span class="nc" id="L60">        this.fileName = fileName;</span>
+<span class="nc" id="L61">    }</span>
 
     public String getFileName() {
-<span class="nc" id="L36">        return this.fileName;</span>
+<span class="nc" id="L64">        return this.fileName;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span>Generated by the Android Gradle plugin 2.2.0</div></body></html>

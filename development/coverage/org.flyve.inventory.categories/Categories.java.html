@@ -1,35 +1,29 @@
----
-layout: coverage
----
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../resources/report.css" type="text/css"/><link rel="shortcut icon" href="../resources/report.gif" type="image/gif"/><title>Categories.java</title><link rel="stylesheet" href="../resources/prettify.css" type="text/css"/><script type="text/javascript" src="../resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory.categories</a> &gt; <span class="el_source">Categories.java</span></div><h1>Categories.java</h1><pre class="source lang-java linenums">/**
+ *  LICENSE
+ * 
+ *  This file is part of Flyve MDM Inventory Library for Android.
  *
- * Copyright 2017 Teclib.
- * Copyright 2010-2016 by the FusionInventory Development
+ *  Inventory Library for Android is a subproject of Flyve MDM.
+ *  Flyve MDM is a mobile device management software.
+ * 
+ *  Flyve MDM is free software: you can redistribute it and/or
+ *  modify it under the terms of the GNU General Public License
+ *  as published by the Free Software Foundation; either version 3
+ *  of the License, or (at your option) any later version.
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-android
- *
- * ------------------------------------------------------------------------
- *
- * LICENSE
- *
- * This file is part of FusionInventory project.
- *
- * FusionInventory is free software: you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- *
- * FusionInventory is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * ------------------------------------------------------------------------------
- * @update    07/06/2017
- * @license   GPLv2 https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * @link      https://github.com/fusioninventory/fusioninventory-android
- * @link      http://www.fusioninventory.org/
- * ------------------------------------------------------------------------------
+ *  Flyve MDM is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *  ---------------------------------------------------------------------
+ *  @author    Rafael Hernandez - &lt;rhernandez@teclib.com&gt;
+ *  @copyright Copyright Teclib. All rights reserved.
+ *  @copyright Copyright FusionInventory.
+ *  @license   GPLv3 https://www.gnu.org/licenses/gpl-3.0.html
+ *  @link      https://github.com/flyve-mdm/android-inventory-library
+ *  @link      http://flyve.org/android-inventory-library/
+ *  @link      https://flyve-mdm.com
+ *  ---------------------------------------------------------------------
  */
 
 package org.flyve.inventory.categories;
@@ -66,13 +60,13 @@ public class Categories extends ArrayList&lt;Category&gt;{
      */
     @Override
     public boolean equals(Object obj) {
-<span class="nc bnc" id="L66" title="All 2 branches missed.">        if (obj == null) {</span>
+<span class="nc bnc" id="L63" title="All 2 branches missed.">        if (obj == null) {</span>
+<span class="nc" id="L64">            return false;</span>
+        }
+<span class="nc bnc" id="L66" title="All 2 branches missed.">        if (getClass() != obj.getClass()) {</span>
 <span class="nc" id="L67">            return false;</span>
         }
-<span class="nc bnc" id="L69" title="All 2 branches missed.">        if (getClass() != obj.getClass()) {</span>
-<span class="nc" id="L70">            return false;</span>
-        }
-<span class="nc bnc" id="L72" title="All 2 branches missed.">        return (!super.equals(obj));</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">        return (!super.equals(obj));</span>
     }
 
     /**
@@ -81,18 +75,18 @@ public class Categories extends ArrayList&lt;Category&gt;{
      */
     @Override
     public int hashCode() {
-<span class="nc" id="L81">        int hash = super.hashCode();</span>
-<span class="nc bnc" id="L82" title="All 2 branches missed.">        hash = 89 * hash + (this.mCtx != null ? this.mCtx.hashCode() : 0);</span>
-<span class="nc" id="L83">        return hash;</span>
+<span class="nc" id="L78">        int hash = super.hashCode();</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">        hash = 89 * hash + (this.mCtx != null ? this.mCtx.hashCode() : 0);</span>
+<span class="nc" id="L80">        return hash;</span>
     }
 
     /**
      * This constructor load the Context of the instance
      * @param xCtx Context where this class work
      */
-<span class="fc" id="L90">    public Categories(Context xCtx) {</span>
-<span class="fc" id="L91">        mCtx = xCtx;</span>
-<span class="fc" id="L92">    }</span>
+<span class="fc" id="L87">    public Categories(Context xCtx) {</span>
+<span class="fc" id="L88">        mCtx = xCtx;</span>
+<span class="fc" id="L89">    }</span>
 
     /**
      *  Create a XML object
@@ -100,13 +94,13 @@ public class Categories extends ArrayList&lt;Category&gt;{
      */
     public void toXML(XmlSerializer xSerializer) {
         try {
-<span class="fc bfc" id="L100" title="All 2 branches covered.">            for( Category c : this) {</span>
-<span class="fc" id="L101">                c.toXML(xSerializer);</span>
-<span class="fc" id="L102">            }</span>
-<span class="nc" id="L103">        } catch (Exception e) {</span>
-<span class="nc" id="L104">            FILog.e(e.getMessage());</span>
-<span class="fc" id="L105">        }</span>
-<span class="fc" id="L106">    }</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">            for( Category c : this) {</span>
+<span class="fc" id="L98">                c.toXML(xSerializer);</span>
+<span class="fc" id="L99">            }</span>
+<span class="nc" id="L100">        } catch (Exception e) {</span>
+<span class="nc" id="L101">            FILog.e(e.getMessage());</span>
+<span class="fc" id="L102">        }</span>
+<span class="fc" id="L103">    }</span>
 
     /**
      *  Create a XML object
@@ -114,44 +108,44 @@ public class Categories extends ArrayList&lt;Category&gt;{
      */
     public void toXMLWithoutPrivateData(XmlSerializer xSerializer) {
         try {
-<span class="nc bnc" id="L114" title="All 2 branches missed.">            for( Category c : this) {</span>
-<span class="nc" id="L115">                c.toXMLWithoutPrivateData(xSerializer);</span>
-<span class="nc" id="L116">            }</span>
-<span class="nc" id="L117">        } catch (Exception e) {</span>
-<span class="nc" id="L118">            FILog.e(e.getMessage());</span>
-<span class="nc" id="L119">        }</span>
-<span class="nc" id="L120">    }</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">            for( Category c : this) {</span>
+<span class="nc" id="L112">                c.toXMLWithoutPrivateData(xSerializer);</span>
+<span class="nc" id="L113">            }</span>
+<span class="nc" id="L114">        } catch (Exception e) {</span>
+<span class="nc" id="L115">            FILog.e(e.getMessage());</span>
+<span class="nc" id="L116">        }</span>
+<span class="nc" id="L117">    }</span>
 
     public void toJSON(JSONObject json) {
 
-<span class="fc" id="L124">        JSONArray jsonArr = new JSONArray();</span>
-<span class="fc" id="L125">        String mType = &quot;&quot;;</span>
+<span class="fc" id="L121">        JSONArray jsonArr = new JSONArray();</span>
+<span class="fc" id="L122">        String mType = &quot;&quot;;</span>
         try {
-<span class="fc bfc" id="L127" title="All 2 branches covered.">            for( Category c : this) {</span>
-<span class="fc" id="L128">                mType = c.getTagName();</span>
-<span class="fc" id="L129">                jsonArr.put(c.toJSON());</span>
-<span class="fc" id="L130">            }</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">            for( Category c : this) {</span>
+<span class="fc" id="L125">                mType = c.getTagName();</span>
+<span class="fc" id="L126">                jsonArr.put(c.toJSON());</span>
+<span class="fc" id="L127">            }</span>
 
-<span class="fc" id="L132">            json.put(mType, jsonArr);</span>
-<span class="nc" id="L133">        } catch (Exception e) {</span>
-<span class="nc" id="L134">            FILog.e(e.getMessage());</span>
-<span class="fc" id="L135">        }</span>
-<span class="fc" id="L136">    }</span>
+<span class="fc" id="L129">            json.put(mType, jsonArr);</span>
+<span class="nc" id="L130">        } catch (Exception e) {</span>
+<span class="nc" id="L131">            FILog.e(e.getMessage());</span>
+<span class="fc" id="L132">        }</span>
+<span class="fc" id="L133">    }</span>
 
     public void toJSONWithoutPrivateData(JSONObject json) {
 
-<span class="nc" id="L140">        JSONArray jsonArr = new JSONArray();</span>
-<span class="nc" id="L141">        String mType = &quot;&quot;;</span>
+<span class="nc" id="L137">        JSONArray jsonArr = new JSONArray();</span>
+<span class="nc" id="L138">        String mType = &quot;&quot;;</span>
         try {
-<span class="nc bnc" id="L143" title="All 2 branches missed.">            for( Category c : this) {</span>
-<span class="nc" id="L144">                mType = c.getTagName();</span>
-<span class="nc" id="L145">                jsonArr.put(c.toJSONWithoutPrivateData());</span>
-<span class="nc" id="L146">            }</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">            for( Category c : this) {</span>
+<span class="nc" id="L141">                mType = c.getTagName();</span>
+<span class="nc" id="L142">                jsonArr.put(c.toJSONWithoutPrivateData());</span>
+<span class="nc" id="L143">            }</span>
 
-<span class="nc" id="L148">            json.put(mType, jsonArr);</span>
-<span class="nc" id="L149">        } catch (Exception e) {</span>
-<span class="nc" id="L150">            FILog.e(e.getMessage());</span>
-<span class="nc" id="L151">        }</span>
-<span class="nc" id="L152">    }</span>
+<span class="nc" id="L145">            json.put(mType, jsonArr);</span>
+<span class="nc" id="L146">        } catch (Exception e) {</span>
+<span class="nc" id="L147">            FILog.e(e.getMessage());</span>
+<span class="nc" id="L148">        }</span>
+<span class="nc" id="L149">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span>Generated by the Android Gradle plugin 2.2.0</div></body></html>

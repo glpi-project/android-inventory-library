@@ -1,36 +1,29 @@
----
-layout: coverage
----
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../resources/report.css" type="text/css"/><link rel="shortcut icon" href="../resources/report.gif" type="image/gif"/><title>InventoryTask.java</title><link rel="stylesheet" href="../resources/prettify.css" type="text/css"/><script type="text/javascript" src="../resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory</a> &gt; <span class="el_source">InventoryTask.java</span></div><h1>InventoryTask.java</h1><pre class="source lang-java linenums">/**
- * FILog
+ *  LICENSE
+ * 
+ *  This file is part of Flyve MDM Inventory Library for Android.
  *
- * Copyright 2017 Teclib.
- * Copyright 2010-2016 by the FusionInventory Development
+ *  Inventory Library for Android is a subproject of Flyve MDM.
+ *  Flyve MDM is a mobile device management software.
+ * 
+ *  Flyve MDM is free software: you can redistribute it and/or
+ *  modify it under the terms of the GNU General Public License
+ *  as published by the Free Software Foundation; either version 3
+ *  of the License, or (at your option) any later version.
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-android
- *
- * ------------------------------------------------------------------------
- *
- * LICENSE
- *
- * This file is part of FusionInventory project.
- *
- * FusionInventory is free software: you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- *
- * FusionInventory is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * ------------------------------------------------------------------------------
- * @update    07/06/2017
- * @license   GPLv2 https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * @link      https://github.com/fusioninventory/fusioninventory-android
- * @link      http://www.fusioninventory.org/
- * ------------------------------------------------------------------------------
+ *  Flyve MDM is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *  ---------------------------------------------------------------------
+ *  @author    Rafael Hernandez - &lt;rhernandez@teclib.com&gt;
+ *  @copyright Copyright Teclib. All rights reserved.
+ *  @copyright Copyright FusionInventory.
+ *  @license   GPLv3 https://www.gnu.org/licenses/gpl-3.0.html
+ *  @link      https://github.com/flyve-mdm/android-inventory-library
+ *  @link      http://flyve.org/android-inventory-library/
+ *  @link      https://flyve-mdm.com
+ *  ---------------------------------------------------------------------
  */
 
 package org.flyve.inventory;
@@ -61,26 +54,26 @@ public class InventoryTask {
 
     private static Handler uiHandler;
 
-<span class="pc" id="L61">    private Boolean running = false;</span>
+<span class="pc" id="L57">    private Boolean running = false;</span>
 
     static {
-<span class="fc" id="L64">        uiHandler = new Handler(Looper.getMainLooper());</span>
-<span class="fc" id="L65">    }</span>
+<span class="fc" id="L60">        uiHandler = new Handler(Looper.getMainLooper());</span>
+<span class="fc" id="L61">    }</span>
 
     private static void runOnUI(Runnable runnable) {
-<span class="fc" id="L68">        uiHandler.post(runnable);</span>
-<span class="fc" id="L69">    }</span>
+<span class="fc" id="L64">        uiHandler.post(runnable);</span>
+<span class="fc" id="L65">    }</span>
 
-<span class="pc" id="L71">    private Context ctx = null;</span>
-<span class="pc" id="L72">    private String appVersion = &quot;&quot;;</span>
-<span class="pc" id="L73">    private String fileNameXML = &quot;Inventory.xml&quot;;</span>
-<span class="pc" id="L74">    private String fileNameJSON = &quot;Inventory.json&quot;;</span>
-<span class="pc" id="L75">    private Boolean storeResult = false;</span>
-<span class="pc" id="L76">    private String TAG = &quot;&quot;;</span>
-<span class="pc" id="L77">    private boolean privateData = false;</span>
+<span class="pc" id="L67">    private Context ctx = null;</span>
+<span class="pc" id="L68">    private String appVersion = &quot;&quot;;</span>
+<span class="pc" id="L69">    private String fileNameXML = &quot;Inventory.xml&quot;;</span>
+<span class="pc" id="L70">    private String fileNameJSON = &quot;Inventory.json&quot;;</span>
+<span class="pc" id="L71">    private Boolean storeResult = false;</span>
+<span class="pc" id="L72">    private String TAG = &quot;&quot;;</span>
+<span class="pc" id="L73">    private boolean privateData = false;</span>
 
     public Boolean isRunning() {
-<span class="nc" id="L80">        return running;</span>
+<span class="nc" id="L76">        return running;</span>
     }
 
     /**
@@ -88,18 +81,18 @@ public class InventoryTask {
      * @param context The context to be use
      * @param appVersion The name of the agent
      */
-<span class="nc" id="L88">    public InventoryTask(Context context, String appVersion) {</span>
-<span class="nc" id="L89">        this.appVersion = appVersion;</span>
-<span class="nc" id="L90">        ctx = context;</span>
+<span class="nc" id="L84">    public InventoryTask(Context context, String appVersion) {</span>
+<span class="nc" id="L85">        this.appVersion = appVersion;</span>
+<span class="nc" id="L86">        ctx = context;</span>
 
         try {
-<span class="nc" id="L93">            FormatStrategy formatStrategy = PrettyFormatStrategy.newBuilder()</span>
-<span class="nc" id="L94">                    .build();</span>
-<span class="nc" id="L95">            Logger.addLogAdapter(new AndroidLogAdapter(formatStrategy));</span>
-<span class="nc" id="L96">        } catch (Exception ex) {</span>
-<span class="nc" id="L97">            ex.getStackTrace();</span>
-<span class="nc" id="L98">        }</span>
-<span class="nc" id="L99">    }</span>
+<span class="nc" id="L89">            FormatStrategy formatStrategy = PrettyFormatStrategy.newBuilder()</span>
+<span class="nc" id="L90">                    .build();</span>
+<span class="nc" id="L91">            Logger.addLogAdapter(new AndroidLogAdapter(formatStrategy));</span>
+<span class="nc" id="L92">        } catch (Exception ex) {</span>
+<span class="nc" id="L93">            ex.getStackTrace();</span>
+<span class="nc" id="L94">        }</span>
+<span class="nc" id="L95">    }</span>
 
     /**
      * This constructor return a Success XML or Error on asynchronous way
@@ -107,11 +100,11 @@ public class InventoryTask {
      * @param appVersion The name of the agent
      * @param storeResult Indicate is the result will be stored on file
      */
-<span class="fc" id="L107">    public InventoryTask(Context context, String appVersion, Boolean storeResult) {</span>
-<span class="fc" id="L108">        this.appVersion = appVersion;</span>
-<span class="fc" id="L109">        this.storeResult = storeResult;</span>
-<span class="fc" id="L110">        ctx = context;</span>
-<span class="fc" id="L111">    }</span>
+<span class="fc" id="L103">    public InventoryTask(Context context, String appVersion, Boolean storeResult) {</span>
+<span class="fc" id="L104">        this.appVersion = appVersion;</span>
+<span class="fc" id="L105">        this.storeResult = storeResult;</span>
+<span class="fc" id="L106">        ctx = context;</span>
+<span class="fc" id="L107">    }</span>
 
     /**
      * This function load all the categories class dynamically
@@ -120,9 +113,9 @@ public class InventoryTask {
     @SuppressWarnings(&quot;unchecked&quot;)
     private ArrayList&lt;Categories&gt; loadCategoriesClass() throws FlyveException {
 
-<span class="fc" id="L120">        ArrayList&lt;Categories&gt; mContent = new ArrayList&lt;Categories&gt;();</span>
+<span class="fc" id="L116">        ArrayList&lt;Categories&gt; mContent = new ArrayList&lt;Categories&gt;();</span>
 
-<span class="fc" id="L122">        String[] categories = {</span>
+<span class="fc" id="L118">        String[] categories = {</span>
 //                &quot;PhoneStatus&quot;,
                 &quot;Hardware&quot;,
                 &quot;User&quot;,
@@ -147,50 +140,50 @@ public class InventoryTask {
                 &quot;Controllers&quot;
         };
 
-<span class="fc" id="L147">        Class&lt;Categories&gt; catClass = null;</span>
+<span class="fc" id="L143">        Class&lt;Categories&gt; catClass = null;</span>
 
-<span class="fc bfc" id="L149" title="All 2 branches covered.">        for(String c : categories) {</span>
-<span class="fc" id="L150">            FILog.v(String.format(&quot;new INVENTORY of %s&quot;, c));</span>
+<span class="fc bfc" id="L145" title="All 2 branches covered.">        for(String c : categories) {</span>
+<span class="fc" id="L146">            FILog.v(String.format(&quot;new INVENTORY of %s&quot;, c));</span>
 
             // Loading the class with name of the ArrayList
             try {
-<span class="fc" id="L154">                Class cCat = Class.forName(String.format(&quot;org.flyve.inventory.categories.%s&quot;, c));</span>
-<span class="fc" id="L155">                catClass = (Class&lt;Categories&gt;)cCat;</span>
+<span class="fc" id="L150">                Class cCat = Class.forName(String.format(&quot;org.flyve.inventory.categories.%s&quot;, c));</span>
+<span class="fc" id="L151">                catClass = (Class&lt;Categories&gt;)cCat;</span>
 
             }
-<span class="nc" id="L158">            catch (Exception ex) {</span>
-<span class="nc" id="L159">                FILog.e( ex.getCause().toString() );</span>
-<span class="nc" id="L160">                throw new FlyveException(ex.getMessage(), ex.getCause());</span>
-<span class="fc" id="L161">            }</span>
+<span class="nc" id="L154">            catch (Exception ex) {</span>
+<span class="nc" id="L155">                FILog.e( ex.getCause().toString() );</span>
+<span class="nc" id="L156">                throw new FlyveException(ex.getMessage(), ex.getCause());</span>
+<span class="fc" id="L157">            }</span>
 
             // Instance the class and checking errors
-<span class="pc bpc" id="L164" title="1 of 2 branches missed.">            if(catClass!=null) {</span>
+<span class="pc bpc" id="L160" title="1 of 2 branches missed.">            if(catClass!=null) {</span>
                 try {
-<span class="fc" id="L166">                    Constructor&lt;Categories&gt; co = catClass.getConstructor(Context.class);</span>
-<span class="fc" id="L167">                    mContent.add(co.newInstance(ctx));</span>
-<span class="nc" id="L168">                } catch ( Exception ex ) {</span>
-<span class="nc" id="L169">                    FILog.e( ex.getCause().toString() );</span>
-<span class="nc" id="L170">                    throw new FlyveException(ex.getMessage(), ex.getCause());</span>
-<span class="fc" id="L171">                }</span>
+<span class="fc" id="L162">                    Constructor&lt;Categories&gt; co = catClass.getConstructor(Context.class);</span>
+<span class="fc" id="L163">                    mContent.add(co.newInstance(ctx));</span>
+<span class="nc" id="L164">                } catch ( Exception ex ) {</span>
+<span class="nc" id="L165">                    FILog.e( ex.getCause().toString() );</span>
+<span class="nc" id="L166">                    throw new FlyveException(ex.getMessage(), ex.getCause());</span>
+<span class="fc" id="L167">                }</span>
             }
         }
-<span class="fc" id="L174">        return mContent;</span>
+<span class="fc" id="L170">        return mContent;</span>
     }
 
     public void setTag(String tag) {
-<span class="nc" id="L178">        TAG = tag;</span>
-<span class="nc" id="L179">    }</span>
+<span class="nc" id="L174">        TAG = tag;</span>
+<span class="nc" id="L175">    }</span>
 
     public String getTag() {
-<span class="fc" id="L182">        return TAG;</span>
+<span class="fc" id="L178">        return TAG;</span>
     }
 
     public void setPrivateData(boolean enable) {
-<span class="nc" id="L186">        privateData = enable;</span>
-<span class="nc" id="L187">    }</span>
+<span class="nc" id="L182">        privateData = enable;</span>
+<span class="nc" id="L183">    }</span>
 
     public boolean getPrivateData() {
-<span class="fc" id="L190">        return privateData;</span>
+<span class="fc" id="L186">        return privateData;</span>
     }
 
     /**
@@ -199,99 +192,99 @@ public class InventoryTask {
      */
     public void getXML(final OnTaskCompleted listener) {
 
-<span class="fc" id="L199">        running = true;</span>
-<span class="fc" id="L200">        Thread t = new Thread(new Runnable()</span>
-<span class="fc" id="L201">        {</span>
+<span class="fc" id="L195">        running = true;</span>
+<span class="fc" id="L196">        Thread t = new Thread(new Runnable()</span>
+<span class="fc" id="L197">        {</span>
             public void run() {
 
                 try {
-<span class="fc" id="L205">                    ArrayList&lt;Categories&gt; mContent = loadCategoriesClass();</span>
-<span class="fc" id="L206">                    String xml = Utils.createXML(ctx, mContent, InventoryTask.this.appVersion, getPrivateData(), getTag());</span>
-<span class="fc" id="L207">                    xml = xml.replaceAll(&quot;&amp;lt;&quot;, &quot;&lt;&quot;);</span>
-<span class="fc" id="L208">                    xml = xml.replaceAll(&quot;&amp;gt;&quot;, &quot;&gt;&quot;);</span>
-<span class="fc" id="L209">                    xml = xml.replaceAll(&quot;&amp;&quot;, &quot;&quot;);</span>
+<span class="fc" id="L201">                    ArrayList&lt;Categories&gt; mContent = loadCategoriesClass();</span>
+<span class="fc" id="L202">                    String xml = Utils.createXML(ctx, mContent, InventoryTask.this.appVersion, getPrivateData(), getTag());</span>
+<span class="fc" id="L203">                    xml = xml.replaceAll(&quot;&amp;lt;&quot;, &quot;&lt;&quot;);</span>
+<span class="fc" id="L204">                    xml = xml.replaceAll(&quot;&amp;gt;&quot;, &quot;&gt;&quot;);</span>
+<span class="fc" id="L205">                    xml = xml.replaceAll(&quot;&amp;&quot;, &quot;&quot;);</span>
 
-<span class="pc bpc" id="L211" title="1 of 2 branches missed.">                    if(storeResult) {</span>
-<span class="fc" id="L212">                        Utils.storeFile(xml, fileNameXML);</span>
+<span class="pc bpc" id="L207" title="1 of 2 branches missed.">                    if(storeResult) {</span>
+<span class="fc" id="L208">                        Utils.storeFile(xml, fileNameXML);</span>
                     }
 
-<span class="fc" id="L215">                    final String finalXml = xml;</span>
-<span class="fc" id="L216">                    InventoryTask.runOnUI(new Runnable() {</span>
+<span class="fc" id="L211">                    final String finalXml = xml;</span>
+<span class="fc" id="L212">                    InventoryTask.runOnUI(new Runnable() {</span>
                         public void run() {
-<span class="fc" id="L218">                            running = false;</span>
-<span class="fc" id="L219">                            listener.onTaskSuccess(finalXml);</span>
-<span class="fc" id="L220">                        }</span>
+<span class="fc" id="L214">                            running = false;</span>
+<span class="fc" id="L215">                            listener.onTaskSuccess(finalXml);</span>
+<span class="fc" id="L216">                        }</span>
                     });
-<span class="nc" id="L222">                } catch (final Exception ex) {</span>
+<span class="nc" id="L218">                } catch (final Exception ex) {</span>
 
-<span class="nc" id="L224">                    InventoryTask.runOnUI(new Runnable() {</span>
+<span class="nc" id="L220">                    InventoryTask.runOnUI(new Runnable() {</span>
                         public void run() {
-<span class="nc" id="L226">                            running = false;</span>
-<span class="nc" id="L227">                            listener.onTaskError( ex.getCause() );</span>
-<span class="nc" id="L228">                        }</span>
+<span class="nc" id="L222">                            running = false;</span>
+<span class="nc" id="L223">                            listener.onTaskError( ex.getCause() );</span>
+<span class="nc" id="L224">                        }</span>
                     });
 
-<span class="fc" id="L231">                }</span>
-<span class="fc" id="L232">            }</span>
+<span class="fc" id="L227">                }</span>
+<span class="fc" id="L228">            }</span>
         });
-<span class="fc" id="L234">        t.start();</span>
-<span class="fc" id="L235">    }</span>
+<span class="fc" id="L230">        t.start();</span>
+<span class="fc" id="L231">    }</span>
 
     /**
      * Return a JSON String or Error OnTaskCompleted interface
      * @param listener the interface OnTaskCompleted
      */
     public void getJSON(final OnTaskCompleted listener) {
-<span class="fc" id="L242">        running = true;</span>
-<span class="fc" id="L243">        Thread t = new Thread(new Runnable()</span>
-<span class="fc" id="L244">        {</span>
+<span class="fc" id="L238">        running = true;</span>
+<span class="fc" id="L239">        Thread t = new Thread(new Runnable()</span>
+<span class="fc" id="L240">        {</span>
             public void run() {
 
                 try {
-<span class="fc" id="L248">                    ArrayList&lt;Categories&gt; mContent = loadCategoriesClass();</span>
-<span class="nc" id="L249">                    final String json = Utils.createJSON(ctx, mContent, InventoryTask.this.appVersion, getPrivateData(), getTag());</span>
+<span class="nc" id="L244">                    ArrayList&lt;Categories&gt; mContent = loadCategoriesClass();</span>
+<span class="nc" id="L245">                    final String json = Utils.createJSON(ctx, mContent, InventoryTask.this.appVersion, getPrivateData(), getTag());</span>
 
-<span class="nc bnc" id="L251" title="All 2 branches missed.">                    if(storeResult) {</span>
-<span class="nc" id="L252">                        Utils.storeFile(json, fileNameJSON);</span>
+<span class="nc bnc" id="L247" title="All 2 branches missed.">                    if(storeResult) {</span>
+<span class="nc" id="L248">                        Utils.storeFile(json, fileNameJSON);</span>
                     }
 
-<span class="nc" id="L255">                    InventoryTask.runOnUI(new Runnable() {</span>
+<span class="nc" id="L251">                    InventoryTask.runOnUI(new Runnable() {</span>
                         public void run() {
-<span class="nc" id="L257">                            running = false;</span>
-<span class="nc" id="L258">                            listener.onTaskSuccess( json );</span>
-<span class="nc" id="L259">                        }</span>
+<span class="nc" id="L253">                            running = false;</span>
+<span class="nc" id="L254">                            listener.onTaskSuccess( json );</span>
+<span class="nc" id="L255">                        }</span>
                     });
 
-<span class="nc" id="L262">                } catch (final Exception ex) {</span>
-<span class="nc" id="L263">                    InventoryTask.runOnUI(new Runnable() {</span>
+<span class="nc" id="L258">                } catch (final Exception ex) {</span>
+<span class="nc" id="L259">                    InventoryTask.runOnUI(new Runnable() {</span>
                         public void run() {
-<span class="nc" id="L265">                            running = false;</span>
-<span class="nc" id="L266">                            listener.onTaskError( ex.getCause() );</span>
-<span class="nc" id="L267">                        }</span>
+<span class="nc" id="L261">                            running = false;</span>
+<span class="nc" id="L262">                            listener.onTaskError( ex.getCause() );</span>
+<span class="nc" id="L263">                        }</span>
                     });
-<span class="nc" id="L269">                }</span>
-<span class="nc" id="L270">            }</span>
+<span class="nc" id="L265">                }</span>
+<span class="nc" id="L266">            }</span>
         });
-<span class="fc" id="L272">        t.start();</span>
-<span class="fc" id="L273">    }</span>
+<span class="fc" id="L268">        t.start();</span>
+<span class="fc" id="L269">    }</span>
 
     /**
      * Return a JSON String synchronously
      */
     public String getJSONSync() {
         try {
-<span class="fc" id="L280">            ArrayList&lt;Categories&gt; mContent = loadCategoriesClass();</span>
-<span class="fc" id="L281">            String json = Utils.createJSON(ctx, mContent, InventoryTask.this.appVersion, getPrivateData(), getTag());</span>
+<span class="fc" id="L276">            ArrayList&lt;Categories&gt; mContent = loadCategoriesClass();</span>
+<span class="fc" id="L277">            String json = Utils.createJSON(ctx, mContent, InventoryTask.this.appVersion, getPrivateData(), getTag());</span>
 
-<span class="pc bpc" id="L283" title="1 of 2 branches missed.">            if(storeResult) {</span>
-<span class="fc" id="L284">                Utils.storeFile(json, fileNameJSON);</span>
+<span class="pc bpc" id="L279" title="1 of 2 branches missed.">            if(storeResult) {</span>
+<span class="fc" id="L280">                Utils.storeFile(json, fileNameJSON);</span>
             }
 
-<span class="fc" id="L287">            return json;</span>
+<span class="fc" id="L283">            return json;</span>
 
-<span class="nc" id="L289">        } catch (final Exception ex) {</span>
-<span class="nc" id="L290">            Log.e(&quot;Library Exception&quot;, ex.getLocalizedMessage());</span>
-<span class="nc" id="L291">            return null;</span>
+<span class="nc" id="L285">        } catch (final Exception ex) {</span>
+<span class="nc" id="L286">            Log.e(&quot;Library Exception&quot;, ex.getLocalizedMessage());</span>
+<span class="nc" id="L287">            return null;</span>
         }
     }
 
@@ -300,32 +293,32 @@ public class InventoryTask {
      */
     public String getXMLSyn() {
         try {
-<span class="fc" id="L300">            ArrayList&lt;Categories&gt; mContent = loadCategoriesClass();</span>
-<span class="fc" id="L301">            String xml = Utils.createXML(ctx, mContent, InventoryTask.this.appVersion, getPrivateData(), getTag());</span>
+<span class="fc" id="L296">            ArrayList&lt;Categories&gt; mContent = loadCategoriesClass();</span>
+<span class="fc" id="L297">            String xml = Utils.createXML(ctx, mContent, InventoryTask.this.appVersion, getPrivateData(), getTag());</span>
 
-<span class="pc bpc" id="L303" title="1 of 2 branches missed.">            if(storeResult) {</span>
-<span class="fc" id="L304">                Utils.storeFile(xml, fileNameXML);</span>
+<span class="pc bpc" id="L299" title="1 of 2 branches missed.">            if(storeResult) {</span>
+<span class="fc" id="L300">                Utils.storeFile(xml, fileNameXML);</span>
             }
 
-<span class="fc" id="L307">            return xml;</span>
+<span class="fc" id="L303">            return xml;</span>
 
-<span class="nc" id="L309">        } catch (final Exception ex) {</span>
-<span class="nc" id="L310">            Log.e(&quot;Library Exception&quot;, ex.getLocalizedMessage());</span>
-<span class="nc" id="L311">            return null;</span>
+<span class="nc" id="L305">        } catch (final Exception ex) {</span>
+<span class="nc" id="L306">            Log.e(&quot;Library Exception&quot;, ex.getLocalizedMessage());</span>
+<span class="nc" id="L307">            return null;</span>
         }
     }
 
     public void shareInventory(int type){
-<span class="nc" id="L316">        Intent intent = new Intent(Intent.ACTION_SEND);</span>
-<span class="nc" id="L317">        intent.setType(&quot;text/plain&quot;);</span>
-<span class="nc" id="L318">        String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();</span>
-<span class="nc bnc" id="L319" title="All 2 branches missed.">        if(type==1) {</span>
-<span class="nc" id="L320">            intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(path + &quot;/Inventory.json&quot;)));</span>
+<span class="nc" id="L312">        Intent intent = new Intent(Intent.ACTION_SEND);</span>
+<span class="nc" id="L313">        intent.setType(&quot;text/plain&quot;);</span>
+<span class="nc" id="L314">        String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();</span>
+<span class="nc bnc" id="L315" title="All 2 branches missed.">        if(type==1) {</span>
+<span class="nc" id="L316">            intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(path + &quot;/Inventory.json&quot;)));</span>
         } else {
-<span class="nc" id="L322">            intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(path + &quot;/Inventory.xml&quot;)));</span>
+<span class="nc" id="L318">            intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(path + &quot;/Inventory.xml&quot;)));</span>
         }
-<span class="nc" id="L324">        this.ctx.startActivity(Intent.createChooser(intent, &quot;Share your inventory&quot;));</span>
-<span class="nc" id="L325">    }</span>
+<span class="nc" id="L320">        this.ctx.startActivity(Intent.createChooser(intent, &quot;Share your inventory&quot;));</span>
+<span class="nc" id="L321">    }</span>
 
     /**
      * This is the interface of return data

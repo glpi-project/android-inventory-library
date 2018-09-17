@@ -1,35 +1,29 @@
----
-layout: coverage
----
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../resources/report.css" type="text/css"/><link rel="shortcut icon" href="../resources/report.gif" type="image/gif"/><title>Cpus.java</title><link rel="stylesheet" href="../resources/prettify.css" type="text/css"/><script type="text/javascript" src="../resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory.categories</a> &gt; <span class="el_source">Cpus.java</span></div><h1>Cpus.java</h1><pre class="source lang-java linenums">/**
+ *  LICENSE
+ * 
+ *  This file is part of Flyve MDM Inventory Library for Android.
  *
- * Copyright 2017 Teclib.
- * Copyright 2010-2016 by the FusionInventory Development
+ *  Inventory Library for Android is a subproject of Flyve MDM.
+ *  Flyve MDM is a mobile device management software.
+ * 
+ *  Flyve MDM is free software: you can redistribute it and/or
+ *  modify it under the terms of the GNU General Public License
+ *  as published by the Free Software Foundation; either version 3
+ *  of the License, or (at your option) any later version.
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-android
- *
- * ------------------------------------------------------------------------
- *
- * LICENSE
- *
- * This file is part of FusionInventory project.
- *
- * FusionInventory is free software: you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- *
- * FusionInventory is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * ------------------------------------------------------------------------------
- * @update    07/06/2017
- * @license   GPLv2 https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * @link      https://github.com/fusioninventory/fusioninventory-android
- * @link      http://www.fusioninventory.org/
- * ------------------------------------------------------------------------------
+ *  Flyve MDM is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *  ---------------------------------------------------------------------
+ *  @author    Rafael Hernandez - &lt;rhernandez@teclib.com&gt;
+ *  @copyright Copyright Teclib. All rights reserved.
+ *  @copyright Copyright FusionInventory.
+ *  @license   GPLv3 https://www.gnu.org/licenses/gpl-3.0.html
+ *  @link      https://github.com/flyve-mdm/android-inventory-library
+ *  @link      http://flyve.org/android-inventory-library/
+ *  @link      https://flyve-mdm.com
+ *  ---------------------------------------------------------------------
  */
 
 package org.flyve.inventory.categories;
@@ -78,29 +72,29 @@ public class Cpus extends Categories {
      * @param xCtx Context where this class work
      */
     public Cpus(Context xCtx) {
-<span class="fc" id="L78">        super(xCtx);</span>
+<span class="fc" id="L75">        super(xCtx);</span>
 
         try {
-<span class="fc" id="L81">            cpuFamily = Utils.loadJSONFromAsset(xCtx, &quot;cpu_family.json&quot;);</span>
-<span class="fc" id="L82">            cpuManufacturer = Utils.loadJSONFromAsset(xCtx, &quot;cpu_manufacturer.json&quot;);</span>
+<span class="fc" id="L78">            cpuFamily = Utils.loadJSONFromAsset(xCtx, &quot;cpu_family.json&quot;);</span>
+<span class="fc" id="L79">            cpuManufacturer = Utils.loadJSONFromAsset(xCtx, &quot;cpu_manufacturer.json&quot;);</span>
 
-<span class="fc" id="L84">            Category c = new Category(&quot;CPUS&quot;, &quot;cpus&quot;);</span>
-<span class="fc" id="L85">            c.put(&quot;ARCH&quot;, new CategoryValue(getArch(), &quot;ARCH&quot;, &quot;arch&quot;));</span>
-<span class="fc" id="L86">            c.put(&quot;CORE&quot;, new CategoryValue(getCPUCore(), &quot;CORE&quot;, &quot;core&quot;));</span>
-<span class="fc" id="L87">            c.put(&quot;FAMILYNAME&quot;, new CategoryValue(getFamilyName(), &quot;FAMILYNAME&quot;, &quot;familyname&quot;));</span>
-<span class="fc" id="L88">            c.put(&quot;FAMILYNUMBER&quot;, new CategoryValue(getFamilyNumber(), &quot;FAMILYNUMBER&quot;, &quot;familynumber&quot;));</span>
-<span class="fc" id="L89">            c.put(&quot;MANUFACTURER&quot;, new CategoryValue(getManufacturer(), &quot;MANUFACTURER&quot;, &quot;manufacturer&quot;));</span>
-<span class="fc" id="L90">            c.put(&quot;MODEL&quot;, new CategoryValue(getModel(), &quot;MODEL&quot;, &quot;model&quot;));</span>
-<span class="fc" id="L91">            c.put(&quot;NAME&quot;, new CategoryValue(getCpuName(), &quot;NAME&quot;, &quot;name&quot;));</span>
-<span class="fc" id="L92">            c.put(&quot;SPEED&quot;, new CategoryValue(getCpuFrequency(), &quot;SPEED&quot;, &quot;cpuFrequency&quot;));</span>
+<span class="fc" id="L81">            Category c = new Category(&quot;CPUS&quot;, &quot;cpus&quot;);</span>
+<span class="fc" id="L82">            c.put(&quot;ARCH&quot;, new CategoryValue(getArch(), &quot;ARCH&quot;, &quot;arch&quot;));</span>
+<span class="fc" id="L83">            c.put(&quot;CORE&quot;, new CategoryValue(getCPUCore(), &quot;CORE&quot;, &quot;core&quot;));</span>
+<span class="fc" id="L84">            c.put(&quot;FAMILYNAME&quot;, new CategoryValue(getFamilyName(), &quot;FAMILYNAME&quot;, &quot;familyname&quot;));</span>
+<span class="fc" id="L85">            c.put(&quot;FAMILYNUMBER&quot;, new CategoryValue(getFamilyNumber(), &quot;FAMILYNUMBER&quot;, &quot;familynumber&quot;));</span>
+<span class="fc" id="L86">            c.put(&quot;MANUFACTURER&quot;, new CategoryValue(getManufacturer(), &quot;MANUFACTURER&quot;, &quot;manufacturer&quot;));</span>
+<span class="fc" id="L87">            c.put(&quot;MODEL&quot;, new CategoryValue(getModel(), &quot;MODEL&quot;, &quot;model&quot;));</span>
+<span class="fc" id="L88">            c.put(&quot;NAME&quot;, new CategoryValue(getCpuName(), &quot;NAME&quot;, &quot;name&quot;));</span>
+<span class="fc" id="L89">            c.put(&quot;SPEED&quot;, new CategoryValue(getCpuFrequency(), &quot;SPEED&quot;, &quot;cpuFrequency&quot;));</span>
 
-<span class="fc" id="L94">            this.add(c);</span>
+<span class="fc" id="L91">            this.add(c);</span>
 
-<span class="nc" id="L96">        } catch (Exception ex) {</span>
-<span class="nc" id="L97">            FILog.e(ex.getMessage());</span>
-<span class="fc" id="L98">        }</span>
+<span class="nc" id="L93">        } catch (Exception ex) {</span>
+<span class="nc" id="L94">            FILog.e(ex.getMessage());</span>
+<span class="fc" id="L95">        }</span>
 
-<span class="fc" id="L100">    }</span>
+<span class="fc" id="L97">    }</span>
 
     /**
      * Get the CPU Architecture
@@ -108,7 +102,7 @@ public class Cpus extends Categories {
      * @return String with the Cpu Architecture
      */
     public String getArch() {
-<span class="fc" id="L108">        return System.getProperty(&quot;os.arch&quot;);</span>
+<span class="fc" id="L105">        return System.getProperty(&quot;os.arch&quot;);</span>
     }
 
     /**
@@ -117,10 +111,10 @@ public class Cpus extends Categories {
      * @return String with the Cpu Core
      */
     public String getCPUCore() {
-<span class="pc bpc" id="L117" title="1 of 2 branches missed.">        if (Build.VERSION.SDK_INT &gt;= 17) {</span>
-<span class="nc" id="L118">            return String.valueOf(Runtime.getRuntime().availableProcessors());</span>
+<span class="pc bpc" id="L114" title="1 of 2 branches missed.">        if (Build.VERSION.SDK_INT &gt;= 17) {</span>
+<span class="nc" id="L115">            return String.valueOf(Runtime.getRuntime().availableProcessors());</span>
         } else {
-<span class="fc" id="L120">            return String.valueOf(getNumCoresOldPhones());</span>
+<span class="fc" id="L117">            return String.valueOf(getNumCoresOldPhones());</span>
         }
     }
 
@@ -130,21 +124,21 @@ public class Cpus extends Categories {
      * @return The number of cores, or 1 if failed to get result
      */
     private int getNumCoresOldPhones() {
-<span class="fc" id="L130">        class CpuFilter implements FileFilter {</span>
+<span class="fc" id="L127">        class CpuFilter implements FileFilter {</span>
             @Override
             public boolean accept(File pathname) {
-<span class="fc" id="L133">                return Pattern.matches(&quot;cpu[0-9]+&quot;, pathname.getName());</span>
+<span class="fc" id="L130">                return Pattern.matches(&quot;cpu[0-9]+&quot;, pathname.getName());</span>
             }
         }
 
         try {
-<span class="fc" id="L138">            File dir = new File(&quot;/sys/devices/system/cpu/&quot;);</span>
-<span class="fc" id="L139">            File[] files = dir.listFiles(new CpuFilter());</span>
+<span class="fc" id="L135">            File dir = new File(&quot;/sys/devices/system/cpu/&quot;);</span>
+<span class="fc" id="L136">            File[] files = dir.listFiles(new CpuFilter());</span>
             //Return the number of cores (virtual CPU devices)
-<span class="fc" id="L141">            return files.length;</span>
-<span class="nc" id="L142">        } catch (Exception e) {</span>
+<span class="fc" id="L138">            return files.length;</span>
+<span class="nc" id="L139">        } catch (Exception e) {</span>
             //Default to return 1 core
-<span class="nc" id="L144">            return 1;</span>
+<span class="nc" id="L141">            return 1;</span>
         }
     }
 
@@ -154,25 +148,25 @@ public class Cpus extends Categories {
      * @return String with the Cpu Family Name
      */
     public String getFamilyName() {
-<span class="fc" id="L154">        String value = &quot;N/A&quot;;</span>
+<span class="fc" id="L151">        String value = &quot;N/A&quot;;</span>
         try {
-<span class="fc" id="L156">            Map&lt;String, String&gt; cpuInfo = Utils.getCatMapInfo(&quot;/proc/cpuinfo&quot;);</span>
-<span class="fc" id="L157">            String shortFamily = Utils.getValueMapInfo(cpuInfo, &quot;CPU part&quot;);</span>
-<span class="pc bpc" id="L158" title="1 of 2 branches missed.">            if (!&quot;&quot;.equals(shortFamily)) {</span>
-<span class="fc" id="L159">                JSONArray jr = new JSONArray(cpuFamily);</span>
-<span class="pc bpc" id="L160" title="1 of 2 branches missed.">                for (int i = 0; i &lt; jr.length(); i++) {</span>
-<span class="fc" id="L161">                    JSONObject c = jr.getJSONObject(i);</span>
-<span class="fc" id="L162">                    String id = c.getString(&quot;id&quot;);</span>
-<span class="fc bfc" id="L163" title="All 2 branches covered.">                    if (id.startsWith(shortFamily)) {</span>
-<span class="fc" id="L164">                        value = c.getString(&quot;name&quot;);</span>
-<span class="fc" id="L165">                        break;</span>
+<span class="fc" id="L153">            Map&lt;String, String&gt; cpuInfo = Utils.getCatMapInfo(&quot;/proc/cpuinfo&quot;);</span>
+<span class="fc" id="L154">            String shortFamily = Utils.getValueMapInfo(cpuInfo, &quot;CPU part&quot;);</span>
+<span class="pc bpc" id="L155" title="1 of 2 branches missed.">            if (!&quot;&quot;.equals(shortFamily)) {</span>
+<span class="fc" id="L156">                JSONArray jr = new JSONArray(cpuFamily);</span>
+<span class="pc bpc" id="L157" title="1 of 2 branches missed.">                for (int i = 0; i &lt; jr.length(); i++) {</span>
+<span class="fc" id="L158">                    JSONObject c = jr.getJSONObject(i);</span>
+<span class="fc" id="L159">                    String id = c.getString(&quot;id&quot;);</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">                    if (id.startsWith(shortFamily)) {</span>
+<span class="fc" id="L161">                        value = c.getString(&quot;name&quot;);</span>
+<span class="fc" id="L162">                        break;</span>
                     }
                 }
             }
-<span class="nc" id="L169">        } catch (Exception e) {</span>
-<span class="nc" id="L170">            FILog.e(e.getMessage());</span>
-<span class="fc" id="L171">        }</span>
-<span class="fc" id="L172">        return value;</span>
+<span class="nc" id="L166">        } catch (Exception e) {</span>
+<span class="nc" id="L167">            FILog.e(e.getMessage());</span>
+<span class="fc" id="L168">        }</span>
+<span class="fc" id="L169">        return value;</span>
     }
 
     /**
@@ -181,17 +175,17 @@ public class Cpus extends Categories {
      * @return String with the Cpu Family Name
      */
     public String getFamilyNumber() {
-<span class="fc" id="L181">        String value = &quot;N/A&quot;;</span>
+<span class="fc" id="L178">        String value = &quot;N/A&quot;;</span>
         try {
-<span class="fc" id="L183">            Map&lt;String, String&gt; cpuInfo = Utils.getCatMapInfo(&quot;/proc/cpuinfo&quot;);</span>
-<span class="fc" id="L184">            String cpuFamily = Utils.getValueMapInfo(cpuInfo, &quot;cpu family&quot;).trim();</span>
-<span class="pc bpc" id="L185" title="1 of 2 branches missed.">            if (!&quot;&quot;.equals(cpuFamily)) {</span>
-<span class="nc" id="L186">                value = cpuFamily;</span>
+<span class="fc" id="L180">            Map&lt;String, String&gt; cpuInfo = Utils.getCatMapInfo(&quot;/proc/cpuinfo&quot;);</span>
+<span class="fc" id="L181">            String cpuFamily = Utils.getValueMapInfo(cpuInfo, &quot;cpu family&quot;).trim();</span>
+<span class="pc bpc" id="L182" title="1 of 2 branches missed.">            if (!&quot;&quot;.equals(cpuFamily)) {</span>
+<span class="nc" id="L183">                value = cpuFamily;</span>
             }
-<span class="nc" id="L188">        } catch (Exception e) {</span>
-<span class="nc" id="L189">            FILog.e(e.getMessage());</span>
-<span class="fc" id="L190">        }</span>
-<span class="fc" id="L191">        return value;</span>
+<span class="nc" id="L185">        } catch (Exception e) {</span>
+<span class="nc" id="L186">            FILog.e(e.getMessage());</span>
+<span class="fc" id="L187">        }</span>
+<span class="fc" id="L188">        return value;</span>
     }
 
     /**
@@ -200,25 +194,25 @@ public class Cpus extends Categories {
      * @return String with the Cpu Manufacturer
      */
     public String getManufacturer() {
-<span class="fc" id="L200">        String value = &quot;N/A&quot;;</span>
+<span class="fc" id="L197">        String value = &quot;N/A&quot;;</span>
         try {
-<span class="fc" id="L202">            String cpuPart = Utils.getSystemProperty(&quot;ro.board.platform&quot;).trim();</span>
-<span class="fc" id="L203">            JSONArray jr = new JSONArray(cpuManufacturer);</span>
-<span class="fc bfc" id="L204" title="All 2 branches covered.">            for (int i = 0; i &lt; jr.length(); i++) {</span>
-<span class="fc" id="L205">                JSONObject c = jr.getJSONObject(i);</span>
-<span class="fc" id="L206">                JSONArray ids = c.getJSONArray(&quot;id&quot;);</span>
-<span class="fc bfc" id="L207" title="All 2 branches covered.">                for (int j = 0; j &lt; ids.length(); j++) {</span>
-<span class="fc" id="L208">                    String idObject = ids.getString(j);</span>
-<span class="pc bpc" id="L209" title="1 of 2 branches missed.">                    if (cpuPart.toLowerCase().startsWith(idObject)) {</span>
-<span class="nc" id="L210">                        value = c.getString(&quot;name&quot;);</span>
-<span class="nc" id="L211">                        break;</span>
+<span class="fc" id="L199">            String cpuPart = Utils.getSystemProperty(&quot;ro.board.platform&quot;).trim();</span>
+<span class="fc" id="L200">            JSONArray jr = new JSONArray(cpuManufacturer);</span>
+<span class="fc bfc" id="L201" title="All 2 branches covered.">            for (int i = 0; i &lt; jr.length(); i++) {</span>
+<span class="fc" id="L202">                JSONObject c = jr.getJSONObject(i);</span>
+<span class="fc" id="L203">                JSONArray ids = c.getJSONArray(&quot;id&quot;);</span>
+<span class="fc bfc" id="L204" title="All 2 branches covered.">                for (int j = 0; j &lt; ids.length(); j++) {</span>
+<span class="fc" id="L205">                    String idObject = ids.getString(j);</span>
+<span class="pc bpc" id="L206" title="1 of 2 branches missed.">                    if (cpuPart.toLowerCase().startsWith(idObject)) {</span>
+<span class="nc" id="L207">                        value = c.getString(&quot;name&quot;);</span>
+<span class="nc" id="L208">                        break;</span>
                     }
                 }
             }
-<span class="nc" id="L215">        } catch (Exception e) {</span>
-<span class="nc" id="L216">            FILog.e(e.getMessage());</span>
-<span class="fc" id="L217">        }</span>
-<span class="fc" id="L218">        return value;</span>
+<span class="nc" id="L212">        } catch (Exception e) {</span>
+<span class="nc" id="L213">            FILog.e(e.getMessage());</span>
+<span class="fc" id="L214">        }</span>
+<span class="fc" id="L215">        return value;</span>
     }
 
     /**
@@ -227,17 +221,17 @@ public class Cpus extends Categories {
      * @return String with the Cpu Model
      */
     public String getModel() {
-<span class="fc" id="L227">        String value = &quot;N/A&quot;;</span>
+<span class="fc" id="L224">        String value = &quot;N/A&quot;;</span>
         try {
-<span class="fc" id="L229">            Map&lt;String, String&gt; cpuInfo = Utils.getCatMapInfo(&quot;/proc/cpuinfo&quot;);</span>
-<span class="fc" id="L230">            String hardware = Utils.getValueMapInfo(cpuInfo, &quot;Hardware&quot;).trim();</span>
-<span class="pc bpc" id="L231" title="1 of 2 branches missed.">            if (!&quot;&quot;.equals(hardware)){</span>
-<span class="fc" id="L232">                value = hardware;</span>
+<span class="fc" id="L226">            Map&lt;String, String&gt; cpuInfo = Utils.getCatMapInfo(&quot;/proc/cpuinfo&quot;);</span>
+<span class="fc" id="L227">            String hardware = Utils.getValueMapInfo(cpuInfo, &quot;Hardware&quot;).trim();</span>
+<span class="pc bpc" id="L228" title="1 of 2 branches missed.">            if (!&quot;&quot;.equals(hardware)){</span>
+<span class="fc" id="L229">                value = hardware;</span>
             }
-<span class="nc" id="L234">        } catch (FileNotFoundException e) {</span>
-<span class="nc" id="L235">            FILog.e(e.getMessage());</span>
-<span class="fc" id="L236">        }</span>
-<span class="fc" id="L237">        return value;</span>
+<span class="nc" id="L231">        } catch (FileNotFoundException e) {</span>
+<span class="nc" id="L232">            FILog.e(e.getMessage());</span>
+<span class="fc" id="L233">        }</span>
+<span class="fc" id="L234">        return value;</span>
     }
 
     /**
@@ -247,26 +241,26 @@ public class Cpus extends Categories {
      */
 
     public String getCpuName() throws IOException {
-<span class="fc" id="L247">        String cpuname = &quot;&quot;;</span>
-<span class="fc" id="L248">        FileReader fr = null;</span>
-<span class="fc" id="L249">        BufferedReader br = null;</span>
+<span class="fc" id="L244">        String cpuname = &quot;&quot;;</span>
+<span class="fc" id="L245">        FileReader fr = null;</span>
+<span class="fc" id="L246">        BufferedReader br = null;</span>
         try {
-<span class="fc" id="L251">            File f = new File(CPUINFO);</span>
-<span class="fc" id="L252">            fr = new FileReader(f);</span>
-<span class="fc" id="L253">            br = new BufferedReader(fr, 8 * 1024);</span>
-<span class="fc" id="L254">            String infos = br.readLine();</span>
-<span class="fc" id="L255">            cpuname = infos.replaceAll(&quot;(.*):\\ (.*)&quot;, &quot;$2&quot;);</span>
-<span class="nc" id="L256">        } catch (IOException e) {</span>
-<span class="nc" id="L257">            FILog.e(e.getMessage());</span>
+<span class="fc" id="L248">            File f = new File(CPUINFO);</span>
+<span class="fc" id="L249">            fr = new FileReader(f);</span>
+<span class="fc" id="L250">            br = new BufferedReader(fr, 8 * 1024);</span>
+<span class="fc" id="L251">            String infos = br.readLine();</span>
+<span class="fc" id="L252">            cpuname = infos.replaceAll(&quot;(.*):\\ (.*)&quot;, &quot;$2&quot;);</span>
+<span class="nc" id="L253">        } catch (IOException e) {</span>
+<span class="nc" id="L254">            FILog.e(e.getMessage());</span>
         } finally {
-<span class="pc bpc" id="L259" title="5 of 6 branches missed.">            if(fr != null) {</span>
-<span class="pc" id="L260">                fr.close();</span>
+<span class="pc bpc" id="L256" title="5 of 6 branches missed.">            if(fr != null) {</span>
+<span class="pc" id="L257">                fr.close();</span>
             }
-<span class="pc bpc" id="L262" title="5 of 6 branches missed.">            if(br != null) {</span>
-<span class="pc" id="L263">                br.close();</span>
+<span class="pc bpc" id="L259" title="5 of 6 branches missed.">            if(br != null) {</span>
+<span class="pc" id="L260">                br.close();</span>
             }
-<span class="nc" id="L265">        }</span>
-<span class="fc" id="L266">        return cpuname;</span>
+<span class="nc" id="L262">        }</span>
+<span class="fc" id="L263">        return cpuname;</span>
     }
 
     /**
@@ -275,20 +269,20 @@ public class Cpus extends Categories {
      * @throws IOException return exception
      */
     public String getCpuFrequency() throws IOException {
-<span class="fc" id="L275">        String cpuFrequency = &quot;N/A&quot;;</span>
-<span class="fc" id="L276">        RandomAccessFile reader = null;</span>
+<span class="fc" id="L272">        String cpuFrequency = &quot;N/A&quot;;</span>
+<span class="fc" id="L273">        RandomAccessFile reader = null;</span>
         try {
-<span class="nc" id="L278">            reader = new RandomAccessFile(CPUINFO_MAX_FREQ, &quot;r&quot;);</span>
-<span class="nc" id="L279">            cpuFrequency = String.valueOf(Integer.valueOf(reader.readLine()) / 1000);</span>
-<span class="nc" id="L280">            reader.close();</span>
-<span class="fc" id="L281">        } catch (IOException e) {</span>
-<span class="fc" id="L282">            FILog.e(e.getMessage());</span>
+<span class="nc" id="L275">            reader = new RandomAccessFile(CPUINFO_MAX_FREQ, &quot;r&quot;);</span>
+<span class="nc" id="L276">            cpuFrequency = String.valueOf(Integer.valueOf(reader.readLine()) / 1000);</span>
+<span class="nc" id="L277">            reader.close();</span>
+<span class="fc" id="L278">        } catch (IOException e) {</span>
+<span class="fc" id="L279">            FILog.e(e.getMessage());</span>
         } finally {
-<span class="pc bpc" id="L284" title="5 of 6 branches missed.">            if(reader != null) {</span>
-<span class="nc" id="L285">                reader.close();</span>
+<span class="pc bpc" id="L281" title="5 of 6 branches missed.">            if(reader != null) {</span>
+<span class="nc" id="L282">                reader.close();</span>
             }
-<span class="nc" id="L287">        }</span>
-<span class="fc" id="L288">        return cpuFrequency;</span>
+<span class="nc" id="L284">        }</span>
+<span class="fc" id="L285">        return cpuFrequency;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span>Generated by the Android Gradle plugin 2.2.0</div></body></html>

@@ -1,36 +1,29 @@
----
-layout: coverage
----
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../resources/report.css" type="text/css"/><link rel="shortcut icon" href="../resources/report.gif" type="image/gif"/><title>Envs.java</title><link rel="stylesheet" href="../resources/prettify.css" type="text/css"/><script type="text/javascript" src="../resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory.categories</a> &gt; <span class="el_source">Envs.java</span></div><h1>Envs.java</h1><pre class="source lang-java linenums">/**
- * FILog
+ *  LICENSE
+ * 
+ *  This file is part of Flyve MDM Inventory Library for Android.
  *
- * Copyright 2017 Teclib.
- * Copyright 2010-2016 by the FusionInventory Development
+ *  Inventory Library for Android is a subproject of Flyve MDM.
+ *  Flyve MDM is a mobile device management software.
+ * 
+ *  Flyve MDM is free software: you can redistribute it and/or
+ *  modify it under the terms of the GNU General Public License
+ *  as published by the Free Software Foundation; either version 3
+ *  of the License, or (at your option) any later version.
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-android
- *
- * ------------------------------------------------------------------------
- *
- * LICENSE
- *
- * This file is part of FusionInventory project.
- *
- * FusionInventory is free software: you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- *
- * FusionInventory is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * ------------------------------------------------------------------------------
- * @update    07/06/2017
- * @license   GPLv2 https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * @link      https://github.com/fusioninventory/fusioninventory-android
- * @link      http://www.fusioninventory.org/
- * ------------------------------------------------------------------------------
+ *  Flyve MDM is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *  ---------------------------------------------------------------------
+ *  @author    Rafael Hernandez - &lt;rhernandez@teclib.com&gt;
+ *  @copyright Copyright Teclib. All rights reserved.
+ *  @copyright Copyright FusionInventory.
+ *  @license   GPLv3 https://www.gnu.org/licenses/gpl-3.0.html
+ *  @link      https://github.com/flyve-mdm/android-inventory-library
+ *  @link      http://flyve.org/android-inventory-library/
+ *  @link      https://flyve-mdm.com
+ *  ---------------------------------------------------------------------
  */
 
 package org.flyve.inventory.categories;
@@ -63,20 +56,20 @@ public class Envs extends Categories {
      * @param xCtx Context where this class work
      */
 	public Envs(Context xCtx) {
-<span class="fc" id="L63">        super(xCtx);</span>
+<span class="fc" id="L59">        super(xCtx);</span>
 
         try {
             //get all envs vars
-<span class="fc" id="L67">            Map&lt;String, String&gt; envs = System.getenv();</span>
-<span class="fc bfc" id="L68" title="All 2 branches covered.">            for (Map.Entry&lt;String, String&gt; entry : envs.entrySet()) {</span>
-<span class="fc" id="L69">                Category c = new Category(&quot;ENVS&quot;, &quot;envs&quot;);</span>
-<span class="fc" id="L70">                c.put(&quot;KEY&quot;, new CategoryValue(entry.getKey(), &quot;KEY&quot;, &quot;key&quot;));</span>
-<span class="fc" id="L71">                c.put(&quot;VAL&quot;, new CategoryValue(envs.get(entry.getKey()), &quot;VAL&quot;, &quot;Value&quot;));</span>
-<span class="fc" id="L72">                this.add(c);</span>
-<span class="fc" id="L73">            }</span>
-<span class="nc" id="L74">        } catch (Exception ex) {</span>
-<span class="nc" id="L75">            FILog.e(ex.getMessage());</span>
-<span class="fc" id="L76">        }</span>
-<span class="fc" id="L77">    }</span>
+<span class="fc" id="L63">            Map&lt;String, String&gt; envs = System.getenv();</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">            for (Map.Entry&lt;String, String&gt; entry : envs.entrySet()) {</span>
+<span class="fc" id="L65">                Category c = new Category(&quot;ENVS&quot;, &quot;envs&quot;);</span>
+<span class="fc" id="L66">                c.put(&quot;KEY&quot;, new CategoryValue(entry.getKey(), &quot;KEY&quot;, &quot;key&quot;));</span>
+<span class="fc" id="L67">                c.put(&quot;VAL&quot;, new CategoryValue(envs.get(entry.getKey()), &quot;VAL&quot;, &quot;Value&quot;));</span>
+<span class="fc" id="L68">                this.add(c);</span>
+<span class="fc" id="L69">            }</span>
+<span class="nc" id="L70">        } catch (Exception ex) {</span>
+<span class="nc" id="L71">            FILog.e(ex.getMessage());</span>
+<span class="fc" id="L72">        }</span>
+<span class="fc" id="L73">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span>Generated by the Android Gradle plugin 2.2.0</div></body></html>

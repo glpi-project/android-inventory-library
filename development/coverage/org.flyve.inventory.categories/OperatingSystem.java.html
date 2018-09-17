@@ -1,35 +1,28 @@
----
-layout: coverage
----
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../resources/report.css" type="text/css"/><link rel="shortcut icon" href="../resources/report.gif" type="image/gif"/><title>OperatingSystem.java</title><link rel="stylesheet" href="../resources/prettify.css" type="text/css"/><script type="text/javascript" src="../resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory.categories</a> &gt; <span class="el_source">OperatingSystem.java</span></div><h1>OperatingSystem.java</h1><pre class="source lang-java linenums">/**
+ *  LICENSE
+ * 
+ *  This file is part of Flyve MDM Inventory Library for Android.
  *
- * Copyright 2017 Teclib.
- * Copyright 2010-2016 by the FusionInventory Development
+ *  Inventory Library for Android is a subproject of Flyve MDM.
+ *  Flyve MDM is a mobile device management software.
+ * 
+ *  Flyve MDM is free software: you can redistribute it and/or
+ *  modify it under the terms of the GNU General Public License
+ *  as published by the Free Software Foundation; either version 3
+ *  of the License, or (at your option) any later version.
  *
- * http://www.fusioninventory.org/
- * https://github.com/fusioninventory/fusioninventory-android
- *
- * ------------------------------------------------------------------------
- *
- * LICENSE
- *
- * This file is part of FusionInventory project.
- *
- * FusionInventory is free software: you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- *
- * FusionInventory is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * ------------------------------------------------------------------------------
- * @update    07/06/2017
- * @license   GPLv2 https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * @link      https://github.com/fusioninventory/fusioninventory-android
- * @link      http://www.fusioninventory.org/
- * ------------------------------------------------------------------------------
+ *  Flyve MDM is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *  ---------------------------------------------------------------------
+ *  @author    Rafael Hernandez - &lt;rhernandez@teclib.com&gt;
+ *  @copyright Copyright Teclib. All rights reserved.
+ *  @license   GPLv3 https://www.gnu.org/licenses/gpl-3.0.html
+ *  @link      https://github.com/flyve-mdm/android-inventory-library
+ *  @link      http://flyve.org/android-inventory-library/
+ *  @link      https://flyve-mdm.com
+ *  ---------------------------------------------------------------------
  */
 
 package org.flyve.inventory.categories;
@@ -82,13 +75,13 @@ public class OperatingSystem extends Categories {
      */
     @Override
     public boolean equals(Object obj) {
-<span class="nc bnc" id="L82" title="All 2 branches missed.">        if (obj == null) {</span>
-<span class="nc" id="L83">            return false;</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">        if (obj == null) {</span>
+<span class="nc" id="L79">            return false;</span>
         }
-<span class="nc bnc" id="L85" title="All 2 branches missed.">        if (getClass() != obj.getClass()) {</span>
-<span class="nc" id="L86">            return false;</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">        if (getClass() != obj.getClass()) {</span>
+<span class="nc" id="L82">            return false;</span>
         }
-<span class="nc bnc" id="L88" title="All 2 branches missed.">        return (!super.equals(obj));</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">        return (!super.equals(obj));</span>
     }
 
     /**
@@ -98,10 +91,10 @@ public class OperatingSystem extends Categories {
      */
     @Override
     public int hashCode() {
-<span class="nc" id="L98">        int hash = super.hashCode();</span>
-<span class="nc bnc" id="L99" title="All 2 branches missed.">        hash = 89 * hash + (this.xCtx != null ? this.xCtx.hashCode() : 0);</span>
-<span class="nc bnc" id="L100" title="All 2 branches missed.">        hash = 89 * hash + (this.props != null ? this.props.hashCode() : 0);</span>
-<span class="nc" id="L101">        return hash;</span>
+<span class="nc" id="L94">        int hash = super.hashCode();</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">        hash = 89 * hash + (this.xCtx != null ? this.xCtx.hashCode() : 0);</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">        hash = 89 * hash + (this.props != null ? this.props.hashCode() : 0);</span>
+<span class="nc" id="L97">        return hash;</span>
     }
 
     /**
@@ -110,179 +103,179 @@ public class OperatingSystem extends Categories {
      * @param xCtx Context where this class work
      */
     public OperatingSystem(Context xCtx) {
-<span class="fc" id="L110">        super(xCtx);</span>
+<span class="fc" id="L106">        super(xCtx);</span>
 
-<span class="fc" id="L112">        this.xCtx = xCtx;</span>
+<span class="fc" id="L108">        this.xCtx = xCtx;</span>
 
         try {
-<span class="fc" id="L115">            props = System.getProperties();</span>
+<span class="fc" id="L111">            props = System.getProperties();</span>
 
-<span class="fc" id="L117">            Category c = new Category(&quot;OPERATINGSYSTEM&quot;, &quot;operatingSystem&quot;);</span>
-<span class="fc" id="L118">            String architecture = &quot;&quot;;</span>
-<span class="fc" id="L119">            String hostId = &quot;&quot;;</span>
+<span class="fc" id="L113">            Category c = new Category(&quot;OPERATINGSYSTEM&quot;, &quot;operatingSystem&quot;);</span>
+<span class="fc" id="L114">            String architecture = &quot;&quot;;</span>
+<span class="fc" id="L115">            String hostId = &quot;&quot;;</span>
 
-<span class="fc" id="L121">            ArrayList&lt;HashMap&lt;String, String&gt;&gt; arr = Utils.getDeviceProperties();</span>
-<span class="fc bfc" id="L122" title="All 2 branches covered.">            for (int i = 0; i &lt; arr.size(); i++) {</span>
-<span class="fc" id="L123">                HashMap&lt;String, String&gt; map = arr.get(i);</span>
+<span class="fc" id="L117">            ArrayList&lt;HashMap&lt;String, String&gt;&gt; arr = Utils.getDeviceProperties();</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">            for (int i = 0; i &lt; arr.size(); i++) {</span>
+<span class="fc" id="L119">                HashMap&lt;String, String&gt; map = arr.get(i);</span>
 
-<span class="pc bpc" id="L125" title="1 of 2 branches missed.">                if (map.get(&quot;ro.product.cpu.abilist&quot;)!=null) {</span>
-<span class="nc bnc" id="L126" title="All 2 branches missed.">                    if(architecture.trim().isEmpty()) {</span>
-<span class="nc" id="L127">                        architecture = map.get(&quot;ro.product.cpu.abilist&quot;);</span>
+<span class="pc bpc" id="L121" title="1 of 2 branches missed.">                if (map.get(&quot;ro.product.cpu.abilist&quot;)!=null) {</span>
+<span class="nc bnc" id="L122" title="All 2 branches missed.">                    if(architecture.trim().isEmpty()) {</span>
+<span class="nc" id="L123">                        architecture = map.get(&quot;ro.product.cpu.abilist&quot;);</span>
                     }
                 }
 
-<span class="pc bpc" id="L131" title="1 of 2 branches missed.">                if (map.get(&quot;ro.product.cpu.abilist64&quot;)!=null) {</span>
-<span class="nc bnc" id="L132" title="All 2 branches missed.">                    if(architecture.trim().isEmpty()) {</span>
-<span class="nc" id="L133">                        architecture = map.get(&quot;ro.product.cpu.abilist64&quot;);</span>
+<span class="pc bpc" id="L127" title="1 of 2 branches missed.">                if (map.get(&quot;ro.product.cpu.abilist64&quot;)!=null) {</span>
+<span class="nc bnc" id="L128" title="All 2 branches missed.">                    if(architecture.trim().isEmpty()) {</span>
+<span class="nc" id="L129">                        architecture = map.get(&quot;ro.product.cpu.abilist64&quot;);</span>
                     }
                 }
 
-<span class="fc bfc" id="L137" title="All 2 branches covered.">                if (map.get(&quot;net.hostname&quot;) != null) {</span>
-<span class="pc bpc" id="L138" title="1 of 2 branches missed.">                    if (architecture.trim().isEmpty()) {</span>
-<span class="fc" id="L139">                        hostId = map.get(&quot;net.hostname&quot;);</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">                if (map.get(&quot;net.hostname&quot;) != null) {</span>
+<span class="pc bpc" id="L134" title="1 of 2 branches missed.">                    if (architecture.trim().isEmpty()) {</span>
+<span class="fc" id="L135">                        hostId = map.get(&quot;net.hostname&quot;);</span>
                     }
                 }
             }
 
-<span class="fc" id="L144">            c.put(&quot;ARCH&quot;, new CategoryValue(architecture.trim(), &quot;ARCH&quot;, &quot;architecture&quot;));</span>
+<span class="fc" id="L140">            c.put(&quot;ARCH&quot;, new CategoryValue(architecture.trim(), &quot;ARCH&quot;, &quot;architecture&quot;));</span>
             // review SystemClock.elapsedRealtime()
-<span class="fc" id="L146">            c.put(&quot;BOOT_TIME&quot;, new CategoryValue(getBootTime(), &quot;BOOT_TIME&quot;, &quot;bootTime&quot;));</span>
-<span class="fc" id="L147">            c.put(&quot;DNS_DOMAIN&quot;, new CategoryValue(&quot; &quot;, &quot;DNS_DOMAIN&quot;, &quot;dnsDomain&quot;));</span>
-<span class="fc" id="L148">            c.put(&quot;FQDN&quot;, new CategoryValue(&quot; &quot;, &quot;FQDN&quot;, &quot;FQDN&quot;));</span>
-<span class="fc" id="L149">            String fullName = getAndroidVersion(Build.VERSION.SDK_INT) + &quot; api &quot; + Build.VERSION.SDK_INT;</span>
-<span class="fc" id="L150">            c.put(&quot;FULL_NAME&quot;, new CategoryValue(fullName, &quot;FULL_NAME&quot;, &quot;fullName&quot;));</span>
-<span class="fc" id="L151">            c.put(&quot;HOSTID&quot;, new CategoryValue(hostId, &quot;HOSTID&quot;, &quot;hostId&quot;));</span>
-<span class="fc" id="L152">            c.put(&quot;KERNEL_NAME&quot;, new CategoryValue(&quot;linux&quot;, &quot;KERNEL_NAME&quot;, &quot;kernelName&quot;));</span>
-<span class="fc" id="L153">            c.put(&quot;KERNEL_VERSION&quot;, new CategoryValue(getKernelVersion(), &quot;KERNEL_VERSION&quot;, &quot;kernelVersion&quot;));</span>
-<span class="fc" id="L154">            c.put(&quot;NAME&quot;, new CategoryValue(getAndroidVersion(Build.VERSION.SDK_INT), &quot;NAME&quot;, &quot;Name&quot;));</span>
-<span class="fc" id="L155">            c.put(&quot;SSH_KEY&quot;, new CategoryValue(&quot; &quot;, &quot;SSH_KEY&quot;, &quot;sshKey&quot;));</span>
-<span class="fc" id="L156">            c.put(&quot;VERSION&quot;, new CategoryValue(String.valueOf(Build.VERSION.SDK_INT), &quot;VERSION&quot;, &quot;Version&quot;));</span>
-<span class="fc" id="L157">            Category category = new Category(&quot;TIMEZONE&quot;, &quot;timezone&quot;);</span>
-<span class="fc" id="L158">            category.put(&quot;NAME&quot;, new CategoryValue( getTimeZoneShortName(), &quot;NAME&quot;, &quot;name&quot;));</span>
-<span class="fc" id="L159">            category.put(&quot;OFFSET&quot;, new CategoryValue(getCurrentTimezoneOffset(), &quot;OFFSET&quot;, &quot;offset&quot;));</span>
-<span class="fc" id="L160">            c.put(&quot;TIMEZONE&quot;, new CategoryValue(category));</span>
+<span class="fc" id="L142">            c.put(&quot;BOOT_TIME&quot;, new CategoryValue(getBootTime(), &quot;BOOT_TIME&quot;, &quot;bootTime&quot;));</span>
+<span class="fc" id="L143">            c.put(&quot;DNS_DOMAIN&quot;, new CategoryValue(&quot; &quot;, &quot;DNS_DOMAIN&quot;, &quot;dnsDomain&quot;));</span>
+<span class="fc" id="L144">            c.put(&quot;FQDN&quot;, new CategoryValue(&quot; &quot;, &quot;FQDN&quot;, &quot;FQDN&quot;));</span>
+<span class="fc" id="L145">            String fullName = getAndroidVersion(Build.VERSION.SDK_INT) + &quot; api &quot; + Build.VERSION.SDK_INT;</span>
+<span class="fc" id="L146">            c.put(&quot;FULL_NAME&quot;, new CategoryValue(fullName, &quot;FULL_NAME&quot;, &quot;fullName&quot;));</span>
+<span class="fc" id="L147">            c.put(&quot;HOSTID&quot;, new CategoryValue(hostId, &quot;HOSTID&quot;, &quot;hostId&quot;));</span>
+<span class="fc" id="L148">            c.put(&quot;KERNEL_NAME&quot;, new CategoryValue(&quot;linux&quot;, &quot;KERNEL_NAME&quot;, &quot;kernelName&quot;));</span>
+<span class="fc" id="L149">            c.put(&quot;KERNEL_VERSION&quot;, new CategoryValue(getKernelVersion(), &quot;KERNEL_VERSION&quot;, &quot;kernelVersion&quot;));</span>
+<span class="fc" id="L150">            c.put(&quot;NAME&quot;, new CategoryValue(getAndroidVersion(Build.VERSION.SDK_INT), &quot;NAME&quot;, &quot;Name&quot;));</span>
+<span class="fc" id="L151">            c.put(&quot;SSH_KEY&quot;, new CategoryValue(&quot; &quot;, &quot;SSH_KEY&quot;, &quot;sshKey&quot;));</span>
+<span class="fc" id="L152">            c.put(&quot;VERSION&quot;, new CategoryValue(String.valueOf(Build.VERSION.SDK_INT), &quot;VERSION&quot;, &quot;Version&quot;));</span>
+<span class="fc" id="L153">            Category category = new Category(&quot;TIMEZONE&quot;, &quot;timezone&quot;);</span>
+<span class="fc" id="L154">            category.put(&quot;NAME&quot;, new CategoryValue( getTimeZoneShortName(), &quot;NAME&quot;, &quot;name&quot;));</span>
+<span class="fc" id="L155">            category.put(&quot;OFFSET&quot;, new CategoryValue(getCurrentTimezoneOffset(), &quot;OFFSET&quot;, &quot;offset&quot;));</span>
+<span class="fc" id="L156">            c.put(&quot;TIMEZONE&quot;, new CategoryValue(category));</span>
 
-<span class="fc" id="L162">            this.add(c);</span>
+<span class="fc" id="L158">            this.add(c);</span>
 
-<span class="nc" id="L164">        } catch (Exception ex) {</span>
-<span class="nc" id="L165">            FILog.e(ex.getMessage());</span>
-<span class="fc" id="L166">        }</span>
-<span class="fc" id="L167">    }</span>
+<span class="nc" id="L160">        } catch (Exception ex) {</span>
+<span class="nc" id="L161">            FILog.e(ex.getMessage());</span>
+<span class="fc" id="L162">        }</span>
+<span class="fc" id="L163">    }</span>
 
     public String getBootTime() {
-<span class="fc" id="L170">        long milliSeconds = System.currentTimeMillis() - SystemClock.elapsedRealtime();</span>
-<span class="fc" id="L171">        SimpleDateFormat sdf = new SimpleDateFormat(&quot;yyyy-mm-dd HH:mm&quot;, Locale.getDefault());</span>
-<span class="fc" id="L172">        Date resultDate = new Date(milliSeconds);</span>
-<span class="fc" id="L173">        return sdf.format(resultDate);</span>
+<span class="fc" id="L166">        long milliSeconds = System.currentTimeMillis() - SystemClock.elapsedRealtime();</span>
+<span class="fc" id="L167">        SimpleDateFormat sdf = new SimpleDateFormat(&quot;yyyy-mm-dd HH:mm&quot;, Locale.getDefault());</span>
+<span class="fc" id="L168">        Date resultDate = new Date(milliSeconds);</span>
+<span class="fc" id="L169">        return sdf.format(resultDate);</span>
     }
 
     public String getKernelVersion() {
         try {
-<span class="nc" id="L178">            Process p = Runtime.getRuntime().exec(&quot;uname -a&quot;);</span>
+<span class="nc" id="L174">            Process p = Runtime.getRuntime().exec(&quot;uname -a&quot;);</span>
             InputStream is;
-<span class="nc bnc" id="L180" title="All 2 branches missed.">            if (p.waitFor() == 0) {</span>
-<span class="nc" id="L181">                is = p.getInputStream();</span>
+<span class="nc bnc" id="L176" title="All 2 branches missed.">            if (p.waitFor() == 0) {</span>
+<span class="nc" id="L177">                is = p.getInputStream();</span>
             } else {
-<span class="nc" id="L183">                return &quot;&quot;;</span>
+<span class="nc" id="L179">                return &quot;&quot;;</span>
             }
-<span class="nc" id="L185">            BufferedReader br = new BufferedReader(new InputStreamReader(is),</span>
+<span class="nc" id="L181">            BufferedReader br = new BufferedReader(new InputStreamReader(is),</span>
                     64);
-<span class="nc" id="L187">            String line = br.readLine();</span>
-<span class="nc" id="L188">            br.close();</span>
-<span class="nc" id="L189">            return line;</span>
-<span class="fc" id="L190">        } catch (Exception ex) {</span>
-<span class="fc" id="L191">            FILog.e(ex.getMessage());</span>
-<span class="fc" id="L192">            return &quot;N/A&quot;;</span>
+<span class="nc" id="L183">            String line = br.readLine();</span>
+<span class="nc" id="L184">            br.close();</span>
+<span class="nc" id="L185">            return line;</span>
+<span class="fc" id="L186">        } catch (Exception ex) {</span>
+<span class="fc" id="L187">            FILog.e(ex.getMessage());</span>
+<span class="fc" id="L188">            return &quot;N/A&quot;;</span>
         }
     }
 
     public String getTimeZoneShortName() {
-<span class="fc" id="L197">        TimeZone timeZone = TimeZone.getTimeZone(&quot;UTC&quot;);</span>
-<span class="fc" id="L198">        Calendar calendar = Calendar.getInstance(timeZone);</span>
-<span class="fc" id="L199">        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(&quot;EE MMM dd HH:mm:ss zzz yyyy&quot;, Locale.US);</span>
-<span class="fc" id="L200">        simpleDateFormat.setTimeZone(timeZone);</span>
+<span class="fc" id="L193">        TimeZone timeZone = TimeZone.getTimeZone(&quot;UTC&quot;);</span>
+<span class="fc" id="L194">        Calendar calendar = Calendar.getInstance(timeZone);</span>
+<span class="fc" id="L195">        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(&quot;EE MMM dd HH:mm:ss zzz yyyy&quot;, Locale.US);</span>
+<span class="fc" id="L196">        simpleDateFormat.setTimeZone(timeZone);</span>
 
-<span class="fc" id="L202">        FILog.i(&quot;Time zone: &quot; + timeZone.getID());</span>
-<span class="fc" id="L203">        FILog.i(&quot;default time zone: &quot; + TimeZone.getDefault().getID());</span>
+<span class="fc" id="L198">        FILog.i(&quot;Time zone: &quot; + timeZone.getID());</span>
+<span class="fc" id="L199">        FILog.i(&quot;default time zone: &quot; + TimeZone.getDefault().getID());</span>
 
-<span class="fc" id="L205">        FILog.i(&quot;UTC:     &quot; + simpleDateFormat.format(calendar.getTime()));</span>
-<span class="fc" id="L206">        FILog.i(&quot;Default: &quot; + calendar.getTime());</span>
-<span class="fc" id="L207">        return timeZone.getDisplayName();</span>
+<span class="fc" id="L201">        FILog.i(&quot;UTC:     &quot; + simpleDateFormat.format(calendar.getTime()));</span>
+<span class="fc" id="L202">        FILog.i(&quot;Default: &quot; + calendar.getTime());</span>
+<span class="fc" id="L203">        return timeZone.getDisplayName();</span>
     }
 
     public String getCurrentTimezoneOffset() {
 
-<span class="fc" id="L212">        TimeZone tz = TimeZone.getDefault();</span>
-<span class="fc" id="L213">        Calendar cal = GregorianCalendar.getInstance(tz);</span>
-<span class="fc" id="L214">        int offsetInMillis = tz.getOffset(cal.getTimeInMillis());</span>
+<span class="fc" id="L208">        TimeZone tz = TimeZone.getDefault();</span>
+<span class="fc" id="L209">        Calendar cal = GregorianCalendar.getInstance(tz);</span>
+<span class="fc" id="L210">        int offsetInMillis = tz.getOffset(cal.getTimeInMillis());</span>
 
-<span class="fc" id="L216">        int abs = Math.abs(offsetInMillis / 3600000);</span>
-<span class="fc" id="L217">        int abs1 = Math.abs((offsetInMillis / 60000) % 60);</span>
+<span class="fc" id="L212">        int abs = Math.abs(offsetInMillis / 3600000);</span>
+<span class="fc" id="L213">        int abs1 = Math.abs((offsetInMillis / 60000) % 60);</span>
         /*String offset = String.format(Locale.getDefault(), &quot;%02d:%02d&quot;, abs, abs1);*/
-<span class="fc" id="L219">        String offset = abs + &quot;&quot; + abs1;</span>
-<span class="pc bpc" id="L220" title="1 of 2 branches missed.">        offset = (offsetInMillis &gt;= 0 ? &quot;+&quot; : &quot;-&quot;) + offset;</span>
+<span class="fc" id="L215">        String offset = abs + &quot;&quot; + abs1;</span>
+<span class="pc bpc" id="L216" title="1 of 2 branches missed.">        offset = (offsetInMillis &gt;= 0 ? &quot;+&quot; : &quot;-&quot;) + offset;</span>
 
-<span class="fc" id="L222">        return offset;</span>
+<span class="fc" id="L218">        return offset;</span>
     }
 
     private String getAndroidVersion(int sdk) {
-<span class="pc bpc" id="L226" title="27 of 28 branches missed.">        switch (sdk) {</span>
+<span class="pc bpc" id="L222" title="27 of 28 branches missed.">        switch (sdk) {</span>
             case 1:
-<span class="nc" id="L228">                return &quot;Android 1.0&quot;;</span>
+<span class="nc" id="L224">                return &quot;Android 1.0&quot;;</span>
             case 2:
-<span class="nc" id="L230">                return &quot;Petit Four (Android 1.1)&quot;;</span>
+<span class="nc" id="L226">                return &quot;Petit Four (Android 1.1)&quot;;</span>
             case 3:
-<span class="nc" id="L232">                return &quot;Cupcake (Android 1.5)&quot;;</span>
+<span class="nc" id="L228">                return &quot;Cupcake (Android 1.5)&quot;;</span>
             case 4:
-<span class="nc" id="L234">                return &quot;Donut (Android 1.6)&quot;;</span>
+<span class="nc" id="L230">                return &quot;Donut (Android 1.6)&quot;;</span>
             case 5:
-<span class="nc" id="L236">                return &quot;Eclair (Android 2.0)&quot;;</span>
+<span class="nc" id="L232">                return &quot;Eclair (Android 2.0)&quot;;</span>
             case 6:
-<span class="nc" id="L238">                return &quot;Eclair (Android 2.0.1)&quot;;</span>
+<span class="nc" id="L234">                return &quot;Eclair (Android 2.0.1)&quot;;</span>
             case 7:
-<span class="nc" id="L240">                return &quot;Eclair (Android 2.1)&quot;;</span>
+<span class="nc" id="L236">                return &quot;Eclair (Android 2.1)&quot;;</span>
             case 8:
-<span class="nc" id="L242">                return &quot;Froyo (Android 2.2)&quot;;</span>
+<span class="nc" id="L238">                return &quot;Froyo (Android 2.2)&quot;;</span>
             case 9:
-<span class="nc" id="L244">                return &quot;Gingerbread (Android 2.3)&quot;;</span>
+<span class="nc" id="L240">                return &quot;Gingerbread (Android 2.3)&quot;;</span>
             case 10:
-<span class="nc" id="L246">                return &quot;Gingerbread (Android 2.3.3)&quot;;</span>
+<span class="nc" id="L242">                return &quot;Gingerbread (Android 2.3.3)&quot;;</span>
             case 11:
-<span class="nc" id="L248">                return &quot;Honeycomb (Android 3.0)&quot;;</span>
+<span class="nc" id="L244">                return &quot;Honeycomb (Android 3.0)&quot;;</span>
             case 12:
-<span class="nc" id="L250">                return &quot;Honeycomb (Android 3.1)&quot;;</span>
+<span class="nc" id="L246">                return &quot;Honeycomb (Android 3.1)&quot;;</span>
             case 13:
-<span class="nc" id="L252">                return &quot;Honeycomb (Android 3.2)&quot;;</span>
+<span class="nc" id="L248">                return &quot;Honeycomb (Android 3.2)&quot;;</span>
             case 14:
-<span class="nc" id="L254">                return &quot;Ice Cream Sandwich (Android 4.0)&quot;;</span>
+<span class="nc" id="L250">                return &quot;Ice Cream Sandwich (Android 4.0)&quot;;</span>
             case 15:
-<span class="nc" id="L256">                return &quot;Ice Cream Sandwich (Android 4.0.3)&quot;;</span>
+<span class="nc" id="L252">                return &quot;Ice Cream Sandwich (Android 4.0.3)&quot;;</span>
             case 16:
-<span class="fc" id="L258">                return &quot;Jelly Bean (Android 4.1)&quot;;</span>
+<span class="fc" id="L254">                return &quot;Jelly Bean (Android 4.1)&quot;;</span>
             case 17:
-<span class="nc" id="L260">                return &quot;Jelly Bean (Android 4.2)&quot;;</span>
+<span class="nc" id="L256">                return &quot;Jelly Bean (Android 4.2)&quot;;</span>
             case 18:
-<span class="nc" id="L262">                return &quot;Jelly Bean (Android 4.3)&quot;;</span>
+<span class="nc" id="L258">                return &quot;Jelly Bean (Android 4.3)&quot;;</span>
             case 19:
-<span class="nc" id="L264">                return &quot;KitKat (Android 4.4)&quot;;</span>
+<span class="nc" id="L260">                return &quot;KitKat (Android 4.4)&quot;;</span>
             case 20:
-<span class="nc" id="L266">                return &quot;KitKat Watch (Android 4.4)&quot;;</span>
+<span class="nc" id="L262">                return &quot;KitKat Watch (Android 4.4)&quot;;</span>
             case 21:
-<span class="nc" id="L268">                return &quot;Lollipop (Android 5.0)&quot;;</span>
+<span class="nc" id="L264">                return &quot;Lollipop (Android 5.0)&quot;;</span>
             case 22:
-<span class="nc" id="L270">                return &quot;Lollipop (Android 5.1)&quot;;</span>
+<span class="nc" id="L266">                return &quot;Lollipop (Android 5.1)&quot;;</span>
             case 23:
-<span class="nc" id="L272">                return &quot;Marshmallow (Android 6.0)&quot;;</span>
+<span class="nc" id="L268">                return &quot;Marshmallow (Android 6.0)&quot;;</span>
             case 24:
-<span class="nc" id="L274">                return &quot;Nougat (Android 7.0)&quot;;</span>
+<span class="nc" id="L270">                return &quot;Nougat (Android 7.0)&quot;;</span>
             case 25:
-<span class="nc" id="L276">                return &quot;Nougat (Android 7.1.1)&quot;;</span>
+<span class="nc" id="L272">                return &quot;Nougat (Android 7.1.1)&quot;;</span>
             case 26:
-<span class="nc" id="L278">                return &quot;Oreo (Android 8.0)&quot;;</span>
+<span class="nc" id="L274">                return &quot;Oreo (Android 8.0)&quot;;</span>
             case 27:
-<span class="nc" id="L280">                return &quot;Oreo (Android 8.1)&quot;;</span>
+<span class="nc" id="L276">                return &quot;Oreo (Android 8.1)&quot;;</span>
             default:
-<span class="nc" id="L282">                return &quot;&quot;;</span>
+<span class="nc" id="L278">                return &quot;&quot;;</span>
         }
     }
 }

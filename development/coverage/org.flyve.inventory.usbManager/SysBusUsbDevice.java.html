@@ -1,7 +1,32 @@
----
-layout: coverage
----
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../resources/report.css" type="text/css"/><link rel="shortcut icon" href="../resources/report.gif" type="image/gif"/><title>SysBusUsbDevice.java</title><link rel="stylesheet" href="../resources/prettify.css" type="text/css"/><script type="text/javascript" src="../resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory.usbManager</a> &gt; <span class="el_source">SysBusUsbDevice.java</span></div><h1>SysBusUsbDevice.java</h1><pre class="source lang-java linenums">package  org.flyve.inventory.usbManager;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../resources/report.css" type="text/css"/><link rel="shortcut icon" href="../resources/report.gif" type="image/gif"/><title>SysBusUsbDevice.java</title><link rel="stylesheet" href="../resources/prettify.css" type="text/css"/><script type="text/javascript" src="../resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory.usbManager</a> &gt; <span class="el_source">SysBusUsbDevice.java</span></div><h1>SysBusUsbDevice.java</h1><pre class="source lang-java linenums">/**
+ *  LICENSE
+ * 
+ *  This file is part of Flyve MDM Inventory Library for Android.
+ *
+ *  Inventory Library for Android is a subproject of Flyve MDM.
+ *  Flyve MDM is a mobile device management software.
+ * 
+ *  Flyve MDM is free software: you can redistribute it and/or
+ *  modify it under the terms of the GNU General Public License
+ *  as published by the Free Software Foundation; either version 3
+ *  of the License, or (at your option) any later version.
+ *
+ *  Flyve MDM is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *  ---------------------------------------------------------------------
+ *  @author    Rafael Hernandez - &lt;rhernandez@teclib.com&gt;
+ *  @author    Ivan del Pino    - &lt;idelpino@teclib.com&gt;
+ *  @copyright Copyright Teclib. All rights reserved.
+ *  @license   GPLv3 https://www.gnu.org/licenses/gpl-3.0.html
+ *  @link      https://github.com/flyve-mdm/android-inventory-library
+ *  @link      http://flyve.org/android-inventory-library/
+ *  @link      https://flyve-mdm.com
+ *  ---------------------------------------------------------------------
+ */
+
+package  org.flyve.inventory.usbManager;
 
 import java.io.Serializable;
 
@@ -21,7 +46,7 @@ public final class SysBusUsbDevice implements Serializable {
     private final String usbVersion;
     private final String vid;
 
-<span class="nc" id="L21">    public static final class Builder {</span>
+<span class="nc" id="L49">    public static final class Builder {</span>
         private String busNumber;
         private String deviceNumber;
         private String devicePath;
@@ -39,165 +64,165 @@ public final class SysBusUsbDevice implements Serializable {
 
         
         public Builder withVid(String val) {
-<span class="nc" id="L39">            this.vid = val;</span>
-<span class="nc" id="L40">            return this;</span>
+<span class="nc" id="L67">            this.vid = val;</span>
+<span class="nc" id="L68">            return this;</span>
         }
 
         
         public Builder withPid(String val) {
-<span class="nc" id="L45">            this.pid = val;</span>
-<span class="nc" id="L46">            return this;</span>
+<span class="nc" id="L73">            this.pid = val;</span>
+<span class="nc" id="L74">            return this;</span>
         }
 
         
         public Builder withReportedProductName(String val) {
-<span class="nc" id="L51">            this.reportedProductName = val;</span>
-<span class="nc" id="L52">            return this;</span>
+<span class="nc" id="L79">            this.reportedProductName = val;</span>
+<span class="nc" id="L80">            return this;</span>
         }
 
         
         public Builder withReportedVendorName(String val) {
-<span class="nc" id="L57">            this.reportedVendorName = val;</span>
-<span class="nc" id="L58">            return this;</span>
+<span class="nc" id="L85">            this.reportedVendorName = val;</span>
+<span class="nc" id="L86">            return this;</span>
         }
 
         
         public Builder withSerialNumber(String val) {
-<span class="nc" id="L63">            this.serialNumber = val;</span>
-<span class="nc" id="L64">            return this;</span>
+<span class="nc" id="L91">            this.serialNumber = val;</span>
+<span class="nc" id="L92">            return this;</span>
         }
 
         
         public Builder withSpeed(String val) {
-<span class="nc" id="L69">            this.speed = val;</span>
-<span class="nc" id="L70">            return this;</span>
+<span class="nc" id="L97">            this.speed = val;</span>
+<span class="nc" id="L98">            return this;</span>
         }
 
         
         public Builder withServiceClass(String val) {
-<span class="nc" id="L75">            this.serviceClass = val;</span>
-<span class="nc" id="L76">            return this;</span>
+<span class="nc" id="L103">            this.serviceClass = val;</span>
+<span class="nc" id="L104">            return this;</span>
         }
 
         
         public Builder withDeviceProtocol(String val) {
-<span class="nc" id="L81">            this.deviceProtocol = val;</span>
-<span class="nc" id="L82">            return this;</span>
+<span class="nc" id="L109">            this.deviceProtocol = val;</span>
+<span class="nc" id="L110">            return this;</span>
         }
 
         
         public Builder withMaxPower(String val) {
-<span class="nc" id="L87">            this.maxPower = val;</span>
-<span class="nc" id="L88">            return this;</span>
+<span class="nc" id="L115">            this.maxPower = val;</span>
+<span class="nc" id="L116">            return this;</span>
         }
 
         
         public Builder withDeviceSubClass(String val) {
-<span class="nc" id="L93">            this.deviceSubClass = val;</span>
-<span class="nc" id="L94">            return this;</span>
+<span class="nc" id="L121">            this.deviceSubClass = val;</span>
+<span class="nc" id="L122">            return this;</span>
         }
 
         
         public Builder withBusNumber(String val) {
-<span class="nc" id="L99">            this.busNumber = val;</span>
-<span class="nc" id="L100">            return this;</span>
+<span class="nc" id="L127">            this.busNumber = val;</span>
+<span class="nc" id="L128">            return this;</span>
         }
 
         
         public Builder withDeviceNumber(String val) {
-<span class="nc" id="L105">            this.deviceNumber = val;</span>
-<span class="nc" id="L106">            return this;</span>
+<span class="nc" id="L133">            this.deviceNumber = val;</span>
+<span class="nc" id="L134">            return this;</span>
         }
 
         
         public Builder withUsbVersion(String val) {
-<span class="nc" id="L111">            this.usbVersion = val;</span>
-<span class="nc" id="L112">            return this;</span>
+<span class="nc" id="L139">            this.usbVersion = val;</span>
+<span class="nc" id="L140">            return this;</span>
         }
 
         
         public Builder withDevicePath(String val) {
-<span class="nc" id="L117">            this.devicePath = val;</span>
-<span class="nc" id="L118">            return this;</span>
+<span class="nc" id="L145">            this.devicePath = val;</span>
+<span class="nc" id="L146">            return this;</span>
         }
 
         
         public SysBusUsbDevice build() {
-<span class="nc" id="L123">            return new SysBusUsbDevice(this);</span>
+<span class="nc" id="L151">            return new SysBusUsbDevice(this);</span>
         }
     }
 
-<span class="nc" id="L127">    private SysBusUsbDevice(Builder builder) {</span>
-<span class="nc" id="L128">        this.vid = builder.vid;</span>
-<span class="nc" id="L129">        this.pid = builder.pid;</span>
-<span class="nc" id="L130">        this.reportedProductName = builder.reportedProductName;</span>
-<span class="nc" id="L131">        this.reportedVendorName = builder.reportedVendorName;</span>
-<span class="nc" id="L132">        this.serialNumber = builder.serialNumber;</span>
-<span class="nc" id="L133">        this.speed = builder.speed;</span>
-<span class="nc" id="L134">        this.serviceClass = builder.serviceClass;</span>
-<span class="nc" id="L135">        this.deviceProtocol = builder.deviceProtocol;</span>
-<span class="nc" id="L136">        this.maxPower = builder.maxPower;</span>
-<span class="nc" id="L137">        this.deviceSubClass = builder.deviceSubClass;</span>
-<span class="nc" id="L138">        this.busNumber = builder.busNumber;</span>
-<span class="nc" id="L139">        this.deviceNumber = builder.deviceNumber;</span>
-<span class="nc" id="L140">        this.usbVersion = builder.usbVersion;</span>
-<span class="nc" id="L141">        this.devicePath = builder.devicePath;</span>
-<span class="nc" id="L142">    }</span>
+<span class="nc" id="L155">    private SysBusUsbDevice(Builder builder) {</span>
+<span class="nc" id="L156">        this.vid = builder.vid;</span>
+<span class="nc" id="L157">        this.pid = builder.pid;</span>
+<span class="nc" id="L158">        this.reportedProductName = builder.reportedProductName;</span>
+<span class="nc" id="L159">        this.reportedVendorName = builder.reportedVendorName;</span>
+<span class="nc" id="L160">        this.serialNumber = builder.serialNumber;</span>
+<span class="nc" id="L161">        this.speed = builder.speed;</span>
+<span class="nc" id="L162">        this.serviceClass = builder.serviceClass;</span>
+<span class="nc" id="L163">        this.deviceProtocol = builder.deviceProtocol;</span>
+<span class="nc" id="L164">        this.maxPower = builder.maxPower;</span>
+<span class="nc" id="L165">        this.deviceSubClass = builder.deviceSubClass;</span>
+<span class="nc" id="L166">        this.busNumber = builder.busNumber;</span>
+<span class="nc" id="L167">        this.deviceNumber = builder.deviceNumber;</span>
+<span class="nc" id="L168">        this.usbVersion = builder.usbVersion;</span>
+<span class="nc" id="L169">        this.devicePath = builder.devicePath;</span>
+<span class="nc" id="L170">    }</span>
 
     public String getBusNumber() {
-<span class="nc" id="L145">        return this.busNumber;</span>
+<span class="nc" id="L173">        return this.busNumber;</span>
     }
 
     public String getServiceClass() {
-<span class="nc" id="L149">        return this.serviceClass;</span>
+<span class="nc" id="L177">        return this.serviceClass;</span>
     }
 
     public String getDeviceNumber() {
-<span class="nc" id="L153">        return this.deviceNumber;</span>
+<span class="nc" id="L181">        return this.deviceNumber;</span>
     }
 
     public String getDevicePath() {
-<span class="nc" id="L157">        return this.devicePath;</span>
+<span class="nc" id="L185">        return this.devicePath;</span>
     }
 
     public String getDeviceProtocol() {
-<span class="nc" id="L161">        return this.deviceProtocol;</span>
+<span class="nc" id="L189">        return this.deviceProtocol;</span>
     }
 
     public String getDeviceSubClass() {
-<span class="nc" id="L165">        return this.deviceSubClass;</span>
+<span class="nc" id="L193">        return this.deviceSubClass;</span>
     }
 
     public String getMaxPower() {
-<span class="nc" id="L169">        return this.maxPower;</span>
+<span class="nc" id="L197">        return this.maxPower;</span>
     }
 
     public String getPid() {
-<span class="nc" id="L173">        return this.pid;</span>
+<span class="nc" id="L201">        return this.pid;</span>
     }
 
     public String getReportedProductName() {
-<span class="nc" id="L177">        return this.reportedProductName;</span>
+<span class="nc" id="L205">        return this.reportedProductName;</span>
     }
 
     public String getReportedVendorName() {
-<span class="nc" id="L181">        return this.reportedVendorName;</span>
+<span class="nc" id="L209">        return this.reportedVendorName;</span>
     }
 
     public String getSerialNumber() {
-<span class="nc" id="L185">        return this.serialNumber;</span>
+<span class="nc" id="L213">        return this.serialNumber;</span>
     }
 
     public String getSpeed() {
-<span class="nc" id="L189">        return this.speed;</span>
+<span class="nc" id="L217">        return this.speed;</span>
     }
 
     public String getUsbVersion() {
-<span class="nc" id="L193">        return this.usbVersion;</span>
+<span class="nc" id="L221">        return this.usbVersion;</span>
     }
 
     public String getVid() {
-<span class="nc" id="L197">        return this.vid;</span>
+<span class="nc" id="L225">        return this.vid;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span>Generated by the Android Gradle plugin 2.2.0</div></body></html>
