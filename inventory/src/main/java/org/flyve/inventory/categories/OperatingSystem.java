@@ -34,13 +34,11 @@ package org.flyve.inventory.categories;
 import android.content.Context;
 import android.os.Build;
 import android.os.SystemClock;
-import android.provider.Settings;
 
 import org.flyve.inventory.FILog;
 import org.flyve.inventory.Utils;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
@@ -50,7 +48,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Properties;
 import java.util.TimeZone;
 
@@ -149,13 +146,18 @@ public class OperatingSystem extends Categories {
             c.put("BOOT_TIME", new CategoryValue(getBootTime(), "BOOT_TIME", "bootTime"));
             c.put("DNS_DOMAIN", new CategoryValue(" ", "DNS_DOMAIN", "dnsDomain"));
             c.put("FQDN", new CategoryValue(" ", "FQDN", "FQDN"));
-            c.put("FULL_NAME", new CategoryValue(getAndroidVersion(Build.VERSION.SDK_INT) + " api " + Build.VERSION.SDK_INT , "FULL_NAME", "fullName"));
+            String fullName = getAndroidVersion(Build.VERSION.SDK_INT) + " api " + Build.VERSION.SDK_INT;
+            c.put("FULL_NAME", new CategoryValue(fullName, "FULL_NAME", "fullName"));
             c.put("HOSTID", new CategoryValue(hostId, "HOSTID", "hostId"));
             c.put("KERNEL_NAME", new CategoryValue("linux", "KERNEL_NAME", "kernelName"));
             c.put("KERNEL_VERSION", new CategoryValue(getKernelVersion(), "KERNEL_VERSION", "kernelVersion"));
             c.put("NAME", new CategoryValue(getAndroidVersion(Build.VERSION.SDK_INT), "NAME", "Name"));
             c.put("SSH_KEY", new CategoryValue(" ", "SSH_KEY", "sshKey"));
             c.put("VERSION", new CategoryValue(String.valueOf(Build.VERSION.SDK_INT), "VERSION", "Version"));
+            Category category = new Category("TIMEZONE", "timezone");
+            category.put("NAME", new CategoryValue( getTimeZoneShortName(), "NAME", "name"));
+            category.put("OFFSET", new CategoryValue(getCurrentTimezoneOffset(), "OFFSET", "offset"));
+            c.put("TIMEZONE", new CategoryValue(category));
 
             this.add(c);
 
@@ -164,15 +166,14 @@ public class OperatingSystem extends Categories {
         }
     }
 
-    private String getBootTime() {
+    public String getBootTime() {
         long milliSeconds = System.currentTimeMillis() - SystemClock.elapsedRealtime();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd HH:mm", Locale.getDefault());
         Date resultDate = new Date(milliSeconds);
-        String format = sdf.format(resultDate);
-        return format;
+        return sdf.format(resultDate);
     }
 
-    public static String getKernelVersion() {
+    public String getKernelVersion() {
         try {
             Process p = Runtime.getRuntime().exec("uname -a");
             InputStream is;
@@ -190,6 +191,36 @@ public class OperatingSystem extends Categories {
             FILog.e(ex.getMessage());
             return "N/A";
         }
+    }
+
+    public String getTimeZoneShortName() {
+        TimeZone timeZone = TimeZone.getTimeZone("UTC");
+        Calendar calendar = Calendar.getInstance(timeZone);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EE MMM dd HH:mm:ss zzz yyyy", Locale.US);
+        simpleDateFormat.setTimeZone(timeZone);
+
+        System.out.println("Time zone: " + timeZone.getID());
+        System.out.println("default time zone: " + TimeZone.getDefault().getID());
+        System.out.println();
+
+        System.out.println("UTC:     " + simpleDateFormat.format(calendar.getTime()));
+        System.out.println("Default: " + calendar.getTime());
+        return timeZone.getDisplayName();
+    }
+
+    public String getCurrentTimezoneOffset() {
+
+        TimeZone tz = TimeZone.getDefault();
+        Calendar cal = GregorianCalendar.getInstance(tz);
+        int offsetInMillis = tz.getOffset(cal.getTimeInMillis());
+
+        int abs = Math.abs(offsetInMillis / 3600000);
+        int abs1 = Math.abs((offsetInMillis / 60000) % 60);
+        /*String offset = String.format(Locale.getDefault(), "%02d:%02d", abs, abs1);*/
+        String offset = abs + "" + abs1;
+        offset = (offsetInMillis >= 0 ? "+" : "-") + offset;
+
+        return offset;
     }
 
     private String getAndroidVersion(int sdk) {
