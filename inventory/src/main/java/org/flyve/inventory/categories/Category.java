@@ -34,6 +34,7 @@ import org.flyve.inventory.FILog;
 import org.json.JSONObject;
 import org.xmlpull.v1.XmlSerializer;
 
+import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -117,7 +118,9 @@ public class Category extends LinkedHashMap<String, CategoryValue> {
      */
     public CategoryValue put(String key, CategoryValue value) {
        //Do not add value if it's null, blank or "unknow"
-       if (value != null && !value.getValue().equals("") && !value.getValue().equals(Build.UNKNOWN)) {
+       if (value.getCategory() != null) {
+           return super.put(value.getValue(), value);
+       } else if (value != null && !value.getValue().equals("") && !value.getValue().equals(Build.UNKNOWN)) {
     	   return super.put(key, value);
        } else {
     	   return null;
@@ -133,23 +136,35 @@ public class Category extends LinkedHashMap<String, CategoryValue> {
             serializer.startTag(null, mType);
 
             for (Map.Entry<String, CategoryValue> entry : this.entrySet()) {
-                serializer.startTag(null, this.get(entry.getKey()).getXmlName());
-
-                String value;
-                if(this.get(entry.getKey()).hasCDATA()) {
-                    value = "<![CDATA[" + String.valueOf(this.get(entry.getKey()).getValue()) + "]]>";
+                if (this.get(entry.getKey()).getCategory() != null) {
+                    Category category = this.get(entry.getKey()).getCategory();
+                    serializer.startTag(null, category.getType());
+                    for (Map.Entry<String, CategoryValue> entries : category.entrySet()) {
+                        String xmlName = entries.getKey();
+                        String value = category.get(xmlName).getValue();
+                        setValueXML(serializer, xmlName, value, false);
+                    }
+                    serializer.endTag(null, category.getType());
                 } else {
-                    value = String.valueOf(this.get(entry.getKey()).getValue());
+                    String xmlName = this.get(entry.getKey()).getXmlName();
+                    String value = this.get(entry.getKey()).getValue();
+                    Boolean hasCDATA = this.get(entry.getKey()).hasCDATA();
+                    setValueXML(serializer, xmlName, value, hasCDATA);
                 }
-
-                serializer.text(value);
-                serializer.endTag(null, this.get(entry.getKey()).getXmlName());
             }
 
             serializer.endTag(null, mType);
         } catch (Exception ex) {
             FILog.d(ex.getMessage());
         }
+    }
+
+    private void setValueXML(XmlSerializer serializer, String xmlName, String xmlValue, boolean hasCData) throws IOException {
+        serializer.startTag(null, xmlName);
+        String textValue;
+        textValue = hasCData ? "<![CDATA[" + String.valueOf(xmlValue) + "]]>" : String.valueOf(xmlValue);
+        serializer.text(textValue);
+        serializer.endTag(null, xmlName);
     }
 
     public void toXMLWithoutPrivateData(XmlSerializer serializer) {
