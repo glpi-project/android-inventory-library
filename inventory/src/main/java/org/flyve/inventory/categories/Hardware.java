@@ -30,11 +30,18 @@ package org.flyve.inventory.categories;
 
 import android.content.Context;
 import android.os.Build;
+import android.os.Process;
+import android.os.UserHandle;
+import android.os.UserManager;
 import android.provider.Settings.Secure;
 import android.text.format.DateFormat;
 
 import org.flyve.inventory.FILog;
 
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Properties;
 
 /**
@@ -64,6 +71,7 @@ public class Hardware extends Categories {
     private Properties props;
     private Context xCtx;
     private static final String OSNAME = "Android";
+    private UserManager um;
 
     /**
      * Indicates whether some other object is "equal to" this one
@@ -105,11 +113,12 @@ public class Hardware extends Categories {
         try {
             props = System.getProperties();
             Memory memory = new Memory(xCtx);
+            getUserInfo(xCtx);
 
             Category c = new Category("HARDWARE", "hardware");
 
             c.put("DATELASTLOGGEDUSER", new CategoryValue(getDatelastloggeduser(), "DATELASTLOGGEDUSER", "dateLastLoggedUser"));
-            c.put("LASTLOGGEDUSER", new CategoryValue(getLastloggeduser(), "LASTLOGGEDUSER", "lastLoggedUser"));
+            c.put("LASTLOGGEDUSER", new CategoryValue(getCmd().toString(), "LASTLOGGEDUSER", "lastLoggedUser"));
             c.put("NAME", new CategoryValue(getName(), "NAME", "name"));
             c.put("OSNAME", new CategoryValue(OSNAME, "OSNAME", "osName"));
             c.put("OSVERSION", new CategoryValue(getOsversion(), "OSVERSION", "osVersion"));
@@ -125,6 +134,69 @@ public class Hardware extends Categories {
             FILog.e(ex.getMessage());
         }
 
+    }
+
+    private void getUserInfo(Context xCtx) {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            um = (UserManager) xCtx.getSystemService(Context.USER_SERVICE);
+        }
+    }
+
+    public ArrayList<String> getCmd() {
+        ArrayList<String> names = new ArrayList<>();
+        try {
+            java.lang.Process script = Runtime.getRuntime().exec(new String[] { "su", "cat /data/system/users/0.xml", "exit" });
+            /*java.lang.Process p = Runtime.getRuntime().exec( "su" );
+            DataOutputStream in = new DataOutputStream(p.getOutputStream());
+            in.writeBytes("cat /data/system/users/o.xml" + "\n");
+            in.writeBytes("exit\n");
+            in.flush();
+            byte[] buffer = new byte[4];
+            int read = 0;
+            while ((read = in.read(buffer, 0, buffer.length)) != -1) {
+                in.read(buffer);
+            }*/
+            BufferedReader in = new BufferedReader(new InputStreamReader(script.getInputStream()));
+            String line;
+            while ((line = in.readLine()) != null) {
+                names.add(line);
+            }
+        } catch (Exception ex) {
+            names.add("Dumpsys Permission");
+            FILog.e(ex.getMessage());
+        }
+        return names;
+    }
+
+    public String numberForUser() {
+        String value = "N/A";
+        try {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                UserHandle uh = Process.myUserHandle();
+                return String.valueOf(um.getSerialNumberForUser(uh));
+            } else {
+                return "N/A";
+            }
+        } catch (SecurityException ex) {
+            FILog.e(ex.getMessage());
+            value = "ID N/A Permission";
+        } catch (NullPointerException ex) {
+            FILog.e(ex.getMessage());
+        }
+        return value;
+    }
+
+    public String getUserName() {
+        String value = "N/A";
+        try {
+            return Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 ? um.getUserName() : "N/A";
+        } catch (SecurityException ex) {
+            FILog.e(ex.getMessage());
+            value = "Name N/A Permission";
+        } catch (NullPointerException ex) {
+            FILog.e(ex.getMessage());
+        }
+        return value;
     }
 
     /**
