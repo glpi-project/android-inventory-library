@@ -49,7 +49,7 @@ Dir.glob("development/coverage/**/*.html") do |search_file| # note one extra "*"
 end
 
 # Add header to all files on the folder androidTests
-Dir.glob("development/test-reports/**/*.html") do |search_file| # note one extra "*"
+Dir.glob("development/test-report/**/*.html") do |search_file| # note one extra "*"
     file = File.open("#{search_file}", "r+")
     buffer = file.read
     file.rewind
