@@ -17,6 +17,7 @@
  *  GNU General Public License for more details.
  *  ---------------------------------------------------------------------
  *  @author    Rafael Hernandez - <rhernandez@teclib.com>
+ *  @author    Ivan del Pino    - <idelpino@teclib.com>
  *  @copyright Copyright Teclib. All rights reserved.
  *  @copyright Copyright FusionInventory.
  *  @license   GPLv3 https://www.gnu.org/licenses/gpl-3.0.html
@@ -55,7 +56,10 @@ import static org.junit.Assert.assertNotEquals;
         assertNotEquals("", drives.getVolumn(froot));
         assertNotEquals("", drives.getVolumn(fexternal));
         assertNotEquals("", drives.getVolumn(fdata));
-        assertNotEquals("", drives.getVolumn(fcache));
+        String secondaryStorage = System.getenv("SECONDARY_STORAGE");
+        if (secondaryStorage != null) {
+            assertNotEquals("", drives.getVolumn(new File(secondaryStorage)));
+        }
     }
 
     @Test
@@ -65,6 +69,10 @@ import static org.junit.Assert.assertNotEquals;
         assertNotEquals("", drives.getTotal(fexternal));
         assertNotEquals("", drives.getTotal(fdata));
         assertNotEquals("", drives.getTotal(fcache));
+        String secondaryStorage = System.getenv("SECONDARY_STORAGE");
+        if (secondaryStorage != null) {
+            assertNotEquals("", drives.getTotal(new File(secondaryStorage)));
+        }
     }
 
     @Test
@@ -74,6 +82,10 @@ import static org.junit.Assert.assertNotEquals;
         assertNotEquals("", drives.getFreeSpace(fexternal));
         assertNotEquals("", drives.getFreeSpace(fdata));
         assertNotEquals("", drives.getFreeSpace(fcache));
+        String secondaryStorage = System.getenv("SECONDARY_STORAGE");
+        if (secondaryStorage != null) {
+            assertNotEquals("", drives.getFreeSpace(new File(secondaryStorage)));
+        }
     }
 
     @Test
@@ -83,6 +95,10 @@ import static org.junit.Assert.assertNotEquals;
         assertNotEquals("", drives.getFileSystem(fexternal));
         assertNotEquals("", drives.getFileSystem(fdata));
         assertNotEquals("", drives.getFileSystem(fcache));
+        String secondaryStorage = System.getenv("SECONDARY_STORAGE");
+        if (secondaryStorage != null) {
+            assertNotEquals("", drives.getFileSystem(new File(secondaryStorage)));
+        }
     }
 
 }

@@ -17,6 +17,7 @@
  *  GNU General Public License for more details.
  *  ---------------------------------------------------------------------
  *  @author    Rafael Hernandez - <rhernandez@teclib.com>
+ *  @author    Ivan del Pino    - <idelpino@teclib.com>
  *  @copyright Copyright Teclib. All rights reserved.
  *  @copyright Copyright FusionInventory.
  *  @license   GPLv3 https://www.gnu.org/licenses/gpl-3.0.html
@@ -68,6 +69,10 @@ public class Drives extends Categories {
         this.addStorage(Environment.getExternalStorageDirectory());
 	    this.addStorage(Environment.getDataDirectory());
 	    this.addStorage(Environment.getDownloadCacheDirectory());
+        String secondaryStorage = System.getenv("SECONDARY_STORAGE");
+        if (secondaryStorage != null) {
+            this.addStorage(new File(secondaryStorage));
+        }
     }
     
     /**
