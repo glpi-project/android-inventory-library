@@ -17,6 +17,7 @@
  *  GNU General Public License for more details.
  *  ---------------------------------------------------------------------
  *  @author    Rafael Hernandez - <rhernandez@teclib.com>
+ *  @author    Ivan del Pino    - <idelpino@teclib.com>
  *  @copyright Copyright Teclib. All rights reserved.
  *  @copyright Copyright FusionInventory.
  *  @license   GPLv3 https://www.gnu.org/licenses/gpl-3.0.html
@@ -80,7 +81,43 @@ public class SoftwareTest {
         List<ApplicationInfo> packages = packageManager.getInstalledApplications(PackageManager.GET_META_DATA);
 
         for (ApplicationInfo p : packages) {
-            assertNotEquals("", software.getFilesize(p));
+            assertNotEquals("", software.getFileSize(p));
+        }
+    }
+
+    @Test
+    public void getFolder() throws Exception {
+        Software software = new Software(appContext);
+
+        PackageManager packageManager = appContext.getPackageManager();
+        List<ApplicationInfo> packages = packageManager.getInstalledApplications(PackageManager.GET_META_DATA);
+
+        for (ApplicationInfo p : packages) {
+            assertNotEquals("", software.getFolder(p));
+        }
+    }
+
+    @Test
+    public void getRemovable() throws Exception {
+        Software software = new Software(appContext);
+
+        PackageManager packageManager = appContext.getPackageManager();
+        List<ApplicationInfo> packages = packageManager.getInstalledApplications(PackageManager.GET_META_DATA);
+
+        for (ApplicationInfo p : packages) {
+            assertNotEquals("", software.getRemovable(p));
+        }
+    }
+
+    @Test
+    public void getUserID() throws Exception {
+        Software software = new Software(appContext);
+
+        PackageManager packageManager = appContext.getPackageManager();
+        List<ApplicationInfo> packages = packageManager.getInstalledApplications(PackageManager.GET_META_DATA);
+
+        for (ApplicationInfo p : packages) {
+            assertNotEquals("", software.getUserID(p));
         }
     }
 

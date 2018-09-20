@@ -17,6 +17,7 @@
  *  GNU General Public License for more details.
  *  ---------------------------------------------------------------------
  *  @author    Rafael Hernandez - <rhernandez@teclib.com>
+ *  @author    Ivan del Pino    - <idelpino@teclib.com>
  *  @copyright Copyright Teclib. All rights reserved.
  *  @license   GPLv3 https://www.gnu.org/licenses/gpl-3.0.html
  *  @link      https://github.com/flyve-mdm/android-inventory-library
@@ -32,10 +33,10 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.content.pm.PackageStats;
 
 import org.flyve.inventory.FILog;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -98,14 +99,15 @@ public class Software extends Categories {
 
                 Category c = new Category("SOFTWARES", "softwares");
 
-                String fileSize = getFilesize(p);
-
                 c.put("NAME", new CategoryValue(getName(p), "NAME", "name", false, true));
                 c.put("COMMENTS", new CategoryValue(getPackage(p), "COMMENTS", "comments"));
                 c.put("VERSION", new CategoryValue(getVersion(p), "VERSION", "version"));
-                c.put("FILESIZE", new CategoryValue(fileSize, "FILESIZE", "fileSize"));
+                c.put("FILESIZE", new CategoryValue(getFileSize(p), "FILESIZE", "fileSize"));
                 c.put("FROM", new CategoryValue(FROM, "FROM", "from"));
                 c.put("INSTALLDATE", new CategoryValue(getInstallDate(p), "INSTALLDATE", "installDate"));
+                c.put("FOLDER", new CategoryValue(getFolder(p), "FOLDER", "folder"));
+                c.put("NO_REMOVE", new CategoryValue(getRemovable(p), "NO_REMOVE", "no_remove"));
+                c.put("USERID", new CategoryValue(getUserID(p), "USERID", "userid"));
 
                 this.add(c);
 
@@ -168,9 +170,49 @@ public class Software extends Categories {
      * @param p ApplicationInfo
      * @return string the sum of the cache, code and data size of the application
      */
-    public String getFilesize(ApplicationInfo p) {
-        PackageStats stats = new PackageStats(p.packageName);
-        return String.valueOf(stats.cacheSize + stats.codeSize + stats.dataSize);
+    public String getFileSize(ApplicationInfo p) throws NameNotFoundException {
+        File file = new File(packageManager.getApplicationInfo(p.packageName, 0).publicSourceDir);
+        return String.valueOf(file.length());
+    }
 
+    /**
+     * Get the folder of the application
+     * @param p ApplicationInfo
+     * @return string folder of the application
+     */
+    public String getFolder(ApplicationInfo p) throws NameNotFoundException {
+        File file = new File(packageManager.getApplicationInfo(p.packageName, 0).publicSourceDir);
+        return file.getAbsolutePath().substring(0, file.getAbsolutePath().lastIndexOf("/"));
+    }
+
+    /**
+     * Get if is removable the application
+     * @param p ApplicationInfo
+     * @return string 0 the application be uninstalled or 1 the application can be uninstalled
+     */
+    public String getRemovable(ApplicationInfo p) throws NameNotFoundException {
+        File file = new File(packageManager.getApplicationInfo(p.packageName, 0).publicSourceDir);
+        boolean vendor = file.getAbsolutePath().contains("/system/vendor/operator/");
+        boolean data = file.getAbsolutePath().contains("/data/app/");
+        boolean system = file.getAbsolutePath().contains("/system/app/");
+        boolean systemPriv = file.getAbsolutePath().contains("/system/priv-app/");
+        boolean framework = file.getAbsolutePath().contains("/system/framework/");
+        boolean plugin = file.getAbsolutePath().contains("/system/plugin/");
+        if (vendor || data) {
+            return "1";
+        } else if (system || systemPriv || framework || plugin) {
+            return "0";
+        } else {
+            return "1";
+        }
+    }
+
+    /**
+     * Get the userId of the application
+     * @param p ApplicationInfo
+     * @return string userId of the application
+     */
+    public String getUserID(ApplicationInfo p) {
+        return String.valueOf(p.uid);
     }
 }
