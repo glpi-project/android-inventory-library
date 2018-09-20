@@ -2,6 +2,41 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.9.0"></a>
+# [0.9.0](https://github.com/flyve-mdm/android-inventory-library/compare/0.8.6...0.9.0) (2018-09-20)
+
+
+### Bug Fixes
+
+* **battery:** update get information battery ([231185c](https://github.com/flyve-mdm/android-inventory-library/commit/231185c))
+* **drives:** add information about external removable storage ([6c43dc9](https://github.com/flyve-mdm/android-inventory-library/commit/6c43dc9))
+* **simcards:** get state condition changed ([17ec693](https://github.com/flyve-mdm/android-inventory-library/commit/17ec693))
+
+
+### Features
+
+* **battery:** add capacity information ([0b12b2e](https://github.com/flyve-mdm/android-inventory-library/commit/0b12b2e))
+* **bios:** add information about BIOS and Unit Test ([#148](https://github.com/flyve-mdm/android-inventory-library/issues/148)) ([2eaccc0](https://github.com/flyve-mdm/android-inventory-library/commit/2eaccc0))
+* **controllers:** add information about controllers ([8ba6927](https://github.com/flyve-mdm/android-inventory-library/commit/8ba6927))
+* **CPUs:** add information about CPUs and Unit Test ([0bbf28e](https://github.com/flyve-mdm/android-inventory-library/commit/0bbf28e))
+* **drives:** add information about type file system and enhance free space ([1a2964f](https://github.com/flyve-mdm/android-inventory-library/commit/1a2964f))
+* **memories:** add information about speed and type memories ([e1d38bf](https://github.com/flyve-mdm/android-inventory-library/commit/e1d38bf))
+* **network:** add information about Networks and test unit ([b8cef7b](https://github.com/flyve-mdm/android-inventory-library/commit/b8cef7b))
+* **network:** add information about Networks and test unit ([8c231b6](https://github.com/flyve-mdm/android-inventory-library/commit/8c231b6))
+* **os:** add information about operating system ([8db5803](https://github.com/flyve-mdm/android-inventory-library/commit/8db5803))
+* **os:** add information about operating system ([32d0f87](https://github.com/flyve-mdm/android-inventory-library/commit/32d0f87))
+* **OS:** add information about boot time and hostID ([1a669c1](https://github.com/flyve-mdm/android-inventory-library/commit/1a669c1))
+* **sim:** add information about multiples Simcards ([c5ff02e](https://github.com/flyve-mdm/android-inventory-library/commit/c5ff02e))
+* **usb:** add real information about usb devices and test unit ([3f78c57](https://github.com/flyve-mdm/android-inventory-library/commit/3f78c57))
+* **usb:** add test unit usb devices ([9f29a9a](https://github.com/flyve-mdm/android-inventory-library/commit/9f29a9a))
+
+
+### Performance Improvements
+
+* **os:** change log ([94c2bbf](https://github.com/flyve-mdm/android-inventory-library/commit/94c2bbf))
+
+
+
 <a name="0.8.6"></a>
 ## [0.8.6](https://github.com/flyve-mdm/android-inventory-library/compare/0.8.5...0.8.6) (2018-07-12)
 
