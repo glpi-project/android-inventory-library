@@ -1,6 +1,3 @@
----
-layout: coverage
----
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../resources/report.css" type="text/css"/><link rel="shortcut icon" href="../resources/report.gif" type="image/gif"/><title>Software.java</title><link rel="stylesheet" href="../resources/prettify.css" type="text/css"/><script type="text/javascript" src="../resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory.categories</a> &gt; <span class="el_source">Software.java</span></div><h1>Software.java</h1><pre class="source lang-java linenums">/**
  *  LICENSE
  * 
@@ -20,6 +17,7 @@ layout: coverage
  *  GNU General Public License for more details.
  *  ---------------------------------------------------------------------
  *  @author    Rafael Hernandez - &lt;rhernandez@teclib.com&gt;
+ *  @author    Ivan del Pino    - &lt;idelpino@teclib.com&gt;
  *  @copyright Copyright Teclib. All rights reserved.
  *  @license   GPLv3 https://www.gnu.org/licenses/gpl-3.0.html
  *  @link      https://github.com/flyve-mdm/android-inventory-library
@@ -35,10 +33,10 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.content.pm.PackageStats;
 
 import org.flyve.inventory.FILog;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -67,13 +65,13 @@ public class Software extends Categories {
      */
     @Override
     public boolean equals(Object obj) {
-<span class="nc bnc" id="L67" title="All 2 branches missed.">        if (obj == null) {</span>
-<span class="nc" id="L68">            return false;</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">        if (obj == null) {</span>
+<span class="nc" id="L69">            return false;</span>
         }
-<span class="nc bnc" id="L70" title="All 2 branches missed.">        if (getClass() != obj.getClass()) {</span>
-<span class="nc" id="L71">            return false;</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">        if (getClass() != obj.getClass()) {</span>
+<span class="nc" id="L72">            return false;</span>
         }
-<span class="nc bnc" id="L73" title="All 2 branches missed.">        return (!super.equals(obj));</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">        return (!super.equals(obj));</span>
     }
 
     /**
@@ -82,9 +80,9 @@ public class Software extends Categories {
      */
     @Override
     public int hashCode() {
-<span class="nc" id="L82">        int hash = super.hashCode();</span>
-<span class="nc bnc" id="L83" title="All 2 branches missed.">        hash = 89 * hash + (this.packageManager != null ? this.packageManager.hashCode() : 0);</span>
-<span class="nc" id="L84">        return hash;</span>
+<span class="nc" id="L83">        int hash = super.hashCode();</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">        hash = 89 * hash + (this.packageManager != null ? this.packageManager.hashCode() : 0);</span>
+<span class="nc" id="L85">        return hash;</span>
     }
 
     /**
@@ -92,31 +90,32 @@ public class Software extends Categories {
     * @param xCtx Context where this class work
     */
     public Software(Context xCtx) {
-<span class="fc" id="L92">        super(xCtx);</span>
+<span class="fc" id="L93">        super(xCtx);</span>
         try {
-<span class="fc" id="L94">            packageManager = xCtx.getPackageManager();</span>
-<span class="fc" id="L95">            List&lt;ApplicationInfo&gt; packages = packageManager.getInstalledApplications(PackageManager.GET_META_DATA);</span>
+<span class="fc" id="L95">            packageManager = xCtx.getPackageManager();</span>
+<span class="fc" id="L96">            List&lt;ApplicationInfo&gt; packages = packageManager.getInstalledApplications(PackageManager.GET_META_DATA);</span>
 
-<span class="fc bfc" id="L97" title="All 2 branches covered.">            for (ApplicationInfo p : packages) {</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">            for (ApplicationInfo p : packages) {</span>
 
-<span class="fc" id="L99">                Category c = new Category(&quot;SOFTWARES&quot;, &quot;softwares&quot;);</span>
+<span class="fc" id="L100">                Category c = new Category(&quot;SOFTWARES&quot;, &quot;softwares&quot;);</span>
 
-<span class="fc" id="L101">                String fileSize = getFilesize(p);</span>
+<span class="fc" id="L102">                c.put(&quot;NAME&quot;, new CategoryValue(getName(p), &quot;NAME&quot;, &quot;name&quot;, false, true));</span>
+<span class="fc" id="L103">                c.put(&quot;COMMENTS&quot;, new CategoryValue(getPackage(p), &quot;COMMENTS&quot;, &quot;comments&quot;));</span>
+<span class="fc" id="L104">                c.put(&quot;VERSION&quot;, new CategoryValue(getVersion(p), &quot;VERSION&quot;, &quot;version&quot;));</span>
+<span class="fc" id="L105">                c.put(&quot;FILESIZE&quot;, new CategoryValue(getFileSize(p), &quot;FILESIZE&quot;, &quot;fileSize&quot;));</span>
+<span class="fc" id="L106">                c.put(&quot;FROM&quot;, new CategoryValue(FROM, &quot;FROM&quot;, &quot;from&quot;));</span>
+<span class="fc" id="L107">                c.put(&quot;INSTALLDATE&quot;, new CategoryValue(getInstallDate(p), &quot;INSTALLDATE&quot;, &quot;installDate&quot;));</span>
+<span class="fc" id="L108">                c.put(&quot;FOLDER&quot;, new CategoryValue(getFolder(p), &quot;FOLDER&quot;, &quot;folder&quot;));</span>
+<span class="fc" id="L109">                c.put(&quot;NO_REMOVE&quot;, new CategoryValue(getRemovable(p), &quot;NO_REMOVE&quot;, &quot;no_remove&quot;));</span>
+<span class="fc" id="L110">                c.put(&quot;USERID&quot;, new CategoryValue(getUserID(p), &quot;USERID&quot;, &quot;userid&quot;));</span>
 
-<span class="fc" id="L103">                c.put(&quot;NAME&quot;, new CategoryValue(getName(p), &quot;NAME&quot;, &quot;name&quot;, false, true));</span>
-<span class="fc" id="L104">                c.put(&quot;COMMENTS&quot;, new CategoryValue(getPackage(p), &quot;COMMENTS&quot;, &quot;comments&quot;));</span>
-<span class="fc" id="L105">                c.put(&quot;VERSION&quot;, new CategoryValue(getVersion(p), &quot;VERSION&quot;, &quot;version&quot;));</span>
-<span class="fc" id="L106">                c.put(&quot;FILESIZE&quot;, new CategoryValue(fileSize, &quot;FILESIZE&quot;, &quot;fileSize&quot;));</span>
-<span class="fc" id="L107">                c.put(&quot;FROM&quot;, new CategoryValue(FROM, &quot;FROM&quot;, &quot;from&quot;));</span>
-<span class="fc" id="L108">                c.put(&quot;INSTALLDATE&quot;, new CategoryValue(getInstallDate(p), &quot;INSTALLDATE&quot;, &quot;installDate&quot;));</span>
+<span class="fc" id="L112">                this.add(c);</span>
 
-<span class="fc" id="L110">                this.add(c);</span>
-
-<span class="fc" id="L112">            }</span>
-<span class="nc" id="L113">        } catch (Exception ex) {</span>
-<span class="nc" id="L114">            FILog.e(ex.getMessage());</span>
-<span class="fc" id="L115">        }</span>
-<span class="fc" id="L116">    }</span>
+<span class="fc" id="L114">            }</span>
+<span class="nc" id="L115">        } catch (Exception ex) {</span>
+<span class="nc" id="L116">            FILog.e(ex.getMessage());</span>
+<span class="fc" id="L117">        }</span>
+<span class="fc" id="L118">    }</span>
 
     /**
      * Get the name of the application
@@ -124,11 +123,11 @@ public class Software extends Categories {
      * @return string the application name
      */
     public String getName(ApplicationInfo p) {
-<span class="fc" id="L124">        return packageManager.getApplicationLabel(p).toString();</span>
+<span class="fc" id="L126">        return packageManager.getApplicationLabel(p).toString();</span>
     }
 
     public String getPackage(ApplicationInfo p) {
-<span class="fc" id="L128">        return p.packageName;</span>
+<span class="fc" id="L130">        return p.packageName;</span>
     }
 
     /**
@@ -137,16 +136,16 @@ public class Software extends Categories {
      * @return string the application version
      */
     public String getInstallDate(ApplicationInfo p) {
-<span class="fc" id="L137">        String mInstalled = &quot;&quot;;</span>
+<span class="fc" id="L139">        String mInstalled = &quot;&quot;;</span>
 
         try {
-<span class="fc" id="L140">            PackageInfo pi = packageManager.getPackageInfo(p.packageName, PackageManager.GET_META_DATA);</span>
-<span class="fc" id="L141">            mInstalled = String.valueOf(pi.firstInstallTime);</span>
-<span class="nc" id="L142">        } catch (NameNotFoundException e) {</span>
-<span class="nc" id="L143">            FILog.e(e.getMessage());</span>
-<span class="fc" id="L144">        }</span>
+<span class="fc" id="L142">            PackageInfo pi = packageManager.getPackageInfo(p.packageName, PackageManager.GET_META_DATA);</span>
+<span class="fc" id="L143">            mInstalled = String.valueOf(pi.firstInstallTime);</span>
+<span class="nc" id="L144">        } catch (NameNotFoundException e) {</span>
+<span class="nc" id="L145">            FILog.e(e.getMessage());</span>
+<span class="fc" id="L146">        }</span>
 
-<span class="fc" id="L146">        return mInstalled;</span>
+<span class="fc" id="L148">        return mInstalled;</span>
     }
 
     /**
@@ -155,15 +154,15 @@ public class Software extends Categories {
      * @return string the application version
      */
     public String getVersion(ApplicationInfo p) {
-<span class="fc" id="L155">        String mVersion = &quot;&quot;;</span>
+<span class="fc" id="L157">        String mVersion = &quot;&quot;;</span>
         try {
-<span class="fc" id="L157">            PackageInfo pi = packageManager.getPackageInfo(p.packageName, PackageManager.GET_META_DATA);</span>
-<span class="fc" id="L158">            mVersion = pi.versionName;</span>
-<span class="nc" id="L159">        } catch (NameNotFoundException e) {</span>
-<span class="nc" id="L160">            FILog.e(e.getMessage());</span>
-<span class="fc" id="L161">        }</span>
+<span class="fc" id="L159">            PackageInfo pi = packageManager.getPackageInfo(p.packageName, PackageManager.GET_META_DATA);</span>
+<span class="fc" id="L160">            mVersion = pi.versionName;</span>
+<span class="nc" id="L161">        } catch (NameNotFoundException e) {</span>
+<span class="nc" id="L162">            FILog.e(e.getMessage());</span>
+<span class="fc" id="L163">        }</span>
 
-<span class="fc" id="L163">        return mVersion;</span>
+<span class="fc" id="L165">        return mVersion;</span>
     }
 
     /**
@@ -171,10 +170,50 @@ public class Software extends Categories {
      * @param p ApplicationInfo
      * @return string the sum of the cache, code and data size of the application
      */
-    public String getFilesize(ApplicationInfo p) {
-<span class="fc" id="L172">        PackageStats stats = new PackageStats(p.packageName);</span>
-<span class="fc" id="L173">        return String.valueOf(stats.cacheSize + stats.codeSize + stats.dataSize);</span>
+    public String getFileSize(ApplicationInfo p) throws NameNotFoundException {
+<span class="fc" id="L174">        File file = new File(packageManager.getApplicationInfo(p.packageName, 0).publicSourceDir);</span>
+<span class="fc" id="L175">        return String.valueOf(file.length());</span>
+    }
 
+    /**
+     * Get the folder of the application
+     * @param p ApplicationInfo
+     * @return string folder of the application
+     */
+    public String getFolder(ApplicationInfo p) throws NameNotFoundException {
+<span class="fc" id="L184">        File file = new File(packageManager.getApplicationInfo(p.packageName, 0).publicSourceDir);</span>
+<span class="fc" id="L185">        return file.getAbsolutePath().substring(0, file.getAbsolutePath().lastIndexOf(&quot;/&quot;));</span>
+    }
+
+    /**
+     * Get if is removable the application
+     * @param p ApplicationInfo
+     * @return string 0 the application be uninstalled or 1 the application can be uninstalled
+     */
+    public String getRemovable(ApplicationInfo p) throws NameNotFoundException {
+<span class="fc" id="L194">        File file = new File(packageManager.getApplicationInfo(p.packageName, 0).publicSourceDir);</span>
+<span class="fc" id="L195">        boolean vendor = file.getAbsolutePath().contains(&quot;/system/vendor/operator/&quot;);</span>
+<span class="fc" id="L196">        boolean data = file.getAbsolutePath().contains(&quot;/data/app/&quot;);</span>
+<span class="fc" id="L197">        boolean system = file.getAbsolutePath().contains(&quot;/system/app/&quot;);</span>
+<span class="fc" id="L198">        boolean systemPriv = file.getAbsolutePath().contains(&quot;/system/priv-app/&quot;);</span>
+<span class="fc" id="L199">        boolean framework = file.getAbsolutePath().contains(&quot;/system/framework/&quot;);</span>
+<span class="fc" id="L200">        boolean plugin = file.getAbsolutePath().contains(&quot;/system/plugin/&quot;);</span>
+<span class="pc bpc" id="L201" title="1 of 4 branches missed.">        if (vendor || data) {</span>
+<span class="fc" id="L202">            return &quot;1&quot;;</span>
+<span class="pc bpc" id="L203" title="4 of 8 branches missed.">        } else if (system || systemPriv || framework || plugin) {</span>
+<span class="fc" id="L204">            return &quot;0&quot;;</span>
+        } else {
+<span class="nc" id="L206">            return &quot;1&quot;;</span>
+        }
+    }
+
+    /**
+     * Get the userId of the application
+     * @param p ApplicationInfo
+     * @return string userId of the application
+     */
+    public String getUserID(ApplicationInfo p) {
+<span class="fc" id="L216">        return String.valueOf(p.uid);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span>Generated by the Android Gradle plugin 2.2.0</div></body></html>
