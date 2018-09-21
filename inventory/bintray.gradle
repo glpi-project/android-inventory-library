@@ -7,6 +7,12 @@ if(project.rootProject.file('local.properties').exists()) {
     properties.load(project.rootProject.file('local.properties').newDataInputStream())
 }
 
+android {
+    lintOptions {
+        abortOnError false
+    }
+}
+
 // Bintray
 bintray {
     user = properties.getProperty("bintray.user")
