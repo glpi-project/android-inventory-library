@@ -78,8 +78,8 @@ public class Cameras
                     CameraCharacteristics chars = getCharacteristics(xCtx, index);
                     if (chars != null) {
                         c.put("LENSFACING", new CategoryValue(getFacingState(chars), "LENSFACING", "lensfacing"));
-                        c.put("IMAGEFORMAT", new CategoryValue(getCategoryImageFormat(chars)));
                         c.put("FLASHUNIT", new CategoryValue(getFlashUnit(chars), "FLASHUNIT", "flashunit"));
+                        c.put("IMAGEFORMAT", new CategoryValue(getCategoryImageFormat(chars)));
                     }
                     this.add(c);
                 }
@@ -138,17 +138,6 @@ public class Cameras
     }
 
     /**
-     * Version information about the camera device
-     * @param characteristics
-     * @return String manufacturers camera
-     */
-    public String getManufacturer(CameraCharacteristics characteristics) {
-        String value = "N/A";
-
-        return value;
-    }
-
-    /**
      * Whether this camera device has a flash unit.
      * @param characteristics
      * @return String 0 no available, 1 is available
@@ -157,7 +146,7 @@ public class Cameras
         String value = "N/A";
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
             Boolean bool = characteristics.get(CameraCharacteristics.FLASH_INFO_AVAILABLE);
-            return bool != null ? bool ? "1" : "0" : "-1";
+            return bool != null ? bool ? "1" : "0" : "N/A";
         }
         return value;
     }
@@ -186,7 +175,7 @@ public class Cameras
                     for (int value : outputFormats) {
                         String type = typeFormat(value);
                         if (type != null) {
-                            types.add(type);
+                            types.add(removeCharacters(type));
                         }
                     }
                 }
@@ -195,7 +184,11 @@ public class Cameras
         return types;
     }
 
-    public String typeFormat(int i) {
+    private String removeCharacters(String type) {
+        return type.replaceAll("[<>]", "");
+    }
+
+    private String typeFormat(int i) {
         switch (i) {
             case 4:
                 return "RGB_565";
