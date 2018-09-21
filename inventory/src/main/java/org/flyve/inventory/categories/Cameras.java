@@ -17,6 +17,7 @@
  *  GNU General Public License for more details.
  *  ---------------------------------------------------------------------
  *  @author    Rafael Hernandez - <rhernandez@teclib.com>
+ *  @author    Ivan del Pino    - <idelpino@teclib.com>
  *  @copyright Copyright Teclib. All rights reserved.
  *  @copyright Copyright FusionInventory.
  *  @license   GPLv3 https://www.gnu.org/licenses/gpl-3.0.html
@@ -30,9 +31,15 @@ package org.flyve.inventory.categories;
 
 import android.content.Context;
 import android.hardware.Camera;
+import android.hardware.camera2.CameraAccessException;
+import android.hardware.camera2.CameraCharacteristics;
+import android.hardware.camera2.CameraManager;
+import android.hardware.camera2.params.StreamConfigurationMap;
+import android.os.Build;
 
 import org.flyve.inventory.FILog;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -65,14 +72,153 @@ public class Cameras
         try {
             int count = Camera.getNumberOfCameras();
             if (count > 0) {
-                for (int i = 0; i < count; i++) {
+                for (int index = 0; index < count; index++) {
                     Category c = new Category("CAMERAS", "cameras");
-                    c.put("RESOLUTIONS", new CategoryValue(getResolutions(i), "RESOLUTIONS", "resolutions"));
+                    c.put("RESOLUTIONS", new CategoryValue(getResolutions(index), "RESOLUTIONS", "resolutions"));
+                    CameraCharacteristics chars = getCharacteristics(xCtx, index);
+                    if (chars != null) {
+                        c.put("LENSFACING", new CategoryValue(getFacingState(chars), "LENSFACING", "lensfacing"));
+                        c.put("IMAGEFORMAT", new CategoryValue(getCategoryImageFormat(chars)));
+                        c.put("FLASHUNIT", new CategoryValue(getFlashUnit(chars), "FLASHUNIT", "flashunit"));
+                    }
                     this.add(c);
                 }
             }
         } catch (Exception ex) {
             FILog.e(ex.getMessage());
+        }
+    }
+
+    /**
+     * Get info characteristics of the camera
+     * @param xCtx
+     * @param index number of the camera
+     * @return CameraCharacteristics type object
+     */
+    public CameraCharacteristics getCharacteristics(Context xCtx, int index) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            CameraManager manager = (CameraManager) xCtx.getApplicationContext().getSystemService(Context.CAMERA_SERVICE);
+            try {
+                assert manager != null;
+                String cameraId = manager.getCameraIdList()[index];
+                return manager.getCameraCharacteristics(cameraId);
+            } catch (CameraAccessException e) {
+                FILog.e(e.getMessage());
+            } catch (NullPointerException e) {
+                FILog.e(e.getMessage());
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Get direction the camera faces relative to device screen
+     * @param characteristics
+     * @return String The camera device faces the same direction as the device's screen
+     */
+    public String getFacingState(CameraCharacteristics characteristics) {
+        String value = "N/A";
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            Integer facing = characteristics.get(CameraCharacteristics.LENS_FACING);
+            if (facing != null) {
+                switch (facing) {
+                    case 0:
+                        value = "FRONT";
+                        break;
+                    case 1:
+                        value = "BACK";
+                        break;
+                    case 2:
+                        value = "EXTERNAL";
+                        break;
+                }
+            }
+        }
+        return value;
+    }
+
+    /**
+     * Version information about the camera device
+     * @param characteristics
+     * @return String manufacturers camera
+     */
+    public String getManufacturer(CameraCharacteristics characteristics) {
+        String value = "N/A";
+
+        return value;
+    }
+
+    /**
+     * Whether this camera device has a flash unit.
+     * @param characteristics
+     * @return String 0 no available, 1 is available
+     */
+    public String getFlashUnit(CameraCharacteristics characteristics) {
+        String value = "N/A";
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            Boolean bool = characteristics.get(CameraCharacteristics.FLASH_INFO_AVAILABLE);
+            return bool != null ? bool ? "1" : "0" : "-1";
+        }
+        return value;
+    }
+
+    public Category getCategoryImageFormat(CameraCharacteristics chars) {
+        Category category = new Category("IMAGEFORMAT", "imageformat");
+        for (String imageFormat : getImageFormat(chars)) {
+            category.put("FORMAT", new CategoryValue(imageFormat, "FORMAT", "format"));
+        }
+        return category;
+    }
+
+    /**
+     * version information about the camera device
+     * The available stream configurations that this camera device supports
+     * @param characteristics
+     * @return String The camera device faces the same direction as the device's screen
+     */
+    public ArrayList<String> getImageFormat(CameraCharacteristics characteristics) {
+        ArrayList<String> types = new ArrayList<>();
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            StreamConfigurationMap configurationMap = characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
+            if (configurationMap != null) {
+                int[] outputFormats = configurationMap.getOutputFormats();
+                if (outputFormats != null) {
+                    for (int value : outputFormats) {
+                        String type = typeFormat(value);
+                        if (type != null) {
+                            types.add(type);
+                        }
+                    }
+                }
+            }
+        }
+        return types;
+    }
+
+    public String typeFormat(int i) {
+        switch (i) {
+            case 4:
+                return "RGB_565";
+            case 16:
+                return "NV16";
+            case 17:
+                return "NV21";
+            case 20:
+                return "YUY2";
+            case 32:
+                return "RAW_SENSOR";
+            case 35:
+                return "YUV_420_888";
+            case 37:
+                return "RAW10";
+            case 39:
+                return "YUV_422_888";
+            case 256:
+                return "JPEG";
+            case 842094169:
+                return "YV12";
+            default:
+                return null;
         }
     }
 
