@@ -30,17 +30,34 @@
 package org.flyve.inventory.categories;
 
 import android.content.Context;
+import android.graphics.Rect;
 import android.hardware.Camera;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CameraManager;
 import android.hardware.camera2.params.StreamConfigurationMap;
 import android.os.Build;
+import android.util.Size;
+import android.util.SizeF;
 
 import org.flyve.inventory.FILog;
+import org.flyve.inventory.Utils;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * This class get all the information of the Cameras
@@ -59,6 +76,7 @@ public class Cameras
      *  from: https://stackoverflow.com/questions/285793/what-is-a-serialversionuid-and-why-should-i-use-it
      */
 	private static final long serialVersionUID = 6791259866128400637L;
+    private final String cameraVendors;
 
     /**
      * This constructor trigger get all the information about Cameras
@@ -67,6 +85,8 @@ public class Cameras
 	public Cameras(Context xCtx) {
         super(xCtx);
 
+        cameraVendors = Utils.loadJSONFromAsset(xCtx, "camera_vendors.json");
+
         // Get resolutions of the camera
         // Work on Android SDK Version >= 5
         try {
@@ -74,19 +94,44 @@ public class Cameras
             if (count > 0) {
                 for (int index = 0; index < count; index++) {
                     Category c = new Category("CAMERAS", "cameras");
-                    c.put("RESOLUTIONS", new CategoryValue(getResolutions(index), "RESOLUTIONS", "resolutions"));
                     CameraCharacteristics chars = getCharacteristics(xCtx, index);
                     if (chars != null) {
+                        c.put("RESOLUTIONS", new CategoryValue(getResolution(chars), "RESOLUTIONS", "resolutions"));
                         c.put("LENSFACING", new CategoryValue(getFacingState(chars), "LENSFACING", "lensfacing"));
                         c.put("FLASHUNIT", new CategoryValue(getFlashUnit(chars), "FLASHUNIT", "flashunit"));
                         c.put("IMAGEFORMAT", new CategoryValue(getCategoryImageFormat(chars)));
+                        c.put("ORIENTATION", new CategoryValue(getOrientation(chars), "ORIENTATION", "orientation"));
+                        c.put("FOCALLENGTH", new CategoryValue(getFocalLength(chars), "FOCALLENGTH", "focallength"));
+                        c.put("SENSORSIZE", new CategoryValue(getSensorSize(chars), "SENSORSIZE", "sensorsize"));
                     }
+                    if (!"".equals(cameraVendors)) {
+                        c.put("MANUFACTURER", new CategoryValue(getManufacturer(index), "MANUFACTURER", "manufacturer"));
+                    }
+                    c.put("RESOLUTIONVIDEO", new CategoryValue(getVideoResolution(index), "RESOLUTIONVIDEO", "resolutionvideo"));
+                    c.put("SUPPORT", new CategoryValue(getSupportValue(), "SUPPORT", "support"));
+                    c.put("MODEL", new CategoryValue(getModel(index), "MODEL", "model"));
                     this.add(c);
                 }
             }
         } catch (Exception ex) {
             FILog.e(ex.getMessage());
         }
+    }
+
+    public int getCountCamera(Context xCtx) {
+	    int value = 0;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            CameraManager manager = (CameraManager) xCtx.getApplicationContext().getSystemService(Context.CAMERA_SERVICE);
+            try {
+                assert manager != null;
+                value = manager.getCameraIdList().length;
+            } catch (CameraAccessException e) {
+                FILog.e(e.getMessage());
+            } catch (NullPointerException e) {
+                FILog.e(e.getMessage());
+            }
+        }
+        return value;
     }
 
     /**
@@ -109,6 +154,40 @@ public class Cameras
             }
         }
         return null;
+    }
+
+    /**
+     * Get resolution from the camera
+     * @param characteristics
+     * @return String resolution camera
+     */
+    public String getResolution(CameraCharacteristics characteristics) {
+        String value = "N/A";
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            int width = 0, height = 0;
+            StreamConfigurationMap sizes = characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
+            if (sizes != null) {
+                Size[] outputSizes = sizes.getOutputSizes(256);
+                if (outputSizes == null || outputSizes.length <= 0) {
+                    Rect rect = characteristics.get(CameraCharacteristics.SENSOR_INFO_ACTIVE_ARRAY_SIZE);
+                    if (rect != null) {
+                        width = rect.width();
+                        height = rect.height();
+                    }
+                } else {
+                    Size size = outputSizes[outputSizes.length - 1];
+                    width = size.getWidth();
+                    height = size.getHeight();
+                }
+                double resolution = getResolutionType(width, height);
+                value = resolution + " MP (" + width + "x" + height + ")";
+            } else {
+                return value;
+            }
+        } else {
+            return value;
+        }
+        return value;
     }
 
     /**
@@ -151,19 +230,18 @@ public class Cameras
         return value;
     }
 
-    public Category getCategoryImageFormat(CameraCharacteristics chars) {
+    private Category getCategoryImageFormat(CameraCharacteristics characteristics) {
         Category category = new Category("IMAGEFORMAT", "imageformat");
-        for (String imageFormat : getImageFormat(chars)) {
+        for (String imageFormat : getImageFormat(characteristics)) {
             category.put("FORMAT", new CategoryValue(imageFormat, "FORMAT", "format"));
         }
         return category;
     }
 
     /**
-     * version information about the camera device
-     * The available stream configurations that this camera device supports
+     * Get image format camera
      * @param characteristics
-     * @return String The camera device faces the same direction as the device's screen
+     * @return String image format camera
      */
     public ArrayList<String> getImageFormat(CameraCharacteristics characteristics) {
         ArrayList<String> types = new ArrayList<>();
@@ -175,17 +253,13 @@ public class Cameras
                     for (int value : outputFormats) {
                         String type = typeFormat(value);
                         if (type != null) {
-                            types.add(removeCharacters(type));
+                            types.add(type.replaceAll("[<>]", ""));
                         }
                     }
                 }
             }
         }
         return types;
-    }
-
-    private String removeCharacters(String type) {
-        return type.replaceAll("[<>]", "");
     }
 
     private String typeFormat(int i) {
@@ -216,33 +290,268 @@ public class Cameras
     }
 
     /**
-     * Get the camera resolutions
-     * @param index
-     * @return string with the width and height
+     * Get orientation camera
+     * @param characteristics
+     * @return String orientation camera
      */
-    public String getResolutions(int index) {
-        Camera cam = Camera.open(index);
-        if(cam != null) {
-            Camera.Parameters params = cam.getParameters();
-            List<Camera.Size> list;
-
-            list = params.getSupportedPictureSizes();
-            int width = 0;
-            int height = 0;
-            for (Camera.Size size : list) {
-                if ((size.width * size.height) > (width * height)) {
-                    width = size.width;
-                    height = size.height;
-                }
-            }
-            cam.release();
-
-            // cam resolution width x height
-            return String.format("%dx%d", width, height);
+    public String getOrientation(CameraCharacteristics characteristics) {
+        String value = "N/A";
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            return String.valueOf(characteristics.get(CameraCharacteristics.SENSOR_ORIENTATION));
         } else {
-         return "";
+            return value;
         }
     }
 
+
+    /**
+     * Get video resolution camera
+     * @param index number of camera
+     * @return String video resolution camera
+     */
+    public String getVideoResolution(int index) {
+        String value = "N/A";
+        try {
+            Camera open = Camera.open(index);
+            Camera.Parameters parameters = open.getParameters();
+            List<Camera.Size> supportedVideoSizes = parameters.getSupportedVideoSizes();
+            if (supportedVideoSizes != null) {
+                Camera.Size infoSize = supportedVideoSizes.get(supportedVideoSizes.size() - 1);
+                int width = infoSize.width;
+                int height = infoSize.height;
+                value = getResolutionType(width, height) + " MP (" + width + "x" + height + ")";
+            }
+        } catch (Exception ex) {
+            FILog.e(ex.getMessage());
+        }
+        return value;
+    }
+
+    /**
+     * Get focal length camera
+     * @param characteristics
+     * @return String focal length camera
+     */
+    public String getFocalLength(CameraCharacteristics characteristics) {
+        String value = "N/A";
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            float[] fArr = characteristics.get(CameraCharacteristics.LENS_INFO_AVAILABLE_FOCAL_LENGTHS);
+            if (fArr == null) {
+                return null;
+            }
+            StringBuilder str = new StringBuilder();
+            for (float f : fArr) {
+                str.append(f).append(" mm ");
+            }
+            return str.toString().trim();
+        } else {
+            return value;
+        }
+    }
+
+    /**
+     * Get sensor size camera
+     * @param characteristics
+     * @return String sensor size camera
+     */
+    public String getSensorSize(CameraCharacteristics characteristics) {
+        String value = "N/A";
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            SizeF sizeF = characteristics.get(CameraCharacteristics.SENSOR_INFO_PHYSICAL_SIZE);
+            if (sizeF != null) {
+                double width = (double) sizeF.getWidth();
+                double height = (double) sizeF.getHeight();
+                if (width > 0.0d && height > 0.0d) {
+                    return Math.round(width * 100) / 100.0d + "x" + Math.round(height * 100) / 100.0d;
+                }
+            }
+            return value;
+        } else {
+            return value;
+        }
+    }
+
+    private double getResolutionType(int width, int height) {
+        double value = 0;
+        if (width >= 0) {
+            try {
+                double d = ((((double) (width * height)) * 1.0d) / 1000.0d) / 1000.0d;
+                value = new BigDecimal(d).setScale(1, RoundingMode.HALF_UP).doubleValue();
+            } catch (IllegalArgumentException ex) {
+                FILog.e(ex.getMessage());
+            }
+        }
+        return value;
+    }
+
+    /**
+     * Get manufacturer camera
+     * @param index number of the camera
+     * @return String manufacturer camera
+     */
+    public String getManufacturer(int index) {
+        String value = "N/A";
+        try {
+            String infoModel = Utils.getCatInfoMultiple("/proc/hw_info/camera_info");
+            if ("".equals(infoModel)) {
+                infoModel = Utils.getCatInfoMultiple("/proc/driver/camera_info");
+            }
+            if (!"".equals(infoModel) && infoModel.contains(";")) {
+                String infoName = infoModel.split(";", 2)[index];
+                if (infoName.contains(":")) {
+                    String infoValue = infoName.split(":", 2)[1].trim();
+                    if (!"".equals(infoValue)) {
+                        JSONArray jr = new JSONArray(cameraVendors);
+                        for (int i = 0; i < jr.length(); i++) {
+                            JSONObject c = jr.getJSONObject(i);
+                            String id = c.getString("id");
+                            if (infoValue.startsWith(id)) {
+                                value = c.getString("name");
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            FILog.e(e.getMessage());
+        }
+        return value;
+    }
+
+    /**
+     * Get model camera
+     * @param index number of the camera
+     * @return String model camera
+     */
+    public String getModel(int index) {
+        String value = "N/A";
+        try {
+            String infoModel = Utils.getCatInfoMultiple("/proc/driver/camera_info");
+            if ("".equals(infoModel)) {
+                infoModel = Utils.getCatInfoMultiple("/proc/hw_info/camera_info");
+            }
+            if (!"".equals(infoModel)) {
+                infoModel = infoModel.split(";", 2)[index];
+                if (infoModel.contains(":"))
+                    value = infoModel.split(":", 2)[1];
+            }
+        } catch (Exception e) {
+            FILog.e(e.getMessage());
+        }
+        return value;
+    }
+
+    /**
+     * Get support camera
+     * @return String support camera
+     */
+    public String getSupportValue() {
+        ArrayList<String> arrayList = new ArrayList<>();
+        Iterator it = getCatInfoCamera("/system/lib/libcameracustom.so", "SENSOR_DRVNAME_", 100).iterator();
+        while (it.hasNext()) {
+            arrayList.add(((String) it.next()).toLowerCase(Locale.US));
+        }
+        StringBuilder values = new StringBuilder();
+        for (int i = 0; i < arrayList.size(); i++) {
+            values.append(arrayList.get(i));
+            if (i != arrayList.size() - 1)
+                values.append("; ");
+        }
+        return "".equals(values.toString()) ? "N/A" : values.toString();
+    }
+
+    private ArrayList<String> getCatInfoCamera(String str, String str2, int i) {
+        InputStream bufferedInputStream;
+        Throwable th;
+        ArrayList<String> arrayList = new ArrayList<>();
+        try {
+            File file = new File(str);
+            try {
+                byte[] bytes = str2.getBytes();
+                bufferedInputStream = new BufferedInputStream(new FileInputStream(file));
+                try {
+                    byte[] bArr = new byte[1];
+                    int i2 = 0;
+                    int i3 = 0;
+                    int i5 = 0;
+                    while (true) {
+                        int read = bufferedInputStream.read(bArr);
+                        if (read == -1) {
+                            break;
+                        }
+                        int i6;
+                        i5 += read;
+                        byte b = bArr[0];
+                        if (i3 == str2.length()) {
+                            arrayList.add(((char) b) + getValueString(getListBytes(bufferedInputStream, (byte) 0)));
+                            i3 = i5;
+                            i2 = 0;
+                        } else {
+                            i6 = i2;
+                            i2 = i3;
+                            i3 = i6;
+                        }
+                        i2 = b == bytes[i2] ? i2 + 1 : 0;
+                        if (i3 > 0 && i5 - i3 > i) {
+                            break;
+                        }
+                        i6 = i3;
+                        i3 = i2;
+                        i2 = i6;
+                    }
+                    bufferedInputStream.close();
+                    return arrayList;
+                } catch (Throwable th2) {
+                    th = th2;
+                    bufferedInputStream.close();
+                    throw th;
+                }
+            } catch (Throwable th3) {
+                FILog.e(th3.getMessage());
+            }
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+        return arrayList;
+    }
+
+    private String getValueString(List<Byte> list) {
+        if (list.size() <= 0) {
+            return "";
+        }
+        byte[] bArr = new byte[list.size()];
+        int i = 0;
+        for (Byte byteValue : list) {
+            bArr[i] = byteValue;
+            i++;
+        }
+        if (Build.VERSION.SDK_INT >= 19) {
+            return new String(bArr, StandardCharsets.UTF_8);
+        } else {
+            return new String(bArr, Charset.forName("UTF-8"));
+        }
+    }
+
+    private List<Byte> getListBytes(InputStream inputStream, byte b) {
+        byte[] bArr = new byte[1];
+        List<Byte> arrayList = new ArrayList<>();
+        while (true) {
+            try {
+                int read = inputStream.read(bArr);
+                if (read == -1) {
+                    break;
+                }
+                byte b2 = bArr[0];
+                if (b2 == b) {
+                    break;
+                }
+                arrayList.add(b2);
+            } catch (IOException e) {
+                FILog.e(e.getMessage());
+            }
+        }
+        return arrayList;
+    }
 
 }
