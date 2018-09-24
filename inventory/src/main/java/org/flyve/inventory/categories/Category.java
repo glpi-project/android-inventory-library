@@ -118,10 +118,12 @@ public class Category extends LinkedHashMap<String, CategoryValue> {
      */
     public CategoryValue put(String key, CategoryValue value) {
        //Do not add value if it's null, blank or "unknow"
-       if (value.getCategory() != null) {
-           return super.put(value.getValue(), value);
-       } else if (value != null && !value.getValue().equals("") && !value.getValue().equals(Build.UNKNOWN)) {
-    	   return super.put(key, value);
+       if (value != null) {
+           if (value.getCategory() != null || !value.getValue().equals("") && !value.getValue().equals(Build.UNKNOWN)) {
+               return super.put(key, value);
+           } else {
+               return null;
+           }
        } else {
     	   return null;
        }

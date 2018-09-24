@@ -49,21 +49,20 @@ public class CamerasTest {
     Context appContext = InstrumentationRegistry.getTargetContext();
 
     @Test
-    public void getResolutions() throws Exception {
-        int count = Camera.getNumberOfCameras();
-
+    public void getResolutions() {
         Cameras cameras = new Cameras(appContext);
-        for(int i = 0; i < count; i++ ) {
-            assertNotEquals("", cameras.getResolutions(i));
+        for (int index = 0; index < cameras.getCountCamera(appContext); index++) {
+            CameraCharacteristics chars = cameras.getCharacteristics(appContext, index);
+            if (chars != null) {
+                assertNotEquals("", cameras.getResolution(chars));
+            }
         }
     }
 
     @Test
-    public void getFacingState() throws Exception {
-        int count = Camera.getNumberOfCameras();
-
+    public void getFacingState() {
         Cameras cameras = new Cameras(appContext);
-        for(int index = 0; index < count; index++ ) {
+        for (int index = 0; index < cameras.getCountCamera(appContext); index++) {
             CameraCharacteristics chars = cameras.getCharacteristics(appContext, index);
             if (chars != null) {
                 assertNotEquals("", cameras.getFacingState(chars));
@@ -72,11 +71,9 @@ public class CamerasTest {
     }
 
     @Test
-    public void getCategoryImageFormat() throws Exception {
-        int count = Camera.getNumberOfCameras();
-
+    public void getCategoryImageFormat() {
         Cameras cameras = new Cameras(appContext);
-        for(int index = 0; index < count; index++ ) {
+        for (int index = 0; index < cameras.getCountCamera(appContext); index++) {
             CameraCharacteristics chars = cameras.getCharacteristics(appContext, index);
             if (chars != null) {
                 ArrayList<String> imageFormat = cameras.getImageFormat(chars);
@@ -88,16 +85,79 @@ public class CamerasTest {
     }
 
     @Test
-    public void getFlashUnit() throws Exception {
-        int count = Camera.getNumberOfCameras();
-
+    public void getFlashUnit() {
         Cameras cameras = new Cameras(appContext);
-        for(int index = 0; index < count; index++ ) {
+        for (int index = 0; index < cameras.getCountCamera(appContext); index++) {
             CameraCharacteristics chars = cameras.getCharacteristics(appContext, index);
             if (chars != null) {
                 assertNotEquals("", cameras.getFlashUnit(chars));
             }
         }
+    }
+
+    @Test
+    public void getOrientation() {
+        Cameras cameras = new Cameras(appContext);
+        for (int index = 0; index < cameras.getCountCamera(appContext); index++) {
+            CameraCharacteristics chars = cameras.getCharacteristics(appContext, index);
+            if (chars != null) {
+                assertNotEquals("", cameras.getOrientation(chars));
+            }
+        }
+    }
+
+    @Test
+    public void getVideoResolution() {
+        int count = Camera.getNumberOfCameras();
+
+        Cameras cameras = new Cameras(appContext);
+        for (int index = 0; index < count; index++) {
+            assertNotEquals("", cameras.getVideoResolution(0));
+        }
+    }
+
+    @Test
+    public void getFocalLength() {
+        Cameras cameras = new Cameras(appContext);
+        for (int index = 0; index < cameras.getCountCamera(appContext); index++) {
+            CameraCharacteristics chars = cameras.getCharacteristics(appContext, index);
+            if (chars != null) {
+                assertNotEquals("", cameras.getFocalLength(chars));
+            }
+        }
+    }
+
+    @Test
+    public void getSensorSize() {
+        Cameras cameras = new Cameras(appContext);
+        for (int index = 0; index < cameras.getCountCamera(appContext); index++) {
+            CameraCharacteristics chars = cameras.getCharacteristics(appContext, index);
+            if (chars != null) {
+                assertNotEquals("", cameras.getSensorSize(chars));
+            }
+        }
+    }
+
+    @Test
+    public void getManufacturer() {
+        Cameras cameras = new Cameras(appContext);
+        for (int index = 0; index < cameras.getCountCamera(appContext); index++) {
+            assertNotEquals("", cameras.getManufacturer(index));
+        }
+    }
+
+    @Test
+    public void getModel() {
+        Cameras cameras = new Cameras(appContext);
+        for (int index = 0; index < cameras.getCountCamera(appContext); index++) {
+            assertNotEquals("", cameras.getModel(index));
+        }
+    }
+
+    @Test
+    public void getSupportValue() {
+        Cameras cameras = new Cameras(appContext);
+        assertNotEquals("", cameras.getSupportValue());
     }
 
 }

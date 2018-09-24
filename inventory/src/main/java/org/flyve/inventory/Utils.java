@@ -303,6 +303,19 @@ public class Utils {
         return "";
     }
 
+    public static String getCatInfoMultiple(String path) {
+        StringBuilder concatInfo = new StringBuilder();
+        try {
+            Scanner s = new Scanner(new File(path));
+            while (s.hasNextLine()) {
+                concatInfo.append(s.nextLine());
+            }
+        } catch (Exception e) {
+            FILog.e(e.getMessage());
+        }
+        return concatInfo.toString();
+    }
+
     public static String getCatInfo(String path) {
         try {
             Scanner s = new Scanner(new File(path));
