@@ -1,6 +1,3 @@
----
-layout: coverage
----
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../resources/report.css" type="text/css"/><link rel="shortcut icon" href="../resources/report.gif" type="image/gif"/><title>Utils.java</title><link rel="stylesheet" href="../resources/prettify.css" type="text/css"/><script type="text/javascript" src="../resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory</a> &gt; <span class="el_source">Utils.java</span></div><h1>Utils.java</h1><pre class="source lang-java linenums">/**
  *  LICENSE
  * 
@@ -306,81 +303,94 @@ public class Utils {
 <span class="fc" id="L303">        return &quot;&quot;;</span>
     }
 
+    public static String getCatInfoMultiple(String path) {
+<span class="fc" id="L307">        StringBuilder concatInfo = new StringBuilder();</span>
+        try {
+<span class="nc" id="L309">            Scanner s = new Scanner(new File(path));</span>
+<span class="nc bnc" id="L310" title="All 2 branches missed.">            while (s.hasNextLine()) {</span>
+<span class="nc" id="L311">                concatInfo.append(s.nextLine());</span>
+            }
+<span class="fc" id="L313">        } catch (Exception e) {</span>
+<span class="fc" id="L314">            FILog.e(e.getMessage());</span>
+<span class="nc" id="L315">        }</span>
+<span class="fc" id="L316">        return concatInfo.toString();</span>
+    }
+
     public static String getCatInfo(String path) {
         try {
-<span class="nc" id="L308">            Scanner s = new Scanner(new File(path));</span>
-<span class="nc" id="L309">            return s.next();</span>
-<span class="fc" id="L310">        } catch (Exception e) {</span>
-<span class="fc" id="L311">            FILog.e(e.getMessage());</span>
+<span class="nc" id="L321">            Scanner s = new Scanner(new File(path));</span>
+<span class="nc" id="L322">            return s.next();</span>
+<span class="fc" id="L323">        } catch (Exception e) {</span>
+<span class="fc" id="L324">            FILog.e(e.getMessage());</span>
         }
-<span class="fc" id="L313">        return null;</span>
+<span class="fc" id="L326">        return null;</span>
     }
 
     public static String getSystemProperty(String type) {
-<span class="fc" id="L317">        ArrayList&lt;HashMap&lt;String, String&gt;&gt; arr = getDeviceProperties();</span>
-<span class="fc bfc" id="L318" title="All 2 branches covered.">        for (int i = 0; i &lt; arr.size(); i++) {</span>
-<span class="fc" id="L319">            HashMap&lt;String, String&gt; map = arr.get(i);</span>
-<span class="fc bfc" id="L320" title="All 2 branches covered.">            if (map.get(type) != null)</span>
-<span class="fc" id="L321">                return map.get(type);</span>
+<span class="fc" id="L330">        ArrayList&lt;HashMap&lt;String, String&gt;&gt; arr = getDeviceProperties();</span>
+<span class="fc bfc" id="L331" title="All 2 branches covered.">        for (int i = 0; i &lt; arr.size(); i++) {</span>
+<span class="fc" id="L332">            HashMap&lt;String, String&gt; map = arr.get(i);</span>
+<span class="fc bfc" id="L333" title="All 2 branches covered.">            if (map.get(type) != null)</span>
+<span class="fc" id="L334">                return map.get(type);</span>
         }
-<span class="fc" id="L323">        return &quot;&quot;;</span>
+<span class="fc" id="L336">        return &quot;&quot;;</span>
     }
 
     public static ArrayList&lt;HashMap&lt;String, String&gt;&gt; getDeviceProperties() {
         try {
             // Run the command
-<span class="fc" id="L329">            Process process = Runtime.getRuntime().exec(&quot;getprop&quot;);</span>
-<span class="fc" id="L330">            BufferedReader bufferedReader = new BufferedReader(</span>
-<span class="fc" id="L331">                    new InputStreamReader(process.getInputStream()));</span>
+<span class="fc" id="L342">            Process process = Runtime.getRuntime().exec(&quot;getprop&quot;);</span>
+<span class="fc" id="L343">            BufferedReader bufferedReader = new BufferedReader(</span>
+<span class="fc" id="L344">                    new InputStreamReader(process.getInputStream()));</span>
 
             // Grab the results
-<span class="fc" id="L334">            ArrayList&lt;HashMap&lt;String, String&gt;&gt; arr = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L347">            ArrayList&lt;HashMap&lt;String, String&gt;&gt; arr = new ArrayList&lt;&gt;();</span>
             String line;
-<span class="fc bfc" id="L336" title="All 2 branches covered.">            while ((line = bufferedReader.readLine()) != null) {</span>
-<span class="fc" id="L337">                String[] value = line.split(&quot;:&quot;);</span>
-<span class="fc" id="L338">                HashMap&lt;String, String&gt; map = new HashMap&lt;&gt;();</span>
-<span class="pc bpc" id="L339" title="1 of 2 branches missed.">                if (value.length &gt;= 2) {</span>
-<span class="fc" id="L340">                    map.put(removeBracket(value[0]), removeBracket(value[1]));</span>
-<span class="fc" id="L341">                    arr.add(map);</span>
+<span class="fc bfc" id="L349" title="All 2 branches covered.">            while ((line = bufferedReader.readLine()) != null) {</span>
+<span class="fc" id="L350">                String[] value = line.split(&quot;:&quot;);</span>
+<span class="fc" id="L351">                HashMap&lt;String, String&gt; map = new HashMap&lt;&gt;();</span>
+<span class="pc bpc" id="L352" title="1 of 2 branches missed.">                if (value.length &gt;= 2) {</span>
+<span class="fc" id="L353">                    map.put(removeBracket(value[0]), removeBracket(value[1]));</span>
+<span class="fc" id="L354">                    arr.add(map);</span>
                 }
-<span class="fc" id="L343">            }</span>
+<span class="fc" id="L356">            }</span>
 
-<span class="fc" id="L345">            return arr;</span>
-<span class="nc" id="L346">        } catch (IOException ex) {</span>
-<span class="nc" id="L347">            FILog.e(ex.getMessage());</span>
+<span class="fc" id="L358">            return arr;</span>
+<span class="nc" id="L359">        } catch (IOException ex) {</span>
+<span class="nc" id="L360">            FILog.e(ex.getMessage());</span>
         }
 
-<span class="nc" id="L350">        return new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L363">        return new ArrayList&lt;&gt;();</span>
     }
 
     private static String removeBracket(String str) {
-<span class="fc" id="L354">        return str.replaceAll(&quot;\\[&quot;, &quot;&quot;).replaceAll(&quot;]&quot;, &quot;&quot;);</span>
+<span class="fc" id="L367">        return str.replaceAll(&quot;\\[&quot;, &quot;&quot;).replaceAll(&quot;]&quot;, &quot;&quot;);</span>
     }
 
     public static String loadJSONFromAsset(Context context, String name) {
         String json;
         try {
-<span class="fc" id="L360">            InputStream is = context.getAssets().open(name);</span>
-<span class="fc" id="L361">            int size = is.available();</span>
-<span class="fc" id="L362">            byte[] buffer = new byte[size];</span>
-<span class="fc" id="L363">            is.read(buffer);</span>
-<span class="fc" id="L364">            is.close();</span>
-<span class="fc" id="L365">            json = new String(buffer, &quot;UTF-8&quot;);</span>
-<span class="nc" id="L366">        } catch (IOException ex) {</span>
-<span class="nc" id="L367">            ex.printStackTrace();</span>
-<span class="nc" id="L368">            return null;</span>
-<span class="fc" id="L369">        }</span>
-<span class="fc" id="L370">        return json;</span>
+<span class="fc" id="L373">            InputStream is = context.getAssets().open(name);</span>
+<span class="fc" id="L374">            int size = is.available();</span>
+<span class="fc" id="L375">            byte[] buffer = new byte[size];</span>
+<span class="fc" id="L376">            is.read(buffer);</span>
+<span class="fc" id="L377">            is.close();</span>
+<span class="fc" id="L378">            json = new String(buffer, &quot;UTF-8&quot;);</span>
+<span class="nc" id="L379">        } catch (IOException ex) {</span>
+<span class="nc" id="L380">            ex.printStackTrace();</span>
+<span class="nc" id="L381">            return null;</span>
+<span class="fc" id="L382">        }</span>
+<span class="fc" id="L383">        return json;</span>
     }
 
 
     /* Checks if external storage is available for read and write */
     private static boolean isExternalStorageWritable() {
-<span class="nc" id="L376">        String state = Environment.getExternalStorageState();</span>
-<span class="nc bnc" id="L377" title="All 2 branches missed.">        if (Environment.MEDIA_MOUNTED.equals(state)) {</span>
-<span class="nc" id="L378">            return true;</span>
+<span class="nc" id="L389">        String state = Environment.getExternalStorageState();</span>
+<span class="nc bnc" id="L390" title="All 2 branches missed.">        if (Environment.MEDIA_MOUNTED.equals(state)) {</span>
+<span class="nc" id="L391">            return true;</span>
         }
-<span class="nc" id="L380">        return false;</span>
+<span class="nc" id="L393">        return false;</span>
     }
 
     /**
@@ -389,66 +399,66 @@ public class Utils {
      * @param filename name of the file
      */
     public static void storeFile(String message, String filename) {
-<span class="fc" id="L389">        String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();</span>
-<span class="fc" id="L390">        File dir = new File(path);</span>
+<span class="fc" id="L402">        String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();</span>
+<span class="fc" id="L403">        File dir = new File(path);</span>
 
-<span class="fc" id="L392">        String state = Environment.getExternalStorageState();</span>
-<span class="pc bpc" id="L393" title="1 of 2 branches missed.">        if (Environment.MEDIA_MOUNTED.equals(state)) {</span>
+<span class="fc" id="L405">        String state = Environment.getExternalStorageState();</span>
+<span class="pc bpc" id="L406" title="1 of 2 branches missed.">        if (Environment.MEDIA_MOUNTED.equals(state)) {</span>
 
-<span class="nc bnc" id="L395" title="All 2 branches missed.">            if(!dir.exists()) {</span>
-<span class="nc bnc" id="L396" title="All 2 branches missed.">                if(dir.mkdirs()) {</span>
-<span class="nc" id="L397">                    FILog.d(&quot;create path&quot;);</span>
+<span class="nc bnc" id="L408" title="All 2 branches missed.">            if(!dir.exists()) {</span>
+<span class="nc bnc" id="L409" title="All 2 branches missed.">                if(dir.mkdirs()) {</span>
+<span class="nc" id="L410">                    FILog.d(&quot;create path&quot;);</span>
                 } else {
-<span class="nc" id="L399">                    FILog.e(&quot;cannot create path&quot;);</span>
-<span class="nc" id="L400">                    return;</span>
+<span class="nc" id="L412">                    FILog.e(&quot;cannot create path&quot;);</span>
+<span class="nc" id="L413">                    return;</span>
                 }
             }
 
-<span class="nc" id="L404">            File logFile = new File(path + &quot;/&quot; + filename);</span>
+<span class="nc" id="L417">            File logFile = new File(path + &quot;/&quot; + filename);</span>
 
-<span class="nc bnc" id="L406" title="All 2 branches missed.">            if (!logFile.exists())  {</span>
+<span class="nc bnc" id="L419" title="All 2 branches missed.">            if (!logFile.exists())  {</span>
                 try  {
-<span class="nc bnc" id="L408" title="All 2 branches missed.">                    if(logFile.createNewFile()) {</span>
-<span class="nc" id="L409">                        FILog.d(&quot;File created&quot;);</span>
+<span class="nc bnc" id="L421" title="All 2 branches missed.">                    if(logFile.createNewFile()) {</span>
+<span class="nc" id="L422">                        FILog.d(&quot;File created&quot;);</span>
                     } else {
-<span class="nc" id="L411">                        FILog.d(&quot;Cannot create file&quot;);</span>
-<span class="nc" id="L412">                        return;</span>
+<span class="nc" id="L424">                        FILog.d(&quot;Cannot create file&quot;);</span>
+<span class="nc" id="L425">                        return;</span>
                     }
-<span class="nc" id="L414">                } catch (IOException ex) {</span>
-<span class="nc" id="L415">                    FILog.e(ex.getMessage());</span>
-<span class="nc" id="L416">                }</span>
+<span class="nc" id="L427">                } catch (IOException ex) {</span>
+<span class="nc" id="L428">                    FILog.e(ex.getMessage());</span>
+<span class="nc" id="L429">                }</span>
             }
 
-<span class="nc" id="L419">            FileWriter fw = null;</span>
+<span class="nc" id="L432">            FileWriter fw = null;</span>
 
             try {
                 //BufferedWriter for performance, true to set append to file flag
-<span class="nc" id="L423">                fw = new FileWriter(logFile, false);</span>
-<span class="nc" id="L424">                BufferedWriter buf = new BufferedWriter(fw);</span>
+<span class="nc" id="L436">                fw = new FileWriter(logFile, false);</span>
+<span class="nc" id="L437">                BufferedWriter buf = new BufferedWriter(fw);</span>
 
-<span class="nc" id="L426">                buf.write(message);</span>
-<span class="nc" id="L427">                buf.newLine();</span>
-<span class="nc" id="L428">                buf.flush();</span>
-<span class="nc" id="L429">                buf.close();</span>
-<span class="nc" id="L430">                fw.close();</span>
-<span class="nc" id="L431">                FILog.d(&quot;Inventory stored&quot;);</span>
+<span class="nc" id="L439">                buf.write(message);</span>
+<span class="nc" id="L440">                buf.newLine();</span>
+<span class="nc" id="L441">                buf.flush();</span>
+<span class="nc" id="L442">                buf.close();</span>
+<span class="nc" id="L443">                fw.close();</span>
+<span class="nc" id="L444">                FILog.d(&quot;Inventory stored&quot;);</span>
             }
-<span class="nc" id="L433">            catch (IOException ex) {</span>
-<span class="nc" id="L434">                FILog.e(ex.getMessage());</span>
+<span class="nc" id="L446">            catch (IOException ex) {</span>
+<span class="nc" id="L447">                FILog.e(ex.getMessage());</span>
             }
             finally {
-<span class="nc bnc" id="L437" title="All 6 branches missed.">                if(fw!=null) {</span>
+<span class="nc bnc" id="L450" title="All 6 branches missed.">                if(fw!=null) {</span>
                     try {
-<span class="nc" id="L439">                        fw.close();</span>
-<span class="nc" id="L440">                    } catch(Exception ex) {</span>
-<span class="nc" id="L441">                        FILog.e(ex.getMessage());</span>
-<span class="nc" id="L442">                    }</span>
+<span class="nc" id="L452">                        fw.close();</span>
+<span class="nc" id="L453">                    } catch(Exception ex) {</span>
+<span class="nc" id="L454">                        FILog.e(ex.getMessage());</span>
+<span class="nc" id="L455">                    }</span>
                 }
-<span class="nc" id="L444">            }</span>
-<span class="nc" id="L445">        } else {</span>
-<span class="fc" id="L446">            FILog.d(&quot;External Storage is not available&quot;);</span>
+<span class="nc" id="L457">            }</span>
+<span class="nc" id="L458">        } else {</span>
+<span class="fc" id="L459">            FILog.d(&quot;External Storage is not available&quot;);</span>
         }
-<span class="fc" id="L448">    }</span>
+<span class="fc" id="L461">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span>Generated by the Android Gradle plugin 2.2.0</div></body></html>

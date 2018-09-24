@@ -1,6 +1,3 @@
----
-layout: coverage
----
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../resources/report.css" type="text/css"/><link rel="shortcut icon" href="../resources/report.gif" type="image/gif"/><title>Cameras.java</title><link rel="stylesheet" href="../resources/prettify.css" type="text/css"/><script type="text/javascript" src="../resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory.categories</a> &gt; <span class="el_source">Cameras.java</span></div><h1>Cameras.java</h1><pre class="source lang-java linenums">/**
  *  LICENSE
  * 
@@ -33,22 +30,39 @@ layout: coverage
 package org.flyve.inventory.categories;
 
 import android.content.Context;
+import android.graphics.Rect;
 import android.hardware.Camera;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CameraManager;
 import android.hardware.camera2.params.StreamConfigurationMap;
 import android.os.Build;
+import android.util.Size;
+import android.util.SizeF;
 
 import org.flyve.inventory.FILog;
+import org.flyve.inventory.Utils;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * This class get all the information of the Cameras
  */
-<span class="pc bpc" id="L48" title="1 of 2 branches missed.">public class Cameras</span>
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">public class Cameras</span>
         extends Categories {
 
     /*
@@ -62,35 +76,63 @@ import java.util.List;
      *  from: https://stackoverflow.com/questions/285793/what-is-a-serialversionuid-and-why-should-i-use-it
      */
 	private static final long serialVersionUID = 6791259866128400637L;
+    private final String cameraVendors;
 
     /**
      * This constructor trigger get all the information about Cameras
      * @param xCtx Context where this class work
      */
 	public Cameras(Context xCtx) {
-<span class="fc" id="L68">        super(xCtx);</span>
+<span class="fc" id="L86">        super(xCtx);</span>
+
+<span class="fc" id="L88">        cameraVendors = Utils.loadJSONFromAsset(xCtx, &quot;camera_vendors.json&quot;);</span>
 
         // Get resolutions of the camera
         // Work on Android SDK Version &gt;= 5
         try {
-<span class="fc" id="L73">            int count = Camera.getNumberOfCameras();</span>
-<span class="pc bpc" id="L74" title="1 of 2 branches missed.">            if (count &gt; 0) {</span>
-<span class="fc bfc" id="L75" title="All 2 branches covered.">                for (int index = 0; index &lt; count; index++) {</span>
-<span class="fc" id="L76">                    Category c = new Category(&quot;CAMERAS&quot;, &quot;cameras&quot;);</span>
-<span class="fc" id="L77">                    c.put(&quot;RESOLUTIONS&quot;, new CategoryValue(getResolutions(index), &quot;RESOLUTIONS&quot;, &quot;resolutions&quot;));</span>
-<span class="fc" id="L78">                    CameraCharacteristics chars = getCharacteristics(xCtx, index);</span>
-<span class="pc bpc" id="L79" title="1 of 2 branches missed.">                    if (chars != null) {</span>
-<span class="nc" id="L80">                        c.put(&quot;LENSFACING&quot;, new CategoryValue(getFacingState(chars), &quot;LENSFACING&quot;, &quot;lensfacing&quot;));</span>
-<span class="nc" id="L81">                        c.put(&quot;FLASHUNIT&quot;, new CategoryValue(getFlashUnit(chars), &quot;FLASHUNIT&quot;, &quot;flashunit&quot;));</span>
-<span class="nc" id="L82">                        c.put(&quot;IMAGEFORMAT&quot;, new CategoryValue(getCategoryImageFormat(chars)));</span>
+<span class="fc" id="L93">            int count = Camera.getNumberOfCameras();</span>
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">            if (count &gt; 0) {</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">                for (int index = 0; index &lt; count; index++) {</span>
+<span class="fc" id="L96">                    Category c = new Category(&quot;CAMERAS&quot;, &quot;cameras&quot;);</span>
+<span class="fc" id="L97">                    CameraCharacteristics chars = getCharacteristics(xCtx, index);</span>
+<span class="pc bpc" id="L98" title="1 of 2 branches missed.">                    if (chars != null) {</span>
+<span class="nc" id="L99">                        c.put(&quot;RESOLUTIONS&quot;, new CategoryValue(getResolution(chars), &quot;RESOLUTIONS&quot;, &quot;resolutions&quot;));</span>
+<span class="nc" id="L100">                        c.put(&quot;LENSFACING&quot;, new CategoryValue(getFacingState(chars), &quot;LENSFACING&quot;, &quot;lensfacing&quot;));</span>
+<span class="nc" id="L101">                        c.put(&quot;FLASHUNIT&quot;, new CategoryValue(getFlashUnit(chars), &quot;FLASHUNIT&quot;, &quot;flashunit&quot;));</span>
+<span class="nc" id="L102">                        c.put(&quot;IMAGEFORMAT&quot;, new CategoryValue(getCategoryImageFormat(chars)));</span>
+<span class="nc" id="L103">                        c.put(&quot;ORIENTATION&quot;, new CategoryValue(getOrientation(chars), &quot;ORIENTATION&quot;, &quot;orientation&quot;));</span>
+<span class="nc" id="L104">                        c.put(&quot;FOCALLENGTH&quot;, new CategoryValue(getFocalLength(chars), &quot;FOCALLENGTH&quot;, &quot;focallength&quot;));</span>
+<span class="nc" id="L105">                        c.put(&quot;SENSORSIZE&quot;, new CategoryValue(getSensorSize(chars), &quot;SENSORSIZE&quot;, &quot;sensorsize&quot;));</span>
                     }
-<span class="fc" id="L84">                    this.add(c);</span>
+<span class="pc bpc" id="L107" title="1 of 2 branches missed.">                    if (!&quot;&quot;.equals(cameraVendors)) {</span>
+<span class="fc" id="L108">                        c.put(&quot;MANUFACTURER&quot;, new CategoryValue(getManufacturer(index), &quot;MANUFACTURER&quot;, &quot;manufacturer&quot;));</span>
+                    }
+<span class="fc" id="L110">                    c.put(&quot;RESOLUTIONVIDEO&quot;, new CategoryValue(getVideoResolution(index), &quot;RESOLUTIONVIDEO&quot;, &quot;resolutionvideo&quot;));</span>
+<span class="fc" id="L111">                    c.put(&quot;SUPPORT&quot;, new CategoryValue(getSupportValue(), &quot;SUPPORT&quot;, &quot;support&quot;));</span>
+<span class="fc" id="L112">                    c.put(&quot;MODEL&quot;, new CategoryValue(getModel(index), &quot;MODEL&quot;, &quot;model&quot;));</span>
+<span class="fc" id="L113">                    this.add(c);</span>
                 }
             }
-<span class="nc" id="L87">        } catch (Exception ex) {</span>
-<span class="nc" id="L88">            FILog.e(ex.getMessage());</span>
-<span class="fc" id="L89">        }</span>
-<span class="fc" id="L90">    }</span>
+<span class="nc" id="L116">        } catch (Exception ex) {</span>
+<span class="nc" id="L117">            FILog.e(ex.getMessage());</span>
+<span class="fc" id="L118">        }</span>
+<span class="fc" id="L119">    }</span>
+
+    public int getCountCamera(Context xCtx) {
+<span class="fc" id="L122">	    int value = 0;</span>
+<span class="pc bpc" id="L123" title="1 of 2 branches missed.">        if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.LOLLIPOP) {</span>
+<span class="nc" id="L124">            CameraManager manager = (CameraManager) xCtx.getApplicationContext().getSystemService(Context.CAMERA_SERVICE);</span>
+            try {
+<span class="nc bnc" id="L126" title="All 4 branches missed.">                assert manager != null;</span>
+<span class="nc" id="L127">                value = manager.getCameraIdList().length;</span>
+<span class="nc" id="L128">            } catch (CameraAccessException e) {</span>
+<span class="nc" id="L129">                FILog.e(e.getMessage());</span>
+<span class="nc" id="L130">            } catch (NullPointerException e) {</span>
+<span class="nc" id="L131">                FILog.e(e.getMessage());</span>
+<span class="nc" id="L132">            }</span>
+        }
+<span class="fc" id="L134">        return value;</span>
+    }
 
     /**
      * Get info characteristics of the camera
@@ -99,19 +141,53 @@ import java.util.List;
      * @return CameraCharacteristics type object
      */
     public CameraCharacteristics getCharacteristics(Context xCtx, int index) {
-<span class="pc bpc" id="L99" title="1 of 2 branches missed.">        if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.LOLLIPOP) {</span>
-<span class="nc" id="L100">            CameraManager manager = (CameraManager) xCtx.getApplicationContext().getSystemService(Context.CAMERA_SERVICE);</span>
+<span class="pc bpc" id="L144" title="1 of 2 branches missed.">        if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.LOLLIPOP) {</span>
+<span class="nc" id="L145">            CameraManager manager = (CameraManager) xCtx.getApplicationContext().getSystemService(Context.CAMERA_SERVICE);</span>
             try {
-<span class="nc bnc" id="L102" title="All 4 branches missed.">                assert manager != null;</span>
-<span class="nc" id="L103">                String cameraId = manager.getCameraIdList()[index];</span>
-<span class="nc" id="L104">                return manager.getCameraCharacteristics(cameraId);</span>
-<span class="nc" id="L105">            } catch (CameraAccessException e) {</span>
-<span class="nc" id="L106">                FILog.e(e.getMessage());</span>
-<span class="nc" id="L107">            } catch (NullPointerException e) {</span>
-<span class="nc" id="L108">                FILog.e(e.getMessage());</span>
-<span class="nc" id="L109">            }</span>
+<span class="nc bnc" id="L147" title="All 4 branches missed.">                assert manager != null;</span>
+<span class="nc" id="L148">                String cameraId = manager.getCameraIdList()[index];</span>
+<span class="nc" id="L149">                return manager.getCameraCharacteristics(cameraId);</span>
+<span class="nc" id="L150">            } catch (CameraAccessException e) {</span>
+<span class="nc" id="L151">                FILog.e(e.getMessage());</span>
+<span class="nc" id="L152">            } catch (NullPointerException e) {</span>
+<span class="nc" id="L153">                FILog.e(e.getMessage());</span>
+<span class="nc" id="L154">            }</span>
         }
-<span class="fc" id="L111">        return null;</span>
+<span class="fc" id="L156">        return null;</span>
+    }
+
+    /**
+     * Get resolution from the camera
+     * @param characteristics
+     * @return String resolution camera
+     */
+    public String getResolution(CameraCharacteristics characteristics) {
+<span class="nc" id="L165">        String value = &quot;N/A&quot;;</span>
+<span class="nc bnc" id="L166" title="All 2 branches missed.">        if (android.os.Build.VERSION.SDK_INT &gt;= android.os.Build.VERSION_CODES.LOLLIPOP) {</span>
+<span class="nc" id="L167">            int width = 0, height = 0;</span>
+<span class="nc" id="L168">            StreamConfigurationMap sizes = characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">            if (sizes != null) {</span>
+<span class="nc" id="L170">                Size[] outputSizes = sizes.getOutputSizes(256);</span>
+<span class="nc bnc" id="L171" title="All 4 branches missed.">                if (outputSizes == null || outputSizes.length &lt;= 0) {</span>
+<span class="nc" id="L172">                    Rect rect = characteristics.get(CameraCharacteristics.SENSOR_INFO_ACTIVE_ARRAY_SIZE);</span>
+<span class="nc bnc" id="L173" title="All 2 branches missed.">                    if (rect != null) {</span>
+<span class="nc" id="L174">                        width = rect.width();</span>
+<span class="nc" id="L175">                        height = rect.height();</span>
+                    }
+<span class="nc" id="L177">                } else {</span>
+<span class="nc" id="L178">                    Size size = outputSizes[outputSizes.length - 1];</span>
+<span class="nc" id="L179">                    width = size.getWidth();</span>
+<span class="nc" id="L180">                    height = size.getHeight();</span>
+                }
+<span class="nc" id="L182">                double resolution = getResolutionType(width, height);</span>
+<span class="nc" id="L183">                value = resolution + &quot; MP (&quot; + width + &quot;x&quot; + height + &quot;)&quot;;</span>
+<span class="nc" id="L184">            } else {</span>
+<span class="nc" id="L185">                return value;</span>
+            }
+<span class="nc" id="L187">        } else {</span>
+<span class="nc" id="L188">            return value;</span>
+        }
+<span class="nc" id="L190">        return value;</span>
     }
 
     /**
@@ -120,24 +196,24 @@ import java.util.List;
      * @return String The camera device faces the same direction as the device's screen
      */
     public String getFacingState(CameraCharacteristics characteristics) {
-<span class="nc" id="L120">        String value = &quot;N/A&quot;;</span>
-<span class="nc bnc" id="L121" title="All 2 branches missed.">        if (android.os.Build.VERSION.SDK_INT &gt;= android.os.Build.VERSION_CODES.LOLLIPOP) {</span>
-<span class="nc" id="L122">            Integer facing = characteristics.get(CameraCharacteristics.LENS_FACING);</span>
-<span class="nc bnc" id="L123" title="All 2 branches missed.">            if (facing != null) {</span>
-<span class="nc bnc" id="L124" title="All 4 branches missed.">                switch (facing) {</span>
+<span class="nc" id="L199">        String value = &quot;N/A&quot;;</span>
+<span class="nc bnc" id="L200" title="All 2 branches missed.">        if (android.os.Build.VERSION.SDK_INT &gt;= android.os.Build.VERSION_CODES.LOLLIPOP) {</span>
+<span class="nc" id="L201">            Integer facing = characteristics.get(CameraCharacteristics.LENS_FACING);</span>
+<span class="nc bnc" id="L202" title="All 2 branches missed.">            if (facing != null) {</span>
+<span class="nc bnc" id="L203" title="All 4 branches missed.">                switch (facing) {</span>
                     case 0:
-<span class="nc" id="L126">                        value = &quot;FRONT&quot;;</span>
-<span class="nc" id="L127">                        break;</span>
+<span class="nc" id="L205">                        value = &quot;FRONT&quot;;</span>
+<span class="nc" id="L206">                        break;</span>
                     case 1:
-<span class="nc" id="L129">                        value = &quot;BACK&quot;;</span>
-<span class="nc" id="L130">                        break;</span>
+<span class="nc" id="L208">                        value = &quot;BACK&quot;;</span>
+<span class="nc" id="L209">                        break;</span>
                     case 2:
-<span class="nc" id="L132">                        value = &quot;EXTERNAL&quot;;</span>
+<span class="nc" id="L211">                        value = &quot;EXTERNAL&quot;;</span>
                         break;
                 }
             }
         }
-<span class="nc" id="L137">        return value;</span>
+<span class="nc" id="L216">        return value;</span>
     }
 
     /**
@@ -146,107 +222,337 @@ import java.util.List;
      * @return String 0 no available, 1 is available
      */
     public String getFlashUnit(CameraCharacteristics characteristics) {
-<span class="nc" id="L146">        String value = &quot;N/A&quot;;</span>
-<span class="nc bnc" id="L147" title="All 2 branches missed.">        if (android.os.Build.VERSION.SDK_INT &gt;= android.os.Build.VERSION_CODES.LOLLIPOP) {</span>
-<span class="nc" id="L148">            Boolean bool = characteristics.get(CameraCharacteristics.FLASH_INFO_AVAILABLE);</span>
-<span class="nc bnc" id="L149" title="All 4 branches missed.">            return bool != null ? bool ? &quot;1&quot; : &quot;0&quot; : &quot;N/A&quot;;</span>
+<span class="nc" id="L225">        String value = &quot;N/A&quot;;</span>
+<span class="nc bnc" id="L226" title="All 2 branches missed.">        if (android.os.Build.VERSION.SDK_INT &gt;= android.os.Build.VERSION_CODES.LOLLIPOP) {</span>
+<span class="nc" id="L227">            Boolean bool = characteristics.get(CameraCharacteristics.FLASH_INFO_AVAILABLE);</span>
+<span class="nc bnc" id="L228" title="All 4 branches missed.">            return bool != null ? bool ? &quot;1&quot; : &quot;0&quot; : &quot;N/A&quot;;</span>
         }
-<span class="nc" id="L151">        return value;</span>
+<span class="nc" id="L230">        return value;</span>
     }
 
-    public Category getCategoryImageFormat(CameraCharacteristics chars) {
-<span class="nc" id="L155">        Category category = new Category(&quot;IMAGEFORMAT&quot;, &quot;imageformat&quot;);</span>
-<span class="nc bnc" id="L156" title="All 2 branches missed.">        for (String imageFormat : getImageFormat(chars)) {</span>
-<span class="nc" id="L157">            category.put(&quot;FORMAT&quot;, new CategoryValue(imageFormat, &quot;FORMAT&quot;, &quot;format&quot;));</span>
-<span class="nc" id="L158">        }</span>
-<span class="nc" id="L159">        return category;</span>
+    private Category getCategoryImageFormat(CameraCharacteristics characteristics) {
+<span class="nc" id="L234">        Category category = new Category(&quot;IMAGEFORMAT&quot;, &quot;imageformat&quot;);</span>
+<span class="nc bnc" id="L235" title="All 2 branches missed.">        for (String imageFormat : getImageFormat(characteristics)) {</span>
+<span class="nc" id="L236">            category.put(&quot;FORMAT&quot;, new CategoryValue(imageFormat, &quot;FORMAT&quot;, &quot;format&quot;));</span>
+<span class="nc" id="L237">        }</span>
+<span class="nc" id="L238">        return category;</span>
     }
 
     /**
-     * version information about the camera device
-     * The available stream configurations that this camera device supports
+     * Get image format camera
      * @param characteristics
-     * @return String The camera device faces the same direction as the device's screen
+     * @return String image format camera
      */
     public ArrayList&lt;String&gt; getImageFormat(CameraCharacteristics characteristics) {
-<span class="nc" id="L169">        ArrayList&lt;String&gt; types = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L170" title="All 2 branches missed.">        if (android.os.Build.VERSION.SDK_INT &gt;= android.os.Build.VERSION_CODES.LOLLIPOP) {</span>
-<span class="nc" id="L171">            StreamConfigurationMap configurationMap = characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);</span>
-<span class="nc bnc" id="L172" title="All 2 branches missed.">            if (configurationMap != null) {</span>
-<span class="nc" id="L173">                int[] outputFormats = configurationMap.getOutputFormats();</span>
-<span class="nc bnc" id="L174" title="All 2 branches missed.">                if (outputFormats != null) {</span>
-<span class="nc bnc" id="L175" title="All 2 branches missed.">                    for (int value : outputFormats) {</span>
-<span class="nc" id="L176">                        String type = typeFormat(value);</span>
-<span class="nc bnc" id="L177" title="All 2 branches missed.">                        if (type != null) {</span>
-<span class="nc" id="L178">                            types.add(removeCharacters(type));</span>
+<span class="nc" id="L247">        ArrayList&lt;String&gt; types = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L248" title="All 2 branches missed.">        if (android.os.Build.VERSION.SDK_INT &gt;= android.os.Build.VERSION_CODES.LOLLIPOP) {</span>
+<span class="nc" id="L249">            StreamConfigurationMap configurationMap = characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);</span>
+<span class="nc bnc" id="L250" title="All 2 branches missed.">            if (configurationMap != null) {</span>
+<span class="nc" id="L251">                int[] outputFormats = configurationMap.getOutputFormats();</span>
+<span class="nc bnc" id="L252" title="All 2 branches missed.">                if (outputFormats != null) {</span>
+<span class="nc bnc" id="L253" title="All 2 branches missed.">                    for (int value : outputFormats) {</span>
+<span class="nc" id="L254">                        String type = typeFormat(value);</span>
+<span class="nc bnc" id="L255" title="All 2 branches missed.">                        if (type != null) {</span>
+<span class="nc" id="L256">                            types.add(type.replaceAll(&quot;[&lt;&gt;]&quot;, &quot;&quot;));</span>
                         }
                     }
                 }
             }
         }
-<span class="nc" id="L184">        return types;</span>
-    }
-
-    private String removeCharacters(String type) {
-<span class="nc" id="L188">        return type.replaceAll(&quot;[&lt;&gt;]&quot;, &quot;&quot;);</span>
+<span class="nc" id="L262">        return types;</span>
     }
 
     private String typeFormat(int i) {
-<span class="nc bnc" id="L192" title="All 11 branches missed.">        switch (i) {</span>
+<span class="nc bnc" id="L266" title="All 11 branches missed.">        switch (i) {</span>
             case 4:
-<span class="nc" id="L194">                return &quot;RGB_565&quot;;</span>
+<span class="nc" id="L268">                return &quot;RGB_565&quot;;</span>
             case 16:
-<span class="nc" id="L196">                return &quot;NV16&quot;;</span>
+<span class="nc" id="L270">                return &quot;NV16&quot;;</span>
             case 17:
-<span class="nc" id="L198">                return &quot;NV21&quot;;</span>
+<span class="nc" id="L272">                return &quot;NV21&quot;;</span>
             case 20:
-<span class="nc" id="L200">                return &quot;YUY2&quot;;</span>
+<span class="nc" id="L274">                return &quot;YUY2&quot;;</span>
             case 32:
-<span class="nc" id="L202">                return &quot;RAW_SENSOR&quot;;</span>
+<span class="nc" id="L276">                return &quot;RAW_SENSOR&quot;;</span>
             case 35:
-<span class="nc" id="L204">                return &quot;YUV_420_888&quot;;</span>
+<span class="nc" id="L278">                return &quot;YUV_420_888&quot;;</span>
             case 37:
-<span class="nc" id="L206">                return &quot;RAW10&quot;;</span>
+<span class="nc" id="L280">                return &quot;RAW10&quot;;</span>
             case 39:
-<span class="nc" id="L208">                return &quot;YUV_422_888&quot;;</span>
+<span class="nc" id="L282">                return &quot;YUV_422_888&quot;;</span>
             case 256:
-<span class="nc" id="L210">                return &quot;JPEG&quot;;</span>
+<span class="nc" id="L284">                return &quot;JPEG&quot;;</span>
             case 842094169:
-<span class="nc" id="L212">                return &quot;YV12&quot;;</span>
+<span class="nc" id="L286">                return &quot;YV12&quot;;</span>
             default:
-<span class="nc" id="L214">                return null;</span>
+<span class="nc" id="L288">                return null;</span>
         }
     }
 
     /**
-     * Get the camera resolutions
-     * @param index
-     * @return string with the width and height
+     * Get orientation camera
+     * @param characteristics
+     * @return String orientation camera
      */
-    public String getResolutions(int index) {
-<span class="fc" id="L224">        Camera cam = Camera.open(index);</span>
-<span class="pc bpc" id="L225" title="1 of 2 branches missed.">        if(cam != null) {</span>
-<span class="fc" id="L226">            Camera.Parameters params = cam.getParameters();</span>
-            List&lt;Camera.Size&gt; list;
-
-<span class="fc" id="L229">            list = params.getSupportedPictureSizes();</span>
-<span class="fc" id="L230">            int width = 0;</span>
-<span class="fc" id="L231">            int height = 0;</span>
-<span class="fc bfc" id="L232" title="All 2 branches covered.">            for (Camera.Size size : list) {</span>
-<span class="fc bfc" id="L233" title="All 2 branches covered.">                if ((size.width * size.height) &gt; (width * height)) {</span>
-<span class="fc" id="L234">                    width = size.width;</span>
-<span class="fc" id="L235">                    height = size.height;</span>
-                }
-<span class="fc" id="L237">            }</span>
-<span class="fc" id="L238">            cam.release();</span>
-
-            // cam resolution width x height
-<span class="fc" id="L241">            return String.format(&quot;%dx%d&quot;, width, height);</span>
+    public String getOrientation(CameraCharacteristics characteristics) {
+<span class="nc" id="L298">        String value = &quot;N/A&quot;;</span>
+<span class="nc bnc" id="L299" title="All 2 branches missed.">        if (android.os.Build.VERSION.SDK_INT &gt;= android.os.Build.VERSION_CODES.LOLLIPOP) {</span>
+<span class="nc" id="L300">            return String.valueOf(characteristics.get(CameraCharacteristics.SENSOR_ORIENTATION));</span>
         } else {
-<span class="nc" id="L243">         return &quot;&quot;;</span>
+<span class="nc" id="L302">            return value;</span>
         }
     }
 
+
+    /**
+     * Get video resolution camera
+     * @param index number of camera
+     * @return String video resolution camera
+     */
+    public String getVideoResolution(int index) {
+<span class="fc" id="L313">        String value = &quot;N/A&quot;;</span>
+        try {
+<span class="fc" id="L315">            Camera open = Camera.open(index);</span>
+<span class="fc" id="L316">            Camera.Parameters parameters = open.getParameters();</span>
+<span class="fc" id="L317">            List&lt;Camera.Size&gt; supportedVideoSizes = parameters.getSupportedVideoSizes();</span>
+<span class="pc bpc" id="L318" title="1 of 2 branches missed.">            if (supportedVideoSizes != null) {</span>
+<span class="nc" id="L319">                Camera.Size infoSize = supportedVideoSizes.get(supportedVideoSizes.size() - 1);</span>
+<span class="nc" id="L320">                int width = infoSize.width;</span>
+<span class="nc" id="L321">                int height = infoSize.height;</span>
+<span class="nc" id="L322">                value = getResolutionType(width, height) + &quot; MP (&quot; + width + &quot;x&quot; + height + &quot;)&quot;;</span>
+            }
+<span class="fc" id="L324">        } catch (Exception ex) {</span>
+<span class="fc" id="L325">            FILog.e(ex.getMessage());</span>
+<span class="fc" id="L326">        }</span>
+<span class="fc" id="L327">        return value;</span>
+    }
+
+    /**
+     * Get focal length camera
+     * @param characteristics
+     * @return String focal length camera
+     */
+    public String getFocalLength(CameraCharacteristics characteristics) {
+<span class="nc" id="L336">        String value = &quot;N/A&quot;;</span>
+<span class="nc bnc" id="L337" title="All 2 branches missed.">        if (android.os.Build.VERSION.SDK_INT &gt;= android.os.Build.VERSION_CODES.LOLLIPOP) {</span>
+<span class="nc" id="L338">            float[] fArr = characteristics.get(CameraCharacteristics.LENS_INFO_AVAILABLE_FOCAL_LENGTHS);</span>
+<span class="nc bnc" id="L339" title="All 2 branches missed.">            if (fArr == null) {</span>
+<span class="nc" id="L340">                return null;</span>
+            }
+<span class="nc" id="L342">            StringBuilder str = new StringBuilder();</span>
+<span class="nc bnc" id="L343" title="All 2 branches missed.">            for (float f : fArr) {</span>
+<span class="nc" id="L344">                str.append(f).append(&quot; mm &quot;);</span>
+            }
+<span class="nc" id="L346">            return str.toString().trim();</span>
+        } else {
+<span class="nc" id="L348">            return value;</span>
+        }
+    }
+
+    /**
+     * Get sensor size camera
+     * @param characteristics
+     * @return String sensor size camera
+     */
+    public String getSensorSize(CameraCharacteristics characteristics) {
+<span class="nc" id="L358">        String value = &quot;N/A&quot;;</span>
+<span class="nc bnc" id="L359" title="All 2 branches missed.">        if (android.os.Build.VERSION.SDK_INT &gt;= android.os.Build.VERSION_CODES.LOLLIPOP) {</span>
+<span class="nc" id="L360">            SizeF sizeF = characteristics.get(CameraCharacteristics.SENSOR_INFO_PHYSICAL_SIZE);</span>
+<span class="nc bnc" id="L361" title="All 2 branches missed.">            if (sizeF != null) {</span>
+<span class="nc" id="L362">                double width = (double) sizeF.getWidth();</span>
+<span class="nc" id="L363">                double height = (double) sizeF.getHeight();</span>
+<span class="nc bnc" id="L364" title="All 4 branches missed.">                if (width &gt; 0.0d &amp;&amp; height &gt; 0.0d) {</span>
+<span class="nc" id="L365">                    return Math.round(width * 100) / 100.0d + &quot;x&quot; + Math.round(height * 100) / 100.0d;</span>
+                }
+            }
+<span class="nc" id="L368">            return value;</span>
+        } else {
+<span class="nc" id="L370">            return value;</span>
+        }
+    }
+
+    private double getResolutionType(int width, int height) {
+<span class="nc" id="L375">        double value = 0;</span>
+<span class="nc bnc" id="L376" title="All 2 branches missed.">        if (width &gt;= 0) {</span>
+            try {
+<span class="nc" id="L378">                double d = ((((double) (width * height)) * 1.0d) / 1000.0d) / 1000.0d;</span>
+<span class="nc" id="L379">                value = new BigDecimal(d).setScale(1, RoundingMode.HALF_UP).doubleValue();</span>
+<span class="nc" id="L380">            } catch (IllegalArgumentException ex) {</span>
+<span class="nc" id="L381">                FILog.e(ex.getMessage());</span>
+<span class="nc" id="L382">            }</span>
+        }
+<span class="nc" id="L384">        return value;</span>
+    }
+
+    /**
+     * Get manufacturer camera
+     * @param index number of the camera
+     * @return String manufacturer camera
+     */
+    public String getManufacturer(int index) {
+<span class="fc" id="L393">        String value = &quot;N/A&quot;;</span>
+        try {
+<span class="fc" id="L395">            String infoModel = Utils.getCatInfoMultiple(&quot;/proc/hw_info/camera_info&quot;);</span>
+<span class="pc bpc" id="L396" title="1 of 2 branches missed.">            if (&quot;&quot;.equals(infoModel)) {</span>
+<span class="fc" id="L397">                infoModel = Utils.getCatInfoMultiple(&quot;/proc/driver/camera_info&quot;);</span>
+            }
+<span class="pc bpc" id="L399" title="3 of 4 branches missed.">            if (!&quot;&quot;.equals(infoModel) &amp;&amp; infoModel.contains(&quot;;&quot;)) {</span>
+<span class="nc" id="L400">                String infoName = infoModel.split(&quot;;&quot;, 2)[index];</span>
+<span class="nc bnc" id="L401" title="All 2 branches missed.">                if (infoName.contains(&quot;:&quot;)) {</span>
+<span class="nc" id="L402">                    String infoValue = infoName.split(&quot;:&quot;, 2)[1].trim();</span>
+<span class="nc bnc" id="L403" title="All 2 branches missed.">                    if (!&quot;&quot;.equals(infoValue)) {</span>
+<span class="nc" id="L404">                        JSONArray jr = new JSONArray(cameraVendors);</span>
+<span class="nc bnc" id="L405" title="All 2 branches missed.">                        for (int i = 0; i &lt; jr.length(); i++) {</span>
+<span class="nc" id="L406">                            JSONObject c = jr.getJSONObject(i);</span>
+<span class="nc" id="L407">                            String id = c.getString(&quot;id&quot;);</span>
+<span class="nc bnc" id="L408" title="All 2 branches missed.">                            if (infoValue.startsWith(id)) {</span>
+<span class="nc" id="L409">                                value = c.getString(&quot;name&quot;);</span>
+<span class="nc" id="L410">                                break;</span>
+                            }
+                        }
+                    }
+                }
+            }
+<span class="nc" id="L416">        } catch (Exception e) {</span>
+<span class="nc" id="L417">            FILog.e(e.getMessage());</span>
+<span class="fc" id="L418">        }</span>
+<span class="fc" id="L419">        return value;</span>
+    }
+
+    /**
+     * Get model camera
+     * @param index number of the camera
+     * @return String model camera
+     */
+    public String getModel(int index) {
+<span class="fc" id="L428">        String value = &quot;N/A&quot;;</span>
+        try {
+<span class="fc" id="L430">            String infoModel = Utils.getCatInfoMultiple(&quot;/proc/driver/camera_info&quot;);</span>
+<span class="pc bpc" id="L431" title="1 of 2 branches missed.">            if (&quot;&quot;.equals(infoModel)) {</span>
+<span class="fc" id="L432">                infoModel = Utils.getCatInfoMultiple(&quot;/proc/hw_info/camera_info&quot;);</span>
+            }
+<span class="pc bpc" id="L434" title="1 of 2 branches missed.">            if (!&quot;&quot;.equals(infoModel)) {</span>
+<span class="nc" id="L435">                infoModel = infoModel.split(&quot;;&quot;, 2)[index];</span>
+<span class="nc bnc" id="L436" title="All 2 branches missed.">                if (infoModel.contains(&quot;:&quot;))</span>
+<span class="nc" id="L437">                    value = infoModel.split(&quot;:&quot;, 2)[1];</span>
+            }
+<span class="nc" id="L439">        } catch (Exception e) {</span>
+<span class="nc" id="L440">            FILog.e(e.getMessage());</span>
+<span class="fc" id="L441">        }</span>
+<span class="fc" id="L442">        return value;</span>
+    }
+
+    /**
+     * Get support camera
+     * @return String support camera
+     */
+    public String getSupportValue() {
+<span class="fc" id="L450">        ArrayList&lt;String&gt; arrayList = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L451">        Iterator it = getCatInfoCamera(&quot;/system/lib/libcameracustom.so&quot;, &quot;SENSOR_DRVNAME_&quot;, 100).iterator();</span>
+<span class="pc bpc" id="L452" title="1 of 2 branches missed.">        while (it.hasNext()) {</span>
+<span class="nc" id="L453">            arrayList.add(((String) it.next()).toLowerCase(Locale.US));</span>
+        }
+<span class="fc" id="L455">        StringBuilder values = new StringBuilder();</span>
+<span class="pc bpc" id="L456" title="1 of 2 branches missed.">        for (int i = 0; i &lt; arrayList.size(); i++) {</span>
+<span class="nc" id="L457">            values.append(arrayList.get(i));</span>
+<span class="nc bnc" id="L458" title="All 2 branches missed.">            if (i != arrayList.size() - 1)</span>
+<span class="nc" id="L459">                values.append(&quot;; &quot;);</span>
+        }
+<span class="pc bpc" id="L461" title="1 of 2 branches missed.">        return &quot;&quot;.equals(values.toString()) ? &quot;N/A&quot; : values.toString();</span>
+    }
+
+    private ArrayList&lt;String&gt; getCatInfoCamera(String str, String str2, int i) {
+        InputStream bufferedInputStream;
+        Throwable th;
+<span class="fc" id="L467">        ArrayList&lt;String&gt; arrayList = new ArrayList&lt;&gt;();</span>
+        try {
+<span class="fc" id="L469">            File file = new File(str);</span>
+            try {
+<span class="fc" id="L471">                byte[] bytes = str2.getBytes();</span>
+<span class="nc" id="L472">                bufferedInputStream = new BufferedInputStream(new FileInputStream(file));</span>
+                try {
+<span class="nc" id="L474">                    byte[] bArr = new byte[1];</span>
+<span class="nc" id="L475">                    int i2 = 0;</span>
+<span class="nc" id="L476">                    int i3 = 0;</span>
+<span class="nc" id="L477">                    int i5 = 0;</span>
+                    while (true) {
+<span class="nc" id="L479">                        int read = bufferedInputStream.read(bArr);</span>
+<span class="nc bnc" id="L480" title="All 2 branches missed.">                        if (read == -1) {</span>
+<span class="nc" id="L481">                            break;</span>
+                        }
+                        int i6;
+<span class="nc" id="L484">                        i5 += read;</span>
+<span class="nc" id="L485">                        byte b = bArr[0];</span>
+<span class="nc bnc" id="L486" title="All 2 branches missed.">                        if (i3 == str2.length()) {</span>
+<span class="nc" id="L487">                            arrayList.add(((char) b) + getValueString(getListBytes(bufferedInputStream, (byte) 0)));</span>
+<span class="nc" id="L488">                            i3 = i5;</span>
+<span class="nc" id="L489">                            i2 = 0;</span>
+                        } else {
+<span class="nc" id="L491">                            i6 = i2;</span>
+<span class="nc" id="L492">                            i2 = i3;</span>
+<span class="nc" id="L493">                            i3 = i6;</span>
+                        }
+<span class="nc bnc" id="L495" title="All 2 branches missed.">                        i2 = b == bytes[i2] ? i2 + 1 : 0;</span>
+<span class="nc bnc" id="L496" title="All 4 branches missed.">                        if (i3 &gt; 0 &amp;&amp; i5 - i3 &gt; i) {</span>
+<span class="nc" id="L497">                            break;</span>
+                        }
+<span class="nc" id="L499">                        i6 = i3;</span>
+<span class="nc" id="L500">                        i3 = i2;</span>
+<span class="nc" id="L501">                        i2 = i6;</span>
+<span class="nc" id="L502">                    }</span>
+<span class="nc" id="L503">                    bufferedInputStream.close();</span>
+<span class="nc" id="L504">                    return arrayList;</span>
+<span class="nc" id="L505">                } catch (Throwable th2) {</span>
+<span class="nc" id="L506">                    th = th2;</span>
+<span class="nc" id="L507">                    bufferedInputStream.close();</span>
+<span class="nc" id="L508">                    throw th;</span>
+                }
+<span class="fc" id="L510">            } catch (Throwable th3) {</span>
+<span class="fc" id="L511">                FILog.e(th3.getMessage());</span>
+            }
+<span class="nc" id="L513">        } catch (Exception e) {</span>
+<span class="nc" id="L514">            System.err.println(e.getMessage());</span>
+<span class="fc" id="L515">        }</span>
+<span class="fc" id="L516">        return arrayList;</span>
+    }
+
+    private String getValueString(List&lt;Byte&gt; list) {
+<span class="nc bnc" id="L520" title="All 2 branches missed.">        if (list.size() &lt;= 0) {</span>
+<span class="nc" id="L521">            return &quot;&quot;;</span>
+        }
+<span class="nc" id="L523">        byte[] bArr = new byte[list.size()];</span>
+<span class="nc" id="L524">        int i = 0;</span>
+<span class="nc bnc" id="L525" title="All 2 branches missed.">        for (Byte byteValue : list) {</span>
+<span class="nc" id="L526">            bArr[i] = byteValue;</span>
+<span class="nc" id="L527">            i++;</span>
+<span class="nc" id="L528">        }</span>
+<span class="nc bnc" id="L529" title="All 2 branches missed.">        if (Build.VERSION.SDK_INT &gt;= 19) {</span>
+<span class="nc" id="L530">            return new String(bArr, StandardCharsets.UTF_8);</span>
+        } else {
+<span class="nc" id="L532">            return new String(bArr, Charset.forName(&quot;UTF-8&quot;));</span>
+        }
+    }
+
+    private List&lt;Byte&gt; getListBytes(InputStream inputStream, byte b) {
+<span class="nc" id="L537">        byte[] bArr = new byte[1];</span>
+<span class="nc" id="L538">        List&lt;Byte&gt; arrayList = new ArrayList&lt;&gt;();</span>
+        while (true) {
+            try {
+<span class="nc" id="L541">                int read = inputStream.read(bArr);</span>
+<span class="nc bnc" id="L542" title="All 2 branches missed.">                if (read == -1) {</span>
+<span class="nc" id="L543">                    break;</span>
+                }
+<span class="nc" id="L545">                byte b2 = bArr[0];</span>
+<span class="nc bnc" id="L546" title="All 2 branches missed.">                if (b2 == b) {</span>
+<span class="nc" id="L547">                    break;</span>
+                }
+<span class="nc" id="L549">                arrayList.add(b2);</span>
+<span class="nc" id="L550">            } catch (IOException e) {</span>
+<span class="nc" id="L551">                FILog.e(e.getMessage());</span>
+<span class="nc" id="L552">            }</span>
+        }
+<span class="nc" id="L554">        return arrayList;</span>
+    }
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span>Generated by the Android Gradle plugin 2.2.0</div></body></html>
