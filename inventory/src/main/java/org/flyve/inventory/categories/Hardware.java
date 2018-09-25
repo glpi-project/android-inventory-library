@@ -17,6 +17,7 @@
  *  GNU General Public License for more details.
  *  ---------------------------------------------------------------------
  *  @author    Rafael Hernandez - <rhernandez@teclib.com>
+ *  @author    Ivan del Pino    - <idelpino@teclib.com>
  *  @copyright Copyright Teclib. All rights reserved.
  *  @copyright Copyright FusionInventory.
  *  @license   GPLv3 https://www.gnu.org/licenses/gpl-3.0.html
@@ -30,19 +31,28 @@ package org.flyve.inventory.categories;
 
 import android.content.Context;
 import android.os.Build;
-import android.os.Process;
-import android.os.UserHandle;
-import android.os.UserManager;
 import android.provider.Settings.Secure;
-import android.text.format.DateFormat;
 
 import org.flyve.inventory.FILog;
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Properties;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 /**
  * This class get all the information of the Environment
@@ -71,7 +81,7 @@ public class Hardware extends Categories {
     private Properties props;
     private Context xCtx;
     private static final String OSNAME = "Android";
-    private UserManager um;
+    private ArrayList<String> userInfo = new ArrayList<>();
 
     /**
      * Indicates whether some other object is "equal to" this one
@@ -80,13 +90,7 @@ public class Hardware extends Categories {
      */
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        return (!super.equals(obj));
+        return obj != null && getClass() == obj.getClass() && (!super.equals(obj));
     }
 
     /**
@@ -98,6 +102,7 @@ public class Hardware extends Categories {
         int hash = super.hashCode();
         hash = 89 * hash + (this.xCtx != null ? this.xCtx.hashCode() : 0);
         hash = 89 * hash + (this.props != null ? this.props.hashCode() : 0);
+        hash = 89 * hash + (this.userInfo != null ? this.userInfo.hashCode() : 0);
         return hash;
     }
 
@@ -112,117 +117,107 @@ public class Hardware extends Categories {
 
         try {
             props = System.getProperties();
-            Memory memory = new Memory(xCtx);
-            getUserInfo(xCtx);
+            getUserInfo();
 
             Category c = new Category("HARDWARE", "hardware");
 
-            c.put("DATELASTLOGGEDUSER", new CategoryValue(getDatelastloggeduser(), "DATELASTLOGGEDUSER", "dateLastLoggedUser"));
-            c.put("LASTLOGGEDUSER", new CategoryValue(getCmd().toString(), "LASTLOGGEDUSER", "lastLoggedUser"));
+            c.put("DATELASTLOGGEDUSER", new CategoryValue(getDateLastLoggedUser(), "DATELASTLOGGEDUSER", "dateLastLoggedUser"));
+            c.put("LASTLOGGEDUSER", new CategoryValue(getLastLoggedUser(), "LASTLOGGEDUSER", "lastLoggedUser"));
             c.put("NAME", new CategoryValue(getName(), "NAME", "name"));
             c.put("OSNAME", new CategoryValue(OSNAME, "OSNAME", "osName"));
-            c.put("OSVERSION", new CategoryValue(getOsversion(), "OSVERSION", "osVersion"));
-            c.put("ARCHNAME", new CategoryValue(getArchname(), "ARCHNAME", "archName"));
+            c.put("OSVERSION", new CategoryValue(getOsVersion(), "OSVERSION", "osVersion"));
+            c.put("ARCHNAME", new CategoryValue(getArchName(), "ARCHNAME", "archName"));
             c.put("UUID", new CategoryValue(getUUID(), "UUID", "uuid"));
-
-            String vMemory = memory.getCapacity();
-
-            c.put("MEMORY", new CategoryValue(vMemory, "MEMORY", "memory"));
+            c.put("USERID", new CategoryValue(getUserId(), "USERID", "userid"));
+            c.put("MEMORY", new CategoryValue(new Memory(xCtx).getCapacity(), "MEMORY", "memory"));
 
             this.add(c);
         } catch (Exception ex) {
             FILog.e(ex.getMessage());
         }
-
     }
 
-    private void getUserInfo(Context xCtx) {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            um = (UserManager) xCtx.getSystemService(Context.USER_SERVICE);
-        }
-    }
-
-    public ArrayList<String> getCmd() {
-        ArrayList<String> names = new ArrayList<>();
-        try {
-            java.lang.Process script = Runtime.getRuntime().exec(new String[] { "su", "cat /data/system/users/0.xml", "exit" });
-            /*java.lang.Process p = Runtime.getRuntime().exec( "su" );
-            DataOutputStream in = new DataOutputStream(p.getOutputStream());
-            in.writeBytes("cat /data/system/users/o.xml" + "\n");
-            in.writeBytes("exit\n");
-            in.flush();
-            byte[] buffer = new byte[4];
-            int read = 0;
-            while ((read = in.read(buffer, 0, buffer.length)) != -1) {
-                in.read(buffer);
-            }*/
-            BufferedReader in = new BufferedReader(new InputStreamReader(script.getInputStream()));
-            String line;
-            while ((line = in.readLine()) != null) {
-                names.add(line);
-            }
-        } catch (Exception ex) {
-            names.add("Dumpsys Permission");
-            FILog.e(ex.getMessage());
-        }
-        return names;
-    }
-
-    public String numberForUser() {
-        String value = "N/A";
-        try {
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                UserHandle uh = Process.myUserHandle();
-                return String.valueOf(um.getSerialNumberForUser(uh));
-            } else {
-                return "N/A";
-            }
-        } catch (SecurityException ex) {
-            FILog.e(ex.getMessage());
-            value = "ID N/A Permission";
-        } catch (NullPointerException ex) {
-            FILog.e(ex.getMessage());
-        }
-        return value;
-    }
-
-    public String getUserName() {
-        String value = "N/A";
-        try {
-            return Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 ? um.getUserName() : "N/A";
-        } catch (SecurityException ex) {
-            FILog.e(ex.getMessage());
-            value = "Name N/A Permission";
-        } catch (NullPointerException ex) {
-            FILog.e(ex.getMessage());
-        }
-        return value;
+    /**
+     * Get the if of the user logged
+     * @return string id user logged
+     */
+    public String getUserId() {
+        return getUserTagValue("id");
     }
 
     /**
      * Get the date of the last time the user logged
      * @return string the date in simple format
      */
-    public String getDatelastloggeduser() {
-        return String.valueOf(DateFormat.format("MM/dd/yy", Build.TIME));
+    public String getDateLastLoggedUser() {
+        long lastLoggedIn = Long.parseLong(getUserTagValue("lastLoggedIn"));
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd HH:mm", Locale.getDefault());
+        Date resultDate = new Date(lastLoggedIn);
+        return sdf.format(resultDate);
     }
 
     /**
      * Get the name of the last logged user
      * @return string the user name
      */
-    public String getLastloggeduser() {
-        String mLastloggeduser = "";
-        if (!Build.USER.equals(Build.UNKNOWN)) {
-            mLastloggeduser = Build.USER;
-        } else {
-            String user = props.getProperty("user.name");
-            if (!user.equals("")) {
-                mLastloggeduser = props.getProperty("user.name");
-            }
+    public String getLastLoggedUser() {
+        String value = "N/A";
+        try {
+            DocumentBuilder newDocumentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+            String info = userInfo.get(2).trim();
+            Document parse = newDocumentBuilder.parse(new ByteArrayInputStream(info.getBytes()));
+            value = parse.getFirstChild().getTextContent();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
         }
+        return value;
+    }
 
-        return mLastloggeduser;
+    public String getUserTagValue(String tagName) {
+        String evaluate = "";
+        if (userInfo.size() > 0) {
+            String removeChar = userInfo.get(1).replaceAll("[\"><]", "");
+            if (removeChar.contains("user ")) {
+                evaluate = removeChar.replaceAll(" ", ",").trim();
+            }
+            String[] splitValues = evaluate.split(",");
+            Map<String, String> results = new HashMap<>();
+            for (String a : splitValues) {
+                if (a.contains("=")) {
+                    String[] keyValues = a.split("=", 2);
+                    String key = keyValues[0];
+                    String value = keyValues[1];
+                    results.put(key, value);
+                }
+            }
+            return results.get(tagName) == null ? "N/A" : results.get(tagName);
+        } else {
+            return "N/A";
+        }
+    }
+
+    private void getUserInfo() {
+        userInfo = new ArrayList<>();
+        try {
+            java.lang.Process p = Runtime.getRuntime().exec("su");
+            DataOutputStream dos = new DataOutputStream(p.getOutputStream());
+            dos.writeBytes("cat /data/system/users/0.xml\n");
+            dos.writeBytes("exit\n");
+            dos.flush();
+            dos.close();
+            p.waitFor();
+            BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            String temp;
+            while ((temp = in.readLine()) != null) {
+                userInfo.add(temp);
+            }
+        } catch (Exception ex) {
+            FILog.e(ex.getMessage());
+        }
     }
 
     /**
@@ -237,7 +232,7 @@ public class Hardware extends Categories {
      * Get the OS version
      * @return string the version
      */
-    public String getOsversion() {
+    public String getOsVersion() {
         return Build.VERSION.RELEASE;
     }
 
@@ -245,7 +240,7 @@ public class Hardware extends Categories {
      * Get the name of the architecture
      * @return string the OS architecture
      */
-    public String getArchname() {
+    public String getArchName() {
         return props.getProperty("os.arch");
     }
 
