@@ -150,10 +150,14 @@ public class Hardware extends Categories {
      * @return string the date in simple format
      */
     public String getDateLastLoggedUser() {
-        long lastLoggedIn = Long.parseLong(getUserTagValue("lastLoggedIn"));
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd HH:mm", Locale.getDefault());
-        Date resultDate = new Date(lastLoggedIn);
-        return sdf.format(resultDate);
+        String value = "N/A";
+        String lastLoggedIn = getUserTagValue("lastLoggedIn");
+        if (!"N/A".equals(lastLoggedIn)) {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd HH:mm", Locale.getDefault());
+            Date resultDate = new Date(Long.parseLong(lastLoggedIn));
+            value = sdf.format(resultDate);
+        }
+        return value;
     }
 
     /**
@@ -163,10 +167,12 @@ public class Hardware extends Categories {
     public String getLastLoggedUser() {
         String value = "N/A";
         try {
-            DocumentBuilder newDocumentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-            String info = userInfo.get(2).trim();
-            Document parse = newDocumentBuilder.parse(new ByteArrayInputStream(info.getBytes()));
-            value = parse.getFirstChild().getTextContent();
+            if (userInfo.size() > 0) {
+                DocumentBuilder newDocumentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+                String info = userInfo.get(2).trim();
+                Document parse = newDocumentBuilder.parse(new ByteArrayInputStream(info.getBytes()));
+                value = parse.getFirstChild().getTextContent();
+            }
         } catch (SAXException e) {
             e.printStackTrace();
         } catch (IOException e) {
