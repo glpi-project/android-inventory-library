@@ -17,6 +17,7 @@
  *  GNU General Public License for more details.
  *  ---------------------------------------------------------------------
  *  @author    Rafael Hernandez - <rhernandez@teclib.com>
+ *  @author    Ivan del Pino    - <idelpino@teclib.com>
  *  @copyright Copyright Teclib. All rights reserved.
  *  @copyright Copyright FusionInventory.
  *  @license   GPLv3 https://www.gnu.org/licenses/gpl-3.0.html
@@ -46,16 +47,21 @@ public class HardwareTest {
 
     @Test
     public void getDatelastloggeduser() throws Exception {
-
         Hardware hardware = new Hardware(appContext);
-        assertNotEquals("", hardware.getDatelastloggeduser());
+        assertNotEquals("", hardware.getDateLastLoggedUser());
 
     }
 
     @Test
     public void getLastloggeduser() throws Exception {
         Hardware hardware = new Hardware(appContext);
-        assertNotEquals("", hardware.getLastloggeduser());
+        assertNotEquals("", hardware.getLastLoggedUser());
+    }
+
+    @Test
+    public void getUser() throws Exception {
+        Hardware hardware = new Hardware(appContext);
+        assertNotEquals("", hardware.getUserId());
     }
 
     @Test
@@ -67,13 +73,13 @@ public class HardwareTest {
     @Test
     public void getOsversion() throws Exception {
         Hardware hardware = new Hardware(appContext);
-        assertNotEquals("", hardware.getOsversion());
+        assertNotEquals("", hardware.getOsVersion());
     }
 
     @Test
     public void getArchname() throws Exception {
         Hardware hardware = new Hardware(appContext);
-        assertNotEquals("", hardware.getArchname());
+        assertNotEquals("", hardware.getArchName());
     }
 
     @Test
