@@ -108,7 +108,7 @@ public class Bios extends Categories {
 	 */
 	public String getBiosDate() {
 		String dateInfo = Utils.getCatInfo("/sys/devices/virtual/dmi/id/bios_date");
-		return dateInfo != null ? dateInfo : "N/A";
+		return !dateInfo.equals("") ? dateInfo : "N/A";
 	}
 
 	/**
@@ -125,7 +125,7 @@ public class Bios extends Categories {
 	 */
 	public String getBiosVersion() {
 		String dateInfo = Utils.getCatInfo("/sys/devices/virtual/dmi/id/bios_version");
-		return dateInfo != null ? dateInfo : "N/A";
+		return !dateInfo.equals("") ? dateInfo : "N/A";
 	}
 
 	/**
@@ -158,7 +158,7 @@ public class Bios extends Categories {
 	 */
 	public String getMotherBoardSerial() {
 		String dateInfo = Utils.getCatInfo("/sys/devices/virtual/dmi/id/board_serial");
-		return dateInfo != null ? dateInfo : "N/A";
+		return !dateInfo.equals("") ? dateInfo : "N/A";
 	}
 
 	/**

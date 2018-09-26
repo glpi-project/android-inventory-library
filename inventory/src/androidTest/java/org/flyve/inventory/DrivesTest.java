@@ -53,12 +53,12 @@ import static org.junit.Assert.assertNotEquals;
     @Test
     public void getVolumn() throws Exception {
         Drives drives = new Drives(appContext);
-        assertNotEquals("", drives.getVolumn(froot));
-        assertNotEquals("", drives.getVolumn(fexternal));
-        assertNotEquals("", drives.getVolumn(fdata));
+        assertNotEquals("", drives.getVolume(froot));
+        assertNotEquals("", drives.getVolume(fexternal));
+        assertNotEquals("", drives.getVolume(fdata));
         String secondaryStorage = System.getenv("SECONDARY_STORAGE");
         if (secondaryStorage != null) {
-            assertNotEquals("", drives.getVolumn(new File(secondaryStorage)));
+            assertNotEquals("", drives.getVolume(new File(secondaryStorage)));
         }
     }
 
@@ -98,6 +98,19 @@ import static org.junit.Assert.assertNotEquals;
         String secondaryStorage = System.getenv("SECONDARY_STORAGE");
         if (secondaryStorage != null) {
             assertNotEquals("", drives.getFileSystem(new File(secondaryStorage)));
+        }
+    }
+
+    @Test
+    public void getType() throws Exception {
+        Drives drives = new Drives(appContext);
+        assertNotEquals("", drives.getType(froot));
+        assertNotEquals("", drives.getType(fexternal));
+        assertNotEquals("", drives.getType(fdata));
+        assertNotEquals("", drives.getType(fcache));
+        String secondaryStorage = System.getenv("SECONDARY_STORAGE");
+        if (secondaryStorage != null) {
+            assertNotEquals("", drives.getType(new File(secondaryStorage)));
         }
     }
 

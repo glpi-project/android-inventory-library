@@ -37,7 +37,6 @@ import org.flyve.inventory.FILog;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
@@ -84,10 +83,11 @@ public class Drives extends Categories {
         try {
             Category c = new Category("DRIVES", "drives");
 
-            c.put("VOLUMN", new CategoryValue(getVolumn(f), "VOLUMN", "path"));
+            c.put("VOLUMN", new CategoryValue(getVolume(f), "VOLUMN", "path"));
             c.put("TOTAL", new CategoryValue(getTotal(f), "TOTAL", "total"));
             c.put("FREE", new CategoryValue(getFreeSpace(f), "FREE", "free"));
             c.put("FILESYSTEM", new CategoryValue(getFileSystem(f), "FILESYSTEM", "filesystem"));
+            c.put("TYPE", new CategoryValue(getType(f), "TYPE", "type"));
 
             this.add(c);
         } catch (Exception ex) {
@@ -100,17 +100,23 @@ public class Drives extends Categories {
      * @param f file
      * @return string with the volume
      */
-    public String getVolumn(File f) {
-        // Size of storage
-        String val = "";
-
+    public String getVolume(File f) {
+        String fileVolume = "N/A";
         try {
-            val = f.toString();
-        } catch (Exception ex) {
-            FILog.e(ex.getMessage());
+            Process mount = Runtime.getRuntime().exec("mount");
+            BufferedReader bufferedFileInfo = new BufferedReader(new InputStreamReader(mount.getInputStream()));
+            String line;
+            while ((line = bufferedFileInfo.readLine()) != null) {
+                String[] fileInfo = line.split("\\s+");
+                if (fileInfo[1].contentEquals(f.getAbsolutePath())) {
+                    fileVolume = fileInfo[0];
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            FILog.e(e.getMessage());
         }
-
-        return val;
+        return fileVolume;
     }
 
     /**
@@ -159,24 +165,42 @@ public class Drives extends Categories {
         String fileSystem = "N/A";
         try {
             Process mount = Runtime.getRuntime().exec("mount");
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(mount.getInputStream()));
-            mount.waitFor();
-
+            BufferedReader bufferedFileInfo = new BufferedReader(new InputStreamReader(mount.getInputStream()));
             String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                String[] split = line.split("\\s+");
-                for (int i = 0; i < split.length - 1; i++) {
-                    if (split[i].contentEquals(f.getAbsolutePath())) {
-                        String strMount = split[i];
-                        fileSystem = split[i + 1];
-                    }
+            while ((line = bufferedFileInfo.readLine()) != null) {
+                String[] fileInfo = line.split("\\s+");
+                if (fileInfo[1].contentEquals(f.getAbsolutePath())) {
+                    fileSystem = fileInfo[2];
+                    break;
                 }
             }
-        } catch (IOException e) {
-            FILog.e(e.getMessage());
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             FILog.e(e.getMessage());
         }
         return fileSystem;
+    }
+
+    /**
+     * Get the filesystem mount point
+     * @param f file
+     * @return string filesystem mount point
+     */
+    public String getType(File f) {
+        String pointMounted = "N/A";
+        try {
+            Process mount = Runtime.getRuntime().exec("mount");
+            BufferedReader bufferedFileInfo = new BufferedReader(new InputStreamReader(mount.getInputStream()));
+            String line;
+            while ((line = bufferedFileInfo.readLine()) != null) {
+                String[] fileInfo = line.split("\\s+");
+                if (fileInfo[1].contentEquals(f.getAbsolutePath())) {
+                    pointMounted = fileInfo[1];
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            FILog.e(e.getMessage());
+        }
+        return pointMounted;
     }
 }
