@@ -53,6 +53,10 @@ public class CategoryValue {
             jsonName = "";
         }
 
+        if (value.contains("<") || value.contains(">")) {
+            value = value.replaceAll("[<>]", "");
+        }
+
         this.value = value;
         this.jsonName = jsonName;
         this.xmlName = xmlName;
@@ -71,6 +75,10 @@ public class CategoryValue {
 
         if(jsonName==null) {
             jsonName = "";
+        }
+
+        if (value.contains("<") || value.contains(">")) {
+            value = value.replaceAll("[<>]", "");
         }
 
         this.value = value;
