@@ -311,7 +311,7 @@ public class Networks extends Categories {
 				}
 			}
 		} catch (Exception ex) {
-			Log.e("IP Address", ex.toString());
+			FILog.e(ex.getMessage());
 		}
 		return "N/A";
 	}
