@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.10.0"></a>
+# [0.10.0](https://github.com/flyve-mdm/android-inventory-library/compare/0.9.0...0.10.0) (2018-09-26)
+
+
+### Bug Fixes
+
+* **camera:** add lintOptions in gradle ([e57827f](https://github.com/flyve-mdm/android-inventory-library/commit/e57827f))
+* **camera:** remove character ([97ba0f4](https://github.com/flyve-mdm/android-inventory-library/commit/97ba0f4))
+* **category:** changed capture log and gradle minSdk ([843aeaf](https://github.com/flyve-mdm/android-inventory-library/commit/843aeaf))
+* **category:** remove characters specials of the output XML ([9ddf0a3](https://github.com/flyve-mdm/android-inventory-library/commit/9ddf0a3))
+* **hardware:** validate if no found user info ([0b14647](https://github.com/flyve-mdm/android-inventory-library/commit/0b14647))
+* **software:** update file size and add information ([1123de9](https://github.com/flyve-mdm/android-inventory-library/commit/1123de9))
+* **utils:** return empty string instead null ([6f9e772](https://github.com/flyve-mdm/android-inventory-library/commit/6f9e772))
+* **yarn:** update yarn.lock ([fe8af3a](https://github.com/flyve-mdm/android-inventory-library/commit/fe8af3a))
+
+
+### Features
+
+* **camera:** add information about camera ([7e258d7](https://github.com/flyve-mdm/android-inventory-library/commit/7e258d7))
+* **camera:** add information about camera ([bf2ecbe](https://github.com/flyve-mdm/android-inventory-library/commit/bf2ecbe))
+* **drives:** add information about drives ([28cebcc](https://github.com/flyve-mdm/android-inventory-library/commit/28cebcc))
+* **hardware:** add information about hardware ([b0dbb51](https://github.com/flyve-mdm/android-inventory-library/commit/b0dbb51))
+* **hardware:** add information date, id and name user ([8f686ad](https://github.com/flyve-mdm/android-inventory-library/commit/8f686ad))
+* **hardware:** changed capture log ([37bd81e](https://github.com/flyve-mdm/android-inventory-library/commit/37bd81e))
+
+
+
 <a name="0.9.0"></a>
 # [0.9.0](https://github.com/flyve-mdm/android-inventory-library/compare/0.8.6...0.9.0) (2018-09-20)
 
