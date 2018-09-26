@@ -122,7 +122,7 @@ public class Memory extends Categories {
 
     private void getRamInfo() {
 <span class="fc" id="L124">        String infoCat = Utils.getCatInfo(&quot;/sys/bus/platform/drivers/ddr_type/ddr_type&quot;);</span>
-<span class="pc bpc" id="L125" title="1 of 2 branches missed.">        if (!infoCat.equals(&quot;&quot;)) {</span>
+<span class="pc bpc" id="L125" title="1 of 2 branches missed.">        if (infoCat != null) {</span>
 <span class="nc" id="L126">            splitRamInfo(infoCat);</span>
         } else {
 <span class="fc" id="L128">            String infoProp = getRamProp();</span>
