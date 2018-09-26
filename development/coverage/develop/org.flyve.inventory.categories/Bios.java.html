@@ -108,7 +108,7 @@ public class Bios extends Categories {
 	 */
 	public String getBiosDate() {
 <span class="fc" id="L110">		String dateInfo = Utils.getCatInfo(&quot;/sys/devices/virtual/dmi/id/bios_date&quot;);</span>
-<span class="pc bpc" id="L111" title="1 of 2 branches missed.">		return dateInfo != null ? dateInfo : &quot;N/A&quot;;</span>
+<span class="pc bpc" id="L111" title="1 of 2 branches missed.">		return !dateInfo.equals(&quot;&quot;) ? dateInfo : &quot;N/A&quot;;</span>
 	}
 
 	/**
@@ -125,7 +125,7 @@ public class Bios extends Categories {
 	 */
 	public String getBiosVersion() {
 <span class="fc" id="L127">		String dateInfo = Utils.getCatInfo(&quot;/sys/devices/virtual/dmi/id/bios_version&quot;);</span>
-<span class="pc bpc" id="L128" title="1 of 2 branches missed.">		return dateInfo != null ? dateInfo : &quot;N/A&quot;;</span>
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">		return !dateInfo.equals(&quot;&quot;) ? dateInfo : &quot;N/A&quot;;</span>
 	}
 
 	/**
@@ -158,7 +158,7 @@ public class Bios extends Categories {
 	 */
 	public String getMotherBoardSerial() {
 <span class="fc" id="L160">		String dateInfo = Utils.getCatInfo(&quot;/sys/devices/virtual/dmi/id/board_serial&quot;);</span>
-<span class="pc bpc" id="L161" title="1 of 2 branches missed.">		return dateInfo != null ? dateInfo : &quot;N/A&quot;;</span>
+<span class="pc bpc" id="L161" title="1 of 2 branches missed.">		return !dateInfo.equals(&quot;&quot;) ? dateInfo : &quot;N/A&quot;;</span>
 	}
 
 	/**
