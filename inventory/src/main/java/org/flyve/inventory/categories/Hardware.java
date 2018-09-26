@@ -173,12 +173,8 @@ public class Hardware extends Categories {
                 Document parse = newDocumentBuilder.parse(new ByteArrayInputStream(info.getBytes()));
                 value = parse.getFirstChild().getTextContent();
             }
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
+        } catch (Exception ex) {
+            FILog.e(ex.getMessage());
         }
         return value;
     }
