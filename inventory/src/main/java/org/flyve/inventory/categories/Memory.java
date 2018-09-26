@@ -122,7 +122,7 @@ public class Memory extends Categories {
 
     private void getRamInfo() {
         String infoCat = Utils.getCatInfo("/sys/bus/platform/drivers/ddr_type/ddr_type");
-        if (infoCat != null) {
+        if (!infoCat.equals("")) {
             splitRamInfo(infoCat);
         } else {
             String infoProp = getRamProp();

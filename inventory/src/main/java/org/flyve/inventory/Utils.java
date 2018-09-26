@@ -323,7 +323,7 @@ public class Utils {
         } catch (Exception e) {
             FILog.e(e.getMessage());
         }
-        return null;
+        return "";
     }
 
     public static String getSystemProperty(String type) {
