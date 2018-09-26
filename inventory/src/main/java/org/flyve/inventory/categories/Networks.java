@@ -33,14 +33,11 @@ import android.content.Context;
 import android.net.DhcpInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
-import android.telephony.PhoneStateListener;
-import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import org.flyve.inventory.FILog;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.math.BigInteger;
 import java.net.Inet6Address;
@@ -52,8 +49,6 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Scanner;
-
-import static android.content.Context.TELEPHONY_SERVICE;
 
 /**
  * This class get all the information of the Network
@@ -207,7 +202,7 @@ public class Networks extends Categories {
 	 * @return string the BSSID of the current access point
 	 */
 	public String getBSSID() {
-		return String.valueOf(wifi.getBSSID());
+		return wifi.getBSSID() != null ? String.valueOf(wifi.getBSSID()) : "N/A";
 	}
 
 	/**
@@ -216,7 +211,7 @@ public class Networks extends Categories {
 	 * 
 	 */
 	public String getSSID() {
-		return String.valueOf(wifi.getSSID());
+		return wifi.getSSID() != null ? String.valueOf(wifi.getSSID()) : "N/A";
 	}
 
 	/**
@@ -287,8 +282,10 @@ public class Networks extends Categories {
 		try {
 			InetAddress inetAddress = InetAddress.getByAddress(ip);
 			NetworkInterface netInterface = NetworkInterface.getByInetAddress(inetAddress);
-			name = netInterface.getDisplayName();
-			return name;
+			if (netInterface != null ) {
+				name = netInterface.getDisplayName();
+				return name;
+			}
 		} catch (UnknownHostException e) {
 			FILog.e(e.getMessage());
 		} catch (SocketException e) {
