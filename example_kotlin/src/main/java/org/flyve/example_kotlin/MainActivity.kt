@@ -13,7 +13,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val inventoryTask = InventoryTask(this@MainActivity, "example-app-kotlin")
+        InventoryTask.showFILog = true
+        val inventoryTask = InventoryTask(this@MainActivity, "example-app-kotlin", false)
         inventoryTask.getJSON( object : InventoryTask.OnTaskCompleted {
             override fun onTaskSuccess(data: String) {
                 Log.d(LOG, data)
