@@ -179,8 +179,7 @@ public class Cameras
                     width = size.getWidth();
                     height = size.getHeight();
                 }
-                double resolution = getResolutionType(width, height);
-                value = resolution + " MP (" + width + "x" + height + ")";
+                value = width + "x" + height;
             } else {
                 return value;
             }
@@ -319,7 +318,7 @@ public class Cameras
                 Camera.Size infoSize = supportedVideoSizes.get(supportedVideoSizes.size() - 1);
                 int width = infoSize.width;
                 int height = infoSize.height;
-                value = getResolutionType(width, height) + " MP (" + width + "x" + height + ")";
+                value = width + "x" + height;
             }
         } catch (Exception ex) {
             FILog.e(ex.getMessage());
@@ -341,7 +340,7 @@ public class Cameras
             }
             StringBuilder str = new StringBuilder();
             for (float f : fArr) {
-                str.append(f).append(" mm ");
+                str.append(f);
             }
             return str.toString().trim();
         } else {
