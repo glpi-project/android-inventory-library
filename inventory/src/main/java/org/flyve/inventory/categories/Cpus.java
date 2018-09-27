@@ -29,7 +29,6 @@
 package org.flyve.inventory.categories;
 
 import android.content.Context;
-import android.os.Build;
 
 import org.flyve.inventory.FILog;
 import org.flyve.inventory.Utils;
@@ -38,13 +37,11 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileFilter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 /**
  * This class get all the information of the Cpus
@@ -87,6 +84,7 @@ public class Cpus extends Categories {
             c.put("MODEL", new CategoryValue(getModel(), "MODEL", "model"));
             c.put("NAME", new CategoryValue(getCpuName(), "NAME", "name"));
             c.put("SPEED", new CategoryValue(getCpuFrequency(), "SPEED", "cpuFrequency"));
+            c.put("THREAD", new CategoryValue(getCpuThread(), "THREAD", "thread"));
 
             this.add(c);
 
@@ -97,49 +95,26 @@ public class Cpus extends Categories {
     }
 
     /**
+     * Get the CPU Number Core
+     *
+     * @return String with the Cpu Core
+     */
+    public String getCPUCore() {
+        int i = 0;
+        String a = Utils.getCatInfo("/sys/devices/system/cpu/present");
+        if (a != null && a.contains("-")) {
+            i = Integer.parseInt(a.split("-")[1]);
+        }
+        return String.valueOf(++i);
+    }
+
+    /**
      * Get the CPU Architecture
      *
      * @return String with the Cpu Architecture
      */
     public String getArch() {
         return System.getProperty("os.arch");
-    }
-
-    /**
-     * Get the CPU Number Core
-     *
-     * @return String with the Cpu Core
-     */
-    public String getCPUCore() {
-        if (Build.VERSION.SDK_INT >= 17) {
-            return String.valueOf(Runtime.getRuntime().availableProcessors());
-        } else {
-            return String.valueOf(getNumCoresOldPhones());
-        }
-    }
-
-    /**
-     * Gets the number of cores available in this device, across all processors.
-     *
-     * @return The number of cores, or 1 if failed to get result
-     */
-    private int getNumCoresOldPhones() {
-        class CpuFilter implements FileFilter {
-            @Override
-            public boolean accept(File pathname) {
-                return Pattern.matches("cpu[0-9]+", pathname.getName());
-            }
-        }
-
-        try {
-            File dir = new File("/sys/devices/system/cpu/");
-            File[] files = dir.listFiles(new CpuFilter());
-            //Return the number of cores (virtual CPU devices)
-            return files.length;
-        } catch (Exception e) {
-            //Default to return 1 core
-            return 1;
-        }
     }
 
     /**
@@ -283,5 +258,13 @@ public class Cpus extends Categories {
             }
         }
         return cpuFrequency;
+    }
+
+    /**
+     * Gets the number of threads available in this device.é
+     * @return The number of threads
+     */
+    private String getCpuThread() {
+        return String.valueOf(Runtime.getRuntime().availableProcessors());
     }
 }
