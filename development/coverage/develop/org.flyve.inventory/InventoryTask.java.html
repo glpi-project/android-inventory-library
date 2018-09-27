@@ -1,6 +1,3 @@
----
-layout: coverage
----
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../resources/report.css" type="text/css"/><link rel="shortcut icon" href="../resources/report.gif" type="image/gif"/><title>InventoryTask.java</title><link rel="stylesheet" href="../resources/prettify.css" type="text/css"/><script type="text/javascript" src="../resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory</a> &gt; <span class="el_source">InventoryTask.java</span></div><h1>InventoryTask.java</h1><pre class="source lang-java linenums">/**
  *  LICENSE
  * 
@@ -245,17 +242,17 @@ public class InventoryTask {
 
                 try {
 <span class="fc" id="L244">                    ArrayList&lt;Categories&gt; mContent = loadCategoriesClass();</span>
-<span class="fc" id="L245">                    final String json = Utils.createJSON(ctx, mContent, InventoryTask.this.appVersion, getPrivateData(), getTag());</span>
+<span class="nc" id="L245">                    final String json = Utils.createJSON(ctx, mContent, InventoryTask.this.appVersion, getPrivateData(), getTag());</span>
 
-<span class="pc bpc" id="L247" title="1 of 2 branches missed.">                    if(storeResult) {</span>
-<span class="fc" id="L248">                        Utils.storeFile(json, fileNameJSON);</span>
+<span class="nc bnc" id="L247" title="All 2 branches missed.">                    if(storeResult) {</span>
+<span class="nc" id="L248">                        Utils.storeFile(json, fileNameJSON);</span>
                     }
 
-<span class="fc" id="L251">                    InventoryTask.runOnUI(new Runnable() {</span>
+<span class="nc" id="L251">                    InventoryTask.runOnUI(new Runnable() {</span>
                         public void run() {
-<span class="fc" id="L253">                            running = false;</span>
-<span class="fc" id="L254">                            listener.onTaskSuccess( json );</span>
-<span class="fc" id="L255">                        }</span>
+<span class="nc" id="L253">                            running = false;</span>
+<span class="nc" id="L254">                            listener.onTaskSuccess( json );</span>
+<span class="nc" id="L255">                        }</span>
                     });
 
 <span class="nc" id="L258">                } catch (final Exception ex) {</span>
@@ -265,8 +262,8 @@ public class InventoryTask {
 <span class="nc" id="L262">                            listener.onTaskError( ex.getCause() );</span>
 <span class="nc" id="L263">                        }</span>
                     });
-<span class="fc" id="L265">                }</span>
-<span class="fc" id="L266">            }</span>
+<span class="nc" id="L265">                }</span>
+<span class="nc" id="L266">            }</span>
         });
 <span class="fc" id="L268">        t.start();</span>
 <span class="fc" id="L269">    }</span>
