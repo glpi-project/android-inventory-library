@@ -100,12 +100,16 @@ public class Cpus extends Categories {
      * @return String with the Cpu Core
      */
     public String getCPUCore() {
-        int i = 0;
+        int value = 0;
         String a = Utils.getCatInfo("/sys/devices/system/cpu/present");
-        if (a != null && a.contains("-")) {
-            i = Integer.parseInt(a.split("-")[1]);
+        if (!a.equals("")) {
+            if (a.contains("-")) {
+                value = Integer.parseInt(a.split("-")[1]);
+            }
+            return String.valueOf(++value);
+        } else {
+            return String.valueOf(Runtime.getRuntime().availableProcessors());
         }
-        return String.valueOf(++i);
     }
 
     /**
@@ -264,7 +268,7 @@ public class Cpus extends Categories {
      * Gets the number of threads available in this device.é
      * @return The number of threads
      */
-    private String getCpuThread() {
+    public String getCpuThread() {
         return String.valueOf(Runtime.getRuntime().availableProcessors());
     }
 }

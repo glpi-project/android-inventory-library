@@ -88,6 +88,12 @@ public class CpusTest {
     }
 
     @Test
+    public void getCpuThread() throws Exception {
+        Cpus cpus = new Cpus(appContext);
+        assertNotEquals("", cpus.getCpuThread());
+    }
+
+    @Test
     public void getCpuFrequency() throws Exception {
         // work on real device
         if(!Utils.isEmulator()) {
