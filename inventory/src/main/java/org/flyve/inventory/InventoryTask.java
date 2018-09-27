@@ -52,6 +52,10 @@ import java.util.ArrayList;
  */
 public class InventoryTask {
 
+    /**
+     * Set if show FILog in console
+     */
+    public static boolean showFILog = false;
     private static Handler uiHandler;
 
     private Boolean running = false;
@@ -81,14 +85,15 @@ public class InventoryTask {
      * @param context The context to be use
      * @param appVersion The name of the agent
      */
-    public InventoryTask(Context context, String appVersion) {
+    public InventoryTask(Context context, String appVersion, Boolean storeResult) {
+        this(storeResult);
         this.appVersion = appVersion;
         ctx = context;
-
         try {
-            FormatStrategy formatStrategy = PrettyFormatStrategy.newBuilder()
-                    .build();
-            Logger.addLogAdapter(new AndroidLogAdapter(formatStrategy));
+            if (showFILog) {
+                FormatStrategy formatStrategy = PrettyFormatStrategy.newBuilder().build();
+                Logger.addLogAdapter(new AndroidLogAdapter(formatStrategy));
+            }
         } catch (Exception ex) {
             ex.getStackTrace();
         }
@@ -96,14 +101,10 @@ public class InventoryTask {
 
     /**
      * This constructor return a Success XML or Error on asynchronous way
-     * @param context The context to be use
-     * @param appVersion The name of the agent
      * @param storeResult Indicate is the result will be stored on file
      */
-    public InventoryTask(Context context, String appVersion, Boolean storeResult) {
-        this.appVersion = appVersion;
+    private InventoryTask(Boolean storeResult) {
         this.storeResult = storeResult;
-        ctx = context;
     }
 
     /**
