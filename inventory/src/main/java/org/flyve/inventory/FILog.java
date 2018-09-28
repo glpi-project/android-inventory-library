@@ -28,6 +28,8 @@
 
 package org.flyve.inventory;
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.util.Log;
 
 import com.orhanobut.logger.Logger;
@@ -115,5 +117,10 @@ public final class FILog {
     public static void log(Object obj, String msg, int level) {
         String final_msg = String.format("[%s] %s", obj.getClass().getName(), msg);
         Log.println(level, "InventoryAgent", final_msg);
+    }
+
+    public static String getMessage(Context context, int type, String message) {
+        Resources resource = context.getResources();
+        return resource.getString(R.string.error_message_with_number, String.valueOf(type), message);
     }
 }

@@ -75,6 +75,6 @@ public class BatteryTest {
 
     @Test
     public void getCapacity() {
-        assertNotEquals("", new Battery(appContext).getCapacity(appContext));
+        assertNotEquals("", new Battery(appContext).getCapacity());
     }
 }
