@@ -30,6 +30,7 @@ package org.flyve.inventory.categories;
 
 import android.content.Context;
 
+import org.flyve.inventory.CommonErrorType;
 import org.flyve.inventory.FILog;
 import org.flyve.inventory.Utils;
 import org.json.JSONArray;
@@ -37,7 +38,6 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -63,6 +63,7 @@ public class Cpus extends Categories {
     private static final String CPUINFO_MAX_FREQ = "/sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_max_freq";
     private String cpuFamily;
     private String cpuManufacturer;
+    private final Context context;
 
     /**
      * This constructor trigger get all the information about Cpus
@@ -71,27 +72,23 @@ public class Cpus extends Categories {
     public Cpus(Context xCtx) {
         super(xCtx);
 
-        try {
-            cpuFamily = Utils.loadJSONFromAsset(xCtx, "cpu_family.json");
-            cpuManufacturer = Utils.loadJSONFromAsset(xCtx, "cpu_manufacturer.json");
+        context = xCtx;
 
-            Category c = new Category("CPUS", "cpus");
-            c.put("ARCH", new CategoryValue(getArch(), "ARCH", "arch"));
-            c.put("CORE", new CategoryValue(getCPUCore(), "CORE", "core"));
-            c.put("FAMILYNAME", new CategoryValue(getFamilyName(), "FAMILYNAME", "familyname"));
-            c.put("FAMILYNUMBER", new CategoryValue(getFamilyNumber(), "FAMILYNUMBER", "familynumber"));
-            c.put("MANUFACTURER", new CategoryValue(getManufacturer(), "MANUFACTURER", "manufacturer"));
-            c.put("MODEL", new CategoryValue(getModel(), "MODEL", "model"));
-            c.put("NAME", new CategoryValue(getCpuName(), "NAME", "name"));
-            c.put("SPEED", new CategoryValue(getCpuFrequency(), "SPEED", "cpuFrequency"));
-            c.put("THREAD", new CategoryValue(getCpuThread(), "THREAD", "thread"));
+        cpuFamily = Utils.loadJSONFromAsset(context, "cpu_family.json");
+        cpuManufacturer = Utils.loadJSONFromAsset(context, "cpu_manufacturer.json");
 
-            this.add(c);
+        Category c = new Category("CPUS", "cpus");
+        c.put("ARCH", new CategoryValue(getArch(), "ARCH", "arch"));
+        c.put("CORE", new CategoryValue(getCPUCore(), "CORE", "core"));
+        c.put("FAMILYNAME", new CategoryValue(getFamilyName(), "FAMILYNAME", "familyname"));
+        c.put("FAMILYNUMBER", new CategoryValue(getFamilyNumber(), "FAMILYNUMBER", "familynumber"));
+        c.put("MANUFACTURER", new CategoryValue(getManufacturer(), "MANUFACTURER", "manufacturer"));
+        c.put("MODEL", new CategoryValue(getModel(), "MODEL", "model"));
+        c.put("NAME", new CategoryValue(getCpuName(), "NAME", "name"));
+        c.put("SPEED", new CategoryValue(getCpuFrequency(), "SPEED", "cpuFrequency"));
+        c.put("THREAD", new CategoryValue(getCpuThread(), "THREAD", "thread"));
 
-        } catch (Exception ex) {
-            FILog.e(ex.getMessage());
-        }
-
+        this.add(c);
     }
 
     /**
@@ -101,15 +98,20 @@ public class Cpus extends Categories {
      */
     public String getCPUCore() {
         int value = 0;
-        String a = Utils.getCatInfo("/sys/devices/system/cpu/present");
-        if (!a.equals("")) {
-            if (a.contains("-")) {
-                value = Integer.parseInt(a.split("-")[1]);
+        try {
+            String a = Utils.getCatInfo("/sys/devices/system/cpu/present");
+            if (!a.equals("")) {
+                if (a.contains("-")) {
+                    value = Integer.parseInt(a.split("-")[1]);
+                }
+                return String.valueOf(++value);
+            } else {
+                return String.valueOf(Runtime.getRuntime().availableProcessors());
             }
-            return String.valueOf(++value);
-        } else {
-            return String.valueOf(Runtime.getRuntime().availableProcessors());
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.CPU_CORE, ex.getMessage()));
         }
+        return String.valueOf(value);
     }
 
     /**
@@ -118,7 +120,13 @@ public class Cpus extends Categories {
      * @return String with the Cpu Architecture
      */
     public String getArch() {
-        return System.getProperty("os.arch");
+        String value = "N/A";
+        try {
+            value = System.getProperty("os.arch");
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.CPU_ARCH, ex.getMessage()));
+        }
+        return value;
     }
 
     /**
@@ -142,8 +150,8 @@ public class Cpus extends Categories {
                     }
                 }
             }
-        } catch (Exception e) {
-            FILog.e(e.getMessage());
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.CPU_FAMILY_NAME, ex.getMessage()));
         }
         return value;
     }
@@ -161,8 +169,8 @@ public class Cpus extends Categories {
             if (!"".equals(cpuFamily)) {
                 value = cpuFamily;
             }
-        } catch (Exception e) {
-            FILog.e(e.getMessage());
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.CPU_FAMILY_NUMBER, ex.getMessage()));
         }
         return value;
     }
@@ -188,8 +196,8 @@ public class Cpus extends Categories {
                     }
                 }
             }
-        } catch (Exception e) {
-            FILog.e(e.getMessage());
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.CPU_MANUFACTURER, ex.getMessage()));
         }
         return value;
     }
@@ -207,8 +215,8 @@ public class Cpus extends Categories {
             if (!"".equals(hardware)){
                 value = hardware;
             }
-        } catch (FileNotFoundException e) {
-            FILog.e(e.getMessage());
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.CPU_MODEL, ex.getMessage()));
         }
         return value;
     }
@@ -216,50 +224,56 @@ public class Cpus extends Categories {
     /**
      * Get the CPU Name
      * @return String with the name
-     * @throws IOException return exception
      */
 
-    public String getCpuName() throws IOException {
-        String cpuname = "";
-        FileReader fr = null;
-        BufferedReader br = null;
+    public String getCpuName() {
+        String cpuName = "N/A";
         try {
-            File f = new File(CPUINFO);
-            fr = new FileReader(f);
-            br = new BufferedReader(fr, 8 * 1024);
-            String infos = br.readLine();
-            cpuname = infos.replaceAll("(.*):\\ (.*)", "$2");
-        } catch (IOException e) {
-            FILog.e(e.getMessage());
-        } finally {
-            if(fr != null) {
-                fr.close();
+            FileReader fr = null;
+            BufferedReader br = null;
+            try {
+                File f = new File(CPUINFO);
+                fr = new FileReader(f);
+                br = new BufferedReader(fr, 8 * 1024);
+                String info = br.readLine();
+                cpuName = info.replaceAll("(.*):\\ (.*)", "$2");
+            } catch (IOException e) {
+                FILog.e(e.getMessage());
+            } finally {
+                if (fr != null) {
+                    fr.close();
+                }
+                if (br != null) {
+                    br.close();
+                }
             }
-            if(br != null) {
-                br.close();
-            }
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.CPU_NAME, ex.getMessage()));
         }
-        return cpuname;
+        return cpuName;
     }
 
     /**
      * Get the CPU Frequency
      * @return String with the Cpu Frequency
-     * @throws IOException return exception
      */
-    public String getCpuFrequency() throws IOException {
+    public String getCpuFrequency() {
         String cpuFrequency = "N/A";
-        RandomAccessFile reader = null;
         try {
-            reader = new RandomAccessFile(CPUINFO_MAX_FREQ, "r");
-            cpuFrequency = String.valueOf(Integer.valueOf(reader.readLine()) / 1000);
-            reader.close();
-        } catch (IOException e) {
-            FILog.e(e.getMessage());
-        } finally {
-            if(reader != null) {
+            RandomAccessFile reader = null;
+            try {
+                reader = new RandomAccessFile(CPUINFO_MAX_FREQ, "r");
+                cpuFrequency = String.valueOf(Integer.valueOf(reader.readLine()) / 1000);
                 reader.close();
+            } catch (IOException e) {
+                FILog.e(e.getMessage());
+            } finally {
+                if (reader != null) {
+                    reader.close();
+                }
             }
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.CPU_FREQUENCY, ex.getMessage()));
         }
         return cpuFrequency;
     }
@@ -269,6 +283,12 @@ public class Cpus extends Categories {
      * @return The number of threads
      */
     public String getCpuThread() {
-        return String.valueOf(Runtime.getRuntime().availableProcessors());
+        String value = "N/A";
+        try {
+            value = String.valueOf(Runtime.getRuntime().availableProcessors());
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.CPU_THREAD, ex.getMessage()));
+        }
+        return value;
     }
 }

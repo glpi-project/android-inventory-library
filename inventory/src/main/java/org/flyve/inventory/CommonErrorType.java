@@ -30,4 +30,15 @@ public class CommonErrorType {
     /* Controllers */
     public static final int CONTROLLERS_FILE = 501;
     public static final int CONTROLLERS_DRIVERS = 502;
+
+    /* CPUs */
+    public static final int CPU_CORE = 601;
+    public static final int CPU_ARCH = 602;
+    public static final int CPU_FAMILY_NAME = 603;
+    public static final int CPU_FAMILY_NUMBER = 604;
+    public static final int CPU_MANUFACTURER = 605;
+    public static final int CPU_MODEL = 606;
+    public static final int CPU_NAME = 607;
+    public static final int CPU_FREQUENCY = 608;
+    public static final int CPU_THREAD = 609;
 }
