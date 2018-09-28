@@ -31,6 +31,7 @@ package org.flyve.inventory.categories;
 import android.os.Build;
 
 import org.flyve.inventory.FILog;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.xmlpull.v1.XmlSerializer;
 
@@ -144,42 +145,13 @@ public class Category extends LinkedHashMap<String, CategoryValue> {
         try {
             serializer.startTag(null, mType);
             for (Map.Entry<String, CategoryValue> entry : this.entrySet()) {
-                CategoryValue categoryValue = this.get(entry.getKey());
-                if (categoryValue.getCategory() != null) {
-                    Category category = categoryValue.getCategory();
-                    serializer.startTag(null, category.getType());
-                    for (Map.Entry<String, CategoryValue> entries : category.entrySet()) {
-                        String xmlName = entries.getKey();
-                        String value = category.get(xmlName).getValue();
-                        setValueXML(serializer, xmlName, value, false);
-                    }
-                    serializer.endTag(null, category.getType());
-                } else if (categoryValue.getValues() != null && categoryValue.getValues().size() > 0) {
-                    for (String value : categoryValue.getValues()) {
-                        String xmlName = categoryValue.getXmlName();
-                        Boolean hasCDATA = categoryValue.hasCDATA();
-                        setValueXML(serializer, xmlName, value, hasCDATA);
-                    }
-                } else {
-                    String xmlName = categoryValue.getXmlName();
-                    String value = categoryValue.getValue();
-                    Boolean hasCDATA = categoryValue.hasCDATA();
-                    setValueXML(serializer, xmlName, value, hasCDATA);
-                }
+                setXMLValues(serializer, entry);
             }
 
             serializer.endTag(null, mType);
         } catch (Exception ex) {
             FILog.d(ex.getMessage());
         }
-    }
-
-    private void setValueXML(XmlSerializer serializer, String xmlName, String xmlValue, boolean hasCData) throws IOException {
-        serializer.startTag(null, xmlName);
-        String textValue;
-        textValue = hasCData ? "<![CDATA[" + String.valueOf(xmlValue) + "]]>" : String.valueOf(xmlValue);
-        serializer.text(textValue);
-        serializer.endTag(null, xmlName);
     }
 
     public void toXMLWithoutPrivateData(XmlSerializer serializer) {
@@ -188,9 +160,7 @@ public class Category extends LinkedHashMap<String, CategoryValue> {
 
             for (Map.Entry<String, CategoryValue> entry : this.entrySet()) {
                 if(!this.get(entry.getKey()).isPrivate()) {
-                    serializer.startTag(null, this.get(entry.getKey()).getXmlName());
-                    serializer.text(String.valueOf(this.get(entry.getKey()).getValue()));
-                    serializer.endTag(null, this.get(entry.getKey()).getXmlName());
+                    setXMLValues(serializer, entry);
                 }
             }
 
@@ -198,6 +168,53 @@ public class Category extends LinkedHashMap<String, CategoryValue> {
         } catch (Exception ex) {
             FILog.d(ex.getMessage());
         }
+    }
+
+    private void setXMLValues(XmlSerializer serializer, Entry<String, CategoryValue> entry) throws IOException {
+        CategoryValue categoryValue = this.get(entry.getKey());
+        if (categoryValue.getCategory() == null) {
+            /* If is a normal value */
+            if (categoryValue.getValues() == null || categoryValue.getValues().size() <= 0) {
+                String xmlName = categoryValue.getXmlName();
+                String value = categoryValue.getValue();
+                Boolean hasCDATA = categoryValue.hasCDATA();
+                setChildXMLValue(serializer, xmlName, value, hasCDATA);
+            /* If is a list of values */
+            } else {
+                for (String value : categoryValue.getValues()) {
+                    String xmlName = categoryValue.getXmlName();
+                    Boolean hasCDATA = categoryValue.hasCDATA();
+                    setChildXMLValue(serializer, xmlName, value, hasCDATA);
+                }
+            }
+        /* If is a Category embed */
+        } else {
+            Category category = categoryValue.getCategory();
+            serializer.startTag(null, category.getType());
+            if (categoryValue.getValues() != null && categoryValue.getValues().size() > 0) {
+                for (Entry<String, CategoryValue> entries : category.entrySet()) {
+                    String xmlName = entries.getKey();
+                    for (String value : category.get(xmlName).getValues()) {
+                        setChildXMLValue(serializer, xmlName, value, false);
+                    }
+                }
+            } else {
+                for (Entry<String, CategoryValue> entries : category.entrySet()) {
+                    String xmlName = entries.getKey();
+                    String value = category.get(xmlName).getValue();
+                    setChildXMLValue(serializer, xmlName, value, false);
+                }
+            }
+            serializer.endTag(null, category.getType());
+        }
+    }
+
+    private void setChildXMLValue(XmlSerializer serializer, String xmlName, String xmlValue, boolean hasCData) throws IOException {
+        serializer.startTag(null, xmlName);
+        String textValue;
+        textValue = hasCData ? "<![CDATA[" + String.valueOf(xmlValue) + "]]>" : String.valueOf(xmlValue);
+        serializer.text(textValue);
+        serializer.endTag(null, xmlName);
     }
 
     /**
@@ -207,7 +224,7 @@ public class Category extends LinkedHashMap<String, CategoryValue> {
         try {
             JSONObject jsonCategories = new JSONObject();
             for (Map.Entry<String,CategoryValue> entry : this.entrySet()) {
-                jsonCategories.put(this.get(entry.getKey()).getJsonName(), this.get(entry.getKey()).getValue());
+                setJSONValues(jsonCategories, entry);
             }
 
             return jsonCategories;
@@ -222,7 +239,7 @@ public class Category extends LinkedHashMap<String, CategoryValue> {
             JSONObject jsonCategories = new JSONObject();
             for (Map.Entry<String,CategoryValue> entry : this.entrySet()) {
                 if(!this.get(entry.getKey()).isPrivate()) {
-                    jsonCategories.put(this.get(entry.getKey()).getJsonName(), this.get(entry.getKey()).getValue());
+                    setJSONValues(jsonCategories, entry);
                 }
             }
 
@@ -230,6 +247,28 @@ public class Category extends LinkedHashMap<String, CategoryValue> {
         } catch ( Exception ex ) {
             FILog.e( ex.getMessage() );
             return new JSONObject();
+        }
+    }
+
+    private void setJSONValues(JSONObject jsonCategories, Entry<String, CategoryValue> entry) throws JSONException {
+        CategoryValue categoryValue = this.get(entry.getKey());
+        if (entry.getValue().getCategory() == null) {
+            if (entry.getValue().getValues() == null) {
+                jsonCategories.put(categoryValue.getJsonName(), categoryValue.getValue());
+            } else {
+                jsonCategories.put(categoryValue.getJsonName(), categoryValue.getValues());
+            }
+        } else {
+            Category category = categoryValue.getCategory();
+            JSONObject newCategory = new JSONObject();
+            for (CategoryValue value : category.values()) {
+                if (entry.getValue().getValues() == null) {
+                    newCategory.put(value.getJsonName(), value.getValue());
+                } else {
+                    newCategory.put(value.getJsonName(), value.getValues());
+                }
+            }
+            jsonCategories.put(category.getType(), newCategory);
         }
     }
 }
