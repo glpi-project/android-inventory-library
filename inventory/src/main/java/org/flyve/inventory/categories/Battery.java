@@ -35,6 +35,9 @@ import android.content.IntentFilter;
 import android.os.BatteryManager;
 import android.os.Build;
 
+import org.flyve.inventory.CommonErrorType;
+import org.flyve.inventory.FILog;
+
 /**
  * This class get all the information of the baterry like level, voltage, temperature, status, health, technology
  * The constructor of the class trigger a BroadcastReceiver with the information
@@ -56,6 +59,7 @@ public class Battery extends Categories {
 
 	// Properties of this component
 	private final Intent batteryIntent;
+	private final Context context;
 
 	/**
      * Indicates whether some other object is "equal to" this one
@@ -90,9 +94,10 @@ public class Battery extends Categories {
 	 */
 	public Battery(Context xCtx) {
 		super(xCtx);
+		context = xCtx;
 
 		IntentFilter batteryIntentFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
-		batteryIntent = xCtx.registerReceiver(null, batteryIntentFilter);
+		batteryIntent = context.registerReceiver(null, batteryIntentFilter);
 
 		if (batteryIntent != null) {
 			if (!getLevel().equals("0%")) {
@@ -104,97 +109,137 @@ public class Battery extends Categories {
 				c.put("LEVEL", new CategoryValue(getLevel(), "LEVEL", "level"));
 				c.put("HEALTH", new CategoryValue(getBatteryHealth(), "HEALTH", "health"));
 				c.put("STATUS", new CategoryValue(getBatteryStatus(), "STATUS", "status"));
-				c.put("CAPACITY", new CategoryValue(getCapacity(xCtx), "CAPACITY", "capacity"));
+				c.put("CAPACITY", new CategoryValue(getCapacity(), "CAPACITY", "capacity"));
 				this.add(c);
 			}
 		}
 	}
 
 	public String getTechnology() {
-		return batteryIntent.getStringExtra("technology");
+		String technology = "N/A";
+		try {
+			batteryIntent.getStringExtra("technology");
+			return technology;
+		} catch (Exception ex) {
+			FILog.e(FILog.getMessage(context, CommonErrorType.BATTERY_TECHNOLOGY, ex.getMessage()));
+		}
+		return technology;
 	}
 
 	public String getTemperature() {
-		return String.valueOf((float) batteryIntent.getIntExtra("temperature", 0) / 10) + "c";
+		String temperature = "N/A";
+		try {
+			float extra = batteryIntent.getIntExtra("temperature", 0);
+			temperature = String.valueOf(extra / 10) + "c";
+		} catch (Exception ex) {
+			FILog.e(FILog.getMessage(context, CommonErrorType.BATTERY_TEMPERATURE, ex.getMessage()));
+		}
+		return temperature;
 	}
 
 	public String getVoltage() {
-		return String.valueOf((float) batteryIntent.getIntExtra("voltage", 0) / 1000) + "V";
+		String voltage  = "N/A";
+		try {
+			voltage = String.valueOf((float) batteryIntent.getIntExtra("voltage", 0) / 1000) + "V";
+		} catch (Exception ex) {
+			FILog.e(FILog.getMessage(context, CommonErrorType.BATTERY_VOLTAGE, ex.getMessage()));
+		}
+		return voltage;
 	}
 
 	public String getLevel() {
-		return String.valueOf(batteryIntent.getIntExtra("level", 0)) + "%";
+		String level = "N/A";
+		try {
+			level = String.valueOf(batteryIntent.getIntExtra("level", 0)) + "%";
+		} catch (Exception ex) {
+			FILog.e(FILog.getMessage(context, CommonErrorType.BATTERY_LEVEL, ex.getMessage()));
+		}
+		return level;
 	}
 
 	public String getBatteryHealth() {
-		String health;
-		int inthealth = batteryIntent.getIntExtra("health",
-                BatteryManager.BATTERY_HEALTH_UNKNOWN);
-		if (inthealth == BatteryManager.BATTERY_HEALTH_GOOD) {
-            health = "Good";
-        } else if (inthealth == BatteryManager.BATTERY_HEALTH_OVERHEAT) {
-            health = "Over Heat";
-        } else if (inthealth == BatteryManager.BATTERY_HEALTH_DEAD) {
-            health = "Dead";
-        } else if (inthealth == BatteryManager.BATTERY_HEALTH_OVER_VOLTAGE) {
-            health = "Over Voltage";
-        } else if (inthealth == BatteryManager.BATTERY_HEALTH_UNSPECIFIED_FAILURE) {
-            health = "Unspecified Failure";
-        } else {
-            health = "Unknown";
-        }
+		String health = "N/A";
+		try {
+			int intHealth = batteryIntent.getIntExtra("health",
+					BatteryManager.BATTERY_HEALTH_UNKNOWN);
+			if (intHealth == BatteryManager.BATTERY_HEALTH_GOOD) {
+				health = "Good";
+			} else if (intHealth == BatteryManager.BATTERY_HEALTH_OVERHEAT) {
+				health = "Over Heat";
+			} else if (intHealth == BatteryManager.BATTERY_HEALTH_DEAD) {
+				health = "Dead";
+			} else if (intHealth == BatteryManager.BATTERY_HEALTH_OVER_VOLTAGE) {
+				health = "Over Voltage";
+			} else if (intHealth == BatteryManager.BATTERY_HEALTH_UNSPECIFIED_FAILURE) {
+				health = "Unspecified Failure";
+			} else {
+				health = "Unknown";
+			}
+		} catch (Exception ex) {
+			FILog.e(FILog.getMessage(context, CommonErrorType.BATTERY_HEALTH, ex.getMessage()));
+		}
         return health;
 	}
 
 	public String getBatteryStatus() {
-		String status;
-		int intStatus = batteryIntent.getIntExtra("status",
-                BatteryManager.BATTERY_STATUS_UNKNOWN);
-		if (intStatus == BatteryManager.BATTERY_STATUS_CHARGING) {
-            status = "Charging";
-        } else if (intStatus == BatteryManager.BATTERY_STATUS_DISCHARGING) {
-            status = "Dis-charging";
-        } else if (intStatus == BatteryManager.BATTERY_STATUS_NOT_CHARGING) {
-            status = "Not charging";
-        } else if (intStatus == BatteryManager.BATTERY_STATUS_FULL) {
-            status = "Full";
-        } else {
-            status = "Unknown";
-        }
+		String status  = "N/A";
+		try {
+			int intStatus = batteryIntent.getIntExtra("status",
+					BatteryManager.BATTERY_STATUS_UNKNOWN);
+			if (intStatus == BatteryManager.BATTERY_STATUS_CHARGING) {
+				status = "Charging";
+			} else if (intStatus == BatteryManager.BATTERY_STATUS_DISCHARGING) {
+				status = "Dis-charging";
+			} else if (intStatus == BatteryManager.BATTERY_STATUS_NOT_CHARGING) {
+				status = "Not charging";
+			} else if (intStatus == BatteryManager.BATTERY_STATUS_FULL) {
+				status = "Full";
+			} else {
+				status = "Unknown";
+			}
+		}  catch (Exception ex) {
+			FILog.e(FILog.getMessage(context, CommonErrorType.BATTERY_STATUS, ex.getMessage()));
+		}
         return status;
 	}
 
-	public String getCapacity(Context context) {
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-			BatteryManager mBatteryManager = (BatteryManager) context.getSystemService(Context.BATTERY_SERVICE);
-			assert mBatteryManager != null;
-			Integer capacity = mBatteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY);
+	public String getCapacity() {
+		String capacityValue = "N/A";
+		try {
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+				BatteryManager mBatteryManager = (BatteryManager) context.getSystemService(Context.BATTERY_SERVICE);
+				assert mBatteryManager != null;
+				Integer capacity = mBatteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY);
 
-			if(capacity == Integer.MIN_VALUE)
-				return String.valueOf(0);
+				if (capacity == Integer.MIN_VALUE)
+					return String.valueOf(0);
 
-			return String.valueOf(capacity);
-		} else {
-			Object mPowerProfile;
-			double batteryCapacity = 0;
-			final String POWER_PROFILE_CLASS = "com.android.internal.os.PowerProfile";
+				capacityValue = String.valueOf(capacity);
+			} else {
+				Object mPowerProfile;
+				double batteryCapacity = 0;
+				final String POWER_PROFILE_CLASS = "com.android.internal.os.PowerProfile";
 
-			try {
-				mPowerProfile = Class.forName(POWER_PROFILE_CLASS)
-						.getConstructor(Context.class)
-						.newInstance(context);
+				try {
+					mPowerProfile = Class.forName(POWER_PROFILE_CLASS)
+							.getConstructor(Context.class)
+							.newInstance(context);
 
-				batteryCapacity = (double) Class
-						.forName(POWER_PROFILE_CLASS)
-						.getMethod("getBatteryCapacity")
-						.invoke(mPowerProfile);
+					batteryCapacity = (double) Class
+							.forName(POWER_PROFILE_CLASS)
+							.getMethod("getBatteryCapacity")
+							.invoke(mPowerProfile);
 
-			} catch (Exception e) {
-				e.printStackTrace();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
+				capacityValue = String.valueOf(batteryCapacity);
 			}
-
-			return String.valueOf(batteryCapacity);
+		}  catch (Exception ex) {
+			FILog.e(FILog.getMessage(context, CommonErrorType.BATTERY_CAPACITY, ex.getMessage()));
 		}
+		return capacityValue;
 	}
 
 }
