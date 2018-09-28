@@ -62,4 +62,16 @@ public class CommonErrorType {
     /* Inputs */
     public static final int INPUTS_KEY_BOARD = 901;
     public static final int INPUTS_TOUCH_SCREEN = 902;
+
+    /* Jvm */
+    public static final int JVM_NAME = 1001;
+    public static final int JVM_VENDOR = 1002;
+    public static final int JVM_LANGUAGE = 1003;
+    public static final int JVM_RUNTIME = 1004;
+    public static final int JVM_HOME = 1005;
+    public static final int JVM_VERSION = 1006;
+    public static final int JVM_CLASS_PATH = 1007;
+
+    /* Location Providers */
+    public static final int LOCATION_NAME = 1101;
 }

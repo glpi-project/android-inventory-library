@@ -30,6 +30,7 @@ package org.flyve.inventory.categories;
 
 import android.content.Context;
 
+import org.flyve.inventory.CommonErrorType;
 import org.flyve.inventory.FILog;
 
 import java.util.Properties;
@@ -50,6 +51,7 @@ public class Jvm extends Categories {
      *  from: https://stackoverflow.com/questions/285793/what-is-a-serialversionuid-and-why-should-i-use-it
      */
 	private static final long serialVersionUID = 3291981487537599599L;
+    private final Context context;
 
     /**
      * This constructor load the context and the Java Virtual Machine information
@@ -58,22 +60,20 @@ public class Jvm extends Categories {
 	public Jvm(Context xCtx) {
         super(xCtx);
 
-        try {
-            Category c = new Category("JVMS", "jvms");
-            Properties props = System.getProperties();
+        context = xCtx;
 
-            c.put("NAME", new CategoryValue(getName(props), "NAME", "name"));
-            c.put("LANGUAGE", new CategoryValue(getLanguage(props), "LANGUAGE", "language"));
-            c.put("VENDOR", new CategoryValue(getVendor(props), "VENDOR", "vendor"));
-            c.put("RUNTIME", new CategoryValue(getRuntime(props), "RUNTIME", "runtime"));
-            c.put("HOME", new CategoryValue(getHome(props), "HOME", "home"));
-            c.put("VERSION", new CategoryValue(getVersion(props), "VERSION", "version"));
-            c.put("CLASSPATH", new CategoryValue(getmClasspath(props), "CLASSPATH", "classPath"));
+        Category c = new Category("JVMS", "jvms");
+        Properties props = System.getProperties();
 
-            this.add(c);
-        } catch (Exception ex) {
-            FILog.e(ex.getMessage());
-        }
+        c.put("NAME", new CategoryValue(getName(props), "NAME", "name"));
+        c.put("LANGUAGE", new CategoryValue(getLanguage(props), "LANGUAGE", "language"));
+        c.put("VENDOR", new CategoryValue(getVendor(props), "VENDOR", "vendor"));
+        c.put("RUNTIME", new CategoryValue(getRuntime(props), "RUNTIME", "runtime"));
+        c.put("HOME", new CategoryValue(getHome(props), "HOME", "home"));
+        c.put("VERSION", new CategoryValue(getVersion(props), "VERSION", "version"));
+        c.put("CLASSPATH", new CategoryValue(getClasspath(props), "CLASSPATH", "classPath"));
+
+        this.add(c);
     }
 
     /**
@@ -82,7 +82,13 @@ public class Jvm extends Categories {
      * @return string the JVM implementation name
      */
     public String getName(Properties props) {
-        return props.getProperty("java.vm.name");
+        String value = "N/A";
+        try {
+            value = props.getProperty("java.vm.name");
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.JVM_NAME, ex.getMessage()));
+        }
+        return value;
     }
 
     /**
@@ -91,7 +97,13 @@ public class Jvm extends Categories {
      * @return string the JVM vendor
      */
     public String getVendor(Properties props) {
-        return props.getProperty("java.vm.vendor");
+        String value  = "N/A";
+        try {
+            value = props.getProperty("java.vm.vendor");
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.JVM_VENDOR, ex.getMessage()));
+        }
+        return value;
     }
 
     /**
@@ -100,11 +112,14 @@ public class Jvm extends Categories {
      * @return string the JVM locale language
      */
     public String getLanguage(Properties props) {
-
-        String language = props.getProperty("user.language");
-        language += "_";
-        language += props.getProperty("user.region");
-
+        String language = "N/A";
+        try {
+            language = props.getProperty("user.language");
+            language += "_";
+            language += props.getProperty("user.region");
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.JVM_LANGUAGE, ex.getMessage()));
+        }
         return language;
     }
 
@@ -114,7 +129,13 @@ public class Jvm extends Categories {
      * @return string the java runtime version
      */
     public String getRuntime(Properties props) {
-        return props.getProperty("java.runtime.version");
+        String value = "N/A";
+        try {
+            value = props.getProperty("java.runtime.version");
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.JVM_RUNTIME, ex.getMessage()));
+        }
+        return value;
     }
 
     /**
@@ -123,7 +144,13 @@ public class Jvm extends Categories {
      * @return string the installation directory
      */
     public String getHome(Properties props) {
-        return props.getProperty("java.home");
+        String value = "N/A";
+        try {
+            value = props.getProperty("java.home");
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.JVM_HOME, ex.getMessage()));
+        }
+        return value;
     }
 
     /**
@@ -132,7 +159,13 @@ public class Jvm extends Categories {
      * @return string the JVM implementation version
      */
     public String getVersion(Properties props) {
-        return props.getProperty("java.vm.version");
+        String value = "N/A";
+        try {
+            value = props.getProperty("java.vm.version");
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.JVM_VERSION, ex.getMessage()));
+        }
+        return value;
     }
 
     /**
@@ -140,7 +173,13 @@ public class Jvm extends Categories {
      * @param props
      * @return string the class path
      */
-    public String getmClasspath(Properties props) {
-        return props.getProperty("java.class.path");
+    public String getClasspath(Properties props) {
+        String value = "N/A";
+        try {
+            value = props.getProperty("java.class.path");
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.JVM_CLASS_PATH, ex.getMessage()));
+        }
+        return value;
     }
 }
