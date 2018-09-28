@@ -22,4 +22,8 @@ public class CommonErrorType {
     public static final int BIOS_SYSTEM_SERIAL = 208;
     public static final int BIOS_SERIAL_PRIVATE = 209;
     public static final int BIOS_CPU_SERIAL = 210;
+
+    /* Bluetooth */
+    public static final int BLUETOOTH_HARDWARE_ADDRESS = 201;
+    public static final int BLUETOOTH_NAME = 202;
 }

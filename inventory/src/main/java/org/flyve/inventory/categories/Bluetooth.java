@@ -31,6 +31,7 @@ package org.flyve.inventory.categories;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 
+import org.flyve.inventory.CommonErrorType;
 import org.flyve.inventory.FILog;
 
 /**
@@ -50,8 +51,9 @@ public class Bluetooth extends Categories {
 	 */
     private static final long serialVersionUID = 3252750764653173048L;
     private BluetoothAdapter adapter;
+    private final Context context;
 
-   /**
+    /**
      * Indicates whether some other object is "equal to" this one
      * @param Object obj the reference object with which to compare
      * @return boolean true if the object is the same as the one given in argument
@@ -84,6 +86,8 @@ public class Bluetooth extends Categories {
     public Bluetooth(Context xCtx) {
         super(xCtx);
 
+        context = xCtx;
+
         adapter = BluetoothAdapter.getDefaultAdapter();
 
         if(adapter != null) {
@@ -107,7 +111,13 @@ public class Bluetooth extends Categories {
      * @return string with the hardware address
      */
     public String getHardwareAddress() {
-        return adapter.getAddress();
+        String address = "N/A";
+        try {
+            address = adapter.getAddress();
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.BLUETOOTH_HARDWARE_ADDRESS, ex.getMessage()));
+        }
+        return address;
     }
 
     /**
@@ -115,7 +125,13 @@ public class Bluetooth extends Categories {
      * @return string the name of the adapter
      */
     public String getName() {
-        return adapter.getName();
+        String name = "N/A";
+        try {
+            name = adapter.getName();
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.BLUETOOTH_NAME, ex.getMessage()));
+        }
+        return name;
     }
 
 }
