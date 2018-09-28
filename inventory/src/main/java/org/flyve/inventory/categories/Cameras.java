@@ -96,10 +96,10 @@ public class Cameras
                     Category c = new Category("CAMERAS", "cameras");
                     CameraCharacteristics chars = getCharacteristics(xCtx, index);
                     if (chars != null) {
-                        c.put("RESOLUTIONS", new CategoryValue(getResolution(chars), "RESOLUTIONS", "resolutions"));
+                        c.put("RESOLUTION", new CategoryValue(getResolution(chars), "RESOLUTION", "resolution"));
                         c.put("LENSFACING", new CategoryValue(getFacingState(chars), "LENSFACING", "lensfacing"));
                         c.put("FLASHUNIT", new CategoryValue(getFlashUnit(chars), "FLASHUNIT", "flashunit"));
-                        c.put("IMAGEFORMAT", new CategoryValue(getCategoryImageFormat(chars)));
+                        c.put("IMAGEFORMATS", new CategoryValue(getImageFormat(chars), "IMAGEFORMATS", "imageformats"));
                         c.put("ORIENTATION", new CategoryValue(getOrientation(chars), "ORIENTATION", "orientation"));
                         c.put("FOCALLENGTH", new CategoryValue(getFocalLength(chars), "FOCALLENGTH", "focallength"));
                         c.put("SENSORSIZE", new CategoryValue(getSensorSize(chars), "SENSORSIZE", "sensorsize"));
@@ -108,7 +108,7 @@ public class Cameras
                         c.put("MANUFACTURER", new CategoryValue(getManufacturer(index), "MANUFACTURER", "manufacturer"));
                     }
                     c.put("RESOLUTIONVIDEO", new CategoryValue(getVideoResolution(index), "RESOLUTIONVIDEO", "resolutionvideo"));
-                    c.put("SUPPORT", new CategoryValue(getSupportValue(), "SUPPORT", "support"));
+                    c.put("SUPPORTS", new CategoryValue(getSupportValue(), "SUPPORTS", "supports"));
                     c.put("MODEL", new CategoryValue(getModel(index), "MODEL", "model"));
                     this.add(c);
                 }
@@ -445,19 +445,20 @@ public class Cameras
      * Get support camera
      * @return String support camera
      */
-    public String getSupportValue() {
+    public ArrayList<String> getSupportValue() {
         ArrayList<String> arrayList = new ArrayList<>();
         Iterator it = getCatInfoCamera("/system/lib/libcameracustom.so", "SENSOR_DRVNAME_", 100).iterator();
         while (it.hasNext()) {
             arrayList.add(((String) it.next()).toLowerCase(Locale.US));
         }
-        StringBuilder values = new StringBuilder();
+        return arrayList;
+        /*StringBuilder values = new StringBuilder();
         for (int i = 0; i < arrayList.size(); i++) {
             values.append(arrayList.get(i));
             if (i != arrayList.size() - 1)
                 values.append("; ");
         }
-        return "".equals(values.toString()) ? "N/A" : values.toString();
+        return "".equals(values.toString()) ? "N/A" : values.toString();*/
     }
 
     private ArrayList<String> getCatInfoCamera(String str, String str2, int i) {
