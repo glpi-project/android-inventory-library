@@ -33,6 +33,7 @@ import android.content.Context;
 import android.location.LocationManager;
 import android.location.LocationProvider;
 
+import org.flyve.inventory.CommonErrorType;
 import org.flyve.inventory.FILog;
 
 import java.util.List;
@@ -53,6 +54,7 @@ public class LocationProviders extends Categories {
      *  from: https://stackoverflow.com/questions/285793/what-is-a-serialversionuid-and-why-should-i-use-it
      */
     private static final long serialVersionUID = 6066226866162586918L;
+    private final Context context;
 
     /**
      * This constructor load the context and the Location Providers information
@@ -61,9 +63,11 @@ public class LocationProviders extends Categories {
     public LocationProviders(Context xCtx) {
         super(xCtx);
 
-        try {
-            LocationManager lLocationMgr = (LocationManager) xCtx.getSystemService(Service.LOCATION_SERVICE);
+        context = xCtx;
 
+        LocationManager lLocationMgr = (LocationManager) context.getSystemService(Service.LOCATION_SERVICE);
+
+        if (lLocationMgr != null) {
             List<String> lProvidersName = lLocationMgr.getAllProviders();
 
             for (String p : lProvidersName) {
@@ -74,8 +78,6 @@ public class LocationProviders extends Categories {
 
                 this.add(c);
             }
-        } catch (Exception ex) {
-            FILog.e(ex.getMessage());
         }
     }
 
@@ -85,6 +87,12 @@ public class LocationProviders extends Categories {
      * @return string the name of the provider
      */
     public String getName(LocationProvider lProvider) {
-        return lProvider.getName();
+        String value  = "N/A";
+        try {
+            value = lProvider.getName();
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.LOCATION_NAME, ex.getMessage()));
+        }
+        return value;
     }
 }
