@@ -58,4 +58,8 @@ public class CommonErrorType {
     public static final int HARDWARE_VERSION = 806;
     public static final int HARDWARE_ARCH_NAME = 807;
     public static final int HARDWARE_UUID = 808;
+
+    /* Inputs */
+    public static final int INPUTS_KEY_BOARD = 901;
+    public static final int INPUTS_TOUCH_SCREEN = 902;
 }
