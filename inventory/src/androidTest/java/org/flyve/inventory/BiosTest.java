@@ -75,7 +75,7 @@ public class BiosTest {
     @Test
     public void getSystemSerialNumber() throws Exception {
         Bios bios = new Bios(appContext);
-        assertNotEquals("", bios.getSystemSerialNumber(appContext) );
+        assertNotEquals("", bios.getSystemSerialNumber() );
     }
 
     @Test

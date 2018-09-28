@@ -31,6 +31,7 @@ package org.flyve.inventory.categories;
 import android.content.Context;
 import android.os.Build;
 
+import org.flyve.inventory.CommonErrorType;
 import org.flyve.inventory.FILog;
 import org.flyve.inventory.Utils;
 
@@ -57,6 +58,7 @@ public class Bios extends Categories {
 	 */
 	private static final long serialVersionUID = -559572118090134691L;
 	private static final String CPUINFO = "/proc/cpuinfo";
+	private final Context context;
 
 	// <!ELEMENT BIOS (SMODEL, SMANUFACTURER, SSN, BDATE, BVERSION,
 	//	BMANUFACTURER, MMANUFACTURER, MSN, MMODEL, ASSETTAG, ENCLOSURESERIAL,
@@ -69,37 +71,35 @@ public class Bios extends Categories {
 	public Bios(Context xCtx) {
 		super(xCtx);
 
-		try {
-			Category c = new Category("BIOS", "bios");
+		context = xCtx;
 
-			// Bios Date
-			c.put("BDATE", new CategoryValue(getBiosDate(), "BDATE", "biosReleaseDate"));
+		Category c = new Category("BIOS", "bios");
 
-			// Bios Manufacturer
-			c.put("BMANUFACTURER", new CategoryValue(getBiosManufacturer(), "BMANUFACTURER", "biosManufacturer"));
+		// Bios Date
+		c.put("BDATE", new CategoryValue(getBiosDate(), "BDATE", "biosReleaseDate"));
 
-			// Bios version
-			c.put("BVERSION", new CategoryValue(getBiosVersion(), "BVERSION", "biosVersion"));
+		// Bios Manufacturer
+		c.put("BMANUFACTURER", new CategoryValue(getBiosManufacturer(), "BMANUFACTURER", "biosManufacturer"));
 
-			// Mother Board Manufacturer
-			c.put("MMANUFACTURER", new CategoryValue(getMotherBoardManufacturer(), "MMANUFACTURER", "motherBoardManufacturer"));
+		// Bios version
+		c.put("BVERSION", new CategoryValue(getBiosVersion(), "BVERSION", "biosVersion"));
 
-			// Mother Board Model
-			c.put("SMODEL", new CategoryValue(getMotherBoardModel(), "SMODEL", "motherBoardModel"));
+		// Mother Board Manufacturer
+		c.put("MMANUFACTURER", new CategoryValue(getMotherBoardManufacturer(), "MMANUFACTURER", "motherBoardManufacturer"));
 
-			// Mother Board Serial Number
-			c.put("SSN", new CategoryValue(getSystemSerialNumber(xCtx), "SSN", "motherBoardSerialNumber"));
+		// Mother Board Model
+		c.put("SMODEL", new CategoryValue(getMotherBoardModel(), "SMODEL", "motherBoardModel"));
 
-			// Build Tag
-			c.put("ASSETTAG", new CategoryValue(getBuildTag(), "ASSETTAG", "assettag"));
+		// Mother Board Serial Number
+		c.put("SSN", new CategoryValue(getSystemSerialNumber(), "SSN", "motherBoardSerialNumber"));
 
-			// Build Tag
-			c.put("MSN", new CategoryValue(getMotherBoardSerial(), "MSN", "msn"));
+		// Build Tag
+		c.put("ASSETTAG", new CategoryValue(getBuildTag(), "ASSETTAG", "assettag"));
 
-			this.add(c);
-		} catch (Exception ex) {
-			FILog.e(ex.getMessage());
-		}
+		// Build Tag
+		c.put("MSN", new CategoryValue(getMotherBoardSerial(), "MSN", "msn"));
+
+		this.add(c);
 	}
 
 	/**
@@ -107,7 +107,12 @@ public class Bios extends Categories {
 	 * @return string with the date in simple format
 	 */
 	public String getBiosDate() {
-		String dateInfo = Utils.getCatInfo("/sys/devices/virtual/dmi/id/bios_date");
+		String dateInfo = "N/A";
+		try {
+			dateInfo = Utils.getCatInfo("/sys/devices/virtual/dmi/id/bios_date");
+		} catch (Exception ex) {
+			FILog.e(FILog.getMessage(context, CommonErrorType.BIOS_DATE, ex.getMessage()));
+		}
 		return !dateInfo.equals("") ? dateInfo : "N/A";
 	}
 
@@ -116,7 +121,13 @@ public class Bios extends Categories {
 	 * @return string with the manufacturer
 	 */
 	public String getBiosManufacturer() {
-		return Build.MANUFACTURER;
+		String manufacturer = "N/A";
+		try {
+			manufacturer= Build.MANUFACTURER;
+		} catch (Exception ex) {
+			FILog.e(FILog.getMessage(context, CommonErrorType.BIOS_MANUFACTURER, ex.getMessage()));
+		}
+		return manufacturer;
 	}
 
 	/**
@@ -124,7 +135,12 @@ public class Bios extends Categories {
 	 * @return string with the bootloader version
 	 */
 	public String getBiosVersion() {
-		String dateInfo = Utils.getCatInfo("/sys/devices/virtual/dmi/id/bios_version");
+		String dateInfo = "N/A";
+		try {
+			dateInfo = Utils.getCatInfo("/sys/devices/virtual/dmi/id/bios_version");
+		} catch (Exception ex) {
+			FILog.e(FILog.getMessage(context, CommonErrorType.BIOS_VERSION, ex.getMessage()));
+		}
 		return !dateInfo.equals("") ? dateInfo : "N/A";
 	}
 
@@ -133,7 +149,13 @@ public class Bios extends Categories {
 	 * @return string with the manufacturer
 	 */
 	public String getMotherBoardManufacturer() {
-		return Build.MANUFACTURER;
+		String manufacturer = "N/A";
+		try {
+			manufacturer = Build.MANUFACTURER;
+		} catch (Exception ex) {
+			FILog.e(FILog.getMessage(context, CommonErrorType.BIOS_BOARD_MANUFACTURER, ex.getMessage()));
+		}
+		return manufacturer;
 	}
 
 	/**
@@ -141,7 +163,13 @@ public class Bios extends Categories {
 	 * @return string with the model
 	 */
 	public String getMotherBoardModel() {
-		return Build.MODEL;
+		String model = "N/A";
+		try {
+			model = Build.MODEL;
+		} catch (Exception ex) {
+			FILog.e(FILog.getMessage(context, CommonErrorType.BIOS_MOTHER_BOARD_MODEL, ex.getMessage()));
+		}
+		return model;
 	}
 
 	/**
@@ -149,7 +177,13 @@ public class Bios extends Categories {
 	 * @return string with the model
 	 */
 	public String getBuildTag() {
-		return Build.TAGS;
+		String tags = "N/A";
+		try {
+			tags = Build.TAGS;
+		} catch (Exception ex) {
+			FILog.e(FILog.getMessage(context, CommonErrorType.BIOS_TAG, ex.getMessage()));
+		}
+		return tags;
 	}
 
 	/**
@@ -157,42 +191,48 @@ public class Bios extends Categories {
 	 * @return string with the serial mother board
 	 */
 	public String getMotherBoardSerial() {
-		String dateInfo = Utils.getCatInfo("/sys/devices/virtual/dmi/id/board_serial");
+		String dateInfo = "N/A";
+		try {
+			dateInfo = Utils.getCatInfo("/sys/devices/virtual/dmi/id/board_serial");
+		} catch (Exception ex) {
+			FILog.e(FILog.getMessage(context, CommonErrorType.BIOS_MOTHER_BOARD_SERIAL, ex.getMessage()));
+		}
 		return !dateInfo.equals("") ? dateInfo : "N/A";
 	}
 
 	/**
 	 * Get the System serial number
 	 * @return string with the serial number
-	 * @param xCtx
 	 */
-	public String getSystemSerialNumber(Context xCtx) {
+	public String getSystemSerialNumber() {
 		String systemSerialNumber = "Unknown";
-
-		if (!Build.SERIAL.equals(Build.UNKNOWN)) {
-			// Mother Board Serial Number
-			// Since in 2.3.3 a.k.a gingerbread
-			systemSerialNumber = Build.SERIAL;
-		} else {
-			//Try to get the serial by reading /proc/cpuinfo
-			String serial = "";
-			try {
-				serial = this.getSerialNumberFromCpuinfo();
-			} catch (Exception ex) {
-				FILog.e(ex.getMessage());
-			}
-
-			if (!serial.equals("") && !serial.equals("0000000000000000")) {
-				systemSerialNumber = serial;
+		try {
+			if (!Build.SERIAL.equals(Build.UNKNOWN)) {
+				// Mother Board Serial Number
+				// Since in 2.3.3 a.k.a gingerbread
+				systemSerialNumber = Build.SERIAL;
 			} else {
-				//Last try, use the hidden API!
-				serial = getSerialFromPrivateAPI();
-				if (!serial.equals("")) {
+				//Try to get the serial by reading /proc/cpuinfo
+				String serial = "";
+				try {
+					serial = this.getSerialNumberFromCpuInfo();
+				} catch (Exception ex) {
+					FILog.e(ex.getMessage());
+				}
+
+				if (!serial.equals("") && !serial.equals("0000000000000000")) {
 					systemSerialNumber = serial;
+				} else {
+					//Last try, use the hidden API!
+					serial = getSerialFromPrivateAPI();
+					if (!serial.equals("")) {
+						systemSerialNumber = serial;
+					}
 				}
 			}
+		} catch (Exception ex) {
+			FILog.e(FILog.getMessage(context, CommonErrorType.BIOS_SYSTEM_SERIAL, ex.getMessage()));
 		}
-
 		return systemSerialNumber;
 	}
 
@@ -201,13 +241,13 @@ public class Bios extends Categories {
 	 * @return String with a Serial Device
 	 */
 	private String getSerialFromPrivateAPI() {
-		String serial = "";
+		String serial = "N/A";
 		try {
 	        Class<?> c = Class.forName("android.os.SystemProperties");
 	        Method get = c.getMethod("get", String.class);
 	        serial = (String) get.invoke(c, "ro.serialno");
-	    } catch (Exception e) {
-			FILog.e(e.getMessage());
+	    } catch (Exception ex) {
+			FILog.e(FILog.getMessage(context, CommonErrorType.BIOS_SERIAL_PRIVATE, ex.getMessage()));
 	    }
 	    return serial;
 	}
@@ -216,29 +256,33 @@ public class Bios extends Categories {
 	 * Get the serial by reading /proc/cpuinfo
 	 * @return String
 	 */
-	private String getSerialNumberFromCpuinfo() throws IOException {
-		String serial = "";
-		File f = new File(CPUINFO);
-		FileReader fr = null;
+	private String getSerialNumberFromCpuInfo() {
+		String serial = "N/A";
 		try {
-			fr = new FileReader(f);
-			BufferedReader br = new BufferedReader(fr, 8 * 1024);
-			String line;
-			while ((line = br.readLine()) != null) {
-				if (line.startsWith("Serial")) {
-					FILog.d(line);
-					String[] results = line.split(":");
-					serial = results[1].trim();
+			File f = new File(CPUINFO);
+			FileReader fr = null;
+			try {
+				fr = new FileReader(f);
+				BufferedReader br = new BufferedReader(fr, 8 * 1024);
+				String line;
+				while ((line = br.readLine()) != null) {
+					if (line.startsWith("Serial")) {
+						FILog.d(line);
+						String[] results = line.split(":");
+						serial = results[1].trim();
+					}
+				}
+				br.close();
+				fr.close();
+			} catch (IOException e) {
+				FILog.e(e.getMessage());
+			} finally {
+				if (fr != null) {
+					fr.close();
 				}
 			}
-			br.close();
-			fr.close();
-		} catch (IOException e) {
-			FILog.e(e.getMessage());
-		} finally {
-			if(fr != null) {
-				fr.close();
-			}
+		} catch (Exception ex) {
+			FILog.e(FILog.getMessage(context, CommonErrorType.BIOS_CPU_SERIAL, ex.getMessage()));
 		}
 
 		return serial.trim();
