@@ -41,4 +41,11 @@ public class CommonErrorType {
     public static final int CPU_NAME = 607;
     public static final int CPU_FREQUENCY = 608;
     public static final int CPU_THREAD = 609;
+
+    /* Drives */
+    public static final int DRIVES_VOLUME = 701;
+    public static final int DRIVES_TOTAL = 702;
+    public static final int DRIVES_FREE_SPACE = 703;
+    public static final int DRIVES_FILE_SYSTEM = 704;
+    public static final int DRIVES_TYPE = 705;
 }

@@ -33,6 +33,7 @@ import android.content.Context;
 import android.os.Environment;
 import android.os.StatFs;
 
+import org.flyve.inventory.CommonErrorType;
 import org.flyve.inventory.FILog;
 
 import java.io.BufferedReader;
@@ -56,6 +57,7 @@ public class Drives extends Categories {
      *  from: https://stackoverflow.com/questions/285793/what-is-a-serialversionuid-and-why-should-i-use-it
      */
 	private static final long serialVersionUID = 6073387379988815108L;
+    private final Context context;
 
     /**
      * This constructor load the context and load the Drivers information
@@ -64,13 +66,15 @@ public class Drives extends Categories {
 
 	public Drives(Context xCtx) {
         super(xCtx);
+
+        context = xCtx;
+
         this.addStorage(Environment.getRootDirectory());
         this.addStorage(Environment.getExternalStorageDirectory());
 	    this.addStorage(Environment.getDataDirectory());
 	    this.addStorage(Environment.getDownloadCacheDirectory());
-        String secondaryStorage = System.getenv("SECONDARY_STORAGE");
-        if (secondaryStorage != null) {
-            this.addStorage(new File(secondaryStorage));
+        if (System.getenv("SECONDARY_STORAGE") != null) {
+            this.addStorage(new File(System.getenv("SECONDARY_STORAGE")));
         }
     }
     
@@ -79,20 +83,15 @@ public class Drives extends Categories {
      * @param f the partition to inventory
      */
     private void addStorage(File f) {
+        Category c = new Category("DRIVES", "drives");
 
-        try {
-            Category c = new Category("DRIVES", "drives");
+        c.put("VOLUMN", new CategoryValue(getVolume(f), "VOLUMN", "path"));
+        c.put("TOTAL", new CategoryValue(getTotal(f), "TOTAL", "total"));
+        c.put("FREE", new CategoryValue(getFreeSpace(f), "FREE", "free"));
+        c.put("FILESYSTEM", new CategoryValue(getFileSystem(f), "FILESYSTEM", "filesystem"));
+        c.put("TYPE", new CategoryValue(getType(f), "TYPE", "type"));
 
-            c.put("VOLUMN", new CategoryValue(getVolume(f), "VOLUMN", "path"));
-            c.put("TOTAL", new CategoryValue(getTotal(f), "TOTAL", "total"));
-            c.put("FREE", new CategoryValue(getFreeSpace(f), "FREE", "free"));
-            c.put("FILESYSTEM", new CategoryValue(getFileSystem(f), "FILESYSTEM", "filesystem"));
-            c.put("TYPE", new CategoryValue(getType(f), "TYPE", "type"));
-
-            this.add(c);
-        } catch (Exception ex) {
-            FILog.e(ex.getMessage());
-        }
+        this.add(c);
     }
 
     /**
@@ -113,8 +112,8 @@ public class Drives extends Categories {
                     break;
                 }
             }
-        } catch (Exception e) {
-            FILog.e(e.getMessage());
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.DRIVES_VOLUME, ex.getMessage()));
         }
         return fileVolume;
     }
@@ -125,17 +124,15 @@ public class Drives extends Categories {
      * @return string the total space
      */
     public String getTotal(File f) {
-        String val = "";
-
+        String val = "N/A";
         try {
             Long total = f.getTotalSpace();
             int toMega = 1048576;
             total = total / toMega;
             val = total.toString();
         } catch (Exception ex) {
-            FILog.e(ex.getMessage());
+            FILog.e(FILog.getMessage(context, CommonErrorType.DRIVES_TOTAL, ex.getMessage()));
         }
-
         return val;
     }
 
@@ -145,15 +142,21 @@ public class Drives extends Categories {
      * @return string the free space
      */
     public String getFreeSpace(File f) {
-        StatFs stat = new StatFs(f.getPath());
-        long bytesAvailable;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            bytesAvailable = stat.getBlockSizeLong() * stat.getAvailableBlocksLong();
-        } else {
-            bytesAvailable = (long) stat.getBlockSize() * (long) stat.getAvailableBlocks();
+        String value = "N/A";
+        try {
+            StatFs stat = new StatFs(f.getPath());
+            long bytesAvailable;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) {
+                bytesAvailable = stat.getBlockSizeLong() * stat.getAvailableBlocksLong();
+            } else {
+                bytesAvailable = (long) stat.getBlockSize() * (long) stat.getAvailableBlocks();
+            }
+            long valueBytes = bytesAvailable / (1024 * 1024);
+            value = String.valueOf(valueBytes);
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.DRIVES_FREE_SPACE, ex.getMessage()));
         }
-        long value = bytesAvailable / (1024 * 1024);
-        return String.valueOf(value);
+        return value;
     }
 
     /**
@@ -174,8 +177,8 @@ public class Drives extends Categories {
                     break;
                 }
             }
-        } catch (Exception e) {
-            FILog.e(e.getMessage());
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.DRIVES_FILE_SYSTEM, ex.getMessage()));
         }
         return fileSystem;
     }
@@ -198,8 +201,8 @@ public class Drives extends Categories {
                     break;
                 }
             }
-        } catch (Exception e) {
-            FILog.e(e.getMessage());
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.DRIVES_TYPE, ex.getMessage()));
         }
         return pointMounted;
     }
