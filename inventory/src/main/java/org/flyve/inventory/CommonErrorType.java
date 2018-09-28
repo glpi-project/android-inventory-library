@@ -74,4 +74,12 @@ public class CommonErrorType {
 
     /* Location Providers */
     public static final int LOCATION_NAME = 1101;
+
+    /* Memory */
+    public static final int MEMORY_CAPACITY = 1201;
+    public static final int MEMORY_RAM_INFO = 1202;
+    public static final int MEMORY_SPLIT_RAM_INFO = 1203;
+    public static final int MEMORY_RAM_PROP = 1204;
+    public static final int MEMORY_TYPE = 1205;
+    public static final int MEMORY_SPEED = 1206;
 }

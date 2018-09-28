@@ -60,7 +60,7 @@ public class Memory extends Categories {
 
     // Properties of this component
     private static final String DESCRIPTION = "Memory";
-    private static final String MEMINFO = "/proc/meminfo";
+    private static final String MEMO_INFO = "/proc/meminfo";
     private String[] ramInfo = new String[2];
     private final Context context;
 
@@ -74,32 +74,27 @@ public class Memory extends Categories {
 
         context = xCtx;
 
-        try {
-            getRamInfo();
-            Category c = new Category("MEMORIES", "memories");
+        getRamInfo();
+        Category c = new Category("MEMORIES", "memories");
 
-            c.put("DESCRIPTION", new CategoryValue(DESCRIPTION, "DESCRIPTION", "description"));
-            c.put("CAPACITY", new CategoryValue(getCapacity(), "CAPACITY", "capacity"));
-            c.put("TYPE", new CategoryValue(getType(), "TYPE", "type"));
-            c.put("SPEED", new CategoryValue(getSpeed(), "SPEED", "speed"));
+        c.put("DESCRIPTION", new CategoryValue(DESCRIPTION, "DESCRIPTION", "description"));
+        c.put("CAPACITY", new CategoryValue(getCapacity(), "CAPACITY", "capacity"));
+        c.put("TYPE", new CategoryValue(getType(), "TYPE", "type"));
+        c.put("SPEED", new CategoryValue(getSpeed(), "SPEED", "speed"));
 
-            this.add(c);
-        } catch (Exception ex) {
-            FILog.e(ex.getMessage());
-        }
+        this.add(c);
     }
 
     /**
      *  Get total memory of the device
      * @return String Total Memory
-     * @throws IOException return exception
      */
 	public String getCapacity() {
         String capacity = "N/A";
         try {
             FileReader fr = null;
             try {
-                File f = new File(MEMINFO);
+                File f = new File(MEMO_INFO);
                 fr = new FileReader(f);
                 BufferedReader br = new BufferedReader(fr, 8 * 1024);
                 String line;
@@ -122,53 +117,77 @@ public class Memory extends Categories {
                 }
             }
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.BATTERY_TECHNOLOGY, ex.getMessage()));
+            FILog.e(FILog.getMessage(context, CommonErrorType.MEMORY_CAPACITY, ex.getMessage()));
         }
         return capacity;
 	}
 
     private void getRamInfo() {
-        String infoCat = Utils.getCatInfo("/sys/bus/platform/drivers/ddr_type/ddr_type");
-        if (!infoCat.equals("")) {
-            splitRamInfo(infoCat);
-        } else {
-            String infoProp = getRamProp();
-            if (infoProp != null){
-                splitRamInfo(infoProp);
+        try {
+            String infoCat = Utils.getCatInfo("/sys/bus/platform/drivers/ddr_type/ddr_type");
+            if (!infoCat.equals("")) {
+                splitRamInfo(infoCat);
             } else {
-                ramInfo[0] = "N/A";
-                ramInfo[1] = "N/A";
+                String infoProp = getRamProp();
+                if (infoProp != null) {
+                    splitRamInfo(infoProp);
+                } else {
+                    ramInfo[0] = "N/A";
+                    ramInfo[1] = "N/A";
+                }
             }
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.MEMORY_RAM_INFO, ex.getMessage()));
         }
     }
 
     private void splitRamInfo(String info) {
-        if (info.contains("_")) {
-            String[] partRam = info.split("_", 2);
-            ramInfo[0] = partRam[0];
-            ramInfo[1] = partRam[1];
-        } else {
-            ramInfo[0] = info;
-            ramInfo[1] = "N/A";
+	    try {
+            if (info.contains("_")) {
+                String[] partRam = info.split("_", 2);
+                ramInfo[0] = partRam[0];
+                ramInfo[1] = partRam[1];
+            } else {
+                ramInfo[0] = info;
+                ramInfo[1] = "N/A";
+            }
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.MEMORY_SPLIT_RAM_INFO, ex.getMessage()));
         }
     }
 
     private String getRamProp() {
-        String a = Utils.getSystemProperty("ro.boot.hardware.ddr");
-        if (!(a == null || a.isEmpty())) {
-            int indexOf = a.indexOf("LPDDR");
-            if (indexOf > 0) {
-                return a.substring(indexOf);
+	    try {
+            String a = Utils.getSystemProperty("ro.boot.hardware.ddr");
+            if (!(a == null || a.isEmpty())) {
+                int indexOf = a.indexOf("LPDDR");
+                if (indexOf > 0) {
+                    return a.substring(indexOf);
+                }
             }
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.MEMORY_RAM_PROP, ex.getMessage()));
         }
         return null;
     }
 
     public String getType() {
-        return ramInfo[0];
+        String value = "N/A";
+        try {
+            value = ramInfo[0];
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.MEMORY_TYPE, ex.getMessage()));
+        }
+        return value;
     }
 
     public String getSpeed() {
-        return ramInfo[1];
+        String value = "N/A";
+        try {
+            value = ramInfo[1];
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.MEMORY_SPEED, ex.getMessage()));
+        }
+        return value;
     }
 }
