@@ -108,7 +108,10 @@ public class Cameras
                         c.put("MANUFACTURER", new CategoryValue(getManufacturer(index), "MANUFACTURER", "manufacturer"));
                     }
                     c.put("RESOLUTIONVIDEO", new CategoryValue(getVideoResolution(index), "RESOLUTIONVIDEO", "resolutionvideo"));
-                    c.put("SUPPORTS", new CategoryValue(getSupportValue(), "SUPPORTS", "supports"));
+                    ArrayList<String> supportValue = getSupportValue();
+                    if (supportValue.size() > 0) {
+                        c.put("SUPPORTS", new CategoryValue(supportValue, "SUPPORTS", "supports"));
+                    }
                     c.put("MODEL", new CategoryValue(getModel(index), "MODEL", "model"));
                     this.add(c);
                 }
@@ -452,13 +455,6 @@ public class Cameras
             arrayList.add(((String) it.next()).toLowerCase(Locale.US));
         }
         return arrayList;
-        /*StringBuilder values = new StringBuilder();
-        for (int i = 0; i < arrayList.size(); i++) {
-            values.append(arrayList.get(i));
-            if (i != arrayList.size() - 1)
-                values.append("; ");
-        }
-        return "".equals(values.toString()) ? "N/A" : values.toString();*/
     }
 
     private ArrayList<String> getCatInfoCamera(String str, String str2, int i) {
