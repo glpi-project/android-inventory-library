@@ -31,6 +31,7 @@ package org.flyve.inventory.categories;
 import android.content.Context;
 import android.content.res.Configuration;
 
+import org.flyve.inventory.CommonErrorType;
 import org.flyve.inventory.FILog;
 
 /**
@@ -50,6 +51,7 @@ public class Inputs extends Categories {
      */
 	private static final long serialVersionUID = 4846706700566208666L;
 	private Configuration config;
+	private final Context context;
 
 	/**
 	 * Indicates whether some other object is "equal to" this one
@@ -85,29 +87,27 @@ public class Inputs extends Categories {
 	public Inputs(Context xCtx) {
 		super(xCtx);
 
-		config = xCtx.getResources().getConfiguration();
+		context = xCtx;
 
-		try {
-			if (getKeyboard()) {
-				Category c = new Category("INPUTS", "inputs");
+		config = context.getResources().getConfiguration();
 
-				c.put("CAPTION", new CategoryValue("Keyboard", "CAPTION", "caption"));
-				c.put("DESCRIPTION", new CategoryValue("Keyboard", "DESCRIPTION", "description"));
-				c.put("TYPE", new CategoryValue("Keyboard", "TYPE", "type"));
-
-				this.add(c);
-			}
-
+		if (getKeyboard()) {
 			Category c = new Category("INPUTS", "inputs");
 
-			c.put("CAPTION", new CategoryValue("Touch Screen", "CAPTION", "caption"));
-			c.put("DESCRIPTION", new CategoryValue("Touch Screen", "DESCRIPTION", "description"));
-			c.put("TYPE", new CategoryValue(getTouchscreen(), "TYPE", "type"));
+			c.put("CAPTION", new CategoryValue("Keyboard", "CAPTION", "caption"));
+			c.put("DESCRIPTION", new CategoryValue("Keyboard", "DESCRIPTION", "description"));
+			c.put("TYPE", new CategoryValue("Keyboard", "TYPE", "type"));
 
 			this.add(c);
-		} catch (Exception ex) {
-			FILog.e(ex.getMessage());
 		}
+
+		Category c = new Category("INPUTS", "inputs");
+
+		c.put("CAPTION", new CategoryValue("Touch Screen", "CAPTION", "caption"));
+		c.put("DESCRIPTION", new CategoryValue("Touch Screen", "DESCRIPTION", "description"));
+		c.put("TYPE", new CategoryValue(getTouchscreen(), "TYPE", "type"));
+
+		this.add(c);
 	}
 
 	/**
@@ -115,18 +115,21 @@ public class Inputs extends Categories {
 	 * @return string if the device has a hardware keyboard
 	 */
 	public Boolean getKeyboard() {
+		Boolean val = false;
 
-		Boolean val;
-
-		switch (config.keyboard) {
-			case Configuration.KEYBOARD_QWERTY:
-			case Configuration.KEYBOARD_12KEY:
-				val = true;
-				break;
-			case Configuration.KEYBOARD_NOKEYS:
-			default:
-				val = false;
-				break;
+		try {
+			switch (config.keyboard) {
+				case Configuration.KEYBOARD_QWERTY:
+				case Configuration.KEYBOARD_12KEY:
+					val = true;
+					break;
+				case Configuration.KEYBOARD_NOKEYS:
+				default:
+					val = false;
+					break;
+			}
+		} catch (Exception ex) {
+			FILog.e(FILog.getMessage(context, CommonErrorType.INPUTS_KEY_BOARD, ex.getMessage()));
 		}
 
 		return val;
@@ -137,22 +140,25 @@ public class Inputs extends Categories {
 	 * @return string the type of screen the device has
 	 */
 	public String getTouchscreen() {
-
-		String val = "";
-		switch (config.touchscreen) {
-			case Configuration.TOUCHSCREEN_STYLUS:
-				val = "STYLUS";
-				break;
-			case Configuration.TOUCHSCREEN_FINGER:
-				val = "FINGER";
-				break;
-			case  Configuration.TOUCHSCREEN_NOTOUCH:
-				val = "NOTOUCH";
-				break;
-			default:
-				break;
+		String val = "N/A";
+		try {
+			switch (config.touchscreen) {
+				case Configuration.TOUCHSCREEN_STYLUS:
+					val = "STYLUS";
+					break;
+				case Configuration.TOUCHSCREEN_FINGER:
+					val = "FINGER";
+					break;
+				case Configuration.TOUCHSCREEN_NOTOUCH:
+					val = "NOTOUCH";
+					break;
+				default:
+					val = "N/A";
+					break;
+			}
+		} catch (Exception ex) {
+			FILog.e(FILog.getMessage(context, CommonErrorType.INPUTS_TOUCH_SCREEN, ex.getMessage()));
 		}
-
 		return val;
 	}
 }
