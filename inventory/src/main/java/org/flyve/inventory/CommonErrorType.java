@@ -82,4 +82,20 @@ public class CommonErrorType {
     public static final int MEMORY_RAM_PROP = 1204;
     public static final int MEMORY_TYPE = 1205;
     public static final int MEMORY_SPEED = 1206;
+
+    /* Networks */
+    public static final int NETWORKS_MAC_ADDRESS = 1301;
+    public static final int NETWORKS_MAC_ADDRESS_VALUE = 1302;
+    public static final int NETWORKS_SPEED = 1303;
+    public static final int NETWORKS_BSS_ID = 1304;
+    public static final int NETWORKS_SS_ID = 1305;
+    public static final int NETWORKS_IP_GATEWAY = 1306;
+    public static final int NETWORKS_IP_ADDRESS = 1307;
+    public static final int NETWORKS_IP_MASK = 1308;
+    public static final int NETWORKS_IP_DH_CP = 1309;
+    public static final int NETWORKS_IP_SUBNET = 1310;
+    public static final int NETWORKS_STATUS = 1311;
+    public static final int NETWORKS_CAT_INFO = 1312;
+    public static final int NETWORKS_DESCRIPTION = 1313;
+    public static final int NETWORKS_LOCAL_IPV6 = 1314;
 }

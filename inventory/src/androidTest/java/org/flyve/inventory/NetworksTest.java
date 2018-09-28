@@ -47,7 +47,7 @@ public class NetworksTest {
     @Test
     public void getMacaddr() throws Exception {
         Networks networks = new Networks(appContext);
-        assertNotEquals("", networks.getMacaddr());
+        assertNotEquals("", networks.getMacAddress());
     }
 
     @Test
@@ -77,19 +77,19 @@ public class NetworksTest {
     @Test
     public void getIpaddress() throws Exception {
         Networks networks = new Networks(appContext);
-        assertNotEquals("", networks.getIpaddress());
+        assertNotEquals("", networks.getIpAddress());
     }
 
     @Test
     public void getIpmask() throws Exception {
         Networks networks = new Networks(appContext);
-        assertNotEquals("", networks.getIpmask());
+        assertNotEquals("", networks.getIpMask());
     }
 
     @Test
     public void getIpdhcp() throws Exception {
         Networks networks = new Networks(appContext);
-        assertNotEquals("", networks.getIpdhcp());
+        assertNotEquals("", networks.getIpDhCp());
     }
 
     @Test
