@@ -30,6 +30,7 @@ package org.flyve.inventory.categories;
 
 import android.content.Context;
 
+import org.flyve.inventory.CommonErrorType;
 import org.flyve.inventory.FILog;
 
 import java.io.File;
@@ -52,6 +53,7 @@ public class Controllers extends Categories {
      *  from: https://stackoverflow.com/questions/285793/what-is-a-serialversionuid-and-why-should-i-use-it
      */
 	private static final long serialVersionUID = 6791259866128400637L;
+    private final Context context;
 
     /**
      * This constructor trigger get all the information about Controllers
@@ -59,17 +61,16 @@ public class Controllers extends Categories {
      */
 	public Controllers(Context xCtx) {
         super(xCtx);
-        try {
-            ArrayList<String> drivers = getDrivers();
-            if (drivers.size() > 0) {
-                for (int i = 0; i < drivers.size(); i++) {
-                    Category c = new Category("CONTROLLERS", "controllers");
-                    c.put("DRIVER", new CategoryValue(drivers.get(i), "DRIVER", "driver"));
-                    this.add(c);
-                }
+
+        context = xCtx;
+
+        ArrayList<String> drivers = getDrivers();
+        if (drivers.size() > 0) {
+            for (int i = 0; i < drivers.size(); i++) {
+                Category c = new Category("CONTROLLERS", "controllers");
+                c.put("DRIVER", new CategoryValue(drivers.get(i), "DRIVER", "driver"));
+                this.add(c);
             }
-        } catch (Exception ex) {
-            FILog.e(ex.getMessage());
         }
     }
 
@@ -79,43 +80,52 @@ public class Controllers extends Categories {
      */
     public ArrayList<String> getDrivers() {
         ArrayList<String> arrayList = new ArrayList<>();
-        ArrayList<String> arrayList2 = new ArrayList<>();
-        File file = new File("/sys/bus/platform/drivers/");
-        File[] listFiles = file.listFiles();
-        if (listFiles != null) {
-            for (File file2 : listFiles) {
-                if (file2.isDirectory()) {
-                    String name = file2.getName();
-                    String a = filterEmptyFile(file2);
-                    if (a == null || a.isEmpty()) {
-                        arrayList2.add(name);
-                    } else {
-                        arrayList.add(name);
+        try {
+            ArrayList<String> arrayList2 = new ArrayList<>();
+            File file = new File("/sys/bus/platform/drivers/");
+            File[] listFiles = file.listFiles();
+            if (listFiles != null) {
+                for (File file2 : listFiles) {
+                    if (file2.isDirectory()) {
+                        String name = file2.getName();
+                        String a = filterEmptyFile(file2);
+                        if (a == null || a.isEmpty()) {
+                            arrayList2.add(name);
+                        } else {
+                            arrayList.add(name);
+                        }
                     }
                 }
+                if (arrayList.isEmpty()) {
+                    arrayList.addAll(arrayList2);
+                }
+                Collections.sort(arrayList);
             }
-            if (arrayList.isEmpty()) {
-                arrayList.addAll(arrayList2);
-            }
-            Collections.sort(arrayList);
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.CONTROLLERS_DRIVERS, ex.getMessage()));
         }
         return arrayList;
     }
 
     private String filterEmptyFile(File file) {
-        File[] listFiles = file.listFiles();
-        if (listFiles == null) {
-            return null;
-        }
-        for (File file2 : listFiles) {
-            if (file2.isDirectory()) {
-                String name = file2.getName();
-                if (!("bind".equals(name) || "unbind".equals(name) || "uevent".equals(name))) {
-                    return name;
+        String value = "N/A";
+        try {
+            File[] listFiles = file.listFiles();
+            if (listFiles == null) {
+                return value;
+            }
+            for (File file2 : listFiles) {
+                if (file2.isDirectory()) {
+                    String name = file2.getName();
+                    if (!("bind".equals(name) || "unbind".equals(name) || "uevent".equals(name))) {
+                        value = name;
+                    }
                 }
             }
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.CONTROLLERS_FILE, ex.getMessage()));
         }
-        return null;
+        return value;
     }
 
 }
