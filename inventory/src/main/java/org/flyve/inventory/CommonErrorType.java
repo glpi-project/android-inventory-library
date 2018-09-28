@@ -26,4 +26,8 @@ public class CommonErrorType {
     /* Bluetooth */
     public static final int BLUETOOTH_HARDWARE_ADDRESS = 201;
     public static final int BLUETOOTH_NAME = 202;
+
+    /* Controllers */
+    public static final int CONTROLLERS_FILE = 501;
+    public static final int CONTROLLERS_DRIVERS = 502;
 }
