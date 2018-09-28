@@ -33,8 +33,8 @@ import android.content.Context;
 import android.net.DhcpInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
-import android.util.Log;
 
+import org.flyve.inventory.CommonErrorType;
 import org.flyve.inventory.FILog;
 
 import java.io.File;
@@ -71,6 +71,7 @@ public class Networks extends Categories {
 	private static final String TYPE = "WIFI";
 	private DhcpInfo dhcp;
 	private WifiInfo wifi;
+	private final Context context;
 
 	/**
      * Indicates whether some other object is "equal to" this one
@@ -107,45 +108,42 @@ public class Networks extends Categories {
 	public Networks(Context xCtx) {
 		super(xCtx);
 
-		try {
-			WifiManager pWM = (WifiManager) xCtx.getApplicationContext().getSystemService(Service.WIFI_SERVICE);
-			boolean wasWifiEnabled = pWM.isWifiEnabled();
+		context = xCtx;
+		WifiManager pWM = (WifiManager) context.getApplicationContext().getSystemService(Service.WIFI_SERVICE);
+		boolean wasWifiEnabled = pWM.isWifiEnabled();
 
-			// Enable Wifi State if not
-			if (!wasWifiEnabled) {
-				pWM.setWifiEnabled(true);
-			}
-			Category c = new Category("NETWORKS", "networks");
-			c.put("TYPE", new CategoryValue(TYPE, "TYPE", "type"));
+		// Enable Wifi State if not
+		if (!wasWifiEnabled) {
+			pWM.setWifiEnabled(true);
+		}
+		Category c = new Category("NETWORKS", "networks");
+		c.put("TYPE", new CategoryValue(TYPE, "TYPE", "type"));
 
-			dhcp = pWM.getDhcpInfo();
-			wifi = pWM.getConnectionInfo();
+		dhcp = pWM.getDhcpInfo();
+		wifi = pWM.getConnectionInfo();
 
-			FILog.d("<===WIFI DHCP===>");
-			FILog.d("dns1=" + StringUtils.intToIp(dhcp.dns1));
-			FILog.d("dns2=" + StringUtils.intToIp(dhcp.dns2));
-			FILog.d("leaseDuration=" + dhcp.leaseDuration);
+		FILog.d("<===WIFI DHCP===>");
+		FILog.d("dns1=" + StringUtils.intToIp(dhcp.dns1));
+		FILog.d("dns2=" + StringUtils.intToIp(dhcp.dns2));
+		FILog.d("leaseDuration=" + dhcp.leaseDuration);
 
-			c.put("MACADDR", new CategoryValue(getMacaddr(), "MACADDR", "macAddress"));
-			c.put("SPEED", new CategoryValue(getSpeed(), "SPEED", "speed"));
-			c.put("BSSID", new CategoryValue(getBSSID(), "BSSID", "bssid"));
-			c.put("SSID", new CategoryValue(getSSID(), "SSID", "ssid"));
-			c.put("IPGATEWAY", new CategoryValue(getIpgateway(), "IPGATEWAY", "ipGateway"));
-			c.put("IPADDRESS", new CategoryValue(getIpaddress(), "IPADDRESS", "ipAddress", true, false));
-			c.put("IPMASK", new CategoryValue(getIpmask(), "IPMASK", "ipMask", true, false));
-			c.put("IPDHCP", new CategoryValue(getIpdhcp(), "IPDHCP", "ipDhcp", true, false));
-			c.put("IPSUBNET", new CategoryValue(getIpSubnet(), "IPSUBNET", "ipSubnet", true, false));
-			c.put("STATUS", new CategoryValue(getStatus(), "STATUS", "status", true, false));
-			c.put("DESCRIPTION", new CategoryValue(getDescription(), "DESCRIPTION", "description", true, false));
-			c.put("IPADDRESS6", new CategoryValue(getLocalIpV6(), "IPADDRESS6", "ipaddress6", true, false));
+		c.put("MACADDR", new CategoryValue(getMacAddress(), "MACADDR", "macAddress"));
+		c.put("SPEED", new CategoryValue(getSpeed(), "SPEED", "speed"));
+		c.put("BSSID", new CategoryValue(getBSSID(), "BSSID", "bssid"));
+		c.put("SSID", new CategoryValue(getSSID(), "SSID", "ssid"));
+		c.put("IPGATEWAY", new CategoryValue(getIpgateway(), "IPGATEWAY", "ipGateway"));
+		c.put("IPADDRESS", new CategoryValue(getIpAddress(), "IPADDRESS", "ipAddress", true, false));
+		c.put("IPMASK", new CategoryValue(getIpMask(), "IPMASK", "ipMask", true, false));
+		c.put("IPDHCP", new CategoryValue(getIpDhCp(), "IPDHCP", "ipDhcp", true, false));
+		c.put("IPSUBNET", new CategoryValue(getIpSubnet(), "IPSUBNET", "ipSubnet", true, false));
+		c.put("STATUS", new CategoryValue(getStatus(), "STATUS", "status", true, false));
+		c.put("DESCRIPTION", new CategoryValue(getDescription(), "DESCRIPTION", "description", true, false));
+		c.put("IPADDRESS6", new CategoryValue(getLocalIpV6(), "IPADDRESS6", "ipaddress6", true, false));
 
-			this.add(c);
-			// Restore Wifi State
-			if (!wasWifiEnabled) {
-				pWM.setWifiEnabled(false);
-			}
-		} catch (Exception ex) {
-			FILog.e(ex.getMessage());
+		this.add(c);
+		// Restore Wifi State
+		if (!wasWifiEnabled) {
+			pWM.setWifiEnabled(false);
 		}
 	}
 
@@ -153,16 +151,20 @@ public class Networks extends Categories {
 	 * Get the Media Access Control address
 	 * @return string the MAC address
 	 */
-	public String getMacaddr() {
+	public String getMacAddress() {
+		String macAddress = "N/A";
+		try {
+			macAddress = wifi.getMacAddress();
 
-		String macAddress = wifi.getMacAddress();
-
-		// if get default mac address
-		if(macAddress == null || macAddress.contains("02:00:00:00:00:00")) {
-			macAddress = getMACAddress("wlan0");
-			if(macAddress.isEmpty()) {
-				macAddress = getMACAddress("eth0");
+			// if get default mac address
+			if (macAddress == null || macAddress.contains("02:00:00:00:00:00")) {
+				macAddress = getMACAddress("wlan0");
+				if (macAddress.isEmpty()) {
+					macAddress = getMACAddress("eth0");
+				}
 			}
+		} catch (Exception ex) {
+			FILog.e(FILog.getMessage(context, CommonErrorType.NETWORKS_MAC_ADDRESS, ex.getMessage()));
 		}
 
 		return macAddress;
@@ -183,10 +185,10 @@ public class Networks extends Categories {
 				return buf.toString();
 			}
 		} catch (Exception ex) {
-			FILog.e(ex.getMessage());
+			FILog.e(FILog.getMessage(context, CommonErrorType.NETWORKS_MAC_ADDRESS_VALUE, ex.getMessage()));
 		}
 
-		return "";
+		return "N/A";
 	}
 
 	/**
@@ -194,7 +196,13 @@ public class Networks extends Categories {
 	 * @return string the current speed in Mbps
 	 */
 	public String getSpeed() {
-		return String.valueOf(wifi.getLinkSpeed());
+		String value = "N/A";
+		try {
+			value = String.valueOf(wifi.getLinkSpeed());
+		} catch (Exception ex) {
+			FILog.e(FILog.getMessage(context, CommonErrorType.NETWORKS_SPEED, ex.getMessage()));
+		}
+		return value;
 	}
 
 	/**
@@ -202,7 +210,13 @@ public class Networks extends Categories {
 	 * @return string the BSSID of the current access point
 	 */
 	public String getBSSID() {
-		return wifi.getBSSID() != null ? String.valueOf(wifi.getBSSID()) : "N/A";
+		String value = "N/A";
+		try {
+			value = String.valueOf(wifi.getBSSID());
+		} catch (Exception ex) {
+			FILog.e(FILog.getMessage(context, CommonErrorType.NETWORKS_BSS_ID, ex.getMessage()));
+		}
+		return value;
 	}
 
 	/**
@@ -211,7 +225,13 @@ public class Networks extends Categories {
 	 * 
 	 */
 	public String getSSID() {
-		return wifi.getSSID() != null ? String.valueOf(wifi.getSSID()) : "N/A";
+		String value = "N/A";
+		try {
+			value = String.valueOf(wifi.getSSID());
+		} catch (Exception ex) {
+			FILog.e(FILog.getMessage(context, CommonErrorType.NETWORKS_SS_ID, ex.getMessage()));
+		}
+		return value;
 	}
 
 	/**
@@ -219,31 +239,55 @@ public class Networks extends Categories {
 	 * @return string the gateway IP address
 	 */
 	public String getIpgateway() {
-		return StringUtils.intToIp(dhcp.gateway);
+		String value = "N/A";
+		try {
+			value = StringUtils.intToIp(dhcp.gateway);
+		} catch (Exception ex) {
+			FILog.e(FILog.getMessage(context, CommonErrorType.NETWORKS_IP_GATEWAY, ex.getMessage()));
+		}
+		return value;
 	}
 
 	/**
 	 * Get the IP address
 	 * @return string the current IP address
 	 */
-	public String getIpaddress() {
-		return StringUtils.intToIp(dhcp.ipAddress);
+	public String getIpAddress() {
+		String value = "N/A";
+		try {
+			value = StringUtils.intToIp(dhcp.ipAddress);
+		} catch (Exception ex) {
+			FILog.e(FILog.getMessage(context, CommonErrorType.NETWORKS_IP_ADDRESS, ex.getMessage()));
+		}
+		return value;
 	}
 
 	/**
 	 * Get the IP address of the netmask
 	 * @return string the netmask
 	 */
-	public String getIpmask() {
-		return StringUtils.intToIp(dhcp.netmask);
+	public String getIpMask() {
+		String value = "N/A";
+		try {
+			value = StringUtils.intToIp(dhcp.netmask);
+		} catch (Exception ex) {
+			FILog.e(FILog.getMessage(context, CommonErrorType.NETWORKS_IP_MASK, ex.getMessage()));
+		}
+		return value;
 	}
 
 	/**
 	 * Get the IP address of the DHCP
 	 * @return string the server address
 	 */
-	public String getIpdhcp() {
-		return StringUtils.intToIp(dhcp.serverAddress);
+	public String getIpDhCp() {
+		String value = "N/A";
+		try {
+			value = StringUtils.intToIp(dhcp.serverAddress);
+		} catch (Exception ex) {
+			FILog.e(FILog.getMessage(context, CommonErrorType.NETWORKS_IP_DH_CP, ex.getMessage()));
+		}
+		return value;
 	}
 
 	/**
@@ -251,7 +295,13 @@ public class Networks extends Categories {
 	 * @return string the IP Subnet
 	 */
 	public String getIpSubnet() {
-		return StringUtils.getSubNet(wifi.getIpAddress());
+		String value = "N/A";
+		try {
+			value = StringUtils.getSubNet(wifi.getIpAddress());
+		} catch (Exception ex) {
+			FILog.e(FILog.getMessage(context, CommonErrorType.NETWORKS_IP_SUBNET, ex.getMessage()));
+		}
+		return value;
 	}
 
 	/**
@@ -259,7 +309,13 @@ public class Networks extends Categories {
 	 * @return string the IP Subnet
 	 */
 	public String getStatus() {
-		return getCatInfo("/sys/class/net/wlan0/operstate");
+		String value = "N/A";
+		try {
+			value = getCatInfo("/sys/class/net/wlan0/operstate");
+		} catch (Exception ex) {
+			FILog.e(FILog.getMessage(context, CommonErrorType.NETWORKS_STATUS, ex.getMessage()));
+		}
+		return value;
 	}
 
 	private String getCatInfo(String path) {
@@ -267,29 +323,25 @@ public class Networks extends Categories {
 		try {
 			Scanner s = new Scanner(new File(path));
 			value = s.next();
-		} catch (FileNotFoundException e) {
-			FILog.e(e.getMessage());
-		} catch (Exception e) {
-			FILog.e(e.getMessage());
+		} catch (Exception ex) {
+			FILog.e(FILog.getMessage(context, CommonErrorType.NETWORKS_CAT_INFO, ex.getMessage()));
 		}
 		return value;
 	}
 
 	public String getDescription() {
 		String name = "N/A";
-		int ipAddress = wifi.getIpAddress();
-		byte[] ip = BigInteger.valueOf(ipAddress).toByteArray();
 		try {
+			int ipAddress = wifi.getIpAddress();
+			byte[] ip = BigInteger.valueOf(ipAddress).toByteArray();
 			InetAddress inetAddress = InetAddress.getByAddress(ip);
 			NetworkInterface netInterface = NetworkInterface.getByInetAddress(inetAddress);
 			if (netInterface != null ) {
 				name = netInterface.getDisplayName();
 				return name;
 			}
-		} catch (UnknownHostException e) {
-			FILog.e(e.getMessage());
-		} catch (SocketException e) {
-			FILog.e(e.getMessage());
+		} catch (Exception ex) {
+			FILog.e(FILog.getMessage(context, CommonErrorType.NETWORKS_DESCRIPTION, ex.getMessage()));
 		}
 		return name;
 	}
@@ -311,7 +363,7 @@ public class Networks extends Categories {
 				}
 			}
 		} catch (Exception ex) {
-			FILog.e(ex.getMessage());
+			FILog.e(FILog.getMessage(context, CommonErrorType.NETWORKS_LOCAL_IPV6, ex.getMessage()));
 		}
 		return "N/A";
 	}

@@ -177,7 +177,7 @@ public class Utils {
             JSONObject jsonQuery = new JSONObject();
             jsonQuery.put("query", "INVENTORY");
             jsonQuery.put("versionClient", appVersion);
-            jsonQuery.put("deviceId", Build.SERIAL + "_" + new Networks(context).getMacaddr());
+            jsonQuery.put("deviceId", Build.SERIAL + "_" + new Networks(context).getMacAddress());
             jsonQuery.put("content", content);
 
             JSONObject jsonRequest = new JSONObject();
@@ -224,7 +224,7 @@ public class Utils {
 
                 serializer.startTag(null, "DEVICEID");
 
-                serializer.text(Build.SERIAL + "_" + new Networks(context).getMacaddr());
+                serializer.text(Build.SERIAL + "_" + new Networks(context).getMacAddress());
                 serializer.endTag(null, "DEVICEID");
 
                 // Start CONTENT
