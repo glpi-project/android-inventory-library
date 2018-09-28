@@ -33,14 +33,13 @@ import android.content.Context;
 import android.os.Build;
 import android.provider.Settings.Secure;
 
+import org.flyve.inventory.CommonErrorType;
 import org.flyve.inventory.FILog;
 import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.DataOutputStream;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -52,7 +51,6 @@ import java.util.Properties;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
 /**
  * This class get all the information of the Environment
@@ -79,7 +77,7 @@ public class Hardware extends Categories {
 //                        VMHOSTSERIAL, ARCHNAME)>
 
     private Properties props;
-    private Context xCtx;
+    private Context context;
     private static final String OSNAME = "Android";
     private ArrayList<String> userInfo = new ArrayList<>();
 
@@ -100,7 +98,7 @@ public class Hardware extends Categories {
     @Override
     public int hashCode() {
         int hash = super.hashCode();
-        hash = 89 * hash + (this.xCtx != null ? this.xCtx.hashCode() : 0);
+        hash = 89 * hash + (this.context != null ? this.context.hashCode() : 0);
         hash = 89 * hash + (this.props != null ? this.props.hashCode() : 0);
         hash = 89 * hash + (this.userInfo != null ? this.userInfo.hashCode() : 0);
         return hash;
@@ -113,28 +111,24 @@ public class Hardware extends Categories {
     public Hardware(Context xCtx) {
         super(xCtx);
 
-        this.xCtx = xCtx;
+        this.context = xCtx;
 
-        try {
-            props = System.getProperties();
-            getUserInfo();
+        props = System.getProperties();
+        getUserInfo();
 
-            Category c = new Category("HARDWARE", "hardware");
+        Category c = new Category("HARDWARE", "hardware");
 
-            c.put("DATELASTLOGGEDUSER", new CategoryValue(getDateLastLoggedUser(), "DATELASTLOGGEDUSER", "dateLastLoggedUser"));
-            c.put("LASTLOGGEDUSER", new CategoryValue(getLastLoggedUser(), "LASTLOGGEDUSER", "lastLoggedUser"));
-            c.put("NAME", new CategoryValue(getName(), "NAME", "name"));
-            c.put("OSNAME", new CategoryValue(OSNAME, "OSNAME", "osName"));
-            c.put("OSVERSION", new CategoryValue(getOsVersion(), "OSVERSION", "osVersion"));
-            c.put("ARCHNAME", new CategoryValue(getArchName(), "ARCHNAME", "archName"));
-            c.put("UUID", new CategoryValue(getUUID(), "UUID", "uuid"));
-            c.put("USERID", new CategoryValue(getUserId(), "USERID", "userid"));
-            c.put("MEMORY", new CategoryValue(new Memory(xCtx).getCapacity(), "MEMORY", "memory"));
+        c.put("DATELASTLOGGEDUSER", new CategoryValue(getDateLastLoggedUser(), "DATELASTLOGGEDUSER", "dateLastLoggedUser"));
+        c.put("LASTLOGGEDUSER", new CategoryValue(getLastLoggedUser(), "LASTLOGGEDUSER", "lastLoggedUser"));
+        c.put("NAME", new CategoryValue(getName(), "NAME", "name"));
+        c.put("OSNAME", new CategoryValue(OSNAME, "OSNAME", "osName"));
+        c.put("OSVERSION", new CategoryValue(getOsVersion(), "OSVERSION", "osVersion"));
+        c.put("ARCHNAME", new CategoryValue(getArchName(), "ARCHNAME", "archName"));
+        c.put("UUID", new CategoryValue(getUUID(), "UUID", "uuid"));
+        c.put("USERID", new CategoryValue(getUserId(), "USERID", "userid"));
+        c.put("MEMORY", new CategoryValue(new Memory(xCtx).getCapacity(), "MEMORY", "memory"));
 
-            this.add(c);
-        } catch (Exception ex) {
-            FILog.e(ex.getMessage());
-        }
+        this.add(c);
     }
 
     /**
@@ -151,11 +145,15 @@ public class Hardware extends Categories {
      */
     public String getDateLastLoggedUser() {
         String value = "N/A";
-        String lastLoggedIn = getUserTagValue("lastLoggedIn");
-        if (!"N/A".equals(lastLoggedIn)) {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd HH:mm", Locale.getDefault());
-            Date resultDate = new Date(Long.parseLong(lastLoggedIn));
-            value = sdf.format(resultDate);
+        try {
+            String lastLoggedIn = getUserTagValue("lastLoggedIn");
+            if (!"N/A".equals(lastLoggedIn)) {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd HH:mm", Locale.getDefault());
+                Date resultDate = new Date(Long.parseLong(lastLoggedIn));
+                value = sdf.format(resultDate);
+            }
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.HARDWARE_DATE_LAST_LOGGED_USER, ex.getMessage()));
         }
         return value;
     }
@@ -174,32 +172,38 @@ public class Hardware extends Categories {
                 value = parse.getFirstChild().getTextContent();
             }
         } catch (Exception ex) {
-            FILog.e(ex.getMessage());
+            FILog.e(FILog.getMessage(context, CommonErrorType.HARDWARE_LAST_LOGGED_USER, ex.getMessage()));
         }
         return value;
     }
 
-    public String getUserTagValue(String tagName) {
+    private String getUserTagValue(String tagName) {
         String evaluate = "";
-        if (userInfo.size() > 0) {
-            String removeChar = userInfo.get(1).replaceAll("[\"><]", "");
-            if (removeChar.contains("user ")) {
-                evaluate = removeChar.replaceAll(" ", ",").trim();
-            }
-            String[] splitValues = evaluate.split(",");
-            Map<String, String> results = new HashMap<>();
-            for (String a : splitValues) {
-                if (a.contains("=")) {
-                    String[] keyValues = a.split("=", 2);
-                    String key = keyValues[0];
-                    String value = keyValues[1];
-                    results.put(key, value);
+        String value = "N/A";
+        try {
+            if (userInfo.size() > 0) {
+                String removeChar = userInfo.get(1).replaceAll("[\"><]", "");
+                if (removeChar.contains("user ")) {
+                    evaluate = removeChar.replaceAll(" ", ",").trim();
                 }
+                String[] splitValues = evaluate.split(",");
+                Map<String, String> results = new HashMap<>();
+                for (String a : splitValues) {
+                    if (a.contains("=")) {
+                        String[] keyValues = a.split("=", 2);
+                        String key = keyValues[0];
+                        String valueResult = keyValues[1];
+                        results.put(key, valueResult);
+                    }
+                }
+                return results.get(tagName) == null ? "N/A" : results.get(tagName);
+            } else {
+                return value;
             }
-            return results.get(tagName) == null ? "N/A" : results.get(tagName);
-        } else {
-            return "N/A";
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.HARDWARE_USER_TAG, ex.getMessage()));
         }
+        return value;
     }
 
     private void getUserInfo() {
@@ -218,7 +222,7 @@ public class Hardware extends Categories {
                 userInfo.add(temp);
             }
         } catch (Exception ex) {
-            FILog.e(ex.getMessage());
+            FILog.e(FILog.getMessage(context, CommonErrorType.HARDWARE_USER_INFO, ex.getMessage()));
         }
     }
 
@@ -227,7 +231,13 @@ public class Hardware extends Categories {
      * @return string with the model
      */
     public String getName() {
-        return Build.MODEL;
+        String value = "N/A";
+        try {
+            value = Build.MODEL;
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.HARDWARE_NAME, ex.getMessage()));
+        }
+        return value;
     }
 
     /**
@@ -235,7 +245,13 @@ public class Hardware extends Categories {
      * @return string the version
      */
     public String getOsVersion() {
-        return Build.VERSION.RELEASE;
+        String value = "N/A";
+        try {
+            value = Build.VERSION.RELEASE;
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.HARDWARE_VERSION, ex.getMessage()));
+        }
+        return value;
     }
 
     /**
@@ -243,7 +259,13 @@ public class Hardware extends Categories {
      * @return string the OS architecture
      */
     public String getArchName() {
-        return props.getProperty("os.arch");
+        String value = "N/A";
+        try {
+            value = props.getProperty("os.arch");
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.HARDWARE_ARCH_NAME, ex.getMessage()));
+        }
+        return value;
     }
 
     /**
@@ -251,7 +273,13 @@ public class Hardware extends Categories {
      * @return string the Android ID
      */
     public String getUUID() {
-        return Secure.getString(xCtx.getContentResolver(), Secure.ANDROID_ID);
+        String value = "N/A";
+        try {
+            value = Secure.getString(context.getContentResolver(), Secure.ANDROID_ID);
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.HARDWARE_UUID, ex.getMessage()));
+        }
+        return value;
     }
 
 }

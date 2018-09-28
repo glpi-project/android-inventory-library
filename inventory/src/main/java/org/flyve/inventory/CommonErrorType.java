@@ -48,4 +48,14 @@ public class CommonErrorType {
     public static final int DRIVES_FREE_SPACE = 703;
     public static final int DRIVES_FILE_SYSTEM = 704;
     public static final int DRIVES_TYPE = 705;
+
+    /* Hardware */
+    public static final int HARDWARE_DATE_LAST_LOGGED_USER = 801;
+    public static final int HARDWARE_LAST_LOGGED_USER = 802;
+    public static final int HARDWARE_USER_TAG = 803;
+    public static final int HARDWARE_USER_INFO = 804;
+    public static final int HARDWARE_NAME = 805;
+    public static final int HARDWARE_VERSION = 806;
+    public static final int HARDWARE_ARCH_NAME = 807;
+    public static final int HARDWARE_UUID = 808;
 }

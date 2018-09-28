@@ -31,6 +31,7 @@ package org.flyve.inventory.categories;
 
 import android.content.Context;
 
+import org.flyve.inventory.CommonErrorType;
 import org.flyve.inventory.FILog;
 import org.flyve.inventory.Utils;
 
@@ -61,6 +62,7 @@ public class Memory extends Categories {
     private static final String DESCRIPTION = "Memory";
     private static final String MEMINFO = "/proc/meminfo";
     private String[] ramInfo = new String[2];
+    private final Context context;
 
     /**
      * This constructor load the context and the Memory information
@@ -69,6 +71,8 @@ public class Memory extends Categories {
      */
     public Memory(Context xCtx) {
         super(xCtx);
+
+        context = xCtx;
 
         try {
             getRamInfo();
@@ -90,32 +94,35 @@ public class Memory extends Categories {
      * @return String Total Memory
      * @throws IOException return exception
      */
-	public String getCapacity() throws IOException {
-
-        String capacity = "";
-        FileReader fr = null;
+	public String getCapacity() {
+        String capacity = "N/A";
         try {
-            File f = new File(MEMINFO);
-            fr = new FileReader(f);
-        	BufferedReader br = new BufferedReader(fr, 8 * 1024);
-        	String line;
-			while ((line = br.readLine()) != null) {
-        		if (line.startsWith("MemTotal")) {
-                    String[] parts = line.split(":");
-                    String part1 = parts[1].trim();
-                    Long memory = Long.valueOf(part1.replaceAll("(.*)\\ kB", "$1"));
-                    memory = memory / 1024;
-                    capacity =  String.valueOf(memory);
-        		}
-        	}
+            FileReader fr = null;
+            try {
+                File f = new File(MEMINFO);
+                fr = new FileReader(f);
+                BufferedReader br = new BufferedReader(fr, 8 * 1024);
+                String line;
+                while ((line = br.readLine()) != null) {
+                    if (line.startsWith("MemTotal")) {
+                        String[] parts = line.split(":");
+                        String part1 = parts[1].trim();
+                        Long memory = Long.valueOf(part1.replaceAll("(.*)\\ kB", "$1"));
+                        memory = memory / 1024;
+                        capacity = String.valueOf(memory);
+                    }
+                }
 
-            br.close();
-        } catch (IOException e) {
-            FILog.e( e.getMessage());
-        } finally {
-            if(fr!=null) {
-                fr.close();
+                br.close();
+            } catch (IOException e) {
+                FILog.e(e.getMessage());
+            } finally {
+                if (fr != null) {
+                    fr.close();
+                }
             }
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.BATTERY_TECHNOLOGY, ex.getMessage()));
         }
         return capacity;
 	}
