@@ -119,10 +119,17 @@ public class Category extends LinkedHashMap<String, CategoryValue> {
     public CategoryValue put(String key, CategoryValue value) {
        //Do not add value if it's null, blank or "unknow"
        if (value != null) {
-           if (value.getCategory() != null || !value.getValue().equals("") && !value.getValue().equals(Build.UNKNOWN)) {
-               return super.put(key, value);
+           if (value.getCategory() == null) {
+               String s = value.getValue();
+               if (s != null && !s.equals("") && !s.equals(Build.UNKNOWN)){
+                   return super.put(key, value);
+               } else if (value.getValues() != null && value.getValues().size() > 0) {
+                   return super.put(key, value);
+               } else {
+                   return null;
+               }
            } else {
-               return null;
+               return super.put(key, value);
            }
        } else {
     	   return null;
@@ -136,10 +143,10 @@ public class Category extends LinkedHashMap<String, CategoryValue> {
     public void toXML(XmlSerializer serializer) {
         try {
             serializer.startTag(null, mType);
-
             for (Map.Entry<String, CategoryValue> entry : this.entrySet()) {
-                if (this.get(entry.getKey()).getCategory() != null) {
-                    Category category = this.get(entry.getKey()).getCategory();
+                CategoryValue categoryValue = this.get(entry.getKey());
+                if (categoryValue.getCategory() != null) {
+                    Category category = categoryValue.getCategory();
                     serializer.startTag(null, category.getType());
                     for (Map.Entry<String, CategoryValue> entries : category.entrySet()) {
                         String xmlName = entries.getKey();
@@ -147,10 +154,16 @@ public class Category extends LinkedHashMap<String, CategoryValue> {
                         setValueXML(serializer, xmlName, value, false);
                     }
                     serializer.endTag(null, category.getType());
+                } else if (categoryValue.getValues() != null && categoryValue.getValues().size() > 0) {
+                    for (String value : categoryValue.getValues()) {
+                        String xmlName = categoryValue.getXmlName();
+                        Boolean hasCDATA = categoryValue.hasCDATA();
+                        setValueXML(serializer, xmlName, value, hasCDATA);
+                    }
                 } else {
-                    String xmlName = this.get(entry.getKey()).getXmlName();
-                    String value = this.get(entry.getKey()).getValue();
-                    Boolean hasCDATA = this.get(entry.getKey()).hasCDATA();
+                    String xmlName = categoryValue.getXmlName();
+                    String value = categoryValue.getValue();
+                    Boolean hasCDATA = categoryValue.hasCDATA();
                     setValueXML(serializer, xmlName, value, hasCDATA);
                 }
             }

@@ -27,6 +27,9 @@
 
 package org.flyve.inventory.categories;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CategoryValue {
 
     private String value;
@@ -35,11 +38,13 @@ public class CategoryValue {
     private Boolean isPrivate;
     private Boolean hasCDATA;
     private Category category;
+    private List<String> values;
 
-    public CategoryValue(Category category){
-        this.category = category;
-    }
-
+    /** Normal category
+     * @param value
+     * @param xmlName
+     * @param jsonName
+     */
     public CategoryValue(String value, String xmlName, String jsonName) {
         if(value==null) {
             value = "";
@@ -62,6 +67,44 @@ public class CategoryValue {
         this.xmlName = xmlName;
         this.isPrivate = false;
         this.hasCDATA = false;
+    }
+
+    /** Insert list of values to the Category
+     * @param values
+     * @param xmlName
+     * @param jsonName
+     */
+    public CategoryValue(List<String> values, String xmlName, String jsonName) {
+        if (values == null) {
+            values = new ArrayList<>();
+        }
+
+        if (xmlName == null) {
+            xmlName = "";
+        }
+
+        if (jsonName == null) {
+            jsonName = "";
+        }
+
+        for (int i = 0; i < values.size(); i++) {
+            if (values.contains("<") || values.contains(">")) {
+                values.add(i, values.get(i).replaceAll("[<>]", ""));
+            }
+        }
+
+        this.values = values;
+        this.jsonName = jsonName;
+        this.xmlName = xmlName;
+        this.isPrivate = false;
+        this.hasCDATA = false;
+    }
+
+    /** Embed an category inside in another category
+     * @param category instance of the same class CategoryValue
+     */
+    public CategoryValue(Category category){
+        this.category = category;
     }
 
     public CategoryValue(String value, String xmlName, String jsonName, Boolean isPrivate, Boolean hasCDATA) {
@@ -114,5 +157,9 @@ public class CategoryValue {
 
     public Category getCategory() {
         return category;
+    }
+
+    public List<String> getValues() {
+        return values;
     }
 }

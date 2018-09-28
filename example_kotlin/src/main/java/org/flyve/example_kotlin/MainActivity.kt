@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
 
         InventoryTask.showFILog = true
         val inventoryTask = InventoryTask(this@MainActivity, "example-app-kotlin", false)
-        inventoryTask.getJSON( object : InventoryTask.OnTaskCompleted {
+        inventoryTask.getXML( object : InventoryTask.OnTaskCompleted {
             override fun onTaskSuccess(data: String) {
                 Log.d(LOG, data)
             }
