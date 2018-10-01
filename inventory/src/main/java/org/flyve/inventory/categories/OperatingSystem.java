@@ -31,6 +31,7 @@ import android.content.Context;
 import android.os.Build;
 import android.os.SystemClock;
 
+import org.flyve.inventory.CommonErrorType;
 import org.flyve.inventory.FILog;
 import org.flyve.inventory.Utils;
 
@@ -65,7 +66,7 @@ public class OperatingSystem extends Categories {
     private static final long serialVersionUID = 3528873342443549732L;
 
     private Properties props;
-    private Context xCtx;
+    private Context context;
 
     /**
      * Indicates whether some other object is "equal to" this one
@@ -92,7 +93,7 @@ public class OperatingSystem extends Categories {
     @Override
     public int hashCode() {
         int hash = super.hashCode();
-        hash = 89 * hash + (this.xCtx != null ? this.xCtx.hashCode() : 0);
+        hash = 89 * hash + (this.context != null ? this.context.hashCode() : 0);
         hash = 89 * hash + (this.props != null ? this.props.hashCode() : 0);
         return hash;
     }
@@ -105,7 +106,7 @@ public class OperatingSystem extends Categories {
     public OperatingSystem(Context xCtx) {
         super(xCtx);
 
-        this.xCtx = xCtx;
+        this.context = xCtx;
 
         try {
             props = System.getProperties();
@@ -163,59 +164,77 @@ public class OperatingSystem extends Categories {
     }
 
     public String getBootTime() {
-        long milliSeconds = System.currentTimeMillis() - SystemClock.elapsedRealtime();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd HH:mm", Locale.getDefault());
-        Date resultDate = new Date(milliSeconds);
-        return sdf.format(resultDate);
+        String value = "N/A";
+        try {
+            long milliSeconds = System.currentTimeMillis() - SystemClock.elapsedRealtime();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd HH:mm", Locale.getDefault());
+            Date resultDate = new Date(milliSeconds);
+            value = sdf.format(resultDate);
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.OPERATING_SYSTEM_BOOT_TIME, ex.getMessage()));
+        }
+        return value;
     }
 
     public String getKernelVersion() {
+        String value = "N/A";
         try {
             Process p = Runtime.getRuntime().exec("uname -a");
             InputStream is;
             if (p.waitFor() == 0) {
                 is = p.getInputStream();
             } else {
-                return "";
+                return value;
             }
             BufferedReader br = new BufferedReader(new InputStreamReader(is),
                     64);
             String line = br.readLine();
             br.close();
-            return line;
+            value = line;
         } catch (Exception ex) {
-            FILog.e(ex.getMessage());
-            return "N/A";
+            FILog.e(FILog.getMessage(context, CommonErrorType.OPERATING_SYSTEM_KERNEL, ex.getMessage()));
         }
+        return value;
     }
 
     public String getTimeZoneShortName() {
-        TimeZone timeZone = TimeZone.getTimeZone("UTC");
-        Calendar calendar = Calendar.getInstance(timeZone);
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EE MMM dd HH:mm:ss zzz yyyy", Locale.US);
-        simpleDateFormat.setTimeZone(timeZone);
+        String value = "N/A";
+        try {
+            TimeZone timeZone = TimeZone.getTimeZone("UTC");
+            Calendar calendar = Calendar.getInstance(timeZone);
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EE MMM dd HH:mm:ss zzz yyyy", Locale.US);
+            simpleDateFormat.setTimeZone(timeZone);
 
-        FILog.i("Time zone: " + timeZone.getID());
-        FILog.i("default time zone: " + TimeZone.getDefault().getID());
+            FILog.i("Time zone: " + timeZone.getID());
+            FILog.i("default time zone: " + TimeZone.getDefault().getID());
 
-        FILog.i("UTC:     " + simpleDateFormat.format(calendar.getTime()));
-        FILog.i("Default: " + calendar.getTime());
-        return timeZone.getDisplayName();
+            FILog.i("UTC:     " + simpleDateFormat.format(calendar.getTime()));
+            FILog.i("Default: " + calendar.getTime());
+            value = timeZone.getDisplayName();
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.OPERATING_SYSTEM_TIME_ZONE, ex.getMessage()));
+        }
+        return  value;
     }
 
     public String getCurrentTimezoneOffset() {
+        String value = "N/A";
+        try {
+            TimeZone tz = TimeZone.getDefault();
+            Calendar cal = GregorianCalendar.getInstance(tz);
+            int offsetInMillis = tz.getOffset(cal.getTimeInMillis());
 
-        TimeZone tz = TimeZone.getDefault();
-        Calendar cal = GregorianCalendar.getInstance(tz);
-        int offsetInMillis = tz.getOffset(cal.getTimeInMillis());
+            int abs = Math.abs(offsetInMillis / 3600000);
+            int abs1 = Math.abs((offsetInMillis / 60000) % 60);
+            /*String offset = String.format(Locale.getDefault(), "%02d:%02d", abs, abs1);*/
+            String offset = abs + "" + abs1;
+            offset = (offsetInMillis >= 0 ? "+" : "-") + offset;
 
-        int abs = Math.abs(offsetInMillis / 3600000);
-        int abs1 = Math.abs((offsetInMillis / 60000) % 60);
-        /*String offset = String.format(Locale.getDefault(), "%02d:%02d", abs, abs1);*/
-        String offset = abs + "" + abs1;
-        offset = (offsetInMillis >= 0 ? "+" : "-") + offset;
-
-        return offset;
+            value = offset;
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.OPERATING_SYSTEM_CURRENT, ex.getMessage()));
+        }
+        return value;
     }
 
     private String getAndroidVersion(int sdk) {
@@ -275,7 +294,7 @@ public class OperatingSystem extends Categories {
             case 27:
                 return "Oreo (Android 8.1)";
             default:
-                return "";
+                return "N/A";
         }
     }
 }
