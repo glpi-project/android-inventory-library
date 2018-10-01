@@ -149,7 +149,8 @@ public class Utils {
      * @throws FlyveException Exception
      */
 
-    protected static String createJSON(Context context, ArrayList<Categories> categories, String appVersion, boolean isPrivate, String TAG) throws FlyveException {
+    protected static String createJSON(Context context, ArrayList<Categories> categories, String appVersion,
+                                       boolean isPrivate, String TAG) throws FlyveException {
         try {
 
             if(!TAG.equals("")) {
@@ -186,7 +187,7 @@ public class Utils {
             return jsonRequest.toString();
 
         } catch (Exception ex) {
-            FlyveLog.e(ex.getMessage());
+            FlyveLog.e(FlyveLog.getMessage(String.valueOf(CommonErrorType.UTILS_CREATE_JSON), ex.getMessage()));
             throw new FlyveException(ex.getMessage(), ex.getCause());
         }
     }
@@ -198,7 +199,8 @@ public class Utils {
      * @return String with XML
      * @throws FlyveException Exception
      */
-    protected static String createXML(Context context, ArrayList<Categories> categories, String appVersion, boolean isPrivate, String TAG) throws FlyveException {
+    protected static String createXML(Context context, ArrayList<Categories> categories, String appVersion,
+                                      boolean isPrivate, String TAG) throws FlyveException {
         if (categories != null) {
             XmlSerializer serializer = Xml.newSerializer();
             StringWriter writer = new StringWriter();
@@ -274,7 +276,7 @@ public class Utils {
                 return writer.toString();
 
             } catch (Exception ex) {
-                FlyveLog.e(ex.getMessage());
+                FlyveLog.e(FlyveLog.getMessage(String.valueOf(CommonErrorType.UTILS_CREATE_XML), ex.getMessage()));
                 throw new FlyveException(ex.getMessage(), ex.getCause());
             }
         }
@@ -311,7 +313,7 @@ public class Utils {
                 concatInfo.append(s.nextLine());
             }
         } catch (Exception ex) {
-            FlyveLog.e(CommonErrorType.UTILS_CAT_INFO_MULTIPLE + " " + ex.getMessage());
+            FlyveLog.e(FlyveLog.getMessage(String.valueOf(CommonErrorType.UTILS_CAT_INFO_MULTIPLE), ex.getMessage()));
         }
         return concatInfo.toString();
     }
@@ -321,7 +323,7 @@ public class Utils {
             Scanner s = new Scanner(new File(path));
             return s.next();
         } catch (Exception ex) {
-            FlyveLog.e(CommonErrorType.UTILS_CAT_INFO + " " + ex.getMessage());
+            FlyveLog.e(FlyveLog.getMessage(String.valueOf(CommonErrorType.UTILS_CAT_INFO), ex.getMessage()));
         }
         return "";
     }
@@ -357,7 +359,7 @@ public class Utils {
 
             return arr;
         } catch (IOException ex) {
-            FlyveLog.e(ex.getMessage());
+            FlyveLog.e(FlyveLog.getMessage(String.valueOf(CommonErrorType.UTILS_DEVICE_PROPERTIES), ex.getMessage()));
         }
 
         return new ArrayList<>();
@@ -377,7 +379,7 @@ public class Utils {
             is.close();
             json = new String(buffer, "UTF-8");
         } catch (IOException ex) {
-            ex.printStackTrace();
+            FlyveLog.e(FlyveLog.getMessage(String.valueOf(CommonErrorType.UTILS_LOAD_JSON_ASSET), ex.getMessage()));
             return null;
         }
         return json;
@@ -387,10 +389,7 @@ public class Utils {
     /* Checks if external storage is available for read and write */
     private static boolean isExternalStorageWritable() {
         String state = Environment.getExternalStorageState();
-        if (Environment.MEDIA_MOUNTED.equals(state)) {
-            return true;
-        }
-        return false;
+        return Environment.MEDIA_MOUNTED.equals(state);
     }
 
     /**

@@ -152,7 +152,7 @@ public class Category extends LinkedHashMap<String, CategoryValue> {
 
             serializer.endTag(null, mType);
         } catch (Exception ex) {
-            FlyveLog.e(CommonErrorType.CATEGORY_TO_XML + " " + ex.getMessage());
+            FlyveLog.e(FlyveLog.getMessage(String.valueOf(CommonErrorType.CATEGORY_TO_XML), ex.getMessage()));
         }
     }
 
@@ -168,7 +168,7 @@ public class Category extends LinkedHashMap<String, CategoryValue> {
 
             serializer.endTag(null, mType);
         } catch (Exception ex) {
-            FlyveLog.e(CommonErrorType.CATEGORY_TO_XML_WITHOUT_PRIVATE + " " + ex.getMessage());
+            FlyveLog.e(FlyveLog.getMessage(String.valueOf(CommonErrorType.CATEGORY_TO_XML_WITHOUT_PRIVATE), ex.getMessage()));
         }
     }
 
@@ -231,7 +231,7 @@ public class Category extends LinkedHashMap<String, CategoryValue> {
 
             return jsonCategories;
         } catch ( Exception ex ) {
-            FlyveLog.e(CommonErrorType.CATEGORY_TO_JSON + " " + ex.getMessage());
+            FlyveLog.e(FlyveLog.getMessage(String.valueOf(CommonErrorType.CATEGORY_TO_JSON), ex.getMessage()));
             return new JSONObject();
         }
     }
@@ -247,7 +247,7 @@ public class Category extends LinkedHashMap<String, CategoryValue> {
 
             return jsonCategories;
         } catch ( Exception ex ) {
-            FlyveLog.e(CommonErrorType.CATEGORY_TO_JSON_WITHOUT_PRIVATE + " " + ex.getMessage());
+            FlyveLog.e(FlyveLog.getMessage(String.valueOf(CommonErrorType.CATEGORY_TO_JSON_WITHOUT_PRIVATE), ex.getMessage()));
             return new JSONObject();
         }
     }
