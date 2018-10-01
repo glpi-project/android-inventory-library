@@ -31,8 +31,8 @@ package org.flyve.inventory.categories;
 
 import android.content.Context;
 
+import org.flyve.inventory.CommonErrorType;
 import org.flyve.inventory.FILog;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.xmlpull.v1.XmlSerializer;
@@ -98,8 +98,8 @@ public class Categories extends ArrayList<Category>{
             for( Category c : this) {
                 c.toXML(xSerializer);
             }
-        } catch (Exception e) {
-            FILog.e(e.getMessage());
+        } catch (Exception ex) {
+            FILog.e(CommonErrorType.CATEGORIES_TO_XML + " " + ex.getMessage());
         }
     }
 
@@ -112,13 +112,12 @@ public class Categories extends ArrayList<Category>{
             for( Category c : this) {
                 c.toXMLWithoutPrivateData(xSerializer);
             }
-        } catch (Exception e) {
-            FILog.e(e.getMessage());
+        } catch (Exception ex) {
+            FILog.e(CommonErrorType.CATEGORIES_TO_XML_WITHOUT_PRIVATE + " " + ex.getMessage());
         }
     }
 
     public void toJSON(JSONObject json) {
-
         JSONArray jsonArr = new JSONArray();
         String mType = "";
         try {
@@ -128,13 +127,12 @@ public class Categories extends ArrayList<Category>{
             }
 
             json.put(mType, jsonArr);
-        } catch (Exception e) {
-            FILog.e(e.getMessage());
+        } catch (Exception ex) {
+            FILog.e(CommonErrorType.CATEGORIES_TO_JSON + " " + ex.getMessage());
         }
     }
 
     public void toJSONWithoutPrivateData(JSONObject json) {
-
         JSONArray jsonArr = new JSONArray();
         String mType = "";
         try {
@@ -144,8 +142,8 @@ public class Categories extends ArrayList<Category>{
             }
 
             json.put(mType, jsonArr);
-        } catch (Exception e) {
-            FILog.e(e.getMessage());
+        } catch (Exception ex) {
+            FILog.e(CommonErrorType.CATEGORIES_TO_JSON_WITHOUT_PRIVATE + " " + ex.getMessage());
         }
     }
 }
