@@ -99,19 +99,23 @@ public class Battery extends Categories {
 		IntentFilter batteryIntentFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
 		batteryIntent = context.registerReceiver(null, batteryIntentFilter);
 
-		if (batteryIntent != null) {
-			if (!getLevel().equals("0%")) {
-				// Load the information
-				Category c = new Category("BATTERIES", "batteries");
-				c.put("CHEMISTRY", new CategoryValue(getTechnology(), "CHEMISTRY", "chemistry"));
-				c.put("TEMPERATURE", new CategoryValue(getTemperature(), "TEMPERATURE", "temperature"));
-				c.put("VOLTAGE", new CategoryValue(getVoltage(), "VOLTAGE", "voltage"));
-				c.put("LEVEL", new CategoryValue(getLevel(), "LEVEL", "level"));
-				c.put("HEALTH", new CategoryValue(getBatteryHealth(), "HEALTH", "health"));
-				c.put("STATUS", new CategoryValue(getBatteryStatus(), "STATUS", "status"));
-				c.put("CAPACITY", new CategoryValue(getCapacity(), "CAPACITY", "capacity"));
-				this.add(c);
+		try {
+			if (batteryIntent != null) {
+				if (!getLevel().equals("0%")) {
+					// Load the information
+					Category c = new Category("BATTERIES", "batteries");
+					c.put("CHEMISTRY", new CategoryValue(getTechnology(), "CHEMISTRY", "chemistry"));
+					c.put("TEMPERATURE", new CategoryValue(getTemperature(), "TEMPERATURE", "temperature"));
+					c.put("VOLTAGE", new CategoryValue(getVoltage(), "VOLTAGE", "voltage"));
+					c.put("LEVEL", new CategoryValue(getLevel(), "LEVEL", "level"));
+					c.put("HEALTH", new CategoryValue(getBatteryHealth(), "HEALTH", "health"));
+					c.put("STATUS", new CategoryValue(getBatteryStatus(), "STATUS", "status"));
+					c.put("CAPACITY", new CategoryValue(getCapacity(), "CAPACITY", "capacity"));
+					this.add(c);
+				}
 			}
+		} catch (Exception ex) {
+			FILog.e(FILog.getMessage(context, CommonErrorType.BATTERY, ex.getMessage()));
 		}
 	}
 

@@ -77,18 +77,23 @@ public class Cpus extends Categories {
         cpuFamily = Utils.loadJSONFromAsset(context, "cpu_family.json");
         cpuManufacturer = Utils.loadJSONFromAsset(context, "cpu_manufacturer.json");
 
-        Category c = new Category("CPUS", "cpus");
-        c.put("ARCH", new CategoryValue(getArch(), "ARCH", "arch"));
-        c.put("CORE", new CategoryValue(getCPUCore(), "CORE", "core"));
-        c.put("FAMILYNAME", new CategoryValue(getFamilyName(), "FAMILYNAME", "familyname"));
-        c.put("FAMILYNUMBER", new CategoryValue(getFamilyNumber(), "FAMILYNUMBER", "familynumber"));
-        c.put("MANUFACTURER", new CategoryValue(getManufacturer(), "MANUFACTURER", "manufacturer"));
-        c.put("MODEL", new CategoryValue(getModel(), "MODEL", "model"));
-        c.put("NAME", new CategoryValue(getCpuName(), "NAME", "name"));
-        c.put("SPEED", new CategoryValue(getCpuFrequency(), "SPEED", "cpuFrequency"));
-        c.put("THREAD", new CategoryValue(getCpuThread(), "THREAD", "thread"));
+        try {
 
-        this.add(c);
+            Category c = new Category("CPUS", "cpus");
+            c.put("ARCH", new CategoryValue(getArch(), "ARCH", "arch"));
+            c.put("CORE", new CategoryValue(getCPUCore(), "CORE", "core"));
+            c.put("FAMILYNAME", new CategoryValue(getFamilyName(), "FAMILYNAME", "familyname"));
+            c.put("FAMILYNUMBER", new CategoryValue(getFamilyNumber(), "FAMILYNUMBER", "familynumber"));
+            c.put("MANUFACTURER", new CategoryValue(getManufacturer(), "MANUFACTURER", "manufacturer"));
+            c.put("MODEL", new CategoryValue(getModel(), "MODEL", "model"));
+            c.put("NAME", new CategoryValue(getCpuName(), "NAME", "name"));
+            c.put("SPEED", new CategoryValue(getCpuFrequency(), "SPEED", "cpuFrequency"));
+            c.put("THREAD", new CategoryValue(getCpuThread(), "THREAD", "thread"));
+
+            this.add(c);
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.CPU_ARCH, ex.getMessage()));
+        }
     }
 
     /**

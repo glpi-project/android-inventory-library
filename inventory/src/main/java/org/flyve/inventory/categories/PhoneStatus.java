@@ -33,6 +33,7 @@ import android.telephony.PhoneStateListener;
 import android.telephony.ServiceState;
 import android.telephony.TelephonyManager;
 
+import org.flyve.inventory.CommonErrorType;
 import org.flyve.inventory.FILog;
 
 /**
@@ -101,7 +102,7 @@ public class PhoneStatus extends Categories {
                 }
             }, PhoneStateListener.LISTEN_SERVICE_STATE);
         } catch (Exception ex) {
-            FILog.e(ex.getMessage());
+            FILog.e(FILog.getMessage(xCtx, CommonErrorType.PHONE_STATUS, ex.getMessage()));
         }
     }
 }

@@ -62,18 +62,23 @@ public class Jvm extends Categories {
 
         context = xCtx;
 
-        Category c = new Category("JVMS", "jvms");
-        Properties props = System.getProperties();
+        try {
 
-        c.put("NAME", new CategoryValue(getName(props), "NAME", "name"));
-        c.put("LANGUAGE", new CategoryValue(getLanguage(props), "LANGUAGE", "language"));
-        c.put("VENDOR", new CategoryValue(getVendor(props), "VENDOR", "vendor"));
-        c.put("RUNTIME", new CategoryValue(getRuntime(props), "RUNTIME", "runtime"));
-        c.put("HOME", new CategoryValue(getHome(props), "HOME", "home"));
-        c.put("VERSION", new CategoryValue(getVersion(props), "VERSION", "version"));
-        c.put("CLASSPATH", new CategoryValue(getClasspath(props), "CLASSPATH", "classPath"));
+            Category c = new Category("JVMS", "jvms");
+            Properties props = System.getProperties();
 
-        this.add(c);
+            c.put("NAME", new CategoryValue(getName(props), "NAME", "name"));
+            c.put("LANGUAGE", new CategoryValue(getLanguage(props), "LANGUAGE", "language"));
+            c.put("VENDOR", new CategoryValue(getVendor(props), "VENDOR", "vendor"));
+            c.put("RUNTIME", new CategoryValue(getRuntime(props), "RUNTIME", "runtime"));
+            c.put("HOME", new CategoryValue(getHome(props), "HOME", "home"));
+            c.put("VERSION", new CategoryValue(getVersion(props), "VERSION", "version"));
+            c.put("CLASSPATH", new CategoryValue(getClasspath(props), "CLASSPATH", "classPath"));
+
+            this.add(c);
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.JVM, ex.getMessage()));
+        }
     }
 
     /**

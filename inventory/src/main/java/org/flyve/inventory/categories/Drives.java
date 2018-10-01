@@ -83,15 +83,19 @@ public class Drives extends Categories {
      * @param f the partition to inventory
      */
     private void addStorage(File f) {
-        Category c = new Category("DRIVES", "drives");
+        try {
+            Category c = new Category("DRIVES", "drives");
 
-        c.put("VOLUMN", new CategoryValue(getVolume(f), "VOLUMN", "path"));
-        c.put("TOTAL", new CategoryValue(getTotal(f), "TOTAL", "total"));
-        c.put("FREE", new CategoryValue(getFreeSpace(f), "FREE", "free"));
-        c.put("FILESYSTEM", new CategoryValue(getFileSystem(f), "FILESYSTEM", "filesystem"));
-        c.put("TYPE", new CategoryValue(getType(f), "TYPE", "type"));
+            c.put("VOLUMN", new CategoryValue(getVolume(f), "VOLUMN", "path"));
+            c.put("TOTAL", new CategoryValue(getTotal(f), "TOTAL", "total"));
+            c.put("FREE", new CategoryValue(getFreeSpace(f), "FREE", "free"));
+            c.put("FILESYSTEM", new CategoryValue(getFileSystem(f), "FILESYSTEM", "filesystem"));
+            c.put("TYPE", new CategoryValue(getType(f), "TYPE", "type"));
 
-        this.add(c);
+            this.add(c);
+        }  catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.DRIVES, ex.getMessage()));
+        }
     }
 
     /**
