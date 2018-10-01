@@ -140,4 +140,15 @@ public class CommonErrorType {
     public static final int SIM_CARDS_STATE = 1607;
     public static final int SIM_CARDS_LINE_NUMBER = 1608;
     public static final int SIM_CARDS_SUBSCRIBER_ID = 1609;
+
+    /* Software */
+    public static final int SOFTWARE = 1600;
+    public static final int SOFTWARE_NAME = 1601;
+    public static final int SOFTWARE_PACKAGE = 1602;
+    public static final int SOFTWARE_INSTALL_DATE = 1603;
+    public static final int SOFTWARE_VERSION = 1604;
+    public static final int SOFTWARE_FILE_SIZE = 1605;
+    public static final int SOFTWARE_FOLDER = 1606;
+    public static final int SOFTWARE_REMOVABLE = 1607;
+    public static final int SOFTWARE_USER_ID = 1608;
 }
