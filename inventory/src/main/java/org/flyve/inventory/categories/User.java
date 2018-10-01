@@ -120,7 +120,7 @@ public class User extends Categories {
                         // validate permission exception
                         userName = userMgr.getUserName();
                     } catch (Exception ex) {
-                        FILog.e(ex.getMessage());
+                        FILog.e(FILog.getMessage(context, CommonErrorType.USER_NAME, ex.getMessage()));
                         userName = Build.USER;
                     }
                 } else {

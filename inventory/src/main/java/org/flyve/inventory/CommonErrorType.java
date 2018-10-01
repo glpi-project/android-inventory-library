@@ -214,4 +214,9 @@ public class CommonErrorType {
     public static final int CATEGORIES_TO_XML_WITHOUT_PRIVATE = 2206;
     public static final int CATEGORIES_TO_JSON = 2207;
     public static final int CATEGORIES_TO_JSON_WITHOUT_PRIVATE = 2208;
+
+    /* Others */
+    public static final int UTILS_CAT_INFO = 2201;
+    public static final int UTILS_CAT_INFO_MULTIPLE = 2202;
+
 }
