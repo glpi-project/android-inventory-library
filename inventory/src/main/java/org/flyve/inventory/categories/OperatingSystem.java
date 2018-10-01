@@ -159,7 +159,7 @@ public class OperatingSystem extends Categories {
             this.add(c);
 
         } catch (Exception ex) {
-            FILog.e(ex.getMessage());
+            FILog.e(FILog.getMessage(context, CommonErrorType.OPERATING_SYSTEM, ex.getMessage()));
         }
     }
 

@@ -101,7 +101,7 @@ public class Bluetooth extends Categories {
                 c.put("NAME", new CategoryValue(getName(), "NAME", "name"));
                 this.add(c);
             } catch (Exception ex) {
-                FILog.e(ex.getMessage());
+                FILog.e(FILog.getMessage(context, CommonErrorType.BLUETOOTH, ex.getMessage()));
             }
         }
     }

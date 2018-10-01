@@ -91,23 +91,28 @@ public class Inputs extends Categories {
 
 		config = context.getResources().getConfiguration();
 
-		if (getKeyboard()) {
+		try {
+
+			if (getKeyboard()) {
+				Category c = new Category("INPUTS", "inputs");
+
+				c.put("CAPTION", new CategoryValue("Keyboard", "CAPTION", "caption"));
+				c.put("DESCRIPTION", new CategoryValue("Keyboard", "DESCRIPTION", "description"));
+				c.put("TYPE", new CategoryValue("Keyboard", "TYPE", "type"));
+
+				this.add(c);
+			}
+
 			Category c = new Category("INPUTS", "inputs");
 
-			c.put("CAPTION", new CategoryValue("Keyboard", "CAPTION", "caption"));
-			c.put("DESCRIPTION", new CategoryValue("Keyboard", "DESCRIPTION", "description"));
-			c.put("TYPE", new CategoryValue("Keyboard", "TYPE", "type"));
+			c.put("CAPTION", new CategoryValue("Touch Screen", "CAPTION", "caption"));
+			c.put("DESCRIPTION", new CategoryValue("Touch Screen", "DESCRIPTION", "description"));
+			c.put("TYPE", new CategoryValue(getTouchscreen(), "TYPE", "type"));
 
 			this.add(c);
+		} catch (Exception ex) {
+			FILog.e(FILog.getMessage(context, CommonErrorType.INPUTS, ex.getMessage()));
 		}
-
-		Category c = new Category("INPUTS", "inputs");
-
-		c.put("CAPTION", new CategoryValue("Touch Screen", "CAPTION", "caption"));
-		c.put("DESCRIPTION", new CategoryValue("Touch Screen", "DESCRIPTION", "description"));
-		c.put("TYPE", new CategoryValue(getTouchscreen(), "TYPE", "type"));
-
-		this.add(c);
 	}
 
 	/**

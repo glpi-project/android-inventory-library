@@ -114,21 +114,26 @@ public class Hardware extends Categories {
         this.context = xCtx;
 
         props = System.getProperties();
-        getUserInfo();
 
-        Category c = new Category("HARDWARE", "hardware");
+        try {
+            getUserInfo();
 
-        c.put("DATELASTLOGGEDUSER", new CategoryValue(getDateLastLoggedUser(), "DATELASTLOGGEDUSER", "dateLastLoggedUser"));
-        c.put("LASTLOGGEDUSER", new CategoryValue(getLastLoggedUser(), "LASTLOGGEDUSER", "lastLoggedUser"));
-        c.put("NAME", new CategoryValue(getName(), "NAME", "name"));
-        c.put("OSNAME", new CategoryValue(OSNAME, "OSNAME", "osName"));
-        c.put("OSVERSION", new CategoryValue(getOsVersion(), "OSVERSION", "osVersion"));
-        c.put("ARCHNAME", new CategoryValue(getArchName(), "ARCHNAME", "archName"));
-        c.put("UUID", new CategoryValue(getUUID(), "UUID", "uuid"));
-        c.put("USERID", new CategoryValue(getUserId(), "USERID", "userid"));
-        c.put("MEMORY", new CategoryValue(new Memory(xCtx).getCapacity(), "MEMORY", "memory"));
+            Category c = new Category("HARDWARE", "hardware");
 
-        this.add(c);
+            c.put("DATELASTLOGGEDUSER", new CategoryValue(getDateLastLoggedUser(), "DATELASTLOGGEDUSER", "dateLastLoggedUser"));
+            c.put("LASTLOGGEDUSER", new CategoryValue(getLastLoggedUser(), "LASTLOGGEDUSER", "lastLoggedUser"));
+            c.put("NAME", new CategoryValue(getName(), "NAME", "name"));
+            c.put("OSNAME", new CategoryValue(OSNAME, "OSNAME", "osName"));
+            c.put("OSVERSION", new CategoryValue(getOsVersion(), "OSVERSION", "osVersion"));
+            c.put("ARCHNAME", new CategoryValue(getArchName(), "ARCHNAME", "archName"));
+            c.put("UUID", new CategoryValue(getUUID(), "UUID", "uuid"));
+            c.put("USERID", new CategoryValue(getUserId(), "USERID", "userid"));
+            c.put("MEMORY", new CategoryValue(new Memory(xCtx).getCapacity(), "MEMORY", "memory"));
+
+            this.add(c);
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.HARDWARE, ex.getMessage()));
+        }
     }
 
     /**

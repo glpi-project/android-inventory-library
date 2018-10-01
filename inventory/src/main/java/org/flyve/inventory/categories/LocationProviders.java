@@ -65,19 +65,23 @@ public class LocationProviders extends Categories {
 
         context = xCtx;
 
-        LocationManager lLocationMgr = (LocationManager) context.getSystemService(Service.LOCATION_SERVICE);
+        try {
+            LocationManager lLocationMgr = (LocationManager) context.getSystemService(Service.LOCATION_SERVICE);
 
-        if (lLocationMgr != null) {
-            List<String> lProvidersName = lLocationMgr.getAllProviders();
+            if (lLocationMgr != null) {
+                List<String> lProvidersName = lLocationMgr.getAllProviders();
 
-            for (String p : lProvidersName) {
-                Category c = new Category("LOCATION_PROVIDERS", "locationProviders");
+                for (String p : lProvidersName) {
+                    Category c = new Category("LOCATION_PROVIDERS", "locationProviders");
 
-                LocationProvider lProvider = lLocationMgr.getProvider(p);
-                c.put("NAME", new CategoryValue(getName(lProvider), "NAME", "name"));
+                    LocationProvider lProvider = lLocationMgr.getProvider(p);
+                    c.put("NAME", new CategoryValue(getName(lProvider), "NAME", "name"));
 
-                this.add(c);
+                    this.add(c);
+                }
             }
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.LOCATION, ex.getMessage()));
         }
     }
 

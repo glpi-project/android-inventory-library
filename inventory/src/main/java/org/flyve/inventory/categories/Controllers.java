@@ -64,13 +64,17 @@ public class Controllers extends Categories {
 
         context = xCtx;
 
-        ArrayList<String> drivers = getDrivers();
-        if (drivers.size() > 0) {
-            for (int i = 0; i < drivers.size(); i++) {
-                Category c = new Category("CONTROLLERS", "controllers");
-                c.put("DRIVER", new CategoryValue(drivers.get(i), "DRIVER", "driver"));
-                this.add(c);
+        try {
+            ArrayList<String> drivers = getDrivers();
+            if (drivers.size() > 0) {
+                for (int i = 0; i < drivers.size(); i++) {
+                    Category c = new Category("CONTROLLERS", "controllers");
+                    c.put("DRIVER", new CategoryValue(drivers.get(i), "DRIVER", "driver"));
+                    this.add(c);
+                }
             }
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.CONTROLLERS, ex.getMessage()));
         }
     }
 

@@ -73,33 +73,38 @@ public class Bios extends Categories {
 
 		context = xCtx;
 
-		Category c = new Category("BIOS", "bios");
+		try {
 
-		// Bios Date
-		c.put("BDATE", new CategoryValue(getBiosDate(), "BDATE", "biosReleaseDate"));
+			Category c = new Category("BIOS", "bios");
 
-		// Bios Manufacturer
-		c.put("BMANUFACTURER", new CategoryValue(getBiosManufacturer(), "BMANUFACTURER", "biosManufacturer"));
+			// Bios Date
+			c.put("BDATE", new CategoryValue(getBiosDate(), "BDATE", "biosReleaseDate"));
 
-		// Bios version
-		c.put("BVERSION", new CategoryValue(getBiosVersion(), "BVERSION", "biosVersion"));
+			// Bios Manufacturer
+			c.put("BMANUFACTURER", new CategoryValue(getBiosManufacturer(), "BMANUFACTURER", "biosManufacturer"));
 
-		// Mother Board Manufacturer
-		c.put("MMANUFACTURER", new CategoryValue(getMotherBoardManufacturer(), "MMANUFACTURER", "motherBoardManufacturer"));
+			// Bios version
+			c.put("BVERSION", new CategoryValue(getBiosVersion(), "BVERSION", "biosVersion"));
 
-		// Mother Board Model
-		c.put("SMODEL", new CategoryValue(getMotherBoardModel(), "SMODEL", "motherBoardModel"));
+			// Mother Board Manufacturer
+			c.put("MMANUFACTURER", new CategoryValue(getMotherBoardManufacturer(), "MMANUFACTURER", "motherBoardManufacturer"));
 
-		// Mother Board Serial Number
-		c.put("SSN", new CategoryValue(getSystemSerialNumber(), "SSN", "motherBoardSerialNumber"));
+			// Mother Board Model
+			c.put("SMODEL", new CategoryValue(getMotherBoardModel(), "SMODEL", "motherBoardModel"));
 
-		// Build Tag
-		c.put("ASSETTAG", new CategoryValue(getBuildTag(), "ASSETTAG", "assettag"));
+			// Mother Board Serial Number
+			c.put("SSN", new CategoryValue(getSystemSerialNumber(), "SSN", "motherBoardSerialNumber"));
 
-		// Build Tag
-		c.put("MSN", new CategoryValue(getMotherBoardSerial(), "MSN", "msn"));
+			// Build Tag
+			c.put("ASSETTAG", new CategoryValue(getBuildTag(), "ASSETTAG", "assettag"));
 
-		this.add(c);
+			// Build Tag
+			c.put("MSN", new CategoryValue(getMotherBoardSerial(), "MSN", "msn"));
+
+			this.add(c);
+		} catch (Exception ex) {
+			FILog.e(FILog.getMessage(context, CommonErrorType.BIOS, ex.getMessage()));
+		}
 	}
 
 	/**

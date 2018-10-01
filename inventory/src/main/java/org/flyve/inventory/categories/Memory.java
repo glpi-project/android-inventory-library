@@ -74,15 +74,19 @@ public class Memory extends Categories {
 
         context = xCtx;
 
-        getRamInfo();
-        Category c = new Category("MEMORIES", "memories");
+        try {
+            getRamInfo();
+            Category c = new Category("MEMORIES", "memories");
 
-        c.put("DESCRIPTION", new CategoryValue(DESCRIPTION, "DESCRIPTION", "description"));
-        c.put("CAPACITY", new CategoryValue(getCapacity(), "CAPACITY", "capacity"));
-        c.put("TYPE", new CategoryValue(getType(), "TYPE", "type"));
-        c.put("SPEED", new CategoryValue(getSpeed(), "SPEED", "speed"));
+            c.put("DESCRIPTION", new CategoryValue(DESCRIPTION, "DESCRIPTION", "description"));
+            c.put("CAPACITY", new CategoryValue(getCapacity(), "CAPACITY", "capacity"));
+            c.put("TYPE", new CategoryValue(getType(), "TYPE", "type"));
+            c.put("SPEED", new CategoryValue(getSpeed(), "SPEED", "speed"));
 
-        this.add(c);
+            this.add(c);
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.MEMORY, ex.getMessage()));
+        }
     }
 
     /**
