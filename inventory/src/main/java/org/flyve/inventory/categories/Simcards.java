@@ -18,6 +18,7 @@
  * ---------------------------------------------------------------------
  *
  * @author Rafael Hernandez - <rhernandez@teclib.com>
+ * @author Ivan del Pino    - <idelpino@teclib.com>
  * @copyright Copyright Teclib. All rights reserved.
  * @copyright Copyright FusionInventory.
  * @license GPLv3 https://www.gnu.org/licenses/gpl-3.0.html

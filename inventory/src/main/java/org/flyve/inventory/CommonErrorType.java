@@ -200,4 +200,8 @@ public class CommonErrorType {
     /* User */
     public static final int USER = 2000;
     public static final int USER_NAME = 2001;
+
+    /* Videos */
+    public static final int VIDEOS = 2100;
+    public static final int VIDEOS_RESOLUTION = 2101;
 }
