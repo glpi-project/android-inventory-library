@@ -50,7 +50,7 @@ public class SoftwareTest {
     Context appContext = InstrumentationRegistry.getTargetContext();
 
     @Test
-    public void getName() throws Exception {
+    public void getName() {
         Software software = new Software(appContext);
 
         PackageManager packageManager = appContext.getPackageManager();
@@ -62,7 +62,7 @@ public class SoftwareTest {
     }
 
     @Test
-    public void getVersion() throws Exception {
+    public void getVersion() {
         Software software = new Software(appContext);
 
         PackageManager packageManager = appContext.getPackageManager();
@@ -74,7 +74,7 @@ public class SoftwareTest {
     }
 
     @Test
-    public void getFilesize() throws Exception {
+    public void getFileSize() {
         Software software = new Software(appContext);
 
         PackageManager packageManager = appContext.getPackageManager();
@@ -86,7 +86,7 @@ public class SoftwareTest {
     }
 
     @Test
-    public void getFolder() throws Exception {
+    public void getFolder() {
         Software software = new Software(appContext);
 
         PackageManager packageManager = appContext.getPackageManager();
@@ -98,7 +98,7 @@ public class SoftwareTest {
     }
 
     @Test
-    public void getRemovable() throws Exception {
+    public void getRemovable() {
         Software software = new Software(appContext);
 
         PackageManager packageManager = appContext.getPackageManager();
@@ -110,7 +110,7 @@ public class SoftwareTest {
     }
 
     @Test
-    public void getUserID() throws Exception {
+    public void getUserID() {
         Software software = new Software(appContext);
 
         PackageManager packageManager = appContext.getPackageManager();
@@ -118,6 +118,30 @@ public class SoftwareTest {
 
         for (ApplicationInfo p : packages) {
             assertNotEquals("", software.getUserID(p));
+        }
+    }
+
+    @Test
+    public void getPackage() {
+        Software software = new Software(appContext);
+
+        PackageManager packageManager = appContext.getPackageManager();
+        List<ApplicationInfo> packages = packageManager.getInstalledApplications(PackageManager.GET_META_DATA);
+
+        for (ApplicationInfo p : packages) {
+            assertNotEquals("", software.getPackage(p));
+        }
+    }
+
+    @Test
+    public void getInstallDate() {
+        Software software = new Software(appContext);
+
+        PackageManager packageManager = appContext.getPackageManager();
+        List<ApplicationInfo> packages = packageManager.getInstalledApplications(PackageManager.GET_META_DATA);
+
+        for (ApplicationInfo p : packages) {
+            assertNotEquals("", software.getInstallDate(p));
         }
     }
 
