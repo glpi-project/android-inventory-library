@@ -29,10 +29,10 @@ package org.flyve.inventory.categories;
 
 import android.content.Context;
 
+import org.flyve.inventory.CommonErrorType;
 import org.flyve.inventory.FILog;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +56,7 @@ public class Storage extends Categories {
     private static final long serialVersionUID = 3528873342443549732L;
 
     private Properties props;
-    private Context xCtx;
+    private Context context;
 
     /**
      * Indicates whether some other object is "equal to" this one
@@ -81,7 +81,7 @@ public class Storage extends Categories {
     @Override
     public int hashCode() {
         int hash = super.hashCode();
-        hash = 89 * hash + (this.xCtx != null ? this.xCtx.hashCode() : 0);
+        hash = 89 * hash + (this.context != null ? this.context.hashCode() : 0);
         hash = 89 * hash + (this.props != null ? this.props.hashCode() : 0);
         return hash;
     }
@@ -93,7 +93,7 @@ public class Storage extends Categories {
     public Storage(Context xCtx) {
         super(xCtx);
 
-        this.xCtx = xCtx;
+        this.context = xCtx;
 
         try {
             props = System.getProperties();
@@ -115,7 +115,7 @@ public class Storage extends Categories {
                 }
             }
         } catch (Exception ex) {
-            FILog.e(ex.getMessage());
+            FILog.e(FILog.getMessage(context, CommonErrorType.STORAGE, ex.getMessage()));
         }
     }
 
@@ -138,8 +138,8 @@ public class Storage extends Categories {
             }
 
             return values;
-        } catch (IOException ex) {
-            FILog.e(ex.getMessage());
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.STORAGE_PARTITION, ex.getMessage()));
         }
 
         return null;
@@ -148,13 +148,17 @@ public class Storage extends Categories {
     private List<String> getValues(String line) {
         ArrayList<String> arr = new ArrayList<>();
 
-        if(!line.trim().equals("")) {
-            String[] arrLine = line.split(" ");
-            for (int i = 0; i < arrLine.length; i++) {
-                if (!arrLine[i].trim().equals("")) {
-                    arr.add(arrLine[i]);
+        try {
+            if (!line.trim().equals("")) {
+                String[] arrLine = line.split(" ");
+                for (String anArrLine : arrLine) {
+                    if (!anArrLine.trim().equals("")) {
+                        arr.add(anArrLine);
+                    }
                 }
             }
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.STORAGE_VALUES, ex.getMessage()));
         }
 
         return arr;
