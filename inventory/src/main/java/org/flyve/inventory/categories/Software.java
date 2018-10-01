@@ -34,7 +34,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
 import org.flyve.inventory.CommonErrorType;
-import org.flyve.inventory.FILog;
+import org.flyve.inventory.FlyveLog;
 
 import java.io.File;
 import java.util.List;
@@ -115,7 +115,7 @@ public class Software extends Categories {
 
             }
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.SOFTWARE, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.SOFTWARE, ex.getMessage()));
         }
     }
 
@@ -129,7 +129,7 @@ public class Software extends Categories {
         try {
             value = packageManager.getApplicationLabel(p).toString();
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.SOFTWARE_NAME, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.SOFTWARE_NAME, ex.getMessage()));
         }
         return value;
     }
@@ -139,7 +139,7 @@ public class Software extends Categories {
         try {
             value = p.packageName;
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.SOFTWARE_PACKAGE, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.SOFTWARE_PACKAGE, ex.getMessage()));
         }
         return value;
     }
@@ -156,7 +156,7 @@ public class Software extends Categories {
             PackageInfo pi = packageManager.getPackageInfo(p.packageName, PackageManager.GET_META_DATA);
             mInstalled = String.valueOf(pi.firstInstallTime);
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.SOFTWARE_INSTALL_DATE, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.SOFTWARE_INSTALL_DATE, ex.getMessage()));
         }
 
         return mInstalled;
@@ -173,7 +173,7 @@ public class Software extends Categories {
             PackageInfo pi = packageManager.getPackageInfo(p.packageName, PackageManager.GET_META_DATA);
             mVersion = pi.versionName;
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.SOFTWARE_VERSION, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.SOFTWARE_VERSION, ex.getMessage()));
         }
 
         return mVersion;
@@ -190,7 +190,7 @@ public class Software extends Categories {
             File file = new File(packageManager.getApplicationInfo(p.packageName, 0).publicSourceDir);
             value = String.valueOf(file.length());
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.SOFTWARE_FILE_SIZE, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.SOFTWARE_FILE_SIZE, ex.getMessage()));
         }
         return value;
     }
@@ -206,7 +206,7 @@ public class Software extends Categories {
             File file = new File(packageManager.getApplicationInfo(p.packageName, 0).publicSourceDir);
             value = file.getAbsolutePath().substring(0, file.getAbsolutePath().lastIndexOf("/"));
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.SOFTWARE_FOLDER, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.SOFTWARE_FOLDER, ex.getMessage()));
         }
         return value;
     }
@@ -234,7 +234,7 @@ public class Software extends Categories {
                 value = "1";
             }
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.SOFTWARE_REMOVABLE, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.SOFTWARE_REMOVABLE, ex.getMessage()));
         }
         return value;
     }
@@ -249,7 +249,7 @@ public class Software extends Categories {
         try {
             value = String.valueOf(p.uid);
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.SOFTWARE_USER_ID, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.SOFTWARE_USER_ID, ex.getMessage()));
         }
         return value;
     }

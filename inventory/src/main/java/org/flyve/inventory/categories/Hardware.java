@@ -34,7 +34,7 @@ import android.os.Build;
 import android.provider.Settings.Secure;
 
 import org.flyve.inventory.CommonErrorType;
-import org.flyve.inventory.FILog;
+import org.flyve.inventory.FlyveLog;
 import org.w3c.dom.Document;
 
 import java.io.BufferedReader;
@@ -132,7 +132,7 @@ public class Hardware extends Categories {
 
             this.add(c);
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.HARDWARE, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.HARDWARE, ex.getMessage()));
         }
     }
 
@@ -158,7 +158,7 @@ public class Hardware extends Categories {
                 value = sdf.format(resultDate);
             }
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.HARDWARE_DATE_LAST_LOGGED_USER, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.HARDWARE_DATE_LAST_LOGGED_USER, ex.getMessage()));
         }
         return value;
     }
@@ -177,7 +177,7 @@ public class Hardware extends Categories {
                 value = parse.getFirstChild().getTextContent();
             }
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.HARDWARE_LAST_LOGGED_USER, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.HARDWARE_LAST_LOGGED_USER, ex.getMessage()));
         }
         return value;
     }
@@ -206,7 +206,7 @@ public class Hardware extends Categories {
                 return value;
             }
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.HARDWARE_USER_TAG, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.HARDWARE_USER_TAG, ex.getMessage()));
         }
         return value;
     }
@@ -227,7 +227,7 @@ public class Hardware extends Categories {
                 userInfo.add(temp);
             }
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.HARDWARE_USER_INFO, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.HARDWARE_USER_INFO, ex.getMessage()));
         }
     }
 
@@ -240,7 +240,7 @@ public class Hardware extends Categories {
         try {
             value = Build.MODEL;
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.HARDWARE_NAME, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.HARDWARE_NAME, ex.getMessage()));
         }
         return value;
     }
@@ -254,7 +254,7 @@ public class Hardware extends Categories {
         try {
             value = Build.VERSION.RELEASE;
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.HARDWARE_VERSION, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.HARDWARE_VERSION, ex.getMessage()));
         }
         return value;
     }
@@ -268,7 +268,7 @@ public class Hardware extends Categories {
         try {
             value = props.getProperty("os.arch");
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.HARDWARE_ARCH_NAME, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.HARDWARE_ARCH_NAME, ex.getMessage()));
         }
         return value;
     }
@@ -282,7 +282,7 @@ public class Hardware extends Categories {
         try {
             value = Secure.getString(context.getContentResolver(), Secure.ANDROID_ID);
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.HARDWARE_UUID, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.HARDWARE_UUID, ex.getMessage()));
         }
         return value;
     }

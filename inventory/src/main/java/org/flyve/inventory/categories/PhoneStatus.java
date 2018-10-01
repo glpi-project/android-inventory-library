@@ -35,7 +35,7 @@ import android.telephony.ServiceState;
 import android.telephony.TelephonyManager;
 
 import org.flyve.inventory.CommonErrorType;
-import org.flyve.inventory.FILog;
+import org.flyve.inventory.FlyveLog;
 
 /**
  * This class get all the information of the Network
@@ -103,7 +103,7 @@ public class PhoneStatus extends Categories {
                 }
             }, PhoneStateListener.LISTEN_SERVICE_STATE);
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(xCtx, CommonErrorType.PHONE_STATUS, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(xCtx, CommonErrorType.PHONE_STATUS, ex.getMessage()));
         }
     }
 }

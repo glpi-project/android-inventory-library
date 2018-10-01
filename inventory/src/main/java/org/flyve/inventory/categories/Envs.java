@@ -30,7 +30,7 @@ package org.flyve.inventory.categories;
 
 import android.content.Context;
 
-import org.flyve.inventory.FILog;
+import org.flyve.inventory.FlyveLog;
 
 import java.util.Map;
 
@@ -68,7 +68,7 @@ public class Envs extends Categories {
                 this.add(c);
             }
         } catch (Exception ex) {
-            FILog.e(ex.getMessage());
+            FlyveLog.e(ex.getMessage());
         }
     }
 }

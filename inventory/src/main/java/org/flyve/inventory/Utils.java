@@ -186,7 +186,7 @@ public class Utils {
             return jsonRequest.toString();
 
         } catch (Exception ex) {
-            FILog.e(ex.getMessage());
+            FlyveLog.e(ex.getMessage());
             throw new FlyveException(ex.getMessage(), ex.getCause());
         }
     }
@@ -274,7 +274,7 @@ public class Utils {
                 return writer.toString();
 
             } catch (Exception ex) {
-                FILog.e(ex.getMessage());
+                FlyveLog.e(ex.getMessage());
                 throw new FlyveException(ex.getMessage(), ex.getCause());
             }
         }
@@ -311,7 +311,7 @@ public class Utils {
                 concatInfo.append(s.nextLine());
             }
         } catch (Exception ex) {
-            FILog.e(CommonErrorType.UTILS_CAT_INFO_MULTIPLE + " " + ex.getMessage());
+            FlyveLog.e(CommonErrorType.UTILS_CAT_INFO_MULTIPLE + " " + ex.getMessage());
         }
         return concatInfo.toString();
     }
@@ -321,7 +321,7 @@ public class Utils {
             Scanner s = new Scanner(new File(path));
             return s.next();
         } catch (Exception ex) {
-            FILog.e(CommonErrorType.UTILS_CAT_INFO + " " + ex.getMessage());
+            FlyveLog.e(CommonErrorType.UTILS_CAT_INFO + " " + ex.getMessage());
         }
         return "";
     }
@@ -357,7 +357,7 @@ public class Utils {
 
             return arr;
         } catch (IOException ex) {
-            FILog.e(ex.getMessage());
+            FlyveLog.e(ex.getMessage());
         }
 
         return new ArrayList<>();
@@ -407,9 +407,9 @@ public class Utils {
 
             if(!dir.exists()) {
                 if(dir.mkdirs()) {
-                    FILog.d("create path");
+                    FlyveLog.d("create path");
                 } else {
-                    FILog.e("cannot create path");
+                    FlyveLog.e("cannot create path");
                     return;
                 }
             }
@@ -419,13 +419,13 @@ public class Utils {
             if (!logFile.exists())  {
                 try  {
                     if(logFile.createNewFile()) {
-                        FILog.d("File created");
+                        FlyveLog.d("File created");
                     } else {
-                        FILog.d("Cannot create file");
+                        FlyveLog.d("Cannot create file");
                         return;
                     }
                 } catch (IOException ex) {
-                    FILog.e(ex.getMessage());
+                    FlyveLog.e(ex.getMessage());
                 }
             }
 
@@ -441,22 +441,22 @@ public class Utils {
                 buf.flush();
                 buf.close();
                 fw.close();
-                FILog.d("Inventory stored");
+                FlyveLog.d("Inventory stored");
             }
             catch (IOException ex) {
-                FILog.e(ex.getMessage());
+                FlyveLog.e(ex.getMessage());
             }
             finally {
                 if(fw!=null) {
                     try {
                         fw.close();
                     } catch(Exception ex) {
-                        FILog.e(ex.getMessage());
+                        FlyveLog.e(ex.getMessage());
                     }
                 }
             }
         } else {
-            FILog.d("External Storage is not available");
+            FlyveLog.d("External Storage is not available");
         }
     }
 

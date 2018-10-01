@@ -33,7 +33,7 @@ import android.content.Context;
 import android.os.Build;
 
 import org.flyve.inventory.CommonErrorType;
-import org.flyve.inventory.FILog;
+import org.flyve.inventory.FlyveLog;
 import org.flyve.inventory.Utils;
 
 import java.io.BufferedReader;
@@ -104,7 +104,7 @@ public class Bios extends Categories {
 
 			this.add(c);
 		} catch (Exception ex) {
-			FILog.e(FILog.getMessage(context, CommonErrorType.BIOS, ex.getMessage()));
+			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.BIOS, ex.getMessage()));
 		}
 	}
 
@@ -117,7 +117,7 @@ public class Bios extends Categories {
 		try {
 			dateInfo = Utils.getCatInfo("/sys/devices/virtual/dmi/id/bios_date");
 		} catch (Exception ex) {
-			FILog.e(FILog.getMessage(context, CommonErrorType.BIOS_DATE, ex.getMessage()));
+			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.BIOS_DATE, ex.getMessage()));
 		}
 		return !dateInfo.equals("") ? dateInfo : "N/A";
 	}
@@ -131,7 +131,7 @@ public class Bios extends Categories {
 		try {
 			manufacturer= Build.MANUFACTURER;
 		} catch (Exception ex) {
-			FILog.e(FILog.getMessage(context, CommonErrorType.BIOS_MANUFACTURER, ex.getMessage()));
+			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.BIOS_MANUFACTURER, ex.getMessage()));
 		}
 		return manufacturer;
 	}
@@ -145,7 +145,7 @@ public class Bios extends Categories {
 		try {
 			dateInfo = Utils.getCatInfo("/sys/devices/virtual/dmi/id/bios_version");
 		} catch (Exception ex) {
-			FILog.e(FILog.getMessage(context, CommonErrorType.BIOS_VERSION, ex.getMessage()));
+			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.BIOS_VERSION, ex.getMessage()));
 		}
 		return !dateInfo.equals("") ? dateInfo : "N/A";
 	}
@@ -159,7 +159,7 @@ public class Bios extends Categories {
 		try {
 			manufacturer = Build.MANUFACTURER;
 		} catch (Exception ex) {
-			FILog.e(FILog.getMessage(context, CommonErrorType.BIOS_BOARD_MANUFACTURER, ex.getMessage()));
+			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.BIOS_BOARD_MANUFACTURER, ex.getMessage()));
 		}
 		return manufacturer;
 	}
@@ -173,7 +173,7 @@ public class Bios extends Categories {
 		try {
 			model = Build.MODEL;
 		} catch (Exception ex) {
-			FILog.e(FILog.getMessage(context, CommonErrorType.BIOS_MOTHER_BOARD_MODEL, ex.getMessage()));
+			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.BIOS_MOTHER_BOARD_MODEL, ex.getMessage()));
 		}
 		return model;
 	}
@@ -187,7 +187,7 @@ public class Bios extends Categories {
 		try {
 			tags = Build.TAGS;
 		} catch (Exception ex) {
-			FILog.e(FILog.getMessage(context, CommonErrorType.BIOS_TAG, ex.getMessage()));
+			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.BIOS_TAG, ex.getMessage()));
 		}
 		return tags;
 	}
@@ -201,7 +201,7 @@ public class Bios extends Categories {
 		try {
 			dateInfo = Utils.getCatInfo("/sys/devices/virtual/dmi/id/board_serial");
 		} catch (Exception ex) {
-			FILog.e(FILog.getMessage(context, CommonErrorType.BIOS_MOTHER_BOARD_SERIAL, ex.getMessage()));
+			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.BIOS_MOTHER_BOARD_SERIAL, ex.getMessage()));
 		}
 		return !dateInfo.equals("") ? dateInfo : "N/A";
 	}
@@ -223,7 +223,7 @@ public class Bios extends Categories {
 				try {
 					serial = this.getSerialNumberFromCpuInfo();
 				} catch (Exception ex) {
-					FILog.e(ex.getMessage());
+					FlyveLog.e(ex.getMessage());
 				}
 
 				if (!serial.equals("") && !serial.equals("0000000000000000")) {
@@ -237,7 +237,7 @@ public class Bios extends Categories {
 				}
 			}
 		} catch (Exception ex) {
-			FILog.e(FILog.getMessage(context, CommonErrorType.BIOS_SYSTEM_SERIAL, ex.getMessage()));
+			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.BIOS_SYSTEM_SERIAL, ex.getMessage()));
 		}
 		return systemSerialNumber;
 	}
@@ -253,7 +253,7 @@ public class Bios extends Categories {
 	        Method get = c.getMethod("get", String.class);
 	        serial = (String) get.invoke(c, "ro.serialno");
 	    } catch (Exception ex) {
-			FILog.e(FILog.getMessage(context, CommonErrorType.BIOS_SERIAL_PRIVATE, ex.getMessage()));
+			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.BIOS_SERIAL_PRIVATE, ex.getMessage()));
 	    }
 	    return serial;
 	}
@@ -273,7 +273,7 @@ public class Bios extends Categories {
 				String line;
 				while ((line = br.readLine()) != null) {
 					if (line.startsWith("Serial")) {
-						FILog.d(line);
+						FlyveLog.d(line);
 						String[] results = line.split(":");
 						serial = results[1].trim();
 					}
@@ -281,14 +281,14 @@ public class Bios extends Categories {
 				br.close();
 				fr.close();
 			} catch (IOException e) {
-				FILog.e(e.getMessage());
+				FlyveLog.e(e.getMessage());
 			} finally {
 				if (fr != null) {
 					fr.close();
 				}
 			}
 		} catch (Exception ex) {
-			FILog.e(FILog.getMessage(context, CommonErrorType.BIOS_CPU_SERIAL, ex.getMessage()));
+			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.BIOS_CPU_SERIAL, ex.getMessage()));
 		}
 
 		return serial.trim();

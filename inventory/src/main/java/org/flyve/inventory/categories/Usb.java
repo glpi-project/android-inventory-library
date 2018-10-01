@@ -32,7 +32,7 @@ package org.flyve.inventory.categories;
 import android.content.Context;
 
 import org.flyve.inventory.CommonErrorType;
-import org.flyve.inventory.FILog;
+import org.flyve.inventory.FlyveLog;
 import org.flyve.inventory.usbManager.SysBusUsbDevice;
 import org.flyve.inventory.usbManager.SysBusUsbManager;
 
@@ -81,7 +81,7 @@ public class Usb extends Categories {
 
 			this.add(c);
 		} catch (Exception ex) {
-			FILog.e(FILog.getMessage(context, CommonErrorType.USB, ex.getMessage()));
+			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.USB, ex.getMessage()));
 		}
 
     }
@@ -92,7 +92,7 @@ public class Usb extends Categories {
 			Map<String, SysBusUsbDevice> devices = usbManager.getUsbDevices();
 			return devices.get("usb1");
 		} catch (Exception ex) {
-			FILog.e(FILog.getMessage(context, CommonErrorType.USB_SYS_BUS, ex.getMessage()));
+			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.USB_SYS_BUS, ex.getMessage()));
 		}
 		return null;
 	}
@@ -102,7 +102,7 @@ public class Usb extends Categories {
 		try {
 			if (usb != null) value = usb.getServiceClass();
 		} catch (Exception ex) {
-			FILog.e(FILog.getMessage(context, CommonErrorType.USB_SERVICE, ex.getMessage()));
+			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.USB_SERVICE, ex.getMessage()));
 		}
 		return value;
 	}
@@ -112,7 +112,7 @@ public class Usb extends Categories {
 		try {
 			value = usb.getPid();
 		} catch (Exception ex) {
-			FILog.e(FILog.getMessage(context, CommonErrorType.USB_PID, ex.getMessage()));
+			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.USB_PID, ex.getMessage()));
 		}
 		return value;
 	}
@@ -122,7 +122,7 @@ public class Usb extends Categories {
 		try {
 			value = usb.getVid();
 		} catch (Exception ex) {
-			FILog.e(FILog.getMessage(context, CommonErrorType.USB_VID, ex.getMessage()));
+			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.USB_VID, ex.getMessage()));
 		}
 		return value;
 	}
@@ -132,7 +132,7 @@ public class Usb extends Categories {
 		try {
 			value = usb.getDeviceSubClass();
 		} catch (Exception ex) {
-			FILog.e(FILog.getMessage(context, CommonErrorType.USB_DEVICE_SUB_CLASS, ex.getMessage()));
+			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.USB_DEVICE_SUB_CLASS, ex.getMessage()));
 		}
 		return value;
 	}
@@ -142,7 +142,7 @@ public class Usb extends Categories {
 		try {
 			value = usb.getReportedProductName();
 		} catch (Exception ex) {
-			FILog.e(FILog.getMessage(context, CommonErrorType.USB_REPORTED_PRODUCT_NAME, ex.getMessage()));
+			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.USB_REPORTED_PRODUCT_NAME, ex.getMessage()));
 		}
 		return value;
 	}
@@ -152,7 +152,7 @@ public class Usb extends Categories {
 		try {
 			value = usb.getUsbVersion();
 		} catch (Exception ex) {
-			FILog.e(FILog.getMessage(context, CommonErrorType.USB_USB_VERSION, ex.getMessage()));
+			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.USB_USB_VERSION, ex.getMessage()));
 		}
 		return value;
 	}
@@ -162,7 +162,7 @@ public class Usb extends Categories {
 		try {
 			value = usb.getSerialNumber();
 		} catch (Exception ex) {
-			FILog.e(FILog.getMessage(context, CommonErrorType.USB_SERIAL_NUMBER, ex.getMessage()));
+			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.USB_SERIAL_NUMBER, ex.getMessage()));
 		}
 		return value;
 	}

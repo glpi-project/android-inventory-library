@@ -33,7 +33,7 @@ import android.os.Build;
 import android.os.UserManager;
 
 import org.flyve.inventory.CommonErrorType;
-import org.flyve.inventory.FILog;
+import org.flyve.inventory.FlyveLog;
 
 import java.util.Properties;
 
@@ -102,7 +102,7 @@ public class User extends Categories {
 
             this.add(c);
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.USER, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.USER, ex.getMessage()));
         }
 
     }
@@ -120,7 +120,7 @@ public class User extends Categories {
                         // validate permission exception
                         userName = userMgr.getUserName();
                     } catch (Exception ex) {
-                        FILog.e(FILog.getMessage(context, CommonErrorType.USER_NAME, ex.getMessage()));
+                        FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.USER_NAME, ex.getMessage()));
                         userName = Build.USER;
                     }
                 } else {
@@ -130,7 +130,7 @@ public class User extends Categories {
                 userName = Build.USER;
             }
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.USER_NAME, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.USER_NAME, ex.getMessage()));
         }
 
         return userName;

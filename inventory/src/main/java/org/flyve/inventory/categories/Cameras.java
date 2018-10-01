@@ -41,7 +41,7 @@ import android.util.Size;
 import android.util.SizeF;
 
 import org.flyve.inventory.CommonErrorType;
-import org.flyve.inventory.FILog;
+import org.flyve.inventory.FlyveLog;
 import org.flyve.inventory.Utils;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -118,7 +118,7 @@ public class Cameras
                 }
             }
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.CAMERA, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.CAMERA, ex.getMessage()));
         }
     }
 
@@ -131,13 +131,13 @@ public class Cameras
                     assert manager != null;
                     value = manager.getCameraIdList().length;
                 } catch (CameraAccessException e) {
-                    FILog.e(e.getMessage());
+                    FlyveLog.e(e.getMessage());
                 } catch (NullPointerException e) {
-                    FILog.e(e.getMessage());
+                    FlyveLog.e(e.getMessage());
                 }
             }
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.CAMERA_COUNT, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.CAMERA_COUNT, ex.getMessage()));
         }
         return value;
     }
@@ -156,7 +156,7 @@ public class Cameras
                 String cameraId = manager.getCameraIdList()[index];
                 return manager.getCameraCharacteristics(cameraId);
             } catch (Exception ex) {
-                FILog.e(FILog.getMessage(context, CommonErrorType.CAMERA_CHARACTERISTICS, ex.getMessage()));
+                FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.CAMERA_CHARACTERISTICS, ex.getMessage()));
             }
         }
         return null;
@@ -194,7 +194,7 @@ public class Cameras
                 return value;
             }
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.CAMERA_RESOLUTION, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.CAMERA_RESOLUTION, ex.getMessage()));
         }
         return value;
     }
@@ -224,7 +224,7 @@ public class Cameras
                 }
             }
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.CAMERA_FACING_STATE, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.CAMERA_FACING_STATE, ex.getMessage()));
         }
         return value;
     }
@@ -242,7 +242,7 @@ public class Cameras
                 return bool != null ? bool ? "1" : "0" : "N/A";
             }
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.CAMERA_FLASH_UNIT, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.CAMERA_FLASH_UNIT, ex.getMessage()));
         }
         return value;
     }
@@ -268,7 +268,7 @@ public class Cameras
                 }
             }
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.CAMERA_IMAGE_FORMAT, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.CAMERA_IMAGE_FORMAT, ex.getMessage()));
         }
         return types;
     }
@@ -314,7 +314,7 @@ public class Cameras
                 return value;
             }
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.CAMERA_ORIENTATION, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.CAMERA_ORIENTATION, ex.getMessage()));
         }
         return value;
     }
@@ -338,7 +338,7 @@ public class Cameras
                 value = width + "x" + height;
             }
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.CAMERA_VIDEO_RESOLUTION, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.CAMERA_VIDEO_RESOLUTION, ex.getMessage()));
         }
         return value;
     }
@@ -365,7 +365,7 @@ public class Cameras
                 return value;
             }
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.CAMERA_FOCAL_LENGTH, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.CAMERA_FOCAL_LENGTH, ex.getMessage()));
         }
         return value;
     }
@@ -392,7 +392,7 @@ public class Cameras
                 return value;
             }
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.CAMERA_SENSOR_SIZE, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.CAMERA_SENSOR_SIZE, ex.getMessage()));
         }
         return value;
     }
@@ -427,7 +427,7 @@ public class Cameras
                 }
             }
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.CAMERA_MANUFACTURER, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.CAMERA_MANUFACTURER, ex.getMessage()));
         }
         return value;
     }
@@ -450,7 +450,7 @@ public class Cameras
                     value = infoModel.split(":", 2)[1];
             }
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.CAMERA_MODEL, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.CAMERA_MODEL, ex.getMessage()));
         }
         return value;
     }
@@ -515,10 +515,10 @@ public class Cameras
                     throw th;
                 }
             } catch (Throwable th3) {
-                FILog.e(th3.getMessage());
+                FlyveLog.e(th3.getMessage());
             }
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.CAMERA_BUFFERED, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.CAMERA_BUFFERED, ex.getMessage()));
         }
         return arrayList;
     }
@@ -540,7 +540,7 @@ public class Cameras
                 return new String(bArr, Charset.forName("UTF-8"));
             }
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.CAMERA_VALUE_STRING, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.CAMERA_VALUE_STRING, ex.getMessage()));
         }
         return "";
     }
@@ -561,11 +561,11 @@ public class Cameras
                     }
                     arrayList.add(b2);
                 } catch (IOException e) {
-                    FILog.e(e.getMessage());
+                    FlyveLog.e(e.getMessage());
                 }
             }
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.CAMERA_LIST_BYTES, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.CAMERA_LIST_BYTES, ex.getMessage()));
         }
         return arrayList;
     }

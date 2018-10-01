@@ -33,7 +33,7 @@ import android.os.Build;
 import android.os.SystemClock;
 
 import org.flyve.inventory.CommonErrorType;
-import org.flyve.inventory.FILog;
+import org.flyve.inventory.FlyveLog;
 import org.flyve.inventory.Utils;
 
 import java.io.BufferedReader;
@@ -160,7 +160,7 @@ public class OperatingSystem extends Categories {
             this.add(c);
 
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.OPERATING_SYSTEM, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.OPERATING_SYSTEM, ex.getMessage()));
         }
     }
 
@@ -172,7 +172,7 @@ public class OperatingSystem extends Categories {
             Date resultDate = new Date(milliSeconds);
             value = sdf.format(resultDate);
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.OPERATING_SYSTEM_BOOT_TIME, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.OPERATING_SYSTEM_BOOT_TIME, ex.getMessage()));
         }
         return value;
     }
@@ -193,7 +193,7 @@ public class OperatingSystem extends Categories {
             br.close();
             value = line;
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.OPERATING_SYSTEM_KERNEL, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.OPERATING_SYSTEM_KERNEL, ex.getMessage()));
         }
         return value;
     }
@@ -206,14 +206,14 @@ public class OperatingSystem extends Categories {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EE MMM dd HH:mm:ss zzz yyyy", Locale.US);
             simpleDateFormat.setTimeZone(timeZone);
 
-            FILog.i("Time zone: " + timeZone.getID());
-            FILog.i("default time zone: " + TimeZone.getDefault().getID());
+            FlyveLog.i("Time zone: " + timeZone.getID());
+            FlyveLog.i("default time zone: " + TimeZone.getDefault().getID());
 
-            FILog.i("UTC:     " + simpleDateFormat.format(calendar.getTime()));
-            FILog.i("Default: " + calendar.getTime());
+            FlyveLog.i("UTC:     " + simpleDateFormat.format(calendar.getTime()));
+            FlyveLog.i("Default: " + calendar.getTime());
             value = timeZone.getDisplayName();
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.OPERATING_SYSTEM_TIME_ZONE, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.OPERATING_SYSTEM_TIME_ZONE, ex.getMessage()));
         }
         return  value;
     }
@@ -233,7 +233,7 @@ public class OperatingSystem extends Categories {
 
             value = offset;
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.OPERATING_SYSTEM_CURRENT, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.OPERATING_SYSTEM_CURRENT, ex.getMessage()));
         }
         return value;
     }

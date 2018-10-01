@@ -36,16 +36,13 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 
 import org.flyve.inventory.CommonErrorType;
-import org.flyve.inventory.FILog;
+import org.flyve.inventory.FlyveLog;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.math.BigInteger;
 import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
-import java.net.SocketException;
-import java.net.UnknownHostException;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
@@ -124,10 +121,10 @@ public class Networks extends Categories {
 			dhcp = pWM.getDhcpInfo();
 			wifi = pWM.getConnectionInfo();
 
-			FILog.d("<===WIFI DHCP===>");
-			FILog.d("dns1=" + StringUtils.intToIp(dhcp.dns1));
-			FILog.d("dns2=" + StringUtils.intToIp(dhcp.dns2));
-			FILog.d("leaseDuration=" + dhcp.leaseDuration);
+			FlyveLog.d("<===WIFI DHCP===>");
+			FlyveLog.d("dns1=" + StringUtils.intToIp(dhcp.dns1));
+			FlyveLog.d("dns2=" + StringUtils.intToIp(dhcp.dns2));
+			FlyveLog.d("leaseDuration=" + dhcp.leaseDuration);
 
 			c.put("MACADDR", new CategoryValue(getMacAddress(), "MACADDR", "macAddress"));
 			c.put("SPEED", new CategoryValue(getSpeed(), "SPEED", "speed"));
@@ -148,7 +145,7 @@ public class Networks extends Categories {
 				pWM.setWifiEnabled(false);
 			}
 		} catch (Exception ex) {
-			FILog.e(FILog.getMessage(context, CommonErrorType.NETWORKS, ex.getMessage()));
+			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS, ex.getMessage()));
 		}
 	}
 
@@ -169,7 +166,7 @@ public class Networks extends Categories {
 				}
 			}
 		} catch (Exception ex) {
-			FILog.e(FILog.getMessage(context, CommonErrorType.NETWORKS_MAC_ADDRESS, ex.getMessage()));
+			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS_MAC_ADDRESS, ex.getMessage()));
 		}
 
 		return macAddress;
@@ -190,7 +187,7 @@ public class Networks extends Categories {
 				return buf.toString();
 			}
 		} catch (Exception ex) {
-			FILog.e(FILog.getMessage(context, CommonErrorType.NETWORKS_MAC_ADDRESS_VALUE, ex.getMessage()));
+			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS_MAC_ADDRESS_VALUE, ex.getMessage()));
 		}
 
 		return "N/A";
@@ -205,7 +202,7 @@ public class Networks extends Categories {
 		try {
 			value = String.valueOf(wifi.getLinkSpeed());
 		} catch (Exception ex) {
-			FILog.e(FILog.getMessage(context, CommonErrorType.NETWORKS_SPEED, ex.getMessage()));
+			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS_SPEED, ex.getMessage()));
 		}
 		return value;
 	}
@@ -219,7 +216,7 @@ public class Networks extends Categories {
 		try {
 			value = String.valueOf(wifi.getBSSID());
 		} catch (Exception ex) {
-			FILog.e(FILog.getMessage(context, CommonErrorType.NETWORKS_BSS_ID, ex.getMessage()));
+			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS_BSS_ID, ex.getMessage()));
 		}
 		return value;
 	}
@@ -234,7 +231,7 @@ public class Networks extends Categories {
 		try {
 			value = String.valueOf(wifi.getSSID());
 		} catch (Exception ex) {
-			FILog.e(FILog.getMessage(context, CommonErrorType.NETWORKS_SS_ID, ex.getMessage()));
+			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS_SS_ID, ex.getMessage()));
 		}
 		return value;
 	}
@@ -248,7 +245,7 @@ public class Networks extends Categories {
 		try {
 			value = StringUtils.intToIp(dhcp.gateway);
 		} catch (Exception ex) {
-			FILog.e(FILog.getMessage(context, CommonErrorType.NETWORKS_IP_GATEWAY, ex.getMessage()));
+			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS_IP_GATEWAY, ex.getMessage()));
 		}
 		return value;
 	}
@@ -262,7 +259,7 @@ public class Networks extends Categories {
 		try {
 			value = StringUtils.intToIp(dhcp.ipAddress);
 		} catch (Exception ex) {
-			FILog.e(FILog.getMessage(context, CommonErrorType.NETWORKS_IP_ADDRESS, ex.getMessage()));
+			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS_IP_ADDRESS, ex.getMessage()));
 		}
 		return value;
 	}
@@ -276,7 +273,7 @@ public class Networks extends Categories {
 		try {
 			value = StringUtils.intToIp(dhcp.netmask);
 		} catch (Exception ex) {
-			FILog.e(FILog.getMessage(context, CommonErrorType.NETWORKS_IP_MASK, ex.getMessage()));
+			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS_IP_MASK, ex.getMessage()));
 		}
 		return value;
 	}
@@ -290,7 +287,7 @@ public class Networks extends Categories {
 		try {
 			value = StringUtils.intToIp(dhcp.serverAddress);
 		} catch (Exception ex) {
-			FILog.e(FILog.getMessage(context, CommonErrorType.NETWORKS_IP_DH_CP, ex.getMessage()));
+			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS_IP_DH_CP, ex.getMessage()));
 		}
 		return value;
 	}
@@ -304,7 +301,7 @@ public class Networks extends Categories {
 		try {
 			value = StringUtils.getSubNet(wifi.getIpAddress());
 		} catch (Exception ex) {
-			FILog.e(FILog.getMessage(context, CommonErrorType.NETWORKS_IP_SUBNET, ex.getMessage()));
+			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS_IP_SUBNET, ex.getMessage()));
 		}
 		return value;
 	}
@@ -318,7 +315,7 @@ public class Networks extends Categories {
 		try {
 			value = getCatInfo("/sys/class/net/wlan0/operstate");
 		} catch (Exception ex) {
-			FILog.e(FILog.getMessage(context, CommonErrorType.NETWORKS_STATUS, ex.getMessage()));
+			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS_STATUS, ex.getMessage()));
 		}
 		return value;
 	}
@@ -329,7 +326,7 @@ public class Networks extends Categories {
 			Scanner s = new Scanner(new File(path));
 			value = s.next();
 		} catch (Exception ex) {
-			FILog.e(FILog.getMessage(context, CommonErrorType.NETWORKS_CAT_INFO, ex.getMessage()));
+			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS_CAT_INFO, ex.getMessage()));
 		}
 		return value;
 	}
@@ -346,7 +343,7 @@ public class Networks extends Categories {
 				return name;
 			}
 		} catch (Exception ex) {
-			FILog.e(FILog.getMessage(context, CommonErrorType.NETWORKS_DESCRIPTION, ex.getMessage()));
+			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS_DESCRIPTION, ex.getMessage()));
 		}
 		return name;
 	}
@@ -368,7 +365,7 @@ public class Networks extends Categories {
 				}
 			}
 		} catch (Exception ex) {
-			FILog.e(FILog.getMessage(context, CommonErrorType.NETWORKS_LOCAL_IPV6, ex.getMessage()));
+			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS_LOCAL_IPV6, ex.getMessage()));
 		}
 		return "N/A";
 	}

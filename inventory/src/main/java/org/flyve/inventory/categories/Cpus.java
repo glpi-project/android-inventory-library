@@ -32,7 +32,7 @@ package org.flyve.inventory.categories;
 import android.content.Context;
 
 import org.flyve.inventory.CommonErrorType;
-import org.flyve.inventory.FILog;
+import org.flyve.inventory.FlyveLog;
 import org.flyve.inventory.Utils;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -93,7 +93,7 @@ public class Cpus extends Categories {
 
             this.add(c);
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.CPU, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.CPU, ex.getMessage()));
         }
     }
 
@@ -115,7 +115,7 @@ public class Cpus extends Categories {
                 return String.valueOf(Runtime.getRuntime().availableProcessors());
             }
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.CPU_CORE, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.CPU_CORE, ex.getMessage()));
         }
         return String.valueOf(value);
     }
@@ -130,7 +130,7 @@ public class Cpus extends Categories {
         try {
             value = System.getProperty("os.arch");
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.CPU_ARCH, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.CPU_ARCH, ex.getMessage()));
         }
         return value;
     }
@@ -157,7 +157,7 @@ public class Cpus extends Categories {
                 }
             }
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.CPU_FAMILY_NAME, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.CPU_FAMILY_NAME, ex.getMessage()));
         }
         return value;
     }
@@ -176,7 +176,7 @@ public class Cpus extends Categories {
                 value = cpuFamily;
             }
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.CPU_FAMILY_NUMBER, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.CPU_FAMILY_NUMBER, ex.getMessage()));
         }
         return value;
     }
@@ -203,7 +203,7 @@ public class Cpus extends Categories {
                 }
             }
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.CPU_MANUFACTURER, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.CPU_MANUFACTURER, ex.getMessage()));
         }
         return value;
     }
@@ -222,7 +222,7 @@ public class Cpus extends Categories {
                 value = hardware;
             }
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.CPU_MODEL, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.CPU_MODEL, ex.getMessage()));
         }
         return value;
     }
@@ -244,7 +244,7 @@ public class Cpus extends Categories {
                 String info = br.readLine();
                 cpuName = info.replaceAll("(.*):\\ (.*)", "$2");
             } catch (IOException e) {
-                FILog.e(e.getMessage());
+                FlyveLog.e(e.getMessage());
             } finally {
                 if (fr != null) {
                     fr.close();
@@ -254,7 +254,7 @@ public class Cpus extends Categories {
                 }
             }
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.CPU_NAME, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.CPU_NAME, ex.getMessage()));
         }
         return cpuName;
     }
@@ -272,14 +272,14 @@ public class Cpus extends Categories {
                 cpuFrequency = String.valueOf(Integer.valueOf(reader.readLine()) / 1000);
                 reader.close();
             } catch (IOException e) {
-                FILog.e(e.getMessage());
+                FlyveLog.e(e.getMessage());
             } finally {
                 if (reader != null) {
                     reader.close();
                 }
             }
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.CPU_FREQUENCY, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.CPU_FREQUENCY, ex.getMessage()));
         }
         return cpuFrequency;
     }
@@ -293,7 +293,7 @@ public class Cpus extends Categories {
         try {
             value = String.valueOf(Runtime.getRuntime().availableProcessors());
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.CPU_THREAD, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.CPU_THREAD, ex.getMessage()));
         }
         return value;
     }
