@@ -17,6 +17,7 @@
  *  GNU General Public License for more details.
  *  ---------------------------------------------------------------------
  *  @author    Rafael Hernandez - <rhernandez@teclib.com>
+ *  @author    Ivan del Pino    - <idelpino@teclib.com>
  *  @copyright Copyright Teclib. All rights reserved.
  *  @copyright Copyright FusionInventory.
  *  @license   GPLv3 https://www.gnu.org/licenses/gpl-3.0.html
@@ -31,9 +32,9 @@ package org.flyve.inventory.categories;
 import android.app.Service;
 import android.content.Context;
 import android.graphics.Point;
-import android.os.Build;
 import android.view.WindowManager;
 
+import org.flyve.inventory.CommonErrorType;
 import org.flyve.inventory.FILog;
 
 /**
@@ -52,7 +53,7 @@ public class Videos extends Categories {
      *  from: https://stackoverflow.com/questions/285793/what-is-a-serialversionuid-and-why-should-i-use-it
      */
     private static final long serialVersionUID = 6953895287405000489L;
-    private Context xCtx;
+    private Context context;
 
     /**
      * Indicates whether some other object is "equal to" this one
@@ -77,7 +78,7 @@ public class Videos extends Categories {
     @Override
     public int hashCode() {
         int hash = super.hashCode();
-        hash = 89 * hash + (this.xCtx != null ? this.xCtx.hashCode() : 0);
+        hash = 89 * hash + (this.context != null ? this.context.hashCode() : 0);
         return hash;
     }
 
@@ -87,14 +88,14 @@ public class Videos extends Categories {
      */
     public Videos(Context xCtx) {
         super(xCtx);
-        this.xCtx = xCtx;
+        this.context = xCtx;
 
         try {
             Category c = new Category("VIDEOS", "videos");
             c.put("RESOLUTION", new CategoryValue(getResolution(), "RESOLUTION", "resolution"));
             this.add(c);
         } catch (Exception ex) {
-            FILog.e(ex.getMessage());
+            FILog.e(FILog.getMessage(context, CommonErrorType.VIDEOS, ex.getMessage()));
         }
     }
 
@@ -103,13 +104,20 @@ public class Videos extends Categories {
      * @return string the width and height
      */
     public String getResolution() {
-        WindowManager lWinMgr = (WindowManager) xCtx.getSystemService(Service.WINDOW_SERVICE);
-        Point size = new Point();
-        lWinMgr.getDefaultDisplay().getSize(size);
+        String value = "N/A";
+        try {
+            WindowManager lWinMgr = (WindowManager) context.getSystemService(Service.WINDOW_SERVICE);
+            Point size = new Point();
+            lWinMgr.getDefaultDisplay().getSize(size);
 
-        int width = size.x;
-        int height = size.y;
+            int width = size.x;
+            int height = size.y;
 
-        return String.format("%dx%d", width, height);
+            value = String.format("%dx%d", width, height);
+            return value;
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.VIDEOS_RESOLUTION, ex.getMessage()));
+        }
+        return value;
     }
 }
