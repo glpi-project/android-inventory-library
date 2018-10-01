@@ -29,19 +29,12 @@
 package org.flyve.inventory;
 
 import android.content.Context;
-import android.hardware.usb.UsbDevice;
-import android.hardware.usb.UsbManager;
-import android.os.Build;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
 import org.flyve.inventory.categories.Usb;
-
-import org.flyve.inventory.usbManager.SysBusUsbDevice;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import java.util.HashMap;
 
 import static org.junit.Assert.assertNotEquals;
 
@@ -51,39 +44,45 @@ public class UsbTest {
     Context appContext = InstrumentationRegistry.getTargetContext();
 
     @Test
-    public void getClassTest() throws Exception {
+    public void getClassTest() {
         Usb usb = new Usb(appContext);
         assertNotEquals("", usb.getServiceClass());
     }
 
     @Test
-    public void getProductid() throws Exception {
+    public void getProductid() {
         Usb usb = new Usb(appContext);
         assertNotEquals("", usb.getPid());
     }
 
     @Test
-    public void getVendorid() throws Exception {
+    public void getVendorid() {
         Usb usb = new Usb(appContext);
         assertNotEquals("", usb.getVid());
     }
 
     @Test
-    public void getSubclass() throws Exception {
+    public void getSubclass() {
         Usb usb = new Usb(appContext);
         assertNotEquals("", usb.getDeviceSubClass());
     }
 
     @Test
-    public void getManufacturer() throws Exception {
+    public void getManufacturer() {
         Usb usb = new Usb(appContext);
         assertNotEquals("", usb.getReportedProductName());
     }
 
     @Test
-    public void getCaption() throws Exception {
+    public void getCaption() {
         Usb usb = new Usb(appContext);
         assertNotEquals("", usb.getUsbVersion());
+    }
+
+    @Test
+    public void getSerialNumber() {
+        Usb usb = new Usb(appContext);
+        assertNotEquals("", usb.getSerialNumber());
     }
 
 }

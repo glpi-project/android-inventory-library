@@ -29,20 +29,12 @@
 package org.flyve.inventory.categories;
 
 import android.content.Context;
-import android.hardware.usb.UsbDevice;
-import android.hardware.usb.UsbManager;
-import android.os.Build;
-import android.util.Log;
 
+import org.flyve.inventory.CommonErrorType;
 import org.flyve.inventory.FILog;
 import org.flyve.inventory.usbManager.SysBusUsbDevice;
 import org.flyve.inventory.usbManager.SysBusUsbManager;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -62,6 +54,7 @@ public class Usb extends Categories {
      */
     private static final long serialVersionUID = 4846706700566208666L;
 	private SysBusUsbDevice usb;
+	private final Context context;
 
 	/**
 	 * This constructor load the context and the Usb information
@@ -69,8 +62,10 @@ public class Usb extends Categories {
 	 */
     public Usb(Context xCtx) {
         super(xCtx);
-        
-        //USB inventory comes with SDK level 12 !
+
+		context = xCtx;
+
+		//USB inventory comes with SDK level 12 !
         try {
 			usb = getSysBusUsbDevice();
 
@@ -85,42 +80,89 @@ public class Usb extends Categories {
 
 			this.add(c);
 		} catch (Exception ex) {
-			FILog.e(ex.getMessage());
+			FILog.e(FILog.getMessage(context, CommonErrorType.USB, ex.getMessage()));
 		}
 
     }
 
-	public SysBusUsbDevice getSysBusUsbDevice() {
-		SysBusUsbManager usbManager = new SysBusUsbManager("/sys/bus/usb/devices/");
-		Map<String, SysBusUsbDevice> devices = usbManager.getUsbDevices();
-		return devices.get("usb1");
+	private SysBusUsbDevice getSysBusUsbDevice() {
+    	try {
+			SysBusUsbManager usbManager = new SysBusUsbManager("/sys/bus/usb/devices/");
+			Map<String, SysBusUsbDevice> devices = usbManager.getUsbDevices();
+			return devices.get("usb1");
+		} catch (Exception ex) {
+			FILog.e(FILog.getMessage(context, CommonErrorType.USB_SYS_BUS, ex.getMessage()));
+		}
+		return null;
 	}
 
 	public String getServiceClass() {
-		return usb == null ? "N/A" : usb.getServiceClass();
+		String value = "N/A";
+		try {
+			if (usb != null) value = usb.getServiceClass();
+		} catch (Exception ex) {
+			FILog.e(FILog.getMessage(context, CommonErrorType.USB_SERVICE, ex.getMessage()));
+		}
+		return value;
 	}
 
 	public String getPid() {
-		return usb == null ? "N/A" : usb.getPid();
+		String value = "N/A";
+		try {
+			value = usb.getPid();
+		} catch (Exception ex) {
+			FILog.e(FILog.getMessage(context, CommonErrorType.USB_PID, ex.getMessage()));
+		}
+		return value;
 	}
 
 	public String getVid() {
-		return usb == null ? "N/A" : usb.getVid();
+		String value = "N/A";
+		try {
+			value = usb.getVid();
+		} catch (Exception ex) {
+			FILog.e(FILog.getMessage(context, CommonErrorType.USB_VID, ex.getMessage()));
+		}
+		return value;
 	}
 
 	public String getDeviceSubClass() {
-		return usb == null ? "N/A" : usb.getDeviceSubClass();
+		String value = "N/A";
+		try {
+			value = usb.getDeviceSubClass();
+		} catch (Exception ex) {
+			FILog.e(FILog.getMessage(context, CommonErrorType.USB_DEVICE_SUB_CLASS, ex.getMessage()));
+		}
+		return value;
 	}
 
 	public String getReportedProductName() {
-		return usb == null ? "N/A" : usb.getReportedProductName();
+		String value = "N/A";
+		try {
+			value = usb.getReportedProductName();
+		} catch (Exception ex) {
+			FILog.e(FILog.getMessage(context, CommonErrorType.USB_REPORTED_PRODUCT_NAME, ex.getMessage()));
+		}
+		return value;
 	}
 
 	public String getUsbVersion() {
-		return usb == null ? "N/A" : usb.getUsbVersion();
+		String value = "N/A";
+		try {
+			value = usb.getUsbVersion();
+		} catch (Exception ex) {
+			FILog.e(FILog.getMessage(context, CommonErrorType.USB_USB_VERSION, ex.getMessage()));
+		}
+		return value;
 	}
 
 	public String getSerialNumber() {
-		return usb == null ? "N/A" : usb.getSerialNumber();
+		String value = "N/A";
+		try {
+			value = usb.getSerialNumber();
+		} catch (Exception ex) {
+			FILog.e(FILog.getMessage(context, CommonErrorType.USB_SERIAL_NUMBER, ex.getMessage()));
+		}
+		return value;
 	}
 }

@@ -156,4 +156,15 @@ public class CommonErrorType {
     public static final int STORAGE = 1800;
     public static final int STORAGE_PARTITION = 1801;
     public static final int STORAGE_VALUES = 1802;
+
+    /* Usb */
+    public static final int USB = 1900;
+    public static final int USB_SYS_BUS = 1901;
+    public static final int USB_SERVICE = 1902;
+    public static final int USB_PID = 1903;
+    public static final int USB_VID = 1904;
+    public static final int USB_DEVICE_SUB_CLASS = 1905;
+    public static final int USB_REPORTED_PRODUCT_NAME = 1906;
+    public static final int USB_USB_VERSION = 1907;
+    public static final int USB_SERIAL_NUMBER = 1908;
 }
