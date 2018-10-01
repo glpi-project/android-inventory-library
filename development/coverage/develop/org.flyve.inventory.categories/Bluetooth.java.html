@@ -1,6 +1,3 @@
----
-layout: coverage
----
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../resources/report.css" type="text/css"/><link rel="shortcut icon" href="../resources/report.gif" type="image/gif"/><title>Bluetooth.java</title><link rel="stylesheet" href="../resources/prettify.css" type="text/css"/><script type="text/javascript" src="../resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory.categories</a> &gt; <span class="el_source">Bluetooth.java</span></div><h1>Bluetooth.java</h1><pre class="source lang-java linenums">/**
  *  LICENSE
  * 
@@ -20,6 +17,7 @@ layout: coverage
  *  GNU General Public License for more details.
  *  ---------------------------------------------------------------------
  *  @author    Rafael Hernandez - &lt;rhernandez@teclib.com&gt;
+ *  @author    Ivan del Pino    - &lt;idelpino@teclib.com&gt;
  *  @copyright Copyright Teclib. All rights reserved.
  *  @copyright Copyright FusionInventory.
  *  @license   GPLv3 https://www.gnu.org/licenses/gpl-3.0.html
@@ -34,7 +32,8 @@ package org.flyve.inventory.categories;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 
-import org.flyve.inventory.FILog;
+import org.flyve.inventory.CommonErrorType;
+import org.flyve.inventory.FlyveLog;
 
 /**
  * This class get all the information of the Bluetooth
@@ -53,21 +52,22 @@ public class Bluetooth extends Categories {
 	 */
     private static final long serialVersionUID = 3252750764653173048L;
     private BluetoothAdapter adapter;
+    private final Context context;
 
-   /**
+    /**
      * Indicates whether some other object is &quot;equal to&quot; this one
      * @param Object obj the reference object with which to compare
      * @return boolean true if the object is the same as the one given in argument
      */
     @Override
     public boolean equals(Object obj) {
-<span class="nc bnc" id="L61" title="All 2 branches missed.">        if (obj == null) {</span>
-<span class="nc" id="L62">            return false;</span>
-        }
-<span class="nc bnc" id="L64" title="All 2 branches missed.">        if (getClass() != obj.getClass()) {</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">        if (obj == null) {</span>
 <span class="nc" id="L65">            return false;</span>
         }
-<span class="nc bnc" id="L67" title="All 2 branches missed.">        return (!super.equals(obj));</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">        if (getClass() != obj.getClass()) {</span>
+<span class="nc" id="L68">            return false;</span>
+        }
+<span class="nc bnc" id="L70" title="All 2 branches missed.">        return (!super.equals(obj));</span>
     }
 
     /**
@@ -76,41 +76,49 @@ public class Bluetooth extends Categories {
      */
     @Override
     public int hashCode() {
-<span class="nc" id="L76">        int hash = super.hashCode();</span>
-<span class="nc bnc" id="L77" title="All 2 branches missed.">        hash = 89 * hash + (this.adapter != null ? this.adapter.hashCode() : 0);</span>
-<span class="nc" id="L78">        return hash;</span>
+<span class="nc" id="L79">        int hash = super.hashCode();</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">        hash = 89 * hash + (this.adapter != null ? this.adapter.hashCode() : 0);</span>
+<span class="nc" id="L81">        return hash;</span>
     }
     /**
      * This constructor get all the information about Bluetooth
      * @param xCtx Context where this class work
      */
     public Bluetooth(Context xCtx) {
-<span class="nc" id="L85">        super(xCtx);</span>
+<span class="nc" id="L88">        super(xCtx);</span>
 
-<span class="nc" id="L87">        adapter = BluetoothAdapter.getDefaultAdapter();</span>
+<span class="nc" id="L90">        context = xCtx;</span>
 
-<span class="nc bnc" id="L89" title="All 2 branches missed.">        if(adapter != null) {</span>
+<span class="nc" id="L92">        adapter = BluetoothAdapter.getDefaultAdapter();</span>
+
+<span class="nc bnc" id="L94" title="All 2 branches missed.">        if(adapter != null) {</span>
             try {
-<span class="nc" id="L91">                Category c = new Category(&quot;BLUETOOTH_ADAPTER&quot;, &quot;bluetoothAdapter&quot;);</span>
+<span class="nc" id="L96">                Category c = new Category(&quot;BLUETOOTH_ADAPTER&quot;, &quot;bluetoothAdapter&quot;);</span>
 
                 // The hardware address of the local Bluetooth adapter.
-<span class="nc" id="L94">                c.put(&quot;HMAC&quot;, new CategoryValue(getHardwareAddress(), &quot;HMAC&quot;, &quot;hardwareAddress&quot;));</span>
+<span class="nc" id="L99">                c.put(&quot;HMAC&quot;, new CategoryValue(getHardwareAddress(), &quot;HMAC&quot;, &quot;hardwareAddress&quot;));</span>
 
                 // This name is visible to remote Bluetooth devices.
-<span class="nc" id="L97">                c.put(&quot;NAME&quot;, new CategoryValue(getName(), &quot;NAME&quot;, &quot;name&quot;));</span>
-<span class="nc" id="L98">                this.add(c);</span>
-<span class="nc" id="L99">            } catch (Exception ex) {</span>
-<span class="nc" id="L100">                FILog.e(ex.getMessage());</span>
-<span class="nc" id="L101">            }</span>
+<span class="nc" id="L102">                c.put(&quot;NAME&quot;, new CategoryValue(getName(), &quot;NAME&quot;, &quot;name&quot;));</span>
+<span class="nc" id="L103">                this.add(c);</span>
+<span class="nc" id="L104">            } catch (Exception ex) {</span>
+<span class="nc" id="L105">                FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.BLUETOOTH, ex.getMessage()));</span>
+<span class="nc" id="L106">            }</span>
         }
-<span class="nc" id="L103">    }</span>
+<span class="nc" id="L108">    }</span>
 
     /**
      * Get the hardware address of the local bluetooth adapter
      * @return string with the hardware address
      */
     public String getHardwareAddress() {
-<span class="nc" id="L110">        return adapter.getAddress();</span>
+<span class="nc" id="L115">        String address = &quot;N/A&quot;;</span>
+        try {
+<span class="nc" id="L117">            address = adapter.getAddress();</span>
+<span class="nc" id="L118">        } catch (Exception ex) {</span>
+<span class="nc" id="L119">            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.BLUETOOTH_HARDWARE_ADDRESS, ex.getMessage()));</span>
+<span class="nc" id="L120">        }</span>
+<span class="nc" id="L121">        return address;</span>
     }
 
     /**
@@ -118,7 +126,13 @@ public class Bluetooth extends Categories {
      * @return string the name of the adapter
      */
     public String getName() {
-<span class="nc" id="L118">        return adapter.getName();</span>
+<span class="nc" id="L129">        String name = &quot;N/A&quot;;</span>
+        try {
+<span class="nc" id="L131">            name = adapter.getName();</span>
+<span class="nc" id="L132">        } catch (Exception ex) {</span>
+<span class="nc" id="L133">            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.BLUETOOTH_NAME, ex.getMessage()));</span>
+<span class="nc" id="L134">        }</span>
+<span class="nc" id="L135">        return name;</span>
     }
 
 }

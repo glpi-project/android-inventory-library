@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../resources/report.css" type="text/css"/><link rel="shortcut icon" href="../resources/report.gif" type="image/gif"/><title>FlyveLog.java</title><link rel="stylesheet" href="../resources/prettify.css" type="text/css"/><script type="text/javascript" src="../resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory</a> &gt; <span class="el_source">FlyveLog.java</span></div><h1>FlyveLog.java</h1><pre class="source lang-java linenums">/**
+ *  LICENSE
+ * 
+ *  This file is part of Flyve MDM Inventory Library for Android.
+ *
+ *  Inventory Library for Android is a subproject of Flyve MDM.
+ *  Flyve MDM is a mobile device management software.
+ * 
+ *  Flyve MDM is free software: you can redistribute it and/or
+ *  modify it under the terms of the GNU General Public License
+ *  as published by the Free Software Foundation; either version 3
+ *  of the License, or (at your option) any later version.
+ *
+ *  Flyve MDM is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *  ---------------------------------------------------------------------
+ *  @author    Rafael Hernandez - &lt;rhernandez@teclib.com&gt;
+ *  @copyright Copyright Teclib. All rights reserved.
+ *  @copyright Copyright FusionInventory.
+ *  @license   GPLv3 https://www.gnu.org/licenses/gpl-3.0.html
+ *  @link      https://github.com/flyve-mdm/android-inventory-library
+ *  @link      http://flyve.org/android-inventory-library/
+ *  @link      https://flyve-mdm.com
+ *  ---------------------------------------------------------------------
+ */
+
+package org.flyve.inventory;
+
+import android.content.Context;
+import android.content.res.Resources;
+import android.util.Log;
+
+import com.orhanobut.logger.Logger;
+
+/**
+ * This is a Utils class grapper for Log
+ */
+public final class FlyveLog {
+
+    // This is the tag to search on console
+    static final String TAG = &quot;InventoryLibrary&quot;;
+
+    /**
+     * private constructor to prevent instances of this class
+     */
+<span class="nc" id="L48">    private FlyveLog() {</span>
+<span class="nc" id="L49">    }</span>
+
+    /**
+     * Sends a DEBUG log message
+     * @param message to log
+     */
+    public static void d(String message) {
+<span class="pc bpc" id="L56" title="1 of 2 branches missed.">        if(message != null) {</span>
+<span class="fc" id="L57">            Logger.d(TAG, message);</span>
+        }
+<span class="fc" id="L59">    }</span>
+
+    /**
+     * Sends a VERBOSE log message
+     * @param message to log
+     */
+    public static void v(String message) {
+<span class="pc bpc" id="L66" title="1 of 2 branches missed.">        if(message != null) {</span>
+<span class="fc" id="L67">            Logger.v(TAG, message);</span>
+        }
+<span class="fc" id="L69">    }</span>
+
+    /**
+     * Sends an INFO log message
+     * @param message to log
+     */
+    public static void i(String message) {
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">        if(message != null) {</span>
+<span class="fc" id="L77">            Logger.i(TAG, message);</span>
+        }
+<span class="fc" id="L79">    }</span>
+
+    /**
+     * Sends an ERROR log message
+     * @param message to log
+     */
+    public static void e(String message) {
+<span class="pc bpc" id="L86" title="1 of 2 branches missed.">        if(message != null) {</span>
+<span class="fc" id="L87">            Logger.e(TAG, message);</span>
+        }
+<span class="fc" id="L89">    }</span>
+
+    /**
+     * Sends a WARN log message
+     * @param message to log
+     */
+    public static void w(String message) {
+<span class="nc bnc" id="L96" title="All 2 branches missed.">        if(message != null) {</span>
+<span class="nc" id="L97">            Logger.w(TAG, message);</span>
+        }
+<span class="nc" id="L99">    }</span>
+
+    /**
+     * Reports a condition that should never happen, wts (What a Terrible Failure)
+     * @param message to log
+     */
+    public static void wtf(String message) {
+<span class="nc bnc" id="L106" title="All 2 branches missed.">        if(message != null) {</span>
+<span class="nc" id="L107">            Logger.wtf(TAG, message);</span>
+        }
+<span class="nc" id="L109">    }</span>
+
+    /**
+     * Sends a low level calling log
+     * @param obj the name of the class
+     * @param msg the log message
+     * @param level the priority/type of the log message
+     */
+    public static void log(Object obj, String msg, int level) {
+<span class="nc" id="L118">        String final_msg = String.format(&quot;[%s] %s&quot;, obj.getClass().getName(), msg);</span>
+<span class="nc" id="L119">        Log.println(level, &quot;InventoryAgent&quot;, final_msg);</span>
+<span class="nc" id="L120">    }</span>
+
+    public static String getMessage(Context context, int type, String message) {
+<span class="fc" id="L123">        Resources resource = context.getResources();</span>
+<span class="fc" id="L124">        return resource.getString(R.string.error_message_with_number, String.valueOf(type), message);</span>
+    }
+
+    public static String getMessage(String type, String message) {
+<span class="nc" id="L128">        String resource = Resources.getSystem().getString(R.string.error_message_with_number);</span>
+<span class="nc" id="L129">        return String.format(resource, type, message);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span>Generated by the Android Gradle plugin 2.2.0</div></body></html>

@@ -1,6 +1,3 @@
----
-layout: coverage
----
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../resources/report.css" type="text/css"/><link rel="shortcut icon" href="../resources/report.gif" type="image/gif"/><title>Videos.java</title><link rel="stylesheet" href="../resources/prettify.css" type="text/css"/><script type="text/javascript" src="../resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory.categories</a> &gt; <span class="el_source">Videos.java</span></div><h1>Videos.java</h1><pre class="source lang-java linenums">/**
  *  LICENSE
  * 
@@ -20,6 +17,7 @@ layout: coverage
  *  GNU General Public License for more details.
  *  ---------------------------------------------------------------------
  *  @author    Rafael Hernandez - &lt;rhernandez@teclib.com&gt;
+ *  @author    Ivan del Pino    - &lt;idelpino@teclib.com&gt;
  *  @copyright Copyright Teclib. All rights reserved.
  *  @copyright Copyright FusionInventory.
  *  @license   GPLv3 https://www.gnu.org/licenses/gpl-3.0.html
@@ -34,10 +32,10 @@ package org.flyve.inventory.categories;
 import android.app.Service;
 import android.content.Context;
 import android.graphics.Point;
-import android.os.Build;
 import android.view.WindowManager;
 
-import org.flyve.inventory.FILog;
+import org.flyve.inventory.CommonErrorType;
+import org.flyve.inventory.FlyveLog;
 
 /**
  * This class get all the information of the Video
@@ -55,7 +53,7 @@ public class Videos extends Categories {
      *  from: https://stackoverflow.com/questions/285793/what-is-a-serialversionuid-and-why-should-i-use-it
      */
     private static final long serialVersionUID = 6953895287405000489L;
-    private Context xCtx;
+    private Context context;
 
     /**
      * Indicates whether some other object is &quot;equal to&quot; this one
@@ -64,13 +62,13 @@ public class Videos extends Categories {
      */
     @Override
     public boolean equals(Object obj) {
-<span class="nc bnc" id="L64" title="All 2 branches missed.">        if (obj == null) {</span>
-<span class="nc" id="L65">            return false;</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">        if (obj == null) {</span>
+<span class="nc" id="L66">            return false;</span>
         }
-<span class="nc bnc" id="L67" title="All 2 branches missed.">        if (getClass() != obj.getClass()) {</span>
-<span class="nc" id="L68">            return false;</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">        if (getClass() != obj.getClass()) {</span>
+<span class="nc" id="L69">            return false;</span>
         }
-<span class="nc bnc" id="L70" title="All 2 branches missed.">        return (!super.equals(obj));</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">        return (!super.equals(obj));</span>
     }
 
     /**
@@ -79,9 +77,9 @@ public class Videos extends Categories {
      */
     @Override
     public int hashCode() {
-<span class="nc" id="L79">        int hash = super.hashCode();</span>
-<span class="nc bnc" id="L80" title="All 2 branches missed.">        hash = 89 * hash + (this.xCtx != null ? this.xCtx.hashCode() : 0);</span>
-<span class="nc" id="L81">        return hash;</span>
+<span class="nc" id="L80">        int hash = super.hashCode();</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">        hash = 89 * hash + (this.context != null ? this.context.hashCode() : 0);</span>
+<span class="nc" id="L82">        return hash;</span>
     }
 
     /**
@@ -89,31 +87,38 @@ public class Videos extends Categories {
      * @param xCtx Context where this class work
      */
     public Videos(Context xCtx) {
-<span class="fc" id="L89">        super(xCtx);</span>
-<span class="fc" id="L90">        this.xCtx = xCtx;</span>
+<span class="fc" id="L90">        super(xCtx);</span>
+<span class="fc" id="L91">        this.context = xCtx;</span>
 
         try {
-<span class="fc" id="L93">            Category c = new Category(&quot;VIDEOS&quot;, &quot;videos&quot;);</span>
-<span class="fc" id="L94">            c.put(&quot;RESOLUTION&quot;, new CategoryValue(getResolution(), &quot;RESOLUTION&quot;, &quot;resolution&quot;));</span>
-<span class="fc" id="L95">            this.add(c);</span>
-<span class="nc" id="L96">        } catch (Exception ex) {</span>
-<span class="nc" id="L97">            FILog.e(ex.getMessage());</span>
-<span class="fc" id="L98">        }</span>
-<span class="fc" id="L99">    }</span>
+<span class="fc" id="L94">            Category c = new Category(&quot;VIDEOS&quot;, &quot;videos&quot;);</span>
+<span class="fc" id="L95">            c.put(&quot;RESOLUTION&quot;, new CategoryValue(getResolution(), &quot;RESOLUTION&quot;, &quot;resolution&quot;));</span>
+<span class="fc" id="L96">            this.add(c);</span>
+<span class="nc" id="L97">        } catch (Exception ex) {</span>
+<span class="nc" id="L98">            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.VIDEOS, ex.getMessage()));</span>
+<span class="fc" id="L99">        }</span>
+<span class="fc" id="L100">    }</span>
 
     /**
      * Get the video resolutions
      * @return string the width and height
      */
     public String getResolution() {
-<span class="fc" id="L106">        WindowManager lWinMgr = (WindowManager) xCtx.getSystemService(Service.WINDOW_SERVICE);</span>
-<span class="fc" id="L107">        Point size = new Point();</span>
-<span class="fc" id="L108">        lWinMgr.getDefaultDisplay().getSize(size);</span>
+<span class="fc" id="L107">        String value = &quot;N/A&quot;;</span>
+        try {
+<span class="fc" id="L109">            WindowManager lWinMgr = (WindowManager) context.getSystemService(Service.WINDOW_SERVICE);</span>
+<span class="fc" id="L110">            Point size = new Point();</span>
+<span class="fc" id="L111">            lWinMgr.getDefaultDisplay().getSize(size);</span>
 
-<span class="fc" id="L110">        int width = size.x;</span>
-<span class="fc" id="L111">        int height = size.y;</span>
+<span class="fc" id="L113">            int width = size.x;</span>
+<span class="fc" id="L114">            int height = size.y;</span>
 
-<span class="fc" id="L113">        return String.format(&quot;%dx%d&quot;, width, height);</span>
+<span class="fc" id="L116">            value = String.format(&quot;%dx%d&quot;, width, height);</span>
+<span class="fc" id="L117">            return value;</span>
+<span class="nc" id="L118">        } catch (Exception ex) {</span>
+<span class="nc" id="L119">            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.VIDEOS_RESOLUTION, ex.getMessage()));</span>
+        }
+<span class="nc" id="L121">        return value;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span>Generated by the Android Gradle plugin 2.2.0</div></body></html>

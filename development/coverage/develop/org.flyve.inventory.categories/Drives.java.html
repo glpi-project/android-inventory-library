@@ -1,6 +1,3 @@
----
-layout: coverage
----
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../resources/report.css" type="text/css"/><link rel="shortcut icon" href="../resources/report.gif" type="image/gif"/><title>Drives.java</title><link rel="stylesheet" href="../resources/prettify.css" type="text/css"/><script type="text/javascript" src="../resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory.categories</a> &gt; <span class="el_source">Drives.java</span></div><h1>Drives.java</h1><pre class="source lang-java linenums">/**
  *  LICENSE
  * 
@@ -36,7 +33,8 @@ import android.content.Context;
 import android.os.Environment;
 import android.os.StatFs;
 
-import org.flyve.inventory.FILog;
+import org.flyve.inventory.CommonErrorType;
+import org.flyve.inventory.FlyveLog;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -59,6 +57,7 @@ public class Drives extends Categories {
      *  from: https://stackoverflow.com/questions/285793/what-is-a-serialversionuid-and-why-should-i-use-it
      */
 	private static final long serialVersionUID = 6073387379988815108L;
+    private final Context context;
 
     /**
      * This constructor load the context and load the Drivers information
@@ -66,37 +65,38 @@ public class Drives extends Categories {
      */
 
 	public Drives(Context xCtx) {
-<span class="fc" id="L66">        super(xCtx);</span>
-<span class="fc" id="L67">        this.addStorage(Environment.getRootDirectory());</span>
-<span class="fc" id="L68">        this.addStorage(Environment.getExternalStorageDirectory());</span>
-<span class="fc" id="L69">	    this.addStorage(Environment.getDataDirectory());</span>
-<span class="fc" id="L70">	    this.addStorage(Environment.getDownloadCacheDirectory());</span>
-<span class="fc" id="L71">        String secondaryStorage = System.getenv(&quot;SECONDARY_STORAGE&quot;);</span>
-<span class="pc bpc" id="L72" title="1 of 2 branches missed.">        if (secondaryStorage != null) {</span>
-<span class="nc" id="L73">            this.addStorage(new File(secondaryStorage));</span>
+<span class="fc" id="L68">        super(xCtx);</span>
+
+<span class="fc" id="L70">        context = xCtx;</span>
+
+<span class="fc" id="L72">        this.addStorage(Environment.getRootDirectory());</span>
+<span class="fc" id="L73">        this.addStorage(Environment.getExternalStorageDirectory());</span>
+<span class="fc" id="L74">	    this.addStorage(Environment.getDataDirectory());</span>
+<span class="fc" id="L75">	    this.addStorage(Environment.getDownloadCacheDirectory());</span>
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">        if (System.getenv(&quot;SECONDARY_STORAGE&quot;) != null) {</span>
+<span class="nc" id="L77">            this.addStorage(new File(System.getenv(&quot;SECONDARY_STORAGE&quot;)));</span>
         }
-<span class="fc" id="L75">    }</span>
+<span class="fc" id="L79">    }</span>
     
     /**
      * Add a storage to inventory
      * @param f the partition to inventory
      */
     private void addStorage(File f) {
-
         try {
-<span class="fc" id="L84">            Category c = new Category(&quot;DRIVES&quot;, &quot;drives&quot;);</span>
+<span class="fc" id="L87">            Category c = new Category(&quot;DRIVES&quot;, &quot;drives&quot;);</span>
 
-<span class="fc" id="L86">            c.put(&quot;VOLUMN&quot;, new CategoryValue(getVolume(f), &quot;VOLUMN&quot;, &quot;path&quot;));</span>
-<span class="fc" id="L87">            c.put(&quot;TOTAL&quot;, new CategoryValue(getTotal(f), &quot;TOTAL&quot;, &quot;total&quot;));</span>
-<span class="fc" id="L88">            c.put(&quot;FREE&quot;, new CategoryValue(getFreeSpace(f), &quot;FREE&quot;, &quot;free&quot;));</span>
-<span class="fc" id="L89">            c.put(&quot;FILESYSTEM&quot;, new CategoryValue(getFileSystem(f), &quot;FILESYSTEM&quot;, &quot;filesystem&quot;));</span>
-<span class="fc" id="L90">            c.put(&quot;TYPE&quot;, new CategoryValue(getType(f), &quot;TYPE&quot;, &quot;type&quot;));</span>
+<span class="fc" id="L89">            c.put(&quot;VOLUMN&quot;, new CategoryValue(getVolume(f), &quot;VOLUMN&quot;, &quot;path&quot;));</span>
+<span class="fc" id="L90">            c.put(&quot;TOTAL&quot;, new CategoryValue(getTotal(f), &quot;TOTAL&quot;, &quot;total&quot;));</span>
+<span class="fc" id="L91">            c.put(&quot;FREE&quot;, new CategoryValue(getFreeSpace(f), &quot;FREE&quot;, &quot;free&quot;));</span>
+<span class="fc" id="L92">            c.put(&quot;FILESYSTEM&quot;, new CategoryValue(getFileSystem(f), &quot;FILESYSTEM&quot;, &quot;filesystem&quot;));</span>
+<span class="fc" id="L93">            c.put(&quot;TYPE&quot;, new CategoryValue(getType(f), &quot;TYPE&quot;, &quot;type&quot;));</span>
 
-<span class="fc" id="L92">            this.add(c);</span>
-<span class="nc" id="L93">        } catch (Exception ex) {</span>
-<span class="nc" id="L94">            FILog.e(ex.getMessage());</span>
-<span class="fc" id="L95">        }</span>
-<span class="fc" id="L96">    }</span>
+<span class="fc" id="L95">            this.add(c);</span>
+<span class="nc" id="L96">        }  catch (Exception ex) {</span>
+<span class="nc" id="L97">            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.DRIVES, ex.getMessage()));</span>
+<span class="fc" id="L98">        }</span>
+<span class="fc" id="L99">    }</span>
 
     /**
      * Get the volume of the storage
@@ -104,22 +104,22 @@ public class Drives extends Categories {
      * @return string with the volume
      */
     public String getVolume(File f) {
-<span class="fc" id="L104">        String fileVolume = &quot;N/A&quot;;</span>
+<span class="fc" id="L107">        String fileVolume = &quot;N/A&quot;;</span>
         try {
-<span class="fc" id="L106">            Process mount = Runtime.getRuntime().exec(&quot;mount&quot;);</span>
-<span class="fc" id="L107">            BufferedReader bufferedFileInfo = new BufferedReader(new InputStreamReader(mount.getInputStream()));</span>
+<span class="fc" id="L109">            Process mount = Runtime.getRuntime().exec(&quot;mount&quot;);</span>
+<span class="fc" id="L110">            BufferedReader bufferedFileInfo = new BufferedReader(new InputStreamReader(mount.getInputStream()));</span>
             String line;
-<span class="fc bfc" id="L109" title="All 2 branches covered.">            while ((line = bufferedFileInfo.readLine()) != null) {</span>
-<span class="fc" id="L110">                String[] fileInfo = line.split(&quot;\\s+&quot;);</span>
-<span class="fc bfc" id="L111" title="All 2 branches covered.">                if (fileInfo[1].contentEquals(f.getAbsolutePath())) {</span>
-<span class="fc" id="L112">                    fileVolume = fileInfo[0];</span>
-<span class="fc" id="L113">                    break;</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">            while ((line = bufferedFileInfo.readLine()) != null) {</span>
+<span class="fc" id="L113">                String[] fileInfo = line.split(&quot;\\s+&quot;);</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">                if (fileInfo[1].contentEquals(f.getAbsolutePath())) {</span>
+<span class="fc" id="L115">                    fileVolume = fileInfo[0];</span>
+<span class="fc" id="L116">                    break;</span>
                 }
-<span class="fc" id="L115">            }</span>
-<span class="nc" id="L116">        } catch (Exception e) {</span>
-<span class="nc" id="L117">            FILog.e(e.getMessage());</span>
-<span class="fc" id="L118">        }</span>
-<span class="fc" id="L119">        return fileVolume;</span>
+<span class="fc" id="L118">            }</span>
+<span class="nc" id="L119">        } catch (Exception ex) {</span>
+<span class="nc" id="L120">            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.DRIVES_VOLUME, ex.getMessage()));</span>
+<span class="fc" id="L121">        }</span>
+<span class="fc" id="L122">        return fileVolume;</span>
     }
 
     /**
@@ -128,18 +128,16 @@ public class Drives extends Categories {
      * @return string the total space
      */
     public String getTotal(File f) {
-<span class="fc" id="L128">        String val = &quot;&quot;;</span>
-
+<span class="fc" id="L131">        String val = &quot;N/A&quot;;</span>
         try {
-<span class="fc" id="L131">            Long total = f.getTotalSpace();</span>
-<span class="fc" id="L132">            int toMega = 1048576;</span>
-<span class="fc" id="L133">            total = total / toMega;</span>
-<span class="fc" id="L134">            val = total.toString();</span>
-<span class="nc" id="L135">        } catch (Exception ex) {</span>
-<span class="nc" id="L136">            FILog.e(ex.getMessage());</span>
-<span class="fc" id="L137">        }</span>
-
-<span class="fc" id="L139">        return val;</span>
+<span class="fc" id="L133">            Long total = f.getTotalSpace();</span>
+<span class="fc" id="L134">            int toMega = 1048576;</span>
+<span class="fc" id="L135">            total = total / toMega;</span>
+<span class="fc" id="L136">            val = total.toString();</span>
+<span class="nc" id="L137">        } catch (Exception ex) {</span>
+<span class="nc" id="L138">            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.DRIVES_TOTAL, ex.getMessage()));</span>
+<span class="fc" id="L139">        }</span>
+<span class="fc" id="L140">        return val;</span>
     }
 
     /**
@@ -148,15 +146,21 @@ public class Drives extends Categories {
      * @return string the free space
      */
     public String getFreeSpace(File f) {
-<span class="fc" id="L148">        StatFs stat = new StatFs(f.getPath());</span>
-        long bytesAvailable;
-<span class="pc bpc" id="L150" title="1 of 2 branches missed.">        if (android.os.Build.VERSION.SDK_INT &gt;= android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) {</span>
-<span class="nc" id="L151">            bytesAvailable = stat.getBlockSizeLong() * stat.getAvailableBlocksLong();</span>
-        } else {
-<span class="fc" id="L153">            bytesAvailable = (long) stat.getBlockSize() * (long) stat.getAvailableBlocks();</span>
-        }
-<span class="fc" id="L155">        long value = bytesAvailable / (1024 * 1024);</span>
-<span class="fc" id="L156">        return String.valueOf(value);</span>
+<span class="fc" id="L149">        String value = &quot;N/A&quot;;</span>
+        try {
+<span class="fc" id="L151">            StatFs stat = new StatFs(f.getPath());</span>
+            long bytesAvailable;
+<span class="pc bpc" id="L153" title="1 of 2 branches missed.">            if (android.os.Build.VERSION.SDK_INT &gt;= android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) {</span>
+<span class="nc" id="L154">                bytesAvailable = stat.getBlockSizeLong() * stat.getAvailableBlocksLong();</span>
+            } else {
+<span class="fc" id="L156">                bytesAvailable = (long) stat.getBlockSize() * (long) stat.getAvailableBlocks();</span>
+            }
+<span class="fc" id="L158">            long valueBytes = bytesAvailable / (1024 * 1024);</span>
+<span class="fc" id="L159">            value = String.valueOf(valueBytes);</span>
+<span class="nc" id="L160">        } catch (Exception ex) {</span>
+<span class="nc" id="L161">            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.DRIVES_FREE_SPACE, ex.getMessage()));</span>
+<span class="fc" id="L162">        }</span>
+<span class="fc" id="L163">        return value;</span>
     }
 
     /**
@@ -165,22 +169,22 @@ public class Drives extends Categories {
      * @return string the filesystem
      */
     public String getFileSystem(File f) {
-<span class="fc" id="L165">        String fileSystem = &quot;N/A&quot;;</span>
+<span class="fc" id="L172">        String fileSystem = &quot;N/A&quot;;</span>
         try {
-<span class="fc" id="L167">            Process mount = Runtime.getRuntime().exec(&quot;mount&quot;);</span>
-<span class="fc" id="L168">            BufferedReader bufferedFileInfo = new BufferedReader(new InputStreamReader(mount.getInputStream()));</span>
+<span class="fc" id="L174">            Process mount = Runtime.getRuntime().exec(&quot;mount&quot;);</span>
+<span class="fc" id="L175">            BufferedReader bufferedFileInfo = new BufferedReader(new InputStreamReader(mount.getInputStream()));</span>
             String line;
-<span class="fc bfc" id="L170" title="All 2 branches covered.">            while ((line = bufferedFileInfo.readLine()) != null) {</span>
-<span class="fc" id="L171">                String[] fileInfo = line.split(&quot;\\s+&quot;);</span>
-<span class="fc bfc" id="L172" title="All 2 branches covered.">                if (fileInfo[1].contentEquals(f.getAbsolutePath())) {</span>
-<span class="fc" id="L173">                    fileSystem = fileInfo[2];</span>
-<span class="fc" id="L174">                    break;</span>
+<span class="fc bfc" id="L177" title="All 2 branches covered.">            while ((line = bufferedFileInfo.readLine()) != null) {</span>
+<span class="fc" id="L178">                String[] fileInfo = line.split(&quot;\\s+&quot;);</span>
+<span class="fc bfc" id="L179" title="All 2 branches covered.">                if (fileInfo[1].contentEquals(f.getAbsolutePath())) {</span>
+<span class="fc" id="L180">                    fileSystem = fileInfo[2];</span>
+<span class="fc" id="L181">                    break;</span>
                 }
-<span class="fc" id="L176">            }</span>
-<span class="nc" id="L177">        } catch (Exception e) {</span>
-<span class="nc" id="L178">            FILog.e(e.getMessage());</span>
-<span class="fc" id="L179">        }</span>
-<span class="fc" id="L180">        return fileSystem;</span>
+<span class="fc" id="L183">            }</span>
+<span class="nc" id="L184">        } catch (Exception ex) {</span>
+<span class="nc" id="L185">            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.DRIVES_FILE_SYSTEM, ex.getMessage()));</span>
+<span class="fc" id="L186">        }</span>
+<span class="fc" id="L187">        return fileSystem;</span>
     }
 
     /**
@@ -189,22 +193,22 @@ public class Drives extends Categories {
      * @return string filesystem mount point
      */
     public String getType(File f) {
-<span class="fc" id="L189">        String pointMounted = &quot;N/A&quot;;</span>
+<span class="fc" id="L196">        String pointMounted = &quot;N/A&quot;;</span>
         try {
-<span class="fc" id="L191">            Process mount = Runtime.getRuntime().exec(&quot;mount&quot;);</span>
-<span class="fc" id="L192">            BufferedReader bufferedFileInfo = new BufferedReader(new InputStreamReader(mount.getInputStream()));</span>
+<span class="fc" id="L198">            Process mount = Runtime.getRuntime().exec(&quot;mount&quot;);</span>
+<span class="fc" id="L199">            BufferedReader bufferedFileInfo = new BufferedReader(new InputStreamReader(mount.getInputStream()));</span>
             String line;
-<span class="fc bfc" id="L194" title="All 2 branches covered.">            while ((line = bufferedFileInfo.readLine()) != null) {</span>
-<span class="fc" id="L195">                String[] fileInfo = line.split(&quot;\\s+&quot;);</span>
-<span class="fc bfc" id="L196" title="All 2 branches covered.">                if (fileInfo[1].contentEquals(f.getAbsolutePath())) {</span>
-<span class="fc" id="L197">                    pointMounted = fileInfo[1];</span>
-<span class="fc" id="L198">                    break;</span>
+<span class="fc bfc" id="L201" title="All 2 branches covered.">            while ((line = bufferedFileInfo.readLine()) != null) {</span>
+<span class="fc" id="L202">                String[] fileInfo = line.split(&quot;\\s+&quot;);</span>
+<span class="fc bfc" id="L203" title="All 2 branches covered.">                if (fileInfo[1].contentEquals(f.getAbsolutePath())) {</span>
+<span class="fc" id="L204">                    pointMounted = fileInfo[1];</span>
+<span class="fc" id="L205">                    break;</span>
                 }
-<span class="fc" id="L200">            }</span>
-<span class="nc" id="L201">        } catch (Exception e) {</span>
-<span class="nc" id="L202">            FILog.e(e.getMessage());</span>
-<span class="fc" id="L203">        }</span>
-<span class="fc" id="L204">        return pointMounted;</span>
+<span class="fc" id="L207">            }</span>
+<span class="nc" id="L208">        } catch (Exception ex) {</span>
+<span class="nc" id="L209">            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.DRIVES_TYPE, ex.getMessage()));</span>
+<span class="fc" id="L210">        }</span>
+<span class="fc" id="L211">        return pointMounted;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span>Generated by the Android Gradle plugin 2.2.0</div></body></html>

@@ -1,6 +1,3 @@
----
-layout: coverage
----
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../resources/report.css" type="text/css"/><link rel="shortcut icon" href="../resources/report.gif" type="image/gif"/><title>Controllers.java</title><link rel="stylesheet" href="../resources/prettify.css" type="text/css"/><script type="text/javascript" src="../resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory.categories</a> &gt; <span class="el_source">Controllers.java</span></div><h1>Controllers.java</h1><pre class="source lang-java linenums">/**
  *  LICENSE
  * 
@@ -33,7 +30,8 @@ package org.flyve.inventory.categories;
 
 import android.content.Context;
 
-import org.flyve.inventory.FILog;
+import org.flyve.inventory.CommonErrorType;
+import org.flyve.inventory.FlyveLog;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -55,70 +53,83 @@ public class Controllers extends Categories {
      *  from: https://stackoverflow.com/questions/285793/what-is-a-serialversionuid-and-why-should-i-use-it
      */
 	private static final long serialVersionUID = 6791259866128400637L;
+    private final Context context;
 
     /**
      * This constructor trigger get all the information about Controllers
      * @param xCtx Context where this class work
      */
 	public Controllers(Context xCtx) {
-<span class="fc" id="L61">        super(xCtx);</span>
+<span class="fc" id="L63">        super(xCtx);</span>
+
+<span class="fc" id="L65">        context = xCtx;</span>
+
         try {
-<span class="fc" id="L63">            ArrayList&lt;String&gt; drivers = getDrivers();</span>
-<span class="pc bpc" id="L64" title="1 of 2 branches missed.">            if (drivers.size() &gt; 0) {</span>
-<span class="fc bfc" id="L65" title="All 2 branches covered.">                for (int i = 0; i &lt; drivers.size(); i++) {</span>
-<span class="fc" id="L66">                    Category c = new Category(&quot;CONTROLLERS&quot;, &quot;controllers&quot;);</span>
-<span class="fc" id="L67">                    c.put(&quot;DRIVER&quot;, new CategoryValue(drivers.get(i), &quot;DRIVER&quot;, &quot;driver&quot;));</span>
-<span class="fc" id="L68">                    this.add(c);</span>
+<span class="fc" id="L68">            ArrayList&lt;String&gt; drivers = getDrivers();</span>
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">            if (drivers.size() &gt; 0) {</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">                for (int i = 0; i &lt; drivers.size(); i++) {</span>
+<span class="fc" id="L71">                    Category c = new Category(&quot;CONTROLLERS&quot;, &quot;controllers&quot;);</span>
+<span class="fc" id="L72">                    c.put(&quot;DRIVER&quot;, new CategoryValue(drivers.get(i), &quot;DRIVER&quot;, &quot;driver&quot;));</span>
+<span class="fc" id="L73">                    this.add(c);</span>
                 }
             }
-<span class="nc" id="L71">        } catch (Exception ex) {</span>
-<span class="nc" id="L72">            FILog.e(ex.getMessage());</span>
-<span class="fc" id="L73">        }</span>
-<span class="fc" id="L74">    }</span>
+<span class="nc" id="L76">        } catch (Exception ex) {</span>
+<span class="nc" id="L77">            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.CONTROLLERS, ex.getMessage()));</span>
+<span class="fc" id="L78">        }</span>
+<span class="fc" id="L79">    }</span>
 
     /**
      * Get the name Driver
      * @return string name Driver
      */
     public ArrayList&lt;String&gt; getDrivers() {
-<span class="fc" id="L81">        ArrayList&lt;String&gt; arrayList = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L82">        ArrayList&lt;String&gt; arrayList2 = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L83">        File file = new File(&quot;/sys/bus/platform/drivers/&quot;);</span>
-<span class="fc" id="L84">        File[] listFiles = file.listFiles();</span>
-<span class="pc bpc" id="L85" title="1 of 2 branches missed.">        if (listFiles != null) {</span>
-<span class="fc bfc" id="L86" title="All 2 branches covered.">            for (File file2 : listFiles) {</span>
-<span class="pc bpc" id="L87" title="1 of 2 branches missed.">                if (file2.isDirectory()) {</span>
-<span class="fc" id="L88">                    String name = file2.getName();</span>
-<span class="fc" id="L89">                    String a = filterEmptyFile(file2);</span>
-<span class="pc bpc" id="L90" title="1 of 4 branches missed.">                    if (a == null || a.isEmpty()) {</span>
-<span class="fc" id="L91">                        arrayList2.add(name);</span>
-                    } else {
-<span class="fc" id="L93">                        arrayList.add(name);</span>
+<span class="fc" id="L86">        ArrayList&lt;String&gt; arrayList = new ArrayList&lt;&gt;();</span>
+        try {
+<span class="fc" id="L88">            ArrayList&lt;String&gt; arrayList2 = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L89">            File file = new File(&quot;/sys/bus/platform/drivers/&quot;);</span>
+<span class="fc" id="L90">            File[] listFiles = file.listFiles();</span>
+<span class="pc bpc" id="L91" title="1 of 2 branches missed.">            if (listFiles != null) {</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">                for (File file2 : listFiles) {</span>
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">                    if (file2.isDirectory()) {</span>
+<span class="fc" id="L94">                        String name = file2.getName();</span>
+<span class="fc" id="L95">                        String a = filterEmptyFile(file2);</span>
+<span class="pc bpc" id="L96" title="2 of 4 branches missed.">                        if (a == null || a.isEmpty()) {</span>
+<span class="nc" id="L97">                            arrayList2.add(name);</span>
+                        } else {
+<span class="fc" id="L99">                            arrayList.add(name);</span>
+                        }
                     }
                 }
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">                if (arrayList.isEmpty()) {</span>
+<span class="nc" id="L104">                    arrayList.addAll(arrayList2);</span>
+                }
+<span class="fc" id="L106">                Collections.sort(arrayList);</span>
             }
-<span class="pc bpc" id="L97" title="1 of 2 branches missed.">            if (arrayList.isEmpty()) {</span>
-<span class="nc" id="L98">                arrayList.addAll(arrayList2);</span>
-            }
-<span class="fc" id="L100">            Collections.sort(arrayList);</span>
-        }
-<span class="fc" id="L102">        return arrayList;</span>
+<span class="nc" id="L108">        } catch (Exception ex) {</span>
+<span class="nc" id="L109">            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.CONTROLLERS_DRIVERS, ex.getMessage()));</span>
+<span class="fc" id="L110">        }</span>
+<span class="fc" id="L111">        return arrayList;</span>
     }
 
     private String filterEmptyFile(File file) {
-<span class="fc" id="L106">        File[] listFiles = file.listFiles();</span>
-<span class="pc bpc" id="L107" title="1 of 2 branches missed.">        if (listFiles == null) {</span>
-<span class="nc" id="L108">            return null;</span>
-        }
-<span class="fc bfc" id="L110" title="All 2 branches covered.">        for (File file2 : listFiles) {</span>
-<span class="fc bfc" id="L111" title="All 2 branches covered.">            if (file2.isDirectory()) {</span>
-<span class="fc" id="L112">                String name = file2.getName();</span>
-<span class="pc bpc" id="L113" title="3 of 6 branches missed.">                if (!(&quot;bind&quot;.equals(name) || &quot;unbind&quot;.equals(name) || &quot;uevent&quot;.equals(name))) {</span>
-<span class="fc" id="L114">                    return name;</span>
+<span class="fc" id="L115">        String value = &quot;N/A&quot;;</span>
+        try {
+<span class="fc" id="L117">            File[] listFiles = file.listFiles();</span>
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">            if (listFiles == null) {</span>
+<span class="nc" id="L119">                return value;</span>
+            }
+<span class="fc bfc" id="L121" title="All 2 branches covered.">            for (File file2 : listFiles) {</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">                if (file2.isDirectory()) {</span>
+<span class="fc" id="L123">                    String name = file2.getName();</span>
+<span class="pc bpc" id="L124" title="3 of 6 branches missed.">                    if (!(&quot;bind&quot;.equals(name) || &quot;unbind&quot;.equals(name) || &quot;uevent&quot;.equals(name))) {</span>
+<span class="fc" id="L125">                        value = name;</span>
+                    }
                 }
             }
-        }
-<span class="fc" id="L118">        return null;</span>
+<span class="nc" id="L129">        } catch (Exception ex) {</span>
+<span class="nc" id="L130">            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.CONTROLLERS_FILE, ex.getMessage()));</span>
+<span class="fc" id="L131">        }</span>
+<span class="fc" id="L132">        return value;</span>
     }
 
 }

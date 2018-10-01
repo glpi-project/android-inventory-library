@@ -1,6 +1,3 @@
----
-layout: coverage
----
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../resources/report.css" type="text/css"/><link rel="shortcut icon" href="../resources/report.gif" type="image/gif"/><title>User.java</title><link rel="stylesheet" href="../resources/prettify.css" type="text/css"/><script type="text/javascript" src="../resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory.categories</a> &gt; <span class="el_source">User.java</span></div><h1>User.java</h1><pre class="source lang-java linenums">/**
  *  LICENSE
  * 
@@ -20,6 +17,7 @@ layout: coverage
  *  GNU General Public License for more details.
  *  ---------------------------------------------------------------------
  *  @author    Rafael Hernandez - &lt;rhernandez@teclib.com&gt;
+ *  @author    Ivan del Pino    - &lt;idelpino@teclib.com&gt;
  *  @copyright Copyright Teclib. All rights reserved.
  *  @license   GPLv3 https://www.gnu.org/licenses/gpl-3.0.html
  *  @link      https://github.com/flyve-mdm/android-inventory-library
@@ -34,7 +32,8 @@ import android.content.Context;
 import android.os.Build;
 import android.os.UserManager;
 
-import org.flyve.inventory.FILog;
+import org.flyve.inventory.CommonErrorType;
+import org.flyve.inventory.FlyveLog;
 
 import java.util.Properties;
 
@@ -56,7 +55,7 @@ public class User extends Categories {
     private static final long serialVersionUID = 3528873342443549732L;
 
     private Properties props;
-    private Context xCtx;
+    private Context context;
 
     /**
      * Indicates whether some other object is &quot;equal to&quot; this one
@@ -65,13 +64,13 @@ public class User extends Categories {
      */
     @Override
     public boolean equals(Object obj) {
-<span class="nc bnc" id="L65" title="All 2 branches missed.">        if (obj == null) {</span>
-<span class="nc" id="L66">            return false;</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">        if (obj == null) {</span>
+<span class="nc" id="L68">            return false;</span>
         }
-<span class="nc bnc" id="L68" title="All 2 branches missed.">        if (getClass() != obj.getClass()) {</span>
-<span class="nc" id="L69">            return false;</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">        if (getClass() != obj.getClass()) {</span>
+<span class="nc" id="L71">            return false;</span>
         }
-<span class="nc bnc" id="L71" title="All 2 branches missed.">        return (!super.equals(obj));</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">        return (!super.equals(obj));</span>
     }
 
     /**
@@ -80,10 +79,10 @@ public class User extends Categories {
      */
     @Override
     public int hashCode() {
-<span class="nc" id="L80">        int hash = super.hashCode();</span>
-<span class="nc bnc" id="L81" title="All 2 branches missed.">        hash = 89 * hash + (this.xCtx != null ? this.xCtx.hashCode() : 0);</span>
-<span class="nc bnc" id="L82" title="All 2 branches missed.">        hash = 89 * hash + (this.props != null ? this.props.hashCode() : 0);</span>
-<span class="nc" id="L83">        return hash;</span>
+<span class="nc" id="L82">        int hash = super.hashCode();</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">        hash = 89 * hash + (this.context != null ? this.context.hashCode() : 0);</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">        hash = 89 * hash + (this.props != null ? this.props.hashCode() : 0);</span>
+<span class="nc" id="L85">        return hash;</span>
     }
 
     /**
@@ -91,46 +90,50 @@ public class User extends Categories {
      * @param xCtx Context where this class work
      */
     public User(Context xCtx) {
-<span class="fc" id="L91">        super(xCtx);</span>
+<span class="fc" id="L93">        super(xCtx);</span>
 
-<span class="fc" id="L93">        this.xCtx = xCtx;</span>
+<span class="fc" id="L95">        this.context = xCtx;</span>
 
         try {
-<span class="fc" id="L96">            props = System.getProperties();</span>
+<span class="fc" id="L98">            props = System.getProperties();</span>
 
-<span class="fc" id="L98">            Category c = new Category(&quot;USER&quot;, &quot;user&quot;);</span>
-<span class="fc" id="L99">            c.put(&quot;LOGIN&quot;, new CategoryValue(userName(), &quot;LOGIN&quot;, &quot;login&quot;));</span>
+<span class="fc" id="L100">            Category c = new Category(&quot;USER&quot;, &quot;user&quot;);</span>
+<span class="fc" id="L101">            c.put(&quot;LOGIN&quot;, new CategoryValue(getUserName(), &quot;LOGIN&quot;, &quot;login&quot;));</span>
 
-<span class="fc" id="L101">            this.add(c);</span>
-<span class="nc" id="L102">        } catch (Exception ex) {</span>
-<span class="nc" id="L103">            FILog.e(ex.getMessage());</span>
-<span class="fc" id="L104">        }</span>
+<span class="fc" id="L103">            this.add(c);</span>
+<span class="nc" id="L104">        } catch (Exception ex) {</span>
+<span class="nc" id="L105">            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.USER, ex.getMessage()));</span>
+<span class="fc" id="L106">        }</span>
 
-<span class="fc" id="L106">    }</span>
+<span class="fc" id="L108">    }</span>
 
     /**
      * Get the user name
      */
-    public String userName() {
-        String userName;
-<span class="pc bpc" id="L113" title="1 of 2 branches missed.">        if(Build.VERSION.SDK_INT &gt;= 17) {</span>
-<span class="nc" id="L114">            UserManager userMgr = (UserManager) xCtx.getSystemService(Context.USER_SERVICE);</span>
-<span class="nc bnc" id="L115" title="All 2 branches missed.">            if (userMgr != null) {</span>
-                try {
-                    // validate permission exception
-<span class="nc" id="L118">                    userName = userMgr.getUserName();</span>
-<span class="nc" id="L119">                } catch (Exception ex) {</span>
-<span class="nc" id="L120">                    FILog.e(ex.getMessage());</span>
-<span class="nc" id="L121">                    userName = Build.USER;</span>
-<span class="nc" id="L122">                }</span>
-            } else {
-<span class="nc" id="L124">                userName = Build.USER;</span>
+    public String getUserName() {
+<span class="fc" id="L114">        String userName = &quot;N/A&quot;;</span>
+        try {
+<span class="pc bpc" id="L116" title="1 of 2 branches missed.">            if (Build.VERSION.SDK_INT &gt;= 17) {</span>
+<span class="nc" id="L117">                UserManager userMgr = (UserManager) context.getSystemService(Context.USER_SERVICE);</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">                if (userMgr != null) {</span>
+                    try {
+                        // validate permission exception
+<span class="nc" id="L121">                        userName = userMgr.getUserName();</span>
+<span class="nc" id="L122">                    } catch (Exception ex) {</span>
+<span class="nc" id="L123">                        FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.USER_NAME, ex.getMessage()));</span>
+<span class="nc" id="L124">                        userName = Build.USER;</span>
+<span class="nc" id="L125">                    }</span>
+                } else {
+<span class="nc" id="L127">                    userName = Build.USER;</span>
+                }
+<span class="nc" id="L129">            } else {</span>
+<span class="fc" id="L130">                userName = Build.USER;</span>
             }
-<span class="nc" id="L126">        } else {</span>
-<span class="fc" id="L127">            userName = Build.USER;</span>
-        }
+<span class="nc" id="L132">        } catch (Exception ex) {</span>
+<span class="nc" id="L133">            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.USER_NAME, ex.getMessage()));</span>
+<span class="fc" id="L134">        }</span>
 
-<span class="fc" id="L130">        return userName;</span>
+<span class="fc" id="L136">        return userName;</span>
     }
 
 }

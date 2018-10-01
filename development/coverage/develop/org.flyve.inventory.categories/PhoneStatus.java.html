@@ -1,6 +1,3 @@
----
-layout: coverage
----
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../resources/report.css" type="text/css"/><link rel="shortcut icon" href="../resources/report.gif" type="image/gif"/><title>PhoneStatus.java</title><link rel="stylesheet" href="../resources/prettify.css" type="text/css"/><script type="text/javascript" src="../resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory.categories</a> &gt; <span class="el_source">PhoneStatus.java</span></div><h1>PhoneStatus.java</h1><pre class="source lang-java linenums">/**
  *  LICENSE
  * 
@@ -20,6 +17,7 @@ layout: coverage
  *  GNU General Public License for more details.
  *  ---------------------------------------------------------------------
  *  @author    Rafael Hernandez - &lt;rhernandez@teclib.com&gt;
+ *  @author    Ivan del Pino    - &lt;idelpino@teclib.com&gt;
  *  @copyright Copyright Teclib. All rights reserved.
  *  @copyright Copyright FusionInventory.
  *  @license   GPLv3 https://www.gnu.org/licenses/gpl-3.0.html
@@ -36,7 +34,8 @@ import android.telephony.PhoneStateListener;
 import android.telephony.ServiceState;
 import android.telephony.TelephonyManager;
 
-import org.flyve.inventory.FILog;
+import org.flyve.inventory.CommonErrorType;
+import org.flyve.inventory.FlyveLog;
 
 /**
  * This class get all the information of the Network
@@ -60,52 +59,52 @@ public class PhoneStatus extends Categories {
      * @param xCtx Context where this class work
      */
     public PhoneStatus(Context xCtx) {
-<span class="nc" id="L60">        super(xCtx);</span>
+<span class="nc" id="L62">        super(xCtx);</span>
 
         //TODO Solved the problem Thread inside other Thread to make PhoenStatus works
         // The problem here is with a the PhoneStateListener and the
         // AsyncTask we got a Thread inside other Thread
         try {
 
-<span class="nc" id="L67">        final Category c = new Category(&quot;PHONE_STATUS&quot;, &quot;phoneStatus&quot;);</span>
+<span class="nc" id="L69">        final Category c = new Category(&quot;PHONE_STATUS&quot;, &quot;phoneStatus&quot;);</span>
 
-<span class="nc" id="L69">        TelephonyManager telMng = (TelephonyManager)xCtx.getSystemService(Context.TELEPHONY_SERVICE);</span>
-<span class="nc" id="L70">            telMng.listen(new PhoneStateListener() {</span>
+<span class="nc" id="L71">        TelephonyManager telMng = (TelephonyManager)xCtx.getSystemService(Context.TELEPHONY_SERVICE);</span>
+<span class="nc" id="L72">            telMng.listen(new PhoneStateListener() {</span>
                 @Override
                 public void onServiceStateChanged(ServiceState serviceState) {
-<span class="nc" id="L73">                    super.onServiceStateChanged(serviceState);</span>
+<span class="nc" id="L75">                    super.onServiceStateChanged(serviceState);</span>
                     String phoneState;
 
-<span class="nc bnc" id="L76" title="All 5 branches missed.">                    switch (serviceState.getState()) {</span>
+<span class="nc bnc" id="L78" title="All 5 branches missed.">                    switch (serviceState.getState()) {</span>
                         case ServiceState.STATE_EMERGENCY_ONLY:
-<span class="nc" id="L78">                            phoneState = &quot;STATE_EMERGENCY_ONLY&quot;;</span>
-<span class="nc" id="L79">                            break;</span>
+<span class="nc" id="L80">                            phoneState = &quot;STATE_EMERGENCY_ONLY&quot;;</span>
+<span class="nc" id="L81">                            break;</span>
                         case ServiceState.STATE_IN_SERVICE:
-<span class="nc" id="L81">                            phoneState = &quot;STATE_IN_SERVICE&quot;;</span>
-<span class="nc" id="L82">                            break;</span>
+<span class="nc" id="L83">                            phoneState = &quot;STATE_IN_SERVICE&quot;;</span>
+<span class="nc" id="L84">                            break;</span>
                         case ServiceState.STATE_OUT_OF_SERVICE:
-<span class="nc" id="L84">                            phoneState = &quot;STATE_OUT_OF_SERVICE&quot;;</span>
-<span class="nc" id="L85">                            break;</span>
+<span class="nc" id="L86">                            phoneState = &quot;STATE_OUT_OF_SERVICE&quot;;</span>
+<span class="nc" id="L87">                            break;</span>
                         case ServiceState.STATE_POWER_OFF:
-<span class="nc" id="L87">                            phoneState = &quot;STATE_POWER_OFF&quot;;</span>
-<span class="nc" id="L88">                            break;</span>
+<span class="nc" id="L89">                            phoneState = &quot;STATE_POWER_OFF&quot;;</span>
+<span class="nc" id="L90">                            break;</span>
                         default:
-<span class="nc" id="L90">                            phoneState = &quot;Unknown&quot;;</span>
+<span class="nc" id="L92">                            phoneState = &quot;Unknown&quot;;</span>
                             break;
                     }
 
-<span class="nc" id="L94">                    c.put(&quot;STATE&quot;, new CategoryValue(phoneState, &quot;STATE&quot;, &quot;state&quot;));</span>
-<span class="nc" id="L95">                    c.put(&quot;OPERATOR_ALPHA&quot;, new CategoryValue(serviceState.getOperatorAlphaLong(), &quot;OPERATOR_ALPHA&quot;, &quot;operatorAlpha&quot;));</span>
-<span class="nc" id="L96">                    c.put(&quot;OPERATOR_NUMERIC&quot;, new CategoryValue(serviceState.getOperatorNumeric(), &quot;OPERATOR_NUMERIC&quot;, &quot;operatorNumeric&quot;));</span>
-<span class="nc" id="L97">                    c.put(&quot;ROAMING&quot;, new CategoryValue(Boolean.valueOf(serviceState.getRoaming()).toString(), &quot;ROAMING&quot;, &quot;roaming&quot;));</span>
-<span class="nc bnc" id="L98" title="All 2 branches missed.">                    c.put(&quot;NETWORK_SELECTION&quot;, new CategoryValue(serviceState.getIsManualSelection() ? &quot;NETWORK_SELECTION&quot; : &quot;AUTO&quot;, &quot;NETWORK_SELECTION&quot;, &quot;networkSelection&quot;));</span>
+<span class="nc" id="L96">                    c.put(&quot;STATE&quot;, new CategoryValue(phoneState, &quot;STATE&quot;, &quot;state&quot;));</span>
+<span class="nc" id="L97">                    c.put(&quot;OPERATOR_ALPHA&quot;, new CategoryValue(serviceState.getOperatorAlphaLong(), &quot;OPERATOR_ALPHA&quot;, &quot;operatorAlpha&quot;));</span>
+<span class="nc" id="L98">                    c.put(&quot;OPERATOR_NUMERIC&quot;, new CategoryValue(serviceState.getOperatorNumeric(), &quot;OPERATOR_NUMERIC&quot;, &quot;operatorNumeric&quot;));</span>
+<span class="nc" id="L99">                    c.put(&quot;ROAMING&quot;, new CategoryValue(Boolean.valueOf(serviceState.getRoaming()).toString(), &quot;ROAMING&quot;, &quot;roaming&quot;));</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">                    c.put(&quot;NETWORK_SELECTION&quot;, new CategoryValue(serviceState.getIsManualSelection() ? &quot;NETWORK_SELECTION&quot; : &quot;AUTO&quot;, &quot;NETWORK_SELECTION&quot;, &quot;networkSelection&quot;));</span>
 
-<span class="nc" id="L100">                    PhoneStatus.this.add(c);</span>
-<span class="nc" id="L101">                }</span>
+<span class="nc" id="L102">                    PhoneStatus.this.add(c);</span>
+<span class="nc" id="L103">                }</span>
             }, PhoneStateListener.LISTEN_SERVICE_STATE);
-<span class="nc" id="L103">        } catch (Exception ex) {</span>
-<span class="nc" id="L104">            FILog.e(ex.getMessage());</span>
-<span class="nc" id="L105">        }</span>
-<span class="nc" id="L106">    }</span>
+<span class="nc" id="L105">        } catch (Exception ex) {</span>
+<span class="nc" id="L106">            FlyveLog.e(FlyveLog.getMessage(xCtx, CommonErrorType.PHONE_STATUS, ex.getMessage()));</span>
+<span class="nc" id="L107">        }</span>
+<span class="nc" id="L108">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span>Generated by the Android Gradle plugin 2.2.0</div></body></html>
