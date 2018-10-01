@@ -310,8 +310,8 @@ public class Utils {
             while (s.hasNextLine()) {
                 concatInfo.append(s.nextLine());
             }
-        } catch (Exception e) {
-            FILog.e(e.getMessage());
+        } catch (Exception ex) {
+            FILog.e(CommonErrorType.UTILS_CAT_INFO_MULTIPLE + " " + ex.getMessage());
         }
         return concatInfo.toString();
     }
@@ -320,8 +320,8 @@ public class Utils {
         try {
             Scanner s = new Scanner(new File(path));
             return s.next();
-        } catch (Exception e) {
-            FILog.e(e.getMessage());
+        } catch (Exception ex) {
+            FILog.e(CommonErrorType.UTILS_CAT_INFO + " " + ex.getMessage());
         }
         return "";
     }
