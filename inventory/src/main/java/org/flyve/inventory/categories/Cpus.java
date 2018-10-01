@@ -93,7 +93,7 @@ public class Cpus extends Categories {
 
             this.add(c);
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.CPU_ARCH, ex.getMessage()));
+            FILog.e(FILog.getMessage(context, CommonErrorType.CPU, ex.getMessage()));
         }
     }
 
