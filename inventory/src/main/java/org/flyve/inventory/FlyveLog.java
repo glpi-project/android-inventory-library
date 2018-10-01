@@ -123,4 +123,9 @@ public final class FlyveLog {
         Resources resource = context.getResources();
         return resource.getString(R.string.error_message_with_number, String.valueOf(type), message);
     }
+
+    public static String getMessage(String type, String message) {
+        String resource = Resources.getSystem().getString(R.string.error_message_with_number);
+        return String.format(resource, type, message);
+    }
 }

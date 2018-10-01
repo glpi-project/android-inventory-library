@@ -55,7 +55,6 @@ public class CommonErrorType {
     public static final int BIOS_CPU_SERIAL = 210;
 
     /* Bluetooth */
-
     public static final int BLUETOOTH = 300;
     public static final int BLUETOOTH_HARDWARE_ADDRESS = 301;
     public static final int BLUETOOTH_NAME = 302;
@@ -225,16 +224,20 @@ public class CommonErrorType {
     public static final int VIDEOS_RESOLUTION = 2201;
 
     /* Categories */
-    public static final int CATEGORY_TO_XML = 2301;
-    public static final int CATEGORY_TO_XML_WITHOUT_PRIVATE = 2302;
-    public static final int CATEGORY_TO_JSON = 2303;
-    public static final int CATEGORY_TO_JSON_WITHOUT_PRIVATE = 2304;
-    public static final int CATEGORIES_TO_XML = 2305;
-    public static final int CATEGORIES_TO_XML_WITHOUT_PRIVATE = 2306;
-    public static final int CATEGORIES_TO_JSON = 2307;
-    public static final int CATEGORIES_TO_JSON_WITHOUT_PRIVATE = 2308;
+    public static final int CATEGORY_TO_XML = 2300;
+    public static final int CATEGORY_TO_XML_WITHOUT_PRIVATE = 2301;
+    public static final int CATEGORY_TO_JSON = 2302;
+    public static final int CATEGORY_TO_JSON_WITHOUT_PRIVATE = 2303;
+    public static final int CATEGORIES_TO_XML = 2304;
+    public static final int CATEGORIES_TO_XML_WITHOUT_PRIVATE = 2305;
+    public static final int CATEGORIES_TO_JSON = 2306;
+    public static final int CATEGORIES_TO_JSON_WITHOUT_PRIVATE = 2307;
 
-    /* Others */
-    public static final int UTILS_CAT_INFO = 2401;
-    public static final int UTILS_CAT_INFO_MULTIPLE = 2402;
+    /* Utils */
+    public static final int UTILS_CAT_INFO = 2400;
+    public static final int UTILS_CAT_INFO_MULTIPLE = 2401;
+    public static final int UTILS_CREATE_XML = 2402;
+    public static final int UTILS_CREATE_JSON = 2403;
+    public static final int UTILS_DEVICE_PROPERTIES = 2404;
+    public static final int UTILS_LOAD_JSON_ASSET = 2405;
 }

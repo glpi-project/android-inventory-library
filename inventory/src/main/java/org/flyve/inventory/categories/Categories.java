@@ -99,7 +99,7 @@ public class Categories extends ArrayList<Category>{
                 c.toXML(xSerializer);
             }
         } catch (Exception ex) {
-            FlyveLog.e(CommonErrorType.CATEGORIES_TO_XML + " " + ex.getMessage());
+            FlyveLog.e(FlyveLog.getMessage(String.valueOf(CommonErrorType.CATEGORIES_TO_XML), ex.getMessage()));
         }
     }
 
@@ -113,7 +113,7 @@ public class Categories extends ArrayList<Category>{
                 c.toXMLWithoutPrivateData(xSerializer);
             }
         } catch (Exception ex) {
-            FlyveLog.e(CommonErrorType.CATEGORIES_TO_XML_WITHOUT_PRIVATE + " " + ex.getMessage());
+            FlyveLog.e(FlyveLog.getMessage(String.valueOf(CommonErrorType.CATEGORIES_TO_XML_WITHOUT_PRIVATE), ex.getMessage()));
         }
     }
 
@@ -143,7 +143,7 @@ public class Categories extends ArrayList<Category>{
 
             json.put(mType, jsonArr);
         } catch (Exception ex) {
-            FlyveLog.e(CommonErrorType.CATEGORIES_TO_JSON_WITHOUT_PRIVATE + " " + ex.getMessage());
+            FlyveLog.e(FlyveLog.getMessage(String.valueOf(CommonErrorType.CATEGORIES_TO_JSON_WITHOUT_PRIVATE), ex.getMessage()));
         }
     }
 }
