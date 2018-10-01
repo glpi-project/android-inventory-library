@@ -32,6 +32,7 @@ import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 
+import org.flyve.inventory.CommonErrorType;
 import org.flyve.inventory.FILog;
 
 import java.util.List;
@@ -52,6 +53,7 @@ public class Sensors extends Categories {
      *  from: https://stackoverflow.com/questions/285793/what-is-a-serialversionuid-and-why-should-i-use-it
      */
 	private static final long serialVersionUID = 4846706700566208666L;
+	private final Context context;
 
 	/**
 	 * This constructor load the context and the Sensors information
@@ -59,6 +61,8 @@ public class Sensors extends Categories {
 	 */
 	public Sensors(Context xCtx) {
 		super(xCtx);
+
+		context = xCtx;
 
 		try {
 			SensorManager sensorManager = (SensorManager) xCtx.getSystemService(Context.SENSOR_SERVICE);
@@ -76,7 +80,7 @@ public class Sensors extends Categories {
 				this.add(c);
 			}
 		} catch (Exception ex) {
-			FILog.e(ex.getMessage());
+			FILog.e(FILog.getMessage(context, CommonErrorType.SENSORS, ex.getMessage()));
 		}
 	}
 
@@ -86,7 +90,13 @@ public class Sensors extends Categories {
 	 * @return string the sensor name
 	 */
 	public String getName(Sensor s) {
-		return s.getName();
+		String value = "N/A";
+		try {
+			value = s.getName();
+		} catch (Exception ex) {
+			FILog.e(FILog.getMessage(context, CommonErrorType.SENSORS_NAME, ex.getMessage()));
+		}
+		return value;
 	}
 
 	/**
@@ -95,7 +105,13 @@ public class Sensors extends Categories {
 	 * @return string the vendor of the sensor
 	 */
 	public String getManufacturer(Sensor s) {
-		return s.getVendor();
+		String value = "N/A";
+		try {
+			value = s.getVendor();
+		} catch (Exception ex) {
+			FILog.e(FILog.getMessage(context, CommonErrorType.SENSORS_MANUFACTURER, ex.getMessage()));
+		}
+		return value;
 	}
 
 	/**
@@ -104,38 +120,42 @@ public class Sensors extends Categories {
 	 * @return string the sensor type
 	 */
 	public String getType(Sensor s) {
-		String strtype;
-		int type = s.getType();
-		switch (type) {
-			case Sensor.TYPE_ACCELEROMETER:
-				strtype = "ACCELEROMETER";
-				break;
-			case Sensor.TYPE_GRAVITY:
-				strtype = "GRAVITY";
-				break;
-			case Sensor.TYPE_GYROSCOPE:
-				strtype = "GYROSCOPE";
-				break;
-			case Sensor.TYPE_LINEAR_ACCELERATION:
-				strtype = "LINEAR ACCELERATION";
-				break;
-			case Sensor.TYPE_MAGNETIC_FIELD:
-				strtype = "MAGNETIC FIELD";
-				break;
-			case Sensor.TYPE_PRESSURE:
-				strtype = "PRESSURE";
-				break;
-			case Sensor.TYPE_PROXIMITY:
-				strtype = "PROXIMITY";
-				break;
-			case Sensor.TYPE_ROTATION_VECTOR:
-				strtype = "ROTATION VECTOR";
-				break;
-			default:
-				strtype = "Unknow";
-				break;
+		String valueType = "N/A";
+		try {
+			int type = s.getType();
+			switch (type) {
+				case Sensor.TYPE_ACCELEROMETER:
+					valueType = "ACCELEROMETER";
+					break;
+				case Sensor.TYPE_GRAVITY:
+					valueType = "GRAVITY";
+					break;
+				case Sensor.TYPE_GYROSCOPE:
+					valueType = "GYROSCOPE";
+					break;
+				case Sensor.TYPE_LINEAR_ACCELERATION:
+					valueType = "LINEAR ACCELERATION";
+					break;
+				case Sensor.TYPE_MAGNETIC_FIELD:
+					valueType = "MAGNETIC FIELD";
+					break;
+				case Sensor.TYPE_PRESSURE:
+					valueType = "PRESSURE";
+					break;
+				case Sensor.TYPE_PROXIMITY:
+					valueType = "PROXIMITY";
+					break;
+				case Sensor.TYPE_ROTATION_VECTOR:
+					valueType = "ROTATION VECTOR";
+					break;
+				default:
+					valueType = "Unknow";
+					break;
+			}
+		} catch (Exception ex) {
+			FILog.e(FILog.getMessage(context, CommonErrorType.SENSORS_TYPE, ex.getMessage()));
 		}
-		return strtype;
+		return valueType;
 	}
 
 	/**
@@ -144,7 +164,13 @@ public class Sensors extends Categories {
 	 * @return string the power used by the sensor while in use
 	 */
 	public String getPower(Sensor s) {
-		return String.valueOf(s.getPower());
+		String value = "N/A";
+		try {
+			value = String.valueOf(s.getPower());
+		} catch (Exception ex) {
+			FILog.e(FILog.getMessage(context, CommonErrorType.SENSORS_POWER, ex.getMessage()));
+		}
+		return value;
 	}
 
 	/**
@@ -153,6 +179,12 @@ public class Sensors extends Categories {
 	 * @return string the version
 	 */
 	public String getVersion(Sensor s) {
-		return String.valueOf(s.getVersion());
+		String value = "N/A";
+		try {
+			value = String.valueOf(s.getVersion());
+		} catch (Exception ex) {
+			FILog.e(FILog.getMessage(context, CommonErrorType.SENSORS_VERSION, ex.getMessage()));
+		}
+		return value;
 	}
 }

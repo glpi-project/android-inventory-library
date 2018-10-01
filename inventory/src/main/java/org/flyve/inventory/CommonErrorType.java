@@ -120,4 +120,24 @@ public class CommonErrorType {
 
     /* Phone Status */
     public static final int PHONE_STATUS = 1500;
+
+    /* SENSORS */
+    public static final int SENSORS = 1500;
+    public static final int SENSORS_NAME = 1501;
+    public static final int SENSORS_MANUFACTURER = 1502;
+    public static final int SENSORS_TYPE = 1503;
+    public static final int SENSORS_POWER = 1504;
+    public static final int SENSORS_VERSION = 1505;
+
+    /* SIM CARDS */
+    public static final int SIM_CARDS = 1600;
+    public static final int SIM_CARDS_MULTIPLE = 1601;
+    public static final int SIM_CARDS_STATE_BY_SLOT = 1602;
+    public static final int SIM_CARDS_COUNTRY = 1603;
+    public static final int SIM_CARDS_OPERATOR_CODE = 1604;
+    public static final int SIM_CARDS_OPERATOR_NAME = 1605;
+    public static final int SIM_CARDS_SERIAL = 1606;
+    public static final int SIM_CARDS_STATE = 1607;
+    public static final int SIM_CARDS_LINE_NUMBER = 1608;
+    public static final int SIM_CARDS_SUBSCRIBER_ID = 1609;
 }

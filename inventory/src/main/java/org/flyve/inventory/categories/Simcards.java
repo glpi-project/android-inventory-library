@@ -34,6 +34,7 @@ import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 
+import org.flyve.inventory.CommonErrorType;
 import org.flyve.inventory.FILog;
 
 import java.lang.reflect.Method;
@@ -57,6 +58,7 @@ public class Simcards extends Categories {
     private static final long serialVersionUID = -5532129156981574844L;
 
     private TelephonyManager mTM;
+    private final Context context;
 
     /**
      * Indicates whether some other object is "equal to" this one
@@ -91,6 +93,8 @@ public class Simcards extends Categories {
      */
     public Simcards(Context xCtx) {
         super(xCtx);
+
+        context = xCtx;
 
         try {
             /*
@@ -134,7 +138,7 @@ public class Simcards extends Categories {
                 }
             }
         } catch (Exception ex) {
-            FILog.e(ex.getMessage());
+            FILog.e(FILog.getMessage(context, CommonErrorType.SIM_CARDS, ex.getMessage()));
         }
     }
 
@@ -144,12 +148,16 @@ public class Simcards extends Categories {
      * @return true API >= 22
      */
     public List<SubscriptionInfo> getMultipleSim(Context xCtx) {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP_MR1) {
-            SubscriptionManager subscriptionManager = (SubscriptionManager) xCtx.getSystemService(Context.TELEPHONY_SUBSCRIPTION_SERVICE);
-            return subscriptionManager.getActiveSubscriptionInfoList();
-        } else {
-            return null;
+        try {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP_MR1) {
+                SubscriptionManager subscriptionManager = (SubscriptionManager) xCtx.getSystemService(Context.TELEPHONY_SUBSCRIPTION_SERVICE);
+                assert subscriptionManager != null;
+                return subscriptionManager.getActiveSubscriptionInfoList();
+            }
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.SIM_CARDS_MULTIPLE, ex.getMessage()));
         }
+        return null;
     }
 
     /**
@@ -169,8 +177,8 @@ public class Simcards extends Categories {
             if (obPhone != null) {
                 return Integer.parseInt(obPhone.toString());
             }
-        } catch (Exception e) {
-            FILog.e(e.getMessage());
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.SIM_CARDS_STATE_BY_SLOT, ex.getMessage()));
         }
 
         return 0;
@@ -181,7 +189,13 @@ public class Simcards extends Categories {
      * @return string the ISO country code
      */
     public String getCountry() {
-        return mTM.getSimCountryIso();
+        String value = "N/A";
+        try {
+            value = mTM.getSimCountryIso();
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.SIM_CARDS_COUNTRY, ex.getMessage()));
+        }
+        return value;
     }
 
     /**
@@ -189,7 +203,13 @@ public class Simcards extends Categories {
      * @return the Mobile Country Code and Mobile Network Code of the provider of the sim
      */
     public String getOperatorCode() {
-        return mTM.getSimOperator();
+        String value = "N/A";
+        try {
+            value = mTM.getSimOperator();
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.SIM_CARDS_OPERATOR_CODE, ex.getMessage()));
+        }
+        return value;
     }
 
     /**
@@ -197,7 +217,13 @@ public class Simcards extends Categories {
      * @return string the Service Provider Name
      */
     public String getOperatorName() {
-        return mTM.getSimOperatorName();
+        String value = "N/A";
+        try {
+            value = mTM.getSimOperatorName();
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.SIM_CARDS_OPERATOR_NAME, ex.getMessage()));
+        }
+        return value;
     }
 
     /**
@@ -205,7 +231,13 @@ public class Simcards extends Categories {
      * @return string the serial number
      */
     public String getSerial() {
-        return mTM.getSimSerialNumber();
+        String value = "N/A";
+        try {
+            value = mTM.getSimSerialNumber();
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.SIM_CARDS_SERIAL, ex.getMessage()));
+        }
+        return value;
     }
 
     /**
@@ -214,30 +246,34 @@ public class Simcards extends Categories {
      * @param xCtx
      */
     public String getState(Context xCtx, int slotId) {
-        int simState = mTM != null ? mTM.getSimState() : getSIMStateBySlot(xCtx, slotId);
-        String mState;
-        switch (simState) {
-            case TelephonyManager.SIM_STATE_ABSENT:
-                mState = "SIM_STATE_ABSENT";
-                break;
-            case TelephonyManager.SIM_STATE_NETWORK_LOCKED:
-                mState = "SIM_STATE_NETWORK_LOCKED";
-                break;
-            case TelephonyManager.SIM_STATE_PIN_REQUIRED:
-                mState = "SIM_STATE_PIN_REQUIRED";
-                break;
-            case TelephonyManager.SIM_STATE_PUK_REQUIRED:
-                mState = "SIM_STATE_PUK_REQUIRED";
-                break;
-            case TelephonyManager.SIM_STATE_READY:
-                mState = "SIM_STATE_READY";
-                break;
-            case TelephonyManager.SIM_STATE_UNKNOWN:
-                mState = "SIM_STATE_UNKNOWN";
-                break;
-            default:
-                mState = "SIM_STATE_UNKNOWN";
-                break;
+        String mState = "N/A";
+        try {
+            int simState = mTM != null ? mTM.getSimState() : getSIMStateBySlot(xCtx, slotId);
+            switch (simState) {
+                case TelephonyManager.SIM_STATE_ABSENT:
+                    mState = "SIM_STATE_ABSENT";
+                    break;
+                case TelephonyManager.SIM_STATE_NETWORK_LOCKED:
+                    mState = "SIM_STATE_NETWORK_LOCKED";
+                    break;
+                case TelephonyManager.SIM_STATE_PIN_REQUIRED:
+                    mState = "SIM_STATE_PIN_REQUIRED";
+                    break;
+                case TelephonyManager.SIM_STATE_PUK_REQUIRED:
+                    mState = "SIM_STATE_PUK_REQUIRED";
+                    break;
+                case TelephonyManager.SIM_STATE_READY:
+                    mState = "SIM_STATE_READY";
+                    break;
+                case TelephonyManager.SIM_STATE_UNKNOWN:
+                    mState = "SIM_STATE_UNKNOWN";
+                    break;
+                default:
+                    mState = "SIM_STATE_UNKNOWN";
+                    break;
+            }
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.SIM_CARDS_STATE, ex.getMessage()));
         }
         return mState;
     }
@@ -247,7 +283,13 @@ public class Simcards extends Categories {
      * @return string the phone number for line 1
      */
     public String getLineNumber() {
-        return mTM.getLine1Number();
+        String value = "N/A";
+        try {
+            value = mTM.getLine1Number();
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.SIM_CARDS_LINE_NUMBER, ex.getMessage()));
+        }
+        return value;
     }
 
     /**
@@ -255,6 +297,12 @@ public class Simcards extends Categories {
      * @return string the unique subscriber ID
      */
     public String getSubscriberId() {
-        return mTM.getSubscriberId();
+        String value = "N/A";
+        try {
+            value = mTM.getSubscriberId();
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.SIM_CARDS_SUBSCRIBER_ID, ex.getMessage()));
+        }
+        return value;
     }
 }
