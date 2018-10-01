@@ -40,6 +40,7 @@ import android.os.Build;
 import android.util.Size;
 import android.util.SizeF;
 
+import org.flyve.inventory.CommonErrorType;
 import org.flyve.inventory.FILog;
 import org.flyve.inventory.Utils;
 import org.json.JSONArray;
@@ -50,8 +51,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -77,6 +76,7 @@ public class Cameras
      */
 	private static final long serialVersionUID = 6791259866128400637L;
     private final String cameraVendors;
+    private final Context context;
 
     /**
      * This constructor trigger get all the information about Cameras
@@ -84,6 +84,7 @@ public class Cameras
      */
 	public Cameras(Context xCtx) {
         super(xCtx);
+        context = xCtx;
 
         cameraVendors = Utils.loadJSONFromAsset(xCtx, "camera_vendors.json");
 
@@ -117,22 +118,26 @@ public class Cameras
                 }
             }
         } catch (Exception ex) {
-            FILog.e(ex.getMessage());
+            FILog.e(FILog.getMessage(context, CommonErrorType.CAMERA, ex.getMessage()));
         }
     }
 
     public int getCountCamera(Context xCtx) {
 	    int value = 0;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            CameraManager manager = (CameraManager) xCtx.getApplicationContext().getSystemService(Context.CAMERA_SERVICE);
-            try {
-                assert manager != null;
-                value = manager.getCameraIdList().length;
-            } catch (CameraAccessException e) {
-                FILog.e(e.getMessage());
-            } catch (NullPointerException e) {
-                FILog.e(e.getMessage());
+	    try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                CameraManager manager = (CameraManager) xCtx.getApplicationContext().getSystemService(Context.CAMERA_SERVICE);
+                try {
+                    assert manager != null;
+                    value = manager.getCameraIdList().length;
+                } catch (CameraAccessException e) {
+                    FILog.e(e.getMessage());
+                } catch (NullPointerException e) {
+                    FILog.e(e.getMessage());
+                }
             }
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.CAMERA_COUNT, ex.getMessage()));
         }
         return value;
     }
@@ -150,10 +155,8 @@ public class Cameras
                 assert manager != null;
                 String cameraId = manager.getCameraIdList()[index];
                 return manager.getCameraCharacteristics(cameraId);
-            } catch (CameraAccessException e) {
-                FILog.e(e.getMessage());
-            } catch (NullPointerException e) {
-                FILog.e(e.getMessage());
+            } catch (Exception ex) {
+                FILog.e(FILog.getMessage(context, CommonErrorType.CAMERA_CHARACTERISTICS, ex.getMessage()));
             }
         }
         return null;
@@ -166,28 +169,32 @@ public class Cameras
      */
     public String getResolution(CameraCharacteristics characteristics) {
         String value = "N/A";
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            int width = 0, height = 0;
-            StreamConfigurationMap sizes = characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
-            if (sizes != null) {
-                Size[] outputSizes = sizes.getOutputSizes(256);
-                if (outputSizes == null || outputSizes.length <= 0) {
-                    Rect rect = characteristics.get(CameraCharacteristics.SENSOR_INFO_ACTIVE_ARRAY_SIZE);
-                    if (rect != null) {
-                        width = rect.width();
-                        height = rect.height();
+        try {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                int width = 0, height = 0;
+                StreamConfigurationMap sizes = characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
+                if (sizes != null) {
+                    Size[] outputSizes = sizes.getOutputSizes(256);
+                    if (outputSizes == null || outputSizes.length <= 0) {
+                        Rect rect = characteristics.get(CameraCharacteristics.SENSOR_INFO_ACTIVE_ARRAY_SIZE);
+                        if (rect != null) {
+                            width = rect.width();
+                            height = rect.height();
+                        }
+                    } else {
+                        Size size = outputSizes[outputSizes.length - 1];
+                        width = size.getWidth();
+                        height = size.getHeight();
                     }
+                    value = width + "x" + height;
                 } else {
-                    Size size = outputSizes[outputSizes.length - 1];
-                    width = size.getWidth();
-                    height = size.getHeight();
+                    return value;
                 }
-                value = width + "x" + height;
             } else {
                 return value;
             }
-        } else {
-            return value;
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.CAMERA_RESOLUTION, ex.getMessage()));
         }
         return value;
     }
@@ -199,21 +206,25 @@ public class Cameras
      */
     public String getFacingState(CameraCharacteristics characteristics) {
         String value = "N/A";
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            Integer facing = characteristics.get(CameraCharacteristics.LENS_FACING);
-            if (facing != null) {
-                switch (facing) {
-                    case 0:
-                        value = "FRONT";
-                        break;
-                    case 1:
-                        value = "BACK";
-                        break;
-                    case 2:
-                        value = "EXTERNAL";
-                        break;
+        try {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                Integer facing = characteristics.get(CameraCharacteristics.LENS_FACING);
+                if (facing != null) {
+                    switch (facing) {
+                        case 0:
+                            value = "FRONT";
+                            break;
+                        case 1:
+                            value = "BACK";
+                            break;
+                        case 2:
+                            value = "EXTERNAL";
+                            break;
+                    }
                 }
             }
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.CAMERA_FACING_STATE, ex.getMessage()));
         }
         return value;
     }
@@ -225,19 +236,15 @@ public class Cameras
      */
     public String getFlashUnit(CameraCharacteristics characteristics) {
         String value = "N/A";
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            Boolean bool = characteristics.get(CameraCharacteristics.FLASH_INFO_AVAILABLE);
-            return bool != null ? bool ? "1" : "0" : "N/A";
+        try {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                Boolean bool = characteristics.get(CameraCharacteristics.FLASH_INFO_AVAILABLE);
+                return bool != null ? bool ? "1" : "0" : "N/A";
+            }
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.CAMERA_FLASH_UNIT, ex.getMessage()));
         }
         return value;
-    }
-
-    private Category getCategoryImageFormat(CameraCharacteristics characteristics) {
-        Category category = new Category("IMAGEFORMAT", "imageformat");
-        for (String imageFormat : getImageFormat(characteristics)) {
-            category.put("FORMAT", new CategoryValue(imageFormat, "FORMAT", "format"));
-        }
-        return category;
     }
 
     /**
@@ -247,19 +254,21 @@ public class Cameras
      */
     public ArrayList<String> getImageFormat(CameraCharacteristics characteristics) {
         ArrayList<String> types = new ArrayList<>();
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            StreamConfigurationMap configurationMap = characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
-            if (configurationMap != null) {
-                int[] outputFormats = configurationMap.getOutputFormats();
-                if (outputFormats != null) {
-                    for (int value : outputFormats) {
-                        String type = typeFormat(value);
-                        if (type != null) {
+        try {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                StreamConfigurationMap configurationMap = characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
+                if (configurationMap != null) {
+                    int[] outputFormats = configurationMap.getOutputFormats();
+                    if (outputFormats != null) {
+                        for (int value : outputFormats) {
+                            String type = typeFormat(value);
                             types.add(type.replaceAll("[<>]", ""));
                         }
                     }
                 }
             }
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.CAMERA_IMAGE_FORMAT, ex.getMessage()));
         }
         return types;
     }
@@ -287,7 +296,7 @@ public class Cameras
             case 842094169:
                 return "YV12";
             default:
-                return null;
+                return "N/A";
         }
     }
 
@@ -298,11 +307,16 @@ public class Cameras
      */
     public String getOrientation(CameraCharacteristics characteristics) {
         String value = "N/A";
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            return String.valueOf(characteristics.get(CameraCharacteristics.SENSOR_ORIENTATION));
-        } else {
-            return value;
+        try {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                return String.valueOf(characteristics.get(CameraCharacteristics.SENSOR_ORIENTATION));
+            } else {
+                return value;
+            }
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.CAMERA_ORIENTATION, ex.getMessage()));
         }
+        return value;
     }
 
 
@@ -324,7 +338,7 @@ public class Cameras
                 value = width + "x" + height;
             }
         } catch (Exception ex) {
-            FILog.e(ex.getMessage());
+            FILog.e(FILog.getMessage(context, CommonErrorType.CAMERA_VIDEO_RESOLUTION, ex.getMessage()));
         }
         return value;
     }
@@ -336,19 +350,24 @@ public class Cameras
      */
     public String getFocalLength(CameraCharacteristics characteristics) {
         String value = "N/A";
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            float[] fArr = characteristics.get(CameraCharacteristics.LENS_INFO_AVAILABLE_FOCAL_LENGTHS);
-            if (fArr == null) {
-                return null;
+        try {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                float[] fArr = characteristics.get(CameraCharacteristics.LENS_INFO_AVAILABLE_FOCAL_LENGTHS);
+                if (fArr == null) {
+                    return null;
+                }
+                StringBuilder str = new StringBuilder();
+                for (float f : fArr) {
+                    str.append(f);
+                }
+                return str.toString().trim();
+            } else {
+                return value;
             }
-            StringBuilder str = new StringBuilder();
-            for (float f : fArr) {
-                str.append(f);
-            }
-            return str.toString().trim();
-        } else {
-            return value;
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.CAMERA_FOCAL_LENGTH, ex.getMessage()));
         }
+        return value;
     }
 
     /**
@@ -358,30 +377,22 @@ public class Cameras
      */
     public String getSensorSize(CameraCharacteristics characteristics) {
         String value = "N/A";
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            SizeF sizeF = characteristics.get(CameraCharacteristics.SENSOR_INFO_PHYSICAL_SIZE);
-            if (sizeF != null) {
-                double width = (double) sizeF.getWidth();
-                double height = (double) sizeF.getHeight();
-                if (width > 0.0d && height > 0.0d) {
-                    return Math.round(width * 100) / 100.0d + "x" + Math.round(height * 100) / 100.0d;
+        try {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                SizeF sizeF = characteristics.get(CameraCharacteristics.SENSOR_INFO_PHYSICAL_SIZE);
+                if (sizeF != null) {
+                    double width = (double) sizeF.getWidth();
+                    double height = (double) sizeF.getHeight();
+                    if (width > 0.0d && height > 0.0d) {
+                        return Math.round(width * 100) / 100.0d + "x" + Math.round(height * 100) / 100.0d;
+                    }
                 }
+                return value;
+            } else {
+                return value;
             }
-            return value;
-        } else {
-            return value;
-        }
-    }
-
-    private double getResolutionType(int width, int height) {
-        double value = 0;
-        if (width >= 0) {
-            try {
-                double d = ((((double) (width * height)) * 1.0d) / 1000.0d) / 1000.0d;
-                value = new BigDecimal(d).setScale(1, RoundingMode.HALF_UP).doubleValue();
-            } catch (IllegalArgumentException ex) {
-                FILog.e(ex.getMessage());
-            }
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.CAMERA_SENSOR_SIZE, ex.getMessage()));
         }
         return value;
     }
@@ -415,8 +426,8 @@ public class Cameras
                     }
                 }
             }
-        } catch (Exception e) {
-            FILog.e(e.getMessage());
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.CAMERA_MANUFACTURER, ex.getMessage()));
         }
         return value;
     }
@@ -438,8 +449,8 @@ public class Cameras
                 if (infoModel.contains(":"))
                     value = infoModel.split(":", 2)[1];
             }
-        } catch (Exception e) {
-            FILog.e(e.getMessage());
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.CAMERA_MODEL, ex.getMessage()));
         }
         return value;
     }
@@ -506,46 +517,55 @@ public class Cameras
             } catch (Throwable th3) {
                 FILog.e(th3.getMessage());
             }
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.CAMERA_BUFFERED, ex.getMessage()));
         }
         return arrayList;
     }
 
     private String getValueString(List<Byte> list) {
-        if (list.size() <= 0) {
-            return "";
+        try {
+            if (list.size() <= 0) {
+                return "";
+            }
+            byte[] bArr = new byte[list.size()];
+            int i = 0;
+            for (Byte byteValue : list) {
+                bArr[i] = byteValue;
+                i++;
+            }
+            if (Build.VERSION.SDK_INT >= 19) {
+                return new String(bArr, StandardCharsets.UTF_8);
+            } else {
+                return new String(bArr, Charset.forName("UTF-8"));
+            }
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.CAMERA_VALUE_STRING, ex.getMessage()));
         }
-        byte[] bArr = new byte[list.size()];
-        int i = 0;
-        for (Byte byteValue : list) {
-            bArr[i] = byteValue;
-            i++;
-        }
-        if (Build.VERSION.SDK_INT >= 19) {
-            return new String(bArr, StandardCharsets.UTF_8);
-        } else {
-            return new String(bArr, Charset.forName("UTF-8"));
-        }
+        return "";
     }
 
     private List<Byte> getListBytes(InputStream inputStream, byte b) {
         byte[] bArr = new byte[1];
         List<Byte> arrayList = new ArrayList<>();
-        while (true) {
-            try {
-                int read = inputStream.read(bArr);
-                if (read == -1) {
-                    break;
+        try {
+            while (true) {
+                try {
+                    int read = inputStream.read(bArr);
+                    if (read == -1) {
+                        break;
+                    }
+                    byte b2 = bArr[0];
+                    if (b2 == b) {
+                        break;
+                    }
+                    arrayList.add(b2);
+                } catch (IOException e) {
+                    FILog.e(e.getMessage());
                 }
-                byte b2 = bArr[0];
-                if (b2 == b) {
-                    break;
-                }
-                arrayList.add(b2);
-            } catch (IOException e) {
-                FILog.e(e.getMessage());
             }
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.CAMERA_LIST_BYTES, ex.getMessage()));
         }
         return arrayList;
     }

@@ -55,9 +55,28 @@ public class CommonErrorType {
     public static final int BIOS_CPU_SERIAL = 210;
 
     /* Bluetooth */
-    public static final int BLUETOOTH = 200;
-    public static final int BLUETOOTH_HARDWARE_ADDRESS = 201;
-    public static final int BLUETOOTH_NAME = 202;
+
+    public static final int BLUETOOTH = 300;
+    public static final int BLUETOOTH_HARDWARE_ADDRESS = 301;
+    public static final int BLUETOOTH_NAME = 302;
+
+    /* Camera */
+    public static final int CAMERA = 400;
+    public static final int CAMERA_COUNT = 401;
+    public static final int CAMERA_CHARACTERISTICS = 402;
+    public static final int CAMERA_RESOLUTION = 403;
+    public static final int CAMERA_FACING_STATE = 404;
+    public static final int CAMERA_FLASH_UNIT = 405;
+    public static final int CAMERA_IMAGE_FORMAT = 406;
+    public static final int CAMERA_ORIENTATION = 407;
+    public static final int CAMERA_VIDEO_RESOLUTION = 408;
+    public static final int CAMERA_FOCAL_LENGTH = 409;
+    public static final int CAMERA_SENSOR_SIZE = 410;
+    public static final int CAMERA_MANUFACTURER = 411;
+    public static final int CAMERA_MODEL = 412;
+    public static final int CAMERA_BUFFERED = 413;
+    public static final int CAMERA_VALUE_STRING = 414;
+    public static final int CAMERA_LIST_BYTES = 415;
 
     /* Controllers */
     public static final int CONTROLLERS = 500;
@@ -182,41 +201,40 @@ public class CommonErrorType {
     public static final int SOFTWARE_USER_ID = 1808;
 
     /* Storage */
-    public static final int STORAGE = 1800;
-    public static final int STORAGE_PARTITION = 1801;
-    public static final int STORAGE_VALUES = 1802;
+    public static final int STORAGE = 1900;
+    public static final int STORAGE_PARTITION = 1901;
+    public static final int STORAGE_VALUES = 1902;
 
     /* Usb */
-    public static final int USB = 1900;
-    public static final int USB_SYS_BUS = 1901;
-    public static final int USB_SERVICE = 1902;
-    public static final int USB_PID = 1903;
-    public static final int USB_VID = 1904;
-    public static final int USB_DEVICE_SUB_CLASS = 1905;
-    public static final int USB_REPORTED_PRODUCT_NAME = 1906;
-    public static final int USB_USB_VERSION = 1907;
-    public static final int USB_SERIAL_NUMBER = 1908;
+    public static final int USB = 2000;
+    public static final int USB_SYS_BUS = 2001;
+    public static final int USB_SERVICE = 2002;
+    public static final int USB_PID = 2003;
+    public static final int USB_VID = 2004;
+    public static final int USB_DEVICE_SUB_CLASS = 2005;
+    public static final int USB_REPORTED_PRODUCT_NAME = 2006;
+    public static final int USB_USB_VERSION = 2007;
+    public static final int USB_SERIAL_NUMBER = 2008;
 
     /* User */
-    public static final int USER = 2000;
-    public static final int USER_NAME = 2001;
+    public static final int USER = 2100;
+    public static final int USER_NAME = 2101;
 
     /* Videos */
-    public static final int VIDEOS = 2100;
-    public static final int VIDEOS_RESOLUTION = 2101;
+    public static final int VIDEOS = 2200;
+    public static final int VIDEOS_RESOLUTION = 2201;
 
     /* Categories */
-    public static final int CATEGORY_TO_XML = 2201;
-    public static final int CATEGORY_TO_XML_WITHOUT_PRIVATE = 2202;
-    public static final int CATEGORY_TO_JSON = 2203;
-    public static final int CATEGORY_TO_JSON_WITHOUT_PRIVATE = 2204;
-    public static final int CATEGORIES_TO_XML = 2205;
-    public static final int CATEGORIES_TO_XML_WITHOUT_PRIVATE = 2206;
-    public static final int CATEGORIES_TO_JSON = 2207;
-    public static final int CATEGORIES_TO_JSON_WITHOUT_PRIVATE = 2208;
+    public static final int CATEGORY_TO_XML = 2301;
+    public static final int CATEGORY_TO_XML_WITHOUT_PRIVATE = 2302;
+    public static final int CATEGORY_TO_JSON = 2303;
+    public static final int CATEGORY_TO_JSON_WITHOUT_PRIVATE = 2304;
+    public static final int CATEGORIES_TO_XML = 2305;
+    public static final int CATEGORIES_TO_XML_WITHOUT_PRIVATE = 2306;
+    public static final int CATEGORIES_TO_JSON = 2307;
+    public static final int CATEGORIES_TO_JSON_WITHOUT_PRIVATE = 2308;
 
     /* Others */
-    public static final int UTILS_CAT_INFO = 2201;
-    public static final int UTILS_CAT_INFO_MULTIPLE = 2202;
-
+    public static final int UTILS_CAT_INFO = 2401;
+    public static final int UTILS_CAT_INFO_MULTIPLE = 2402;
 }
