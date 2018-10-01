@@ -45,7 +45,7 @@ public class SysBusUsbManager {
 
     public SysBusUsbManager(String usbSysPath) {
         this.usbSysPath = usbSysPath;
-        this.myUsbDevices = new HashMap();
+        this.myUsbDevices = new HashMap<>();
         this.sysBusUsbDeviceFactory = new SysBusUsbDeviceFactory();
         this.validation = new Validation();
     }
