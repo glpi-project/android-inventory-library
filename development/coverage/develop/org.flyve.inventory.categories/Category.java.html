@@ -1,6 +1,3 @@
----
-layout: coverage
----
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../resources/report.css" type="text/css"/><link rel="shortcut icon" href="../resources/report.gif" type="image/gif"/><title>Category.java</title><link rel="stylesheet" href="../resources/prettify.css" type="text/css"/><script type="text/javascript" src="../resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory.categories</a> &gt; <span class="el_source">Category.java</span></div><h1>Category.java</h1><pre class="source lang-java linenums">/**
  *  LICENSE
  * 
@@ -34,6 +31,7 @@ package org.flyve.inventory.categories;
 import android.os.Build;
 
 import org.flyve.inventory.FILog;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.xmlpull.v1.XmlSerializer;
 
@@ -67,13 +65,13 @@ public class Category extends LinkedHashMap&lt;String, CategoryValue&gt; {
      */
     @Override
     public boolean equals(Object obj) {
-<span class="nc bnc" id="L67" title="All 2 branches missed.">        if (obj == null) {</span>
-<span class="nc" id="L68">            return false;</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">        if (obj == null) {</span>
+<span class="nc" id="L69">            return false;</span>
         }
-<span class="nc bnc" id="L70" title="All 2 branches missed.">        if (getClass() != obj.getClass()) {</span>
-<span class="nc" id="L71">            return false;</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">        if (getClass() != obj.getClass()) {</span>
+<span class="nc" id="L72">            return false;</span>
         }
-<span class="nc bnc" id="L73" title="All 2 branches missed.">        return (!super.equals(obj));</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">        return (!super.equals(obj));</span>
     }
 
     /**
@@ -82,26 +80,26 @@ public class Category extends LinkedHashMap&lt;String, CategoryValue&gt; {
      */
     @Override
     public int hashCode() {
-<span class="nc" id="L82">        int hash = super.hashCode();</span>
-<span class="nc bnc" id="L83" title="All 2 branches missed.">        hash = 89 * hash + (this.mType != null ? this.mType.hashCode() : 0);</span>
-<span class="nc" id="L84">        return hash;</span>
+<span class="nc" id="L83">        int hash = super.hashCode();</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">        hash = 89 * hash + (this.mType != null ? this.mType.hashCode() : 0);</span>
+<span class="nc" id="L85">        return hash;</span>
     }
 
     /**
      * This constructor load the Context of the instance and the name of the node in XML
      * @param xType name of the node
      */
-<span class="fc" id="L91">    public Category(String xType, String tagName) {</span>
-<span class="fc" id="L92">        mType = xType;</span>
-<span class="fc" id="L93">        mtagName = tagName;</span>
-<span class="fc" id="L94">    }</span>
+<span class="fc" id="L92">    public Category(String xType, String tagName) {</span>
+<span class="fc" id="L93">        mType = xType;</span>
+<span class="fc" id="L94">        mtagName = tagName;</span>
+<span class="fc" id="L95">    }</span>
 
     /**
      * Return the type of category
      * @return String with the category
      */
     public String getType() {
-<span class="fc" id="L101">        return mType;</span>
+<span class="fc" id="L102">        return mType;</span>
     }
 
     /**
@@ -109,7 +107,7 @@ public class Category extends LinkedHashMap&lt;String, CategoryValue&gt; {
      * @return String with the category
      */
     public String getTagName() {
-<span class="fc" id="L109">        return mtagName;</span>
+<span class="fc" id="L110">        return mtagName;</span>
     }
 
     /**
@@ -121,14 +119,21 @@ public class Category extends LinkedHashMap&lt;String, CategoryValue&gt; {
      */
     public CategoryValue put(String key, CategoryValue value) {
        //Do not add value if it's null, blank or &quot;unknow&quot;
-<span class="pc bpc" id="L121" title="1 of 2 branches missed.">       if (value != null) {</span>
-<span class="fc bfc" id="L122" title="All 6 branches covered.">           if (value.getCategory() != null || !value.getValue().equals(&quot;&quot;) &amp;&amp; !value.getValue().equals(Build.UNKNOWN)) {</span>
-<span class="fc" id="L123">               return super.put(key, value);</span>
+<span class="pc bpc" id="L122" title="1 of 2 branches missed.">       if (value != null) {</span>
+<span class="fc bfc" id="L123" title="All 2 branches covered.">           if (value.getCategory() == null) {</span>
+<span class="fc" id="L124">               String s = value.getValue();</span>
+<span class="pc bpc" id="L125" title="1 of 6 branches missed.">               if (s != null &amp;&amp; !s.equals(&quot;&quot;) &amp;&amp; !s.equals(Build.UNKNOWN)){</span>
+<span class="fc" id="L126">                   return super.put(key, value);</span>
+<span class="pc bpc" id="L127" title="3 of 4 branches missed.">               } else if (value.getValues() != null &amp;&amp; value.getValues().size() &gt; 0) {</span>
+<span class="nc" id="L128">                   return super.put(key, value);</span>
+               } else {
+<span class="fc" id="L130">                   return null;</span>
+               }
            } else {
-<span class="fc" id="L125">               return null;</span>
+<span class="fc" id="L133">               return super.put(key, value);</span>
            }
        } else {
-<span class="nc" id="L128">    	   return null;</span>
+<span class="nc" id="L136">    	   return null;</span>
        }
     }
 
@@ -138,89 +143,133 @@ public class Category extends LinkedHashMap&lt;String, CategoryValue&gt; {
      */
     public void toXML(XmlSerializer serializer) {
         try {
-<span class="fc" id="L138">            serializer.startTag(null, mType);</span>
+<span class="fc" id="L146">            serializer.startTag(null, mType);</span>
+<span class="fc bfc" id="L147" title="All 2 branches covered.">            for (Map.Entry&lt;String, CategoryValue&gt; entry : this.entrySet()) {</span>
+<span class="fc" id="L148">                setXMLValues(serializer, entry);</span>
+<span class="fc" id="L149">            }</span>
 
-<span class="fc bfc" id="L140" title="All 2 branches covered.">            for (Map.Entry&lt;String, CategoryValue&gt; entry : this.entrySet()) {</span>
-<span class="fc bfc" id="L141" title="All 2 branches covered.">                if (this.get(entry.getKey()).getCategory() != null) {</span>
-<span class="fc" id="L142">                    Category category = this.get(entry.getKey()).getCategory();</span>
-<span class="fc" id="L143">                    serializer.startTag(null, category.getType());</span>
-<span class="fc bfc" id="L144" title="All 2 branches covered.">                    for (Map.Entry&lt;String, CategoryValue&gt; entries : category.entrySet()) {</span>
-<span class="fc" id="L145">                        String xmlName = entries.getKey();</span>
-<span class="fc" id="L146">                        String value = category.get(xmlName).getValue();</span>
-<span class="fc" id="L147">                        setValueXML(serializer, xmlName, value, false);</span>
-<span class="fc" id="L148">                    }</span>
-<span class="fc" id="L149">                    serializer.endTag(null, category.getType());</span>
-<span class="fc" id="L150">                } else {</span>
-<span class="fc" id="L151">                    String xmlName = this.get(entry.getKey()).getXmlName();</span>
-<span class="fc" id="L152">                    String value = this.get(entry.getKey()).getValue();</span>
-<span class="fc" id="L153">                    Boolean hasCDATA = this.get(entry.getKey()).hasCDATA();</span>
-<span class="fc" id="L154">                    setValueXML(serializer, xmlName, value, hasCDATA);</span>
-                }
-<span class="fc" id="L156">            }</span>
-
-<span class="fc" id="L158">            serializer.endTag(null, mType);</span>
-<span class="nc" id="L159">        } catch (Exception ex) {</span>
-<span class="nc" id="L160">            FILog.d(ex.getMessage());</span>
-<span class="fc" id="L161">        }</span>
-<span class="fc" id="L162">    }</span>
-
-    private void setValueXML(XmlSerializer serializer, String xmlName, String xmlValue, boolean hasCData) throws IOException {
-<span class="fc" id="L165">        serializer.startTag(null, xmlName);</span>
-        String textValue;
-<span class="fc bfc" id="L167" title="All 2 branches covered.">        textValue = hasCData ? &quot;&lt;![CDATA[&quot; + String.valueOf(xmlValue) + &quot;]]&gt;&quot; : String.valueOf(xmlValue);</span>
-<span class="fc" id="L168">        serializer.text(textValue);</span>
-<span class="fc" id="L169">        serializer.endTag(null, xmlName);</span>
-<span class="fc" id="L170">    }</span>
+<span class="fc" id="L151">            serializer.endTag(null, mType);</span>
+<span class="nc" id="L152">        } catch (Exception ex) {</span>
+<span class="nc" id="L153">            FILog.d(ex.getMessage());</span>
+<span class="fc" id="L154">        }</span>
+<span class="fc" id="L155">    }</span>
 
     public void toXMLWithoutPrivateData(XmlSerializer serializer) {
         try {
-<span class="nc" id="L174">            serializer.startTag(null, mType);</span>
+<span class="nc" id="L159">            serializer.startTag(null, mType);</span>
 
-<span class="nc bnc" id="L176" title="All 2 branches missed.">            for (Map.Entry&lt;String, CategoryValue&gt; entry : this.entrySet()) {</span>
-<span class="nc bnc" id="L177" title="All 2 branches missed.">                if(!this.get(entry.getKey()).isPrivate()) {</span>
-<span class="nc" id="L178">                    serializer.startTag(null, this.get(entry.getKey()).getXmlName());</span>
-<span class="nc" id="L179">                    serializer.text(String.valueOf(this.get(entry.getKey()).getValue()));</span>
-<span class="nc" id="L180">                    serializer.endTag(null, this.get(entry.getKey()).getXmlName());</span>
+<span class="nc bnc" id="L161" title="All 2 branches missed.">            for (Map.Entry&lt;String, CategoryValue&gt; entry : this.entrySet()) {</span>
+<span class="nc bnc" id="L162" title="All 2 branches missed.">                if(!this.get(entry.getKey()).isPrivate()) {</span>
+<span class="nc" id="L163">                    setXMLValues(serializer, entry);</span>
                 }
-<span class="nc" id="L182">            }</span>
+<span class="nc" id="L165">            }</span>
 
-<span class="nc" id="L184">            serializer.endTag(null, mType);</span>
-<span class="nc" id="L185">        } catch (Exception ex) {</span>
-<span class="nc" id="L186">            FILog.d(ex.getMessage());</span>
-<span class="nc" id="L187">        }</span>
-<span class="nc" id="L188">    }</span>
+<span class="nc" id="L167">            serializer.endTag(null, mType);</span>
+<span class="nc" id="L168">        } catch (Exception ex) {</span>
+<span class="nc" id="L169">            FILog.d(ex.getMessage());</span>
+<span class="nc" id="L170">        }</span>
+<span class="nc" id="L171">    }</span>
+
+    private void setXMLValues(XmlSerializer serializer, Entry&lt;String, CategoryValue&gt; entry) throws IOException {
+<span class="fc" id="L174">        CategoryValue categoryValue = this.get(entry.getKey());</span>
+<span class="fc bfc" id="L175" title="All 2 branches covered.">        if (categoryValue.getCategory() == null) {</span>
+            /* If is a normal value */
+<span class="pc bpc" id="L177" title="3 of 4 branches missed.">            if (categoryValue.getValues() == null || categoryValue.getValues().size() &lt;= 0) {</span>
+<span class="fc" id="L178">                String xmlName = categoryValue.getXmlName();</span>
+<span class="fc" id="L179">                String value = categoryValue.getValue();</span>
+<span class="fc" id="L180">                Boolean hasCDATA = categoryValue.hasCDATA();</span>
+<span class="fc" id="L181">                setChildXMLValue(serializer, xmlName, value, hasCDATA);</span>
+            /* If is a list of values */
+<span class="fc" id="L183">            } else {</span>
+<span class="nc bnc" id="L184" title="All 2 branches missed.">                for (String value : categoryValue.getValues()) {</span>
+<span class="nc" id="L185">                    String xmlName = categoryValue.getXmlName();</span>
+<span class="nc" id="L186">                    Boolean hasCDATA = categoryValue.hasCDATA();</span>
+<span class="nc" id="L187">                    setChildXMLValue(serializer, xmlName, value, hasCDATA);</span>
+<span class="nc" id="L188">                }</span>
+            }
+        /* If is a Category embed */
+        } else {
+<span class="fc" id="L192">            Category category = categoryValue.getCategory();</span>
+<span class="fc" id="L193">            serializer.startTag(null, category.getType());</span>
+<span class="pc bpc" id="L194" title="3 of 4 branches missed.">            if (categoryValue.getValues() != null &amp;&amp; categoryValue.getValues().size() &gt; 0) {</span>
+<span class="nc bnc" id="L195" title="All 2 branches missed.">                for (Entry&lt;String, CategoryValue&gt; entries : category.entrySet()) {</span>
+<span class="nc" id="L196">                    String xmlName = entries.getKey();</span>
+<span class="nc bnc" id="L197" title="All 2 branches missed.">                    for (String value : category.get(xmlName).getValues()) {</span>
+<span class="nc" id="L198">                        setChildXMLValue(serializer, xmlName, value, false);</span>
+<span class="nc" id="L199">                    }</span>
+<span class="nc" id="L200">                }</span>
+            } else {
+<span class="fc bfc" id="L202" title="All 2 branches covered.">                for (Entry&lt;String, CategoryValue&gt; entries : category.entrySet()) {</span>
+<span class="fc" id="L203">                    String xmlName = entries.getKey();</span>
+<span class="fc" id="L204">                    String value = category.get(xmlName).getValue();</span>
+<span class="fc" id="L205">                    setChildXMLValue(serializer, xmlName, value, false);</span>
+<span class="fc" id="L206">                }</span>
+            }
+<span class="fc" id="L208">            serializer.endTag(null, category.getType());</span>
+        }
+<span class="fc" id="L210">    }</span>
+
+    private void setChildXMLValue(XmlSerializer serializer, String xmlName, String xmlValue, boolean hasCData) throws IOException {
+<span class="fc" id="L213">        serializer.startTag(null, xmlName);</span>
+        String textValue;
+<span class="fc bfc" id="L215" title="All 2 branches covered.">        textValue = hasCData ? &quot;&lt;![CDATA[&quot; + String.valueOf(xmlValue) + &quot;]]&gt;&quot; : String.valueOf(xmlValue);</span>
+<span class="fc" id="L216">        serializer.text(textValue);</span>
+<span class="fc" id="L217">        serializer.endTag(null, xmlName);</span>
+<span class="fc" id="L218">    }</span>
 
     /**
      * This is a public function that create a JSON
      */
     public JSONObject toJSON() {
         try {
-<span class="fc" id="L195">            JSONObject jsonCategories = new JSONObject();</span>
-<span class="fc bfc" id="L196" title="All 2 branches covered.">            for (Map.Entry&lt;String,CategoryValue&gt; entry : this.entrySet()) {</span>
-<span class="fc" id="L197">                jsonCategories.put(this.get(entry.getKey()).getJsonName(), this.get(entry.getKey()).getValue());</span>
-<span class="fc" id="L198">            }</span>
+<span class="fc" id="L225">            JSONObject jsonCategories = new JSONObject();</span>
+<span class="fc bfc" id="L226" title="All 2 branches covered.">            for (Map.Entry&lt;String,CategoryValue&gt; entry : this.entrySet()) {</span>
+<span class="fc" id="L227">                setJSONValues(jsonCategories, entry);</span>
+<span class="fc" id="L228">            }</span>
 
-<span class="fc" id="L200">            return jsonCategories;</span>
-<span class="nc" id="L201">        } catch ( Exception ex ) {</span>
-<span class="nc" id="L202">            FILog.e( ex.getMessage() );</span>
-<span class="nc" id="L203">            return new JSONObject();</span>
+<span class="fc" id="L230">            return jsonCategories;</span>
+<span class="nc" id="L231">        } catch ( Exception ex ) {</span>
+<span class="nc" id="L232">            FILog.e( ex.getMessage() );</span>
+<span class="nc" id="L233">            return new JSONObject();</span>
         }
     }
 
     public JSONObject toJSONWithoutPrivateData() {
         try {
-<span class="nc" id="L209">            JSONObject jsonCategories = new JSONObject();</span>
-<span class="nc bnc" id="L210" title="All 2 branches missed.">            for (Map.Entry&lt;String,CategoryValue&gt; entry : this.entrySet()) {</span>
-<span class="nc bnc" id="L211" title="All 2 branches missed.">                if(!this.get(entry.getKey()).isPrivate()) {</span>
-<span class="nc" id="L212">                    jsonCategories.put(this.get(entry.getKey()).getJsonName(), this.get(entry.getKey()).getValue());</span>
+<span class="nc" id="L239">            JSONObject jsonCategories = new JSONObject();</span>
+<span class="nc bnc" id="L240" title="All 2 branches missed.">            for (Map.Entry&lt;String,CategoryValue&gt; entry : this.entrySet()) {</span>
+<span class="nc bnc" id="L241" title="All 2 branches missed.">                if(!this.get(entry.getKey()).isPrivate()) {</span>
+<span class="nc" id="L242">                    setJSONValues(jsonCategories, entry);</span>
                 }
-<span class="nc" id="L214">            }</span>
+<span class="nc" id="L244">            }</span>
 
-<span class="nc" id="L216">            return jsonCategories;</span>
-<span class="nc" id="L217">        } catch ( Exception ex ) {</span>
-<span class="nc" id="L218">            FILog.e( ex.getMessage() );</span>
-<span class="nc" id="L219">            return new JSONObject();</span>
+<span class="nc" id="L246">            return jsonCategories;</span>
+<span class="nc" id="L247">        } catch ( Exception ex ) {</span>
+<span class="nc" id="L248">            FILog.e( ex.getMessage() );</span>
+<span class="nc" id="L249">            return new JSONObject();</span>
         }
     }
+
+    private void setJSONValues(JSONObject jsonCategories, Entry&lt;String, CategoryValue&gt; entry) throws JSONException {
+<span class="fc" id="L254">        CategoryValue categoryValue = this.get(entry.getKey());</span>
+<span class="fc bfc" id="L255" title="All 2 branches covered.">        if (entry.getValue().getCategory() == null) {</span>
+<span class="pc bpc" id="L256" title="1 of 2 branches missed.">            if (entry.getValue().getValues() == null) {</span>
+<span class="fc" id="L257">                jsonCategories.put(categoryValue.getJsonName(), categoryValue.getValue());</span>
+            } else {
+<span class="nc" id="L259">                jsonCategories.put(categoryValue.getJsonName(), categoryValue.getValues());</span>
+            }
+        } else {
+<span class="fc" id="L262">            Category category = categoryValue.getCategory();</span>
+<span class="fc" id="L263">            JSONObject newCategory = new JSONObject();</span>
+<span class="fc bfc" id="L264" title="All 2 branches covered.">            for (CategoryValue value : category.values()) {</span>
+<span class="pc bpc" id="L265" title="1 of 2 branches missed.">                if (entry.getValue().getValues() == null) {</span>
+<span class="fc" id="L266">                    newCategory.put(value.getJsonName(), value.getValue());</span>
+                } else {
+<span class="nc" id="L268">                    newCategory.put(value.getJsonName(), value.getValues());</span>
+                }
+<span class="fc" id="L270">            }</span>
+<span class="fc" id="L271">            jsonCategories.put(category.getType(), newCategory);</span>
+        }
+<span class="fc" id="L273">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span>Generated by the Android Gradle plugin 2.2.0</div></body></html>
