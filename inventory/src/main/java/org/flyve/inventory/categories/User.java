@@ -17,6 +17,7 @@
  *  GNU General Public License for more details.
  *  ---------------------------------------------------------------------
  *  @author    Rafael Hernandez - <rhernandez@teclib.com>
+ *  @author    Ivan del Pino    - <idelpino@teclib.com>
  *  @copyright Copyright Teclib. All rights reserved.
  *  @license   GPLv3 https://www.gnu.org/licenses/gpl-3.0.html
  *  @link      https://github.com/flyve-mdm/android-inventory-library
@@ -31,6 +32,7 @@ import android.content.Context;
 import android.os.Build;
 import android.os.UserManager;
 
+import org.flyve.inventory.CommonErrorType;
 import org.flyve.inventory.FILog;
 
 import java.util.Properties;
@@ -53,7 +55,7 @@ public class User extends Categories {
     private static final long serialVersionUID = 3528873342443549732L;
 
     private Properties props;
-    private Context xCtx;
+    private Context context;
 
     /**
      * Indicates whether some other object is "equal to" this one
@@ -78,7 +80,7 @@ public class User extends Categories {
     @Override
     public int hashCode() {
         int hash = super.hashCode();
-        hash = 89 * hash + (this.xCtx != null ? this.xCtx.hashCode() : 0);
+        hash = 89 * hash + (this.context != null ? this.context.hashCode() : 0);
         hash = 89 * hash + (this.props != null ? this.props.hashCode() : 0);
         return hash;
     }
@@ -90,17 +92,17 @@ public class User extends Categories {
     public User(Context xCtx) {
         super(xCtx);
 
-        this.xCtx = xCtx;
+        this.context = xCtx;
 
         try {
             props = System.getProperties();
 
             Category c = new Category("USER", "user");
-            c.put("LOGIN", new CategoryValue(userName(), "LOGIN", "login"));
+            c.put("LOGIN", new CategoryValue(getUserName(), "LOGIN", "login"));
 
             this.add(c);
         } catch (Exception ex) {
-            FILog.e(ex.getMessage());
+            FILog.e(FILog.getMessage(context, CommonErrorType.USER, ex.getMessage()));
         }
 
     }
@@ -108,23 +110,27 @@ public class User extends Categories {
     /**
      * Get the user name
      */
-    public String userName() {
-        String userName;
-        if(Build.VERSION.SDK_INT >= 17) {
-            UserManager userMgr = (UserManager) xCtx.getSystemService(Context.USER_SERVICE);
-            if (userMgr != null) {
-                try {
-                    // validate permission exception
-                    userName = userMgr.getUserName();
-                } catch (Exception ex) {
-                    FILog.e(ex.getMessage());
+    public String getUserName() {
+        String userName = "N/A";
+        try {
+            if (Build.VERSION.SDK_INT >= 17) {
+                UserManager userMgr = (UserManager) context.getSystemService(Context.USER_SERVICE);
+                if (userMgr != null) {
+                    try {
+                        // validate permission exception
+                        userName = userMgr.getUserName();
+                    } catch (Exception ex) {
+                        FILog.e(ex.getMessage());
+                        userName = Build.USER;
+                    }
+                } else {
                     userName = Build.USER;
                 }
             } else {
                 userName = Build.USER;
             }
-        } else {
-            userName = Build.USER;
+        } catch (Exception ex) {
+            FILog.e(FILog.getMessage(context, CommonErrorType.USER_NAME, ex.getMessage()));
         }
 
         return userName;
