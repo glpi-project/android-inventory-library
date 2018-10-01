@@ -53,7 +53,7 @@ import java.util.ArrayList;
 public class InventoryTask {
 
     /**
-     * Set if show FILog in console
+     * Set if show FlyveLog in console
      */
     public static boolean showFILog = false;
     private static Handler uiHandler;
@@ -144,7 +144,7 @@ public class InventoryTask {
         Class<Categories> catClass = null;
 
         for(String c : categories) {
-            FILog.v(String.format("new INVENTORY of %s", c));
+            FlyveLog.v(String.format("new INVENTORY of %s", c));
 
             // Loading the class with name of the ArrayList
             try {
@@ -153,7 +153,7 @@ public class InventoryTask {
 
             }
             catch (Exception ex) {
-                FILog.e( ex.getCause().toString() );
+                FlyveLog.e( ex.getCause().toString() );
                 throw new FlyveException(ex.getMessage(), ex.getCause());
             }
 
@@ -163,7 +163,7 @@ public class InventoryTask {
                     Constructor<Categories> co = catClass.getConstructor(Context.class);
                     mContent.add(co.newInstance(ctx));
                 } catch ( Exception ex ) {
-                    FILog.e( ex.getCause().toString() );
+                    FlyveLog.e( ex.getCause().toString() );
                     throw new FlyveException(ex.getMessage(), ex.getCause());
                 }
             }

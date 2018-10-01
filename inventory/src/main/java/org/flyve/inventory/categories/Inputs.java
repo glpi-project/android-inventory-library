@@ -33,7 +33,7 @@ import android.content.Context;
 import android.content.res.Configuration;
 
 import org.flyve.inventory.CommonErrorType;
-import org.flyve.inventory.FILog;
+import org.flyve.inventory.FlyveLog;
 
 /**
  * This class get all the information of the Inputs
@@ -112,7 +112,7 @@ public class Inputs extends Categories {
 
 			this.add(c);
 		} catch (Exception ex) {
-			FILog.e(FILog.getMessage(context, CommonErrorType.INPUTS, ex.getMessage()));
+			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.INPUTS, ex.getMessage()));
 		}
 	}
 
@@ -135,7 +135,7 @@ public class Inputs extends Categories {
 					break;
 			}
 		} catch (Exception ex) {
-			FILog.e(FILog.getMessage(context, CommonErrorType.INPUTS_KEY_BOARD, ex.getMessage()));
+			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.INPUTS_KEY_BOARD, ex.getMessage()));
 		}
 
 		return val;
@@ -163,7 +163,7 @@ public class Inputs extends Categories {
 					break;
 			}
 		} catch (Exception ex) {
-			FILog.e(FILog.getMessage(context, CommonErrorType.INPUTS_TOUCH_SCREEN, ex.getMessage()));
+			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.INPUTS_TOUCH_SCREEN, ex.getMessage()));
 		}
 		return val;
 	}

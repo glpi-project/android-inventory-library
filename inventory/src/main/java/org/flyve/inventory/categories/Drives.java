@@ -34,7 +34,7 @@ import android.os.Environment;
 import android.os.StatFs;
 
 import org.flyve.inventory.CommonErrorType;
-import org.flyve.inventory.FILog;
+import org.flyve.inventory.FlyveLog;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -94,7 +94,7 @@ public class Drives extends Categories {
 
             this.add(c);
         }  catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.DRIVES, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.DRIVES, ex.getMessage()));
         }
     }
 
@@ -117,7 +117,7 @@ public class Drives extends Categories {
                 }
             }
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.DRIVES_VOLUME, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.DRIVES_VOLUME, ex.getMessage()));
         }
         return fileVolume;
     }
@@ -135,7 +135,7 @@ public class Drives extends Categories {
             total = total / toMega;
             val = total.toString();
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.DRIVES_TOTAL, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.DRIVES_TOTAL, ex.getMessage()));
         }
         return val;
     }
@@ -158,7 +158,7 @@ public class Drives extends Categories {
             long valueBytes = bytesAvailable / (1024 * 1024);
             value = String.valueOf(valueBytes);
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.DRIVES_FREE_SPACE, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.DRIVES_FREE_SPACE, ex.getMessage()));
         }
         return value;
     }
@@ -182,7 +182,7 @@ public class Drives extends Categories {
                 }
             }
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.DRIVES_FILE_SYSTEM, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.DRIVES_FILE_SYSTEM, ex.getMessage()));
         }
         return fileSystem;
     }
@@ -206,7 +206,7 @@ public class Drives extends Categories {
                 }
             }
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.DRIVES_TYPE, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.DRIVES_TYPE, ex.getMessage()));
         }
         return pointMounted;
     }

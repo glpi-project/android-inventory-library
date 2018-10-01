@@ -33,7 +33,7 @@ package org.flyve.inventory.categories;
 import android.content.Context;
 
 import org.flyve.inventory.CommonErrorType;
-import org.flyve.inventory.FILog;
+import org.flyve.inventory.FlyveLog;
 import org.flyve.inventory.Utils;
 
 import java.io.BufferedReader;
@@ -86,7 +86,7 @@ public class Memory extends Categories {
 
             this.add(c);
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.MEMORY, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.MEMORY, ex.getMessage()));
         }
     }
 
@@ -115,14 +115,14 @@ public class Memory extends Categories {
 
                 br.close();
             } catch (IOException e) {
-                FILog.e(e.getMessage());
+                FlyveLog.e(e.getMessage());
             } finally {
                 if (fr != null) {
                     fr.close();
                 }
             }
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.MEMORY_CAPACITY, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.MEMORY_CAPACITY, ex.getMessage()));
         }
         return capacity;
 	}
@@ -142,7 +142,7 @@ public class Memory extends Categories {
                 }
             }
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.MEMORY_RAM_INFO, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.MEMORY_RAM_INFO, ex.getMessage()));
         }
     }
 
@@ -157,7 +157,7 @@ public class Memory extends Categories {
                 ramInfo[1] = "N/A";
             }
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.MEMORY_SPLIT_RAM_INFO, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.MEMORY_SPLIT_RAM_INFO, ex.getMessage()));
         }
     }
 
@@ -171,7 +171,7 @@ public class Memory extends Categories {
                 }
             }
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.MEMORY_RAM_PROP, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.MEMORY_RAM_PROP, ex.getMessage()));
         }
         return null;
     }
@@ -181,7 +181,7 @@ public class Memory extends Categories {
         try {
             value = ramInfo[0];
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.MEMORY_TYPE, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.MEMORY_TYPE, ex.getMessage()));
         }
         return value;
     }
@@ -191,7 +191,7 @@ public class Memory extends Categories {
         try {
             value = ramInfo[1];
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.MEMORY_SPEED, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.MEMORY_SPEED, ex.getMessage()));
         }
         return value;
     }

@@ -34,7 +34,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorManager;
 
 import org.flyve.inventory.CommonErrorType;
-import org.flyve.inventory.FILog;
+import org.flyve.inventory.FlyveLog;
 
 import java.util.List;
 
@@ -81,7 +81,7 @@ public class Sensors extends Categories {
 				this.add(c);
 			}
 		} catch (Exception ex) {
-			FILog.e(FILog.getMessage(context, CommonErrorType.SENSORS, ex.getMessage()));
+			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.SENSORS, ex.getMessage()));
 		}
 	}
 
@@ -95,7 +95,7 @@ public class Sensors extends Categories {
 		try {
 			value = s.getName();
 		} catch (Exception ex) {
-			FILog.e(FILog.getMessage(context, CommonErrorType.SENSORS_NAME, ex.getMessage()));
+			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.SENSORS_NAME, ex.getMessage()));
 		}
 		return value;
 	}
@@ -110,7 +110,7 @@ public class Sensors extends Categories {
 		try {
 			value = s.getVendor();
 		} catch (Exception ex) {
-			FILog.e(FILog.getMessage(context, CommonErrorType.SENSORS_MANUFACTURER, ex.getMessage()));
+			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.SENSORS_MANUFACTURER, ex.getMessage()));
 		}
 		return value;
 	}
@@ -154,7 +154,7 @@ public class Sensors extends Categories {
 					break;
 			}
 		} catch (Exception ex) {
-			FILog.e(FILog.getMessage(context, CommonErrorType.SENSORS_TYPE, ex.getMessage()));
+			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.SENSORS_TYPE, ex.getMessage()));
 		}
 		return valueType;
 	}
@@ -169,7 +169,7 @@ public class Sensors extends Categories {
 		try {
 			value = String.valueOf(s.getPower());
 		} catch (Exception ex) {
-			FILog.e(FILog.getMessage(context, CommonErrorType.SENSORS_POWER, ex.getMessage()));
+			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.SENSORS_POWER, ex.getMessage()));
 		}
 		return value;
 	}
@@ -184,7 +184,7 @@ public class Sensors extends Categories {
 		try {
 			value = String.valueOf(s.getVersion());
 		} catch (Exception ex) {
-			FILog.e(FILog.getMessage(context, CommonErrorType.SENSORS_VERSION, ex.getMessage()));
+			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.SENSORS_VERSION, ex.getMessage()));
 		}
 		return value;
 	}

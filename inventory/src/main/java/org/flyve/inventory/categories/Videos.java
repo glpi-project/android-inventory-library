@@ -35,7 +35,7 @@ import android.graphics.Point;
 import android.view.WindowManager;
 
 import org.flyve.inventory.CommonErrorType;
-import org.flyve.inventory.FILog;
+import org.flyve.inventory.FlyveLog;
 
 /**
  * This class get all the information of the Video
@@ -95,7 +95,7 @@ public class Videos extends Categories {
             c.put("RESOLUTION", new CategoryValue(getResolution(), "RESOLUTION", "resolution"));
             this.add(c);
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.VIDEOS, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.VIDEOS, ex.getMessage()));
         }
     }
 
@@ -116,7 +116,7 @@ public class Videos extends Categories {
             value = String.format("%dx%d", width, height);
             return value;
         } catch (Exception ex) {
-            FILog.e(FILog.getMessage(context, CommonErrorType.VIDEOS_RESOLUTION, ex.getMessage()));
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.VIDEOS_RESOLUTION, ex.getMessage()));
         }
         return value;
     }
