@@ -204,4 +204,14 @@ public class CommonErrorType {
     /* Videos */
     public static final int VIDEOS = 2100;
     public static final int VIDEOS_RESOLUTION = 2101;
+
+    /* Categories */
+    public static final int CATEGORY_TO_XML = 2201;
+    public static final int CATEGORY_TO_XML_WITHOUT_PRIVATE = 2202;
+    public static final int CATEGORY_TO_JSON = 2203;
+    public static final int CATEGORY_TO_JSON_WITHOUT_PRIVATE = 2204;
+    public static final int CATEGORIES_TO_XML = 2205;
+    public static final int CATEGORIES_TO_XML_WITHOUT_PRIVATE = 2206;
+    public static final int CATEGORIES_TO_JSON = 2207;
+    public static final int CATEGORIES_TO_JSON_WITHOUT_PRIVATE = 2208;
 }
