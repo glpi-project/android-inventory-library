@@ -122,33 +122,38 @@ public class CommonErrorType {
     public static final int PHONE_STATUS = 1500;
 
     /* SENSORS */
-    public static final int SENSORS = 1500;
-    public static final int SENSORS_NAME = 1501;
-    public static final int SENSORS_MANUFACTURER = 1502;
-    public static final int SENSORS_TYPE = 1503;
-    public static final int SENSORS_POWER = 1504;
-    public static final int SENSORS_VERSION = 1505;
+    public static final int SENSORS = 1600;
+    public static final int SENSORS_NAME = 1601;
+    public static final int SENSORS_MANUFACTURER = 1602;
+    public static final int SENSORS_TYPE = 1603;
+    public static final int SENSORS_POWER = 1604;
+    public static final int SENSORS_VERSION = 1605;
 
     /* SIM CARDS */
-    public static final int SIM_CARDS = 1600;
-    public static final int SIM_CARDS_MULTIPLE = 1601;
-    public static final int SIM_CARDS_STATE_BY_SLOT = 1602;
-    public static final int SIM_CARDS_COUNTRY = 1603;
-    public static final int SIM_CARDS_OPERATOR_CODE = 1604;
-    public static final int SIM_CARDS_OPERATOR_NAME = 1605;
-    public static final int SIM_CARDS_SERIAL = 1606;
-    public static final int SIM_CARDS_STATE = 1607;
-    public static final int SIM_CARDS_LINE_NUMBER = 1608;
-    public static final int SIM_CARDS_SUBSCRIBER_ID = 1609;
+    public static final int SIM_CARDS = 1700;
+    public static final int SIM_CARDS_MULTIPLE = 1701;
+    public static final int SIM_CARDS_STATE_BY_SLOT = 1702;
+    public static final int SIM_CARDS_COUNTRY = 1703;
+    public static final int SIM_CARDS_OPERATOR_CODE = 1704;
+    public static final int SIM_CARDS_OPERATOR_NAME = 1705;
+    public static final int SIM_CARDS_SERIAL = 1706;
+    public static final int SIM_CARDS_STATE = 1707;
+    public static final int SIM_CARDS_LINE_NUMBER = 1708;
+    public static final int SIM_CARDS_SUBSCRIBER_ID = 1709;
 
     /* Software */
-    public static final int SOFTWARE = 1600;
-    public static final int SOFTWARE_NAME = 1601;
-    public static final int SOFTWARE_PACKAGE = 1602;
-    public static final int SOFTWARE_INSTALL_DATE = 1603;
-    public static final int SOFTWARE_VERSION = 1604;
-    public static final int SOFTWARE_FILE_SIZE = 1605;
-    public static final int SOFTWARE_FOLDER = 1606;
-    public static final int SOFTWARE_REMOVABLE = 1607;
-    public static final int SOFTWARE_USER_ID = 1608;
+    public static final int SOFTWARE = 1800;
+    public static final int SOFTWARE_NAME = 1801;
+    public static final int SOFTWARE_PACKAGE = 1802;
+    public static final int SOFTWARE_INSTALL_DATE = 1803;
+    public static final int SOFTWARE_VERSION = 1804;
+    public static final int SOFTWARE_FILE_SIZE = 1805;
+    public static final int SOFTWARE_FOLDER = 1806;
+    public static final int SOFTWARE_REMOVABLE = 1807;
+    public static final int SOFTWARE_USER_ID = 1808;
+
+    /* Storage */
+    public static final int STORAGE = 1800;
+    public static final int STORAGE_PARTITION = 1801;
+    public static final int STORAGE_VALUES = 1802;
 }
