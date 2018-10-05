@@ -1,6 +1,3 @@
----
-layout: coverage
----
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../resources/report.css" type="text/css"/><link rel="shortcut icon" href="../resources/report.gif" type="image/gif"/><title>CategoryValue.java</title><link rel="stylesheet" href="../resources/prettify.css" type="text/css"/><script type="text/javascript" src="../resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory.categories</a> &gt; <span class="el_source">CategoryValue.java</span></div><h1>CategoryValue.java</h1><pre class="source lang-java linenums">/**
  *  LICENSE
  * 
@@ -50,20 +47,20 @@ public class CategoryValue {
      * @param jsonName
      */
 <span class="fc" id="L49">    public CategoryValue(String value, String xmlName, String jsonName) {</span>
-<span class="fc bfc" id="L50" title="All 2 branches covered.">        if(value==null) {</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">        if (value == null) {</span>
 <span class="fc" id="L51">            value = &quot;&quot;;</span>
         }
 
-<span class="pc bpc" id="L54" title="1 of 2 branches missed.">        if(xmlName==null) {</span>
+<span class="pc bpc" id="L54" title="1 of 2 branches missed.">        if (xmlName == null) {</span>
 <span class="nc" id="L55">            xmlName = &quot;&quot;;</span>
         }
 
-<span class="pc bpc" id="L58" title="1 of 2 branches missed.">        if(jsonName==null) {</span>
+<span class="pc bpc" id="L58" title="1 of 2 branches missed.">        if (jsonName == null) {</span>
 <span class="nc" id="L59">            jsonName = &quot;&quot;;</span>
         }
 
-<span class="pc bpc" id="L62" title="2 of 4 branches missed.">        if (value.contains(&quot;&lt;&quot;) || value.contains(&quot;&gt;&quot;)) {</span>
-<span class="nc" id="L63">            value = value.replaceAll(&quot;[&lt;&gt;]&quot;, &quot;&quot;);</span>
+<span class="pc bpc" id="L62" title="3 of 6 branches missed.">        if (value.contains(&quot;&lt;&quot;) || value.contains(&quot;&gt;&quot;) || value.contains(&quot;&amp;&quot;)) {</span>
+<span class="nc" id="L63">            value = value.replaceAll(&quot;[&lt;&gt;&amp;]&quot;, &quot;&quot;);</span>
         }
 
 <span class="fc" id="L66">        this.value = value;</span>
@@ -73,98 +70,100 @@ public class CategoryValue {
 <span class="fc" id="L70">        this.hasCDATA = false;</span>
 <span class="fc" id="L71">    }</span>
 
+<span class="fc" id="L73">    public CategoryValue(String value, String xmlName, String jsonName, Boolean isPrivate, Boolean hasCDATA) {</span>
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">        if (value == null) {</span>
+<span class="nc" id="L75">            value = &quot;&quot;;</span>
+        }
+
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">        if (xmlName == null) {</span>
+<span class="nc" id="L79">            xmlName = &quot;&quot;;</span>
+        }
+
+<span class="pc bpc" id="L82" title="1 of 2 branches missed.">        if (jsonName == null) {</span>
+<span class="nc" id="L83">            jsonName = &quot;&quot;;</span>
+        }
+
+<span class="pc bpc" id="L86" title="3 of 6 branches missed.">        if (value.contains(&quot;&lt;&quot;) || value.contains(&quot;&gt;&quot;) || value.contains(&quot;&amp;&quot;)) {</span>
+<span class="nc" id="L87">            value = value.replaceAll(&quot;[&lt;&gt;&amp;]&quot;, &quot;&quot;);</span>
+        }
+
+<span class="fc" id="L90">        this.value = value;</span>
+<span class="fc" id="L91">        this.jsonName = jsonName;</span>
+<span class="fc" id="L92">        this.xmlName = xmlName;</span>
+<span class="fc" id="L93">        this.isPrivate = isPrivate;</span>
+<span class="fc" id="L94">        this.hasCDATA = hasCDATA;</span>
+<span class="fc" id="L95">    }</span>
+
     /** Insert list of values to the Category
      * @param values
      * @param xmlName
      * @param jsonName
      */
-<span class="nc" id="L78">    public CategoryValue(List&lt;String&gt; values, String xmlName, String jsonName) {</span>
-<span class="nc bnc" id="L79" title="All 2 branches missed.">        if (values == null) {</span>
-<span class="nc" id="L80">            values = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L102">    public CategoryValue(List&lt;String&gt; values, String xmlName, String jsonName) {</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">        if (values == null) {</span>
+<span class="nc" id="L104">            values = new ArrayList&lt;&gt;();</span>
         }
 
-<span class="nc bnc" id="L83" title="All 2 branches missed.">        if (xmlName == null) {</span>
-<span class="nc" id="L84">            xmlName = &quot;&quot;;</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">        if (xmlName == null) {</span>
+<span class="nc" id="L108">            xmlName = &quot;&quot;;</span>
         }
 
-<span class="nc bnc" id="L87" title="All 2 branches missed.">        if (jsonName == null) {</span>
-<span class="nc" id="L88">            jsonName = &quot;&quot;;</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">        if (jsonName == null) {</span>
+<span class="nc" id="L112">            jsonName = &quot;&quot;;</span>
         }
 
-<span class="nc bnc" id="L91" title="All 2 branches missed.">        for (int i = 0; i &lt; values.size(); i++) {</span>
-<span class="nc bnc" id="L92" title="All 4 branches missed.">            if (values.contains(&quot;&lt;&quot;) || values.contains(&quot;&gt;&quot;)) {</span>
-<span class="nc" id="L93">                values.add(i, values.get(i).replaceAll(&quot;[&lt;&gt;]&quot;, &quot;&quot;));</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">        for (int i = 0; i &lt; values.size(); i++) {</span>
+<span class="nc" id="L116">            String value = values.get(i);</span>
+<span class="nc bnc" id="L117" title="All 6 branches missed.">            if (value.contains(&quot;&lt;&quot;) || value.contains(&quot;&gt;&quot;) || value.contains(&quot;&amp;&quot;)) {</span>
+<span class="nc" id="L118">                String s = value.replaceAll(&quot;[&lt;&gt;&amp;]&quot;, &quot;&quot;);</span>
+<span class="nc" id="L119">                values.add(i, s);</span>
             }
         }
 
-<span class="nc" id="L97">        this.values = values;</span>
-<span class="nc" id="L98">        this.jsonName = jsonName;</span>
-<span class="nc" id="L99">        this.xmlName = xmlName;</span>
-<span class="nc" id="L100">        this.isPrivate = false;</span>
-<span class="nc" id="L101">        this.hasCDATA = false;</span>
-<span class="nc" id="L102">    }</span>
+<span class="nc" id="L123">        this.values = values;</span>
+<span class="nc" id="L124">        this.jsonName = jsonName;</span>
+<span class="nc" id="L125">        this.xmlName = xmlName;</span>
+<span class="nc" id="L126">        this.isPrivate = false;</span>
+<span class="nc" id="L127">        this.hasCDATA = false;</span>
+<span class="nc" id="L128">    }</span>
 
     /** Embed an category inside in another category
      * @param category instance of the same class CategoryValue
      */
-<span class="fc" id="L107">    public CategoryValue(Category category){</span>
-<span class="fc" id="L108">        this.category = category;</span>
-<span class="fc" id="L109">    }</span>
+<span class="fc" id="L133">    public CategoryValue(Category category){</span>
+<span class="fc" id="L134">        this.category = category;</span>
+<span class="fc" id="L135">    }</span>
 
-<span class="fc" id="L111">    public CategoryValue(String value, String xmlName, String jsonName, Boolean isPrivate, Boolean hasCDATA) {</span>
-<span class="pc bpc" id="L112" title="1 of 2 branches missed.">        if(value==null) {</span>
-<span class="nc" id="L113">            value = &quot;&quot;;</span>
-        }
-
-<span class="pc bpc" id="L116" title="1 of 2 branches missed.">        if(xmlName==null) {</span>
-<span class="nc" id="L117">            xmlName = &quot;&quot;;</span>
-        }
-
-<span class="pc bpc" id="L120" title="1 of 2 branches missed.">        if(jsonName==null) {</span>
-<span class="nc" id="L121">            jsonName = &quot;&quot;;</span>
-        }
-
-<span class="pc bpc" id="L124" title="2 of 4 branches missed.">        if (value.contains(&quot;&lt;&quot;) || value.contains(&quot;&gt;&quot;)) {</span>
-<span class="nc" id="L125">            value = value.replaceAll(&quot;[&lt;&gt;]&quot;, &quot;&quot;);</span>
-        }
-
-<span class="fc" id="L128">        this.value = value;</span>
-<span class="fc" id="L129">        this.jsonName = jsonName;</span>
-<span class="fc" id="L130">        this.xmlName = xmlName;</span>
-<span class="fc" id="L131">        this.isPrivate = isPrivate;</span>
-<span class="fc" id="L132">        this.hasCDATA = hasCDATA;</span>
-<span class="fc" id="L133">    }</span>
-
-<span class="nc" id="L135">    public CategoryValue(String value) {</span>
-<span class="nc" id="L136">        this.value = value;</span>
-<span class="nc" id="L137">    }</span>
+<span class="nc" id="L137">    public CategoryValue(String value) {</span>
+<span class="nc" id="L138">        this.value = value;</span>
+<span class="nc" id="L139">    }</span>
 
     public String getValue() {
-<span class="fc" id="L140">        return value;</span>
+<span class="fc" id="L142">        return value;</span>
     }
 
     public String getJsonName() {
-<span class="fc" id="L144">        return jsonName;</span>
+<span class="fc" id="L146">        return jsonName;</span>
     }
 
     public String getXmlName() {
-<span class="fc" id="L148">        return xmlName;</span>
+<span class="fc" id="L150">        return xmlName;</span>
     }
 
     public Boolean isPrivate() {
-<span class="nc" id="L152">        return isPrivate;</span>
+<span class="nc" id="L154">        return isPrivate;</span>
     }
 
     public Boolean hasCDATA() {
-<span class="fc" id="L156">        return hasCDATA;</span>
+<span class="fc" id="L158">        return hasCDATA;</span>
     }
 
     public Category getCategory() {
-<span class="fc" id="L160">        return category;</span>
+<span class="fc" id="L162">        return category;</span>
     }
 
     public List&lt;String&gt; getValues() {
-<span class="fc" id="L164">        return values;</span>
+<span class="fc" id="L166">        return values;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span>Generated by the Android Gradle plugin 2.2.0</div></body></html>
