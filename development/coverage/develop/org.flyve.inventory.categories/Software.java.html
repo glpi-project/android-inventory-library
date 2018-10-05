@@ -1,6 +1,3 @@
----
-layout: coverage
----
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../resources/report.css" type="text/css"/><link rel="shortcut icon" href="../resources/report.gif" type="image/gif"/><title>Software.java</title><link rel="stylesheet" href="../resources/prettify.css" type="text/css"/><script type="text/javascript" src="../resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory.categories</a> &gt; <span class="el_source">Software.java</span></div><h1>Software.java</h1><pre class="source lang-java linenums">/**
  *  LICENSE
  * 
@@ -38,6 +35,7 @@ import android.content.pm.PackageManager;
 
 import org.flyve.inventory.CommonErrorType;
 import org.flyve.inventory.FlyveLog;
+import org.flyve.inventory.Utils;
 
 import java.io.File;
 import java.util.List;
@@ -69,13 +67,13 @@ public class Software extends Categories {
      */
     @Override
     public boolean equals(Object obj) {
-<span class="nc bnc" id="L69" title="All 2 branches missed.">        if (obj == null) {</span>
-<span class="nc" id="L70">            return false;</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">        if (obj == null) {</span>
+<span class="nc" id="L71">            return false;</span>
         }
-<span class="nc bnc" id="L72" title="All 2 branches missed.">        if (getClass() != obj.getClass()) {</span>
-<span class="nc" id="L73">            return false;</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">        if (getClass() != obj.getClass()) {</span>
+<span class="nc" id="L74">            return false;</span>
         }
-<span class="nc bnc" id="L75" title="All 2 branches missed.">        return (!super.equals(obj));</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">        return (!super.equals(obj));</span>
     }
 
     /**
@@ -84,9 +82,9 @@ public class Software extends Categories {
      */
     @Override
     public int hashCode() {
-<span class="nc" id="L84">        int hash = super.hashCode();</span>
-<span class="nc bnc" id="L85" title="All 2 branches missed.">        hash = 89 * hash + (this.packageManager != null ? this.packageManager.hashCode() : 0);</span>
-<span class="nc" id="L86">        return hash;</span>
+<span class="nc" id="L85">        int hash = super.hashCode();</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">        hash = 89 * hash + (this.packageManager != null ? this.packageManager.hashCode() : 0);</span>
+<span class="nc" id="L87">        return hash;</span>
     }
 
     /**
@@ -94,33 +92,33 @@ public class Software extends Categories {
     * @param xCtx Context where this class work
     */
     public Software(Context xCtx) {
-<span class="fc" id="L94">        super(xCtx);</span>
-<span class="fc" id="L95">        context = xCtx;</span>
+<span class="fc" id="L95">        super(xCtx);</span>
+<span class="fc" id="L96">        context = xCtx;</span>
         try {
-<span class="fc" id="L97">            packageManager = xCtx.getPackageManager();</span>
-<span class="fc" id="L98">            List&lt;ApplicationInfo&gt; packages = packageManager.getInstalledApplications(PackageManager.GET_META_DATA);</span>
+<span class="fc" id="L98">            packageManager = xCtx.getPackageManager();</span>
+<span class="fc" id="L99">            List&lt;ApplicationInfo&gt; packages = packageManager.getInstalledApplications(PackageManager.GET_META_DATA);</span>
 
-<span class="fc bfc" id="L100" title="All 2 branches covered.">            for (ApplicationInfo p : packages) {</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">            for (ApplicationInfo p : packages) {</span>
 
-<span class="fc" id="L102">                Category c = new Category(&quot;SOFTWARES&quot;, &quot;softwares&quot;);</span>
+<span class="fc" id="L103">                Category c = new Category(&quot;SOFTWARES&quot;, &quot;softwares&quot;);</span>
 
-<span class="fc" id="L104">                c.put(&quot;NAME&quot;, new CategoryValue(getName(p), &quot;NAME&quot;, &quot;name&quot;, false, true));</span>
-<span class="fc" id="L105">                c.put(&quot;COMMENTS&quot;, new CategoryValue(getPackage(p), &quot;COMMENTS&quot;, &quot;comments&quot;));</span>
-<span class="fc" id="L106">                c.put(&quot;VERSION&quot;, new CategoryValue(getVersion(p), &quot;VERSION&quot;, &quot;version&quot;));</span>
-<span class="fc" id="L107">                c.put(&quot;FILESIZE&quot;, new CategoryValue(getFileSize(p), &quot;FILESIZE&quot;, &quot;fileSize&quot;));</span>
-<span class="fc" id="L108">                c.put(&quot;FROM&quot;, new CategoryValue(FROM, &quot;FROM&quot;, &quot;from&quot;));</span>
-<span class="fc" id="L109">                c.put(&quot;INSTALLDATE&quot;, new CategoryValue(getInstallDate(p), &quot;INSTALLDATE&quot;, &quot;installDate&quot;));</span>
-<span class="fc" id="L110">                c.put(&quot;FOLDER&quot;, new CategoryValue(getFolder(p), &quot;FOLDER&quot;, &quot;folder&quot;));</span>
-<span class="fc" id="L111">                c.put(&quot;NO_REMOVE&quot;, new CategoryValue(getRemovable(p), &quot;NO_REMOVE&quot;, &quot;no_remove&quot;));</span>
-<span class="fc" id="L112">                c.put(&quot;USERID&quot;, new CategoryValue(getUserID(p), &quot;USERID&quot;, &quot;userid&quot;));</span>
+<span class="fc" id="L105">                c.put(&quot;NAME&quot;, new CategoryValue(getName(p), &quot;NAME&quot;, &quot;name&quot;, false, true));</span>
+<span class="fc" id="L106">                c.put(&quot;COMMENTS&quot;, new CategoryValue(getPackage(p), &quot;COMMENTS&quot;, &quot;comments&quot;));</span>
+<span class="fc" id="L107">                c.put(&quot;VERSION&quot;, new CategoryValue(getVersion(p), &quot;VERSION&quot;, &quot;version&quot;));</span>
+<span class="fc" id="L108">                c.put(&quot;FILESIZE&quot;, new CategoryValue(getFileSize(p), &quot;FILESIZE&quot;, &quot;fileSize&quot;));</span>
+<span class="fc" id="L109">                c.put(&quot;FROM&quot;, new CategoryValue(FROM, &quot;FROM&quot;, &quot;from&quot;));</span>
+<span class="fc" id="L110">                c.put(&quot;INSTALLDATE&quot;, new CategoryValue(getInstallDate(p), &quot;INSTALLDATE&quot;, &quot;installDate&quot;));</span>
+<span class="fc" id="L111">                c.put(&quot;FOLDER&quot;, new CategoryValue(getFolder(p), &quot;FOLDER&quot;, &quot;folder&quot;));</span>
+<span class="fc" id="L112">                c.put(&quot;NO_REMOVE&quot;, new CategoryValue(getRemovable(p), &quot;NO_REMOVE&quot;, &quot;no_remove&quot;));</span>
+<span class="fc" id="L113">                c.put(&quot;USERID&quot;, new CategoryValue(getUserID(p), &quot;USERID&quot;, &quot;userid&quot;));</span>
 
-<span class="fc" id="L114">                this.add(c);</span>
+<span class="fc" id="L115">                this.add(c);</span>
 
-<span class="fc" id="L116">            }</span>
-<span class="nc" id="L117">        } catch (Exception ex) {</span>
-<span class="nc" id="L118">            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.SOFTWARE, ex.getMessage()));</span>
-<span class="fc" id="L119">        }</span>
-<span class="fc" id="L120">    }</span>
+<span class="fc" id="L117">            }</span>
+<span class="nc" id="L118">        } catch (Exception ex) {</span>
+<span class="nc" id="L119">            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.SOFTWARE, ex.getMessage()));</span>
+<span class="fc" id="L120">        }</span>
+<span class="fc" id="L121">    }</span>
 
     /**
      * Get the name of the application
@@ -128,23 +126,23 @@ public class Software extends Categories {
      * @return string the application name
      */
     public String getName(ApplicationInfo p) {
-<span class="fc" id="L128">        String value = &quot;N/A&quot;;</span>
+<span class="fc" id="L129">        String value = &quot;N/A&quot;;</span>
         try {
-<span class="fc" id="L130">            value = packageManager.getApplicationLabel(p).toString();</span>
-<span class="nc" id="L131">        } catch (Exception ex) {</span>
-<span class="nc" id="L132">            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.SOFTWARE_NAME, ex.getMessage()));</span>
-<span class="fc" id="L133">        }</span>
-<span class="fc" id="L134">        return value;</span>
+<span class="fc" id="L131">            value = packageManager.getApplicationLabel(p).toString();</span>
+<span class="nc" id="L132">        } catch (Exception ex) {</span>
+<span class="nc" id="L133">            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.SOFTWARE_NAME, ex.getMessage()));</span>
+<span class="fc" id="L134">        }</span>
+<span class="fc" id="L135">        return value;</span>
     }
 
     public String getPackage(ApplicationInfo p) {
-<span class="fc" id="L138">        String value = &quot;N/A&quot;;</span>
+<span class="fc" id="L139">        String value = &quot;N/A&quot;;</span>
         try {
-<span class="fc" id="L140">            value = p.packageName;</span>
-<span class="nc" id="L141">        } catch (Exception ex) {</span>
-<span class="nc" id="L142">            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.SOFTWARE_PACKAGE, ex.getMessage()));</span>
-<span class="fc" id="L143">        }</span>
-<span class="fc" id="L144">        return value;</span>
+<span class="fc" id="L141">            value = p.packageName;</span>
+<span class="nc" id="L142">        } catch (Exception ex) {</span>
+<span class="nc" id="L143">            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.SOFTWARE_PACKAGE, ex.getMessage()));</span>
+<span class="fc" id="L144">        }</span>
+<span class="fc" id="L145">        return value;</span>
     }
 
     /**
@@ -153,16 +151,16 @@ public class Software extends Categories {
      * @return string the application version
      */
     public String getInstallDate(ApplicationInfo p) {
-<span class="fc" id="L153">        String mInstalled = &quot;N/A&quot;;</span>
+<span class="fc" id="L154">        String mInstalled = &quot;N/A&quot;;</span>
 
         try {
-<span class="fc" id="L156">            PackageInfo pi = packageManager.getPackageInfo(p.packageName, PackageManager.GET_META_DATA);</span>
-<span class="fc" id="L157">            mInstalled = String.valueOf(pi.firstInstallTime);</span>
-<span class="nc" id="L158">        } catch (Exception ex) {</span>
-<span class="nc" id="L159">            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.SOFTWARE_INSTALL_DATE, ex.getMessage()));</span>
-<span class="fc" id="L160">        }</span>
+<span class="fc" id="L157">            PackageInfo pi = packageManager.getPackageInfo(p.packageName, PackageManager.GET_META_DATA);</span>
+<span class="fc" id="L158">            mInstalled = Utils.convertTime(pi.firstInstallTime, &quot;dd/MM/yyyy&quot;);</span>
+<span class="nc" id="L159">        } catch (Exception ex) {</span>
+<span class="nc" id="L160">            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.SOFTWARE_INSTALL_DATE, ex.getMessage()));</span>
+<span class="fc" id="L161">        }</span>
 
-<span class="fc" id="L162">        return mInstalled;</span>
+<span class="fc" id="L163">        return mInstalled;</span>
     }
 
     /**
@@ -171,15 +169,15 @@ public class Software extends Categories {
      * @return string the application version
      */
     public String getVersion(ApplicationInfo p) {
-<span class="fc" id="L171">        String mVersion = &quot;N/A&quot;;</span>
+<span class="fc" id="L172">        String mVersion = &quot;N/A&quot;;</span>
         try {
-<span class="fc" id="L173">            PackageInfo pi = packageManager.getPackageInfo(p.packageName, PackageManager.GET_META_DATA);</span>
-<span class="fc" id="L174">            mVersion = pi.versionName;</span>
-<span class="nc" id="L175">        } catch (Exception ex) {</span>
-<span class="nc" id="L176">            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.SOFTWARE_VERSION, ex.getMessage()));</span>
-<span class="fc" id="L177">        }</span>
+<span class="fc" id="L174">            PackageInfo pi = packageManager.getPackageInfo(p.packageName, PackageManager.GET_META_DATA);</span>
+<span class="fc" id="L175">            mVersion = pi.versionName;</span>
+<span class="nc" id="L176">        } catch (Exception ex) {</span>
+<span class="nc" id="L177">            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.SOFTWARE_VERSION, ex.getMessage()));</span>
+<span class="fc" id="L178">        }</span>
 
-<span class="fc" id="L179">        return mVersion;</span>
+<span class="fc" id="L180">        return mVersion;</span>
     }
 
     /**
@@ -188,14 +186,14 @@ public class Software extends Categories {
      * @return string the sum of the cache, code and data size of the application
      */
     public String getFileSize(ApplicationInfo p) {
-<span class="fc" id="L188">        String value = &quot;N/A&quot;;</span>
+<span class="fc" id="L189">        String value = &quot;N/A&quot;;</span>
         try {
-<span class="fc" id="L190">            File file = new File(packageManager.getApplicationInfo(p.packageName, 0).publicSourceDir);</span>
-<span class="fc" id="L191">            value = String.valueOf(file.length());</span>
-<span class="nc" id="L192">        } catch (Exception ex) {</span>
-<span class="nc" id="L193">            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.SOFTWARE_FILE_SIZE, ex.getMessage()));</span>
-<span class="fc" id="L194">        }</span>
-<span class="fc" id="L195">        return value;</span>
+<span class="fc" id="L191">            File file = new File(packageManager.getApplicationInfo(p.packageName, 0).publicSourceDir);</span>
+<span class="fc" id="L192">            value = String.valueOf(file.length());</span>
+<span class="nc" id="L193">        } catch (Exception ex) {</span>
+<span class="nc" id="L194">            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.SOFTWARE_FILE_SIZE, ex.getMessage()));</span>
+<span class="fc" id="L195">        }</span>
+<span class="fc" id="L196">        return value;</span>
     }
 
     /**
@@ -204,14 +202,14 @@ public class Software extends Categories {
      * @return string folder of the application
      */
     public String getFolder(ApplicationInfo p) {
-<span class="fc" id="L204">        String value = &quot;N/A&quot;;</span>
+<span class="fc" id="L205">        String value = &quot;N/A&quot;;</span>
         try {
-<span class="fc" id="L206">            File file = new File(packageManager.getApplicationInfo(p.packageName, 0).publicSourceDir);</span>
-<span class="fc" id="L207">            value = file.getAbsolutePath().substring(0, file.getAbsolutePath().lastIndexOf(&quot;/&quot;));</span>
-<span class="nc" id="L208">        } catch (Exception ex) {</span>
-<span class="nc" id="L209">            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.SOFTWARE_FOLDER, ex.getMessage()));</span>
-<span class="fc" id="L210">        }</span>
-<span class="fc" id="L211">        return value;</span>
+<span class="fc" id="L207">            File file = new File(packageManager.getApplicationInfo(p.packageName, 0).publicSourceDir);</span>
+<span class="fc" id="L208">            value = file.getAbsolutePath().substring(0, file.getAbsolutePath().lastIndexOf(&quot;/&quot;));</span>
+<span class="nc" id="L209">        } catch (Exception ex) {</span>
+<span class="nc" id="L210">            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.SOFTWARE_FOLDER, ex.getMessage()));</span>
+<span class="fc" id="L211">        }</span>
+<span class="fc" id="L212">        return value;</span>
     }
 
     /**
@@ -220,26 +218,26 @@ public class Software extends Categories {
      * @return string 0 the application be uninstalled or 1 the application can be uninstalled
      */
     public String getRemovable(ApplicationInfo p) {
-<span class="fc" id="L220">        String value = &quot;N/A&quot;;</span>
+<span class="fc" id="L221">        String value = &quot;N/A&quot;;</span>
         try {
-<span class="fc" id="L222">            File file = new File(packageManager.getApplicationInfo(p.packageName, 0).publicSourceDir);</span>
-<span class="fc" id="L223">            boolean vendor = file.getAbsolutePath().contains(&quot;/system/vendor/operator/&quot;);</span>
-<span class="fc" id="L224">            boolean data = file.getAbsolutePath().contains(&quot;/data/app/&quot;);</span>
-<span class="fc" id="L225">            boolean system = file.getAbsolutePath().contains(&quot;/system/app/&quot;);</span>
-<span class="fc" id="L226">            boolean systemPriv = file.getAbsolutePath().contains(&quot;/system/priv-app/&quot;);</span>
-<span class="fc" id="L227">            boolean framework = file.getAbsolutePath().contains(&quot;/system/framework/&quot;);</span>
-<span class="fc" id="L228">            boolean plugin = file.getAbsolutePath().contains(&quot;/system/plugin/&quot;);</span>
-<span class="pc bpc" id="L229" title="1 of 4 branches missed.">            if (vendor || data) {</span>
-<span class="fc" id="L230">                value = &quot;1&quot;;</span>
-<span class="pc bpc" id="L231" title="4 of 8 branches missed.">            } else if (system || systemPriv || framework || plugin) {</span>
-<span class="fc" id="L232">                value = &quot;0&quot;;</span>
+<span class="fc" id="L223">            File file = new File(packageManager.getApplicationInfo(p.packageName, 0).publicSourceDir);</span>
+<span class="fc" id="L224">            boolean vendor = file.getAbsolutePath().contains(&quot;/system/vendor/operator/&quot;);</span>
+<span class="fc" id="L225">            boolean data = file.getAbsolutePath().contains(&quot;/data/app/&quot;);</span>
+<span class="fc" id="L226">            boolean system = file.getAbsolutePath().contains(&quot;/system/app/&quot;);</span>
+<span class="fc" id="L227">            boolean systemPriv = file.getAbsolutePath().contains(&quot;/system/priv-app/&quot;);</span>
+<span class="fc" id="L228">            boolean framework = file.getAbsolutePath().contains(&quot;/system/framework/&quot;);</span>
+<span class="fc" id="L229">            boolean plugin = file.getAbsolutePath().contains(&quot;/system/plugin/&quot;);</span>
+<span class="pc bpc" id="L230" title="1 of 4 branches missed.">            if (vendor || data) {</span>
+<span class="fc" id="L231">                value = &quot;1&quot;;</span>
+<span class="pc bpc" id="L232" title="4 of 8 branches missed.">            } else if (system || systemPriv || framework || plugin) {</span>
+<span class="fc" id="L233">                value = &quot;0&quot;;</span>
             } else {
-<span class="nc" id="L234">                value = &quot;1&quot;;</span>
+<span class="nc" id="L235">                value = &quot;1&quot;;</span>
             }
-<span class="nc" id="L236">        } catch (Exception ex) {</span>
-<span class="nc" id="L237">            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.SOFTWARE_REMOVABLE, ex.getMessage()));</span>
-<span class="fc" id="L238">        }</span>
-<span class="fc" id="L239">        return value;</span>
+<span class="nc" id="L237">        } catch (Exception ex) {</span>
+<span class="nc" id="L238">            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.SOFTWARE_REMOVABLE, ex.getMessage()));</span>
+<span class="fc" id="L239">        }</span>
+<span class="fc" id="L240">        return value;</span>
     }
 
     /**
@@ -248,13 +246,13 @@ public class Software extends Categories {
      * @return string userId of the application
      */
     public String getUserID(ApplicationInfo p) {
-<span class="fc" id="L248">        String value = &quot;N/A&quot;;</span>
+<span class="fc" id="L249">        String value = &quot;N/A&quot;;</span>
         try {
-<span class="fc" id="L250">            value = String.valueOf(p.uid);</span>
-<span class="nc" id="L251">        } catch (Exception ex) {</span>
-<span class="nc" id="L252">            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.SOFTWARE_USER_ID, ex.getMessage()));</span>
-<span class="fc" id="L253">        }</span>
-<span class="fc" id="L254">        return value;</span>
+<span class="fc" id="L251">            value = String.valueOf(p.uid);</span>
+<span class="nc" id="L252">        } catch (Exception ex) {</span>
+<span class="nc" id="L253">            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.SOFTWARE_USER_ID, ex.getMessage()));</span>
+<span class="fc" id="L254">        }</span>
+<span class="fc" id="L255">        return value;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span>Generated by the Android Gradle plugin 2.2.0</div></body></html>
