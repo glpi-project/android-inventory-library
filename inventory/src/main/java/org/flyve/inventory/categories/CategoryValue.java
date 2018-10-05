@@ -47,20 +47,20 @@ public class CategoryValue {
      * @param jsonName
      */
     public CategoryValue(String value, String xmlName, String jsonName) {
-        if(value==null) {
+        if (value == null) {
             value = "";
         }
 
-        if(xmlName==null) {
+        if (xmlName == null) {
             xmlName = "";
         }
 
-        if(jsonName==null) {
+        if (jsonName == null) {
             jsonName = "";
         }
 
-        if (value.contains("<") || value.contains(">")) {
-            value = value.replaceAll("[<>]", "");
+        if (value.contains("<") || value.contains(">") || value.contains("&")) {
+            value = value.replaceAll("[<>&]", "");
         }
 
         this.value = value;
@@ -68,6 +68,30 @@ public class CategoryValue {
         this.xmlName = xmlName;
         this.isPrivate = false;
         this.hasCDATA = false;
+    }
+
+    public CategoryValue(String value, String xmlName, String jsonName, Boolean isPrivate, Boolean hasCDATA) {
+        if (value == null) {
+            value = "";
+        }
+
+        if (xmlName == null) {
+            xmlName = "";
+        }
+
+        if (jsonName == null) {
+            jsonName = "";
+        }
+
+        if (value.contains("<") || value.contains(">") || value.contains("&")) {
+            value = value.replaceAll("[<>&]", "");
+        }
+
+        this.value = value;
+        this.jsonName = jsonName;
+        this.xmlName = xmlName;
+        this.isPrivate = isPrivate;
+        this.hasCDATA = hasCDATA;
     }
 
     /** Insert list of values to the Category
@@ -89,8 +113,10 @@ public class CategoryValue {
         }
 
         for (int i = 0; i < values.size(); i++) {
-            if (values.contains("<") || values.contains(">")) {
-                values.add(i, values.get(i).replaceAll("[<>]", ""));
+            String value = values.get(i);
+            if (value.contains("<") || value.contains(">") || value.contains("&")) {
+                String s = value.replaceAll("[<>&]", "");
+                values.add(i, s);
             }
         }
 
@@ -106,30 +132,6 @@ public class CategoryValue {
      */
     public CategoryValue(Category category){
         this.category = category;
-    }
-
-    public CategoryValue(String value, String xmlName, String jsonName, Boolean isPrivate, Boolean hasCDATA) {
-        if(value==null) {
-            value = "";
-        }
-
-        if(xmlName==null) {
-            xmlName = "";
-        }
-
-        if(jsonName==null) {
-            jsonName = "";
-        }
-
-        if (value.contains("<") || value.contains(">")) {
-            value = value.replaceAll("[<>]", "");
-        }
-
-        this.value = value;
-        this.jsonName = jsonName;
-        this.xmlName = xmlName;
-        this.isPrivate = isPrivate;
-        this.hasCDATA = hasCDATA;
     }
 
     public CategoryValue(String value) {
