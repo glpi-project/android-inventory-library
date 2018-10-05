@@ -35,6 +35,7 @@ import android.content.pm.PackageManager;
 
 import org.flyve.inventory.CommonErrorType;
 import org.flyve.inventory.FlyveLog;
+import org.flyve.inventory.Utils;
 
 import java.io.File;
 import java.util.List;
@@ -154,7 +155,7 @@ public class Software extends Categories {
 
         try {
             PackageInfo pi = packageManager.getPackageInfo(p.packageName, PackageManager.GET_META_DATA);
-            mInstalled = String.valueOf(pi.firstInstallTime);
+            mInstalled = Utils.convertTime(pi.firstInstallTime, "dd/MM/yyyy");
         } catch (Exception ex) {
             FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.SOFTWARE_INSTALL_DATE, ex.getMessage()));
         }

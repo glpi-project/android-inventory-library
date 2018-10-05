@@ -48,9 +48,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -369,6 +372,17 @@ public class Utils {
         return str.replaceAll("\\[", "").replaceAll("]", "");
     }
 
+    /** Convert timestamp in a formatted date pattern
+     * @param time timestamp
+     * @param pattern string value
+     * @return converted time
+     */
+    public static String convertTime(long time, String pattern){
+        Date date = new Date(time);
+        Format format = new SimpleDateFormat(pattern, Locale.getDefault());
+        return format.format(date);
+    }
+
     public static String loadJSONFromAsset(Context context, String name) {
         String json;
         try {
@@ -384,7 +398,6 @@ public class Utils {
         }
         return json;
     }
-
 
     /* Checks if external storage is available for read and write */
     private static boolean isExternalStorageWritable() {
