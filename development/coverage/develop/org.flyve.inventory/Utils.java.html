@@ -1,6 +1,3 @@
----
-layout: coverage
----
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../resources/report.css" type="text/css"/><link rel="shortcut icon" href="../resources/report.gif" type="image/gif"/><title>Utils.java</title><link rel="stylesheet" href="../resources/prettify.css" type="text/css"/><script type="text/javascript" src="../resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory</a> &gt; <span class="el_source">Utils.java</span></div><h1>Utils.java</h1><pre class="source lang-java linenums">/**
  *  LICENSE
  * 
@@ -38,7 +35,6 @@ import android.text.format.DateFormat;
 import android.util.Xml;
 
 import org.flyve.inventory.categories.Categories;
-import org.flyve.inventory.categories.Networks;
 import org.json.JSONObject;
 import org.xmlpull.v1.XmlSerializer;
 
@@ -54,6 +50,7 @@ import java.io.StringWriter;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -184,7 +181,7 @@ public class Utils {
 <span class="fc" id="L181">            JSONObject jsonQuery = new JSONObject();</span>
 <span class="fc" id="L182">            jsonQuery.put(&quot;query&quot;, &quot;INVENTORY&quot;);</span>
 <span class="fc" id="L183">            jsonQuery.put(&quot;versionClient&quot;, appVersion);</span>
-<span class="fc" id="L184">            jsonQuery.put(&quot;deviceId&quot;, Build.SERIAL + &quot;_&quot; + new Networks(context).getMacAddress());</span>
+<span class="fc" id="L184">            jsonQuery.put(&quot;deviceId&quot;, getDeviceId());</span>
 <span class="fc" id="L185">            jsonQuery.put(&quot;content&quot;, content);</span>
 
 <span class="fc" id="L187">            JSONObject jsonRequest = new JSONObject();</span>
@@ -231,148 +228,153 @@ public class Utils {
 <span class="fc" id="L228">                serializer.endTag(null, &quot;VERSIONCLIENT&quot;);</span>
 
 <span class="fc" id="L230">                serializer.startTag(null, &quot;DEVICEID&quot;);</span>
-
-<span class="fc" id="L232">                serializer.text(Build.SERIAL + &quot;_&quot; + new Networks(context).getMacAddress());</span>
-<span class="fc" id="L233">                serializer.endTag(null, &quot;DEVICEID&quot;);</span>
+<span class="fc" id="L231">                serializer.text(getDeviceId());</span>
+<span class="fc" id="L232">                serializer.endTag(null, &quot;DEVICEID&quot;);</span>
 
                 // Start CONTENT
-<span class="fc" id="L236">                serializer.startTag(null, &quot;CONTENT&quot;);</span>
+<span class="fc" id="L235">                serializer.startTag(null, &quot;CONTENT&quot;);</span>
 
                 // Start ACCESSLOG
-<span class="fc" id="L239">                serializer.startTag(null, &quot;ACCESSLOG&quot;);</span>
+<span class="fc" id="L238">                serializer.startTag(null, &quot;ACCESSLOG&quot;);</span>
 
-<span class="fc" id="L241">                serializer.startTag(null, &quot;LOGDATE&quot;);</span>
-<span class="fc" id="L242">                serializer.text(DateFormat.format(&quot;yyyy-MM-dd H:mm:ss&quot;, new Date()).toString());</span>
-<span class="fc" id="L243">                serializer.endTag(null, &quot;LOGDATE&quot;);</span>
+<span class="fc" id="L240">                serializer.startTag(null, &quot;LOGDATE&quot;);</span>
+<span class="fc" id="L241">                serializer.text(DateFormat.format(&quot;yyyy-MM-dd H:mm:ss&quot;, new Date()).toString());</span>
+<span class="fc" id="L242">                serializer.endTag(null, &quot;LOGDATE&quot;);</span>
 
-<span class="fc" id="L245">                serializer.startTag(null, &quot;USERID&quot;);</span>
-<span class="fc" id="L246">                serializer.text(&quot;N/A&quot;);</span>
-<span class="fc" id="L247">                serializer.endTag(null, &quot;USERID&quot;);</span>
+<span class="fc" id="L244">                serializer.startTag(null, &quot;USERID&quot;);</span>
+<span class="fc" id="L245">                serializer.text(&quot;N/A&quot;);</span>
+<span class="fc" id="L246">                serializer.endTag(null, &quot;USERID&quot;);</span>
 
-<span class="fc" id="L249">                serializer.endTag(null, &quot;ACCESSLOG&quot;);</span>
+<span class="fc" id="L248">                serializer.endTag(null, &quot;ACCESSLOG&quot;);</span>
                 // End ACCESSLOG
 
-<span class="fc bfc" id="L252" title="All 2 branches covered.">                if(!TAG.equals(&quot;&quot;)) {</span>
-<span class="fc" id="L253">                    serializer.startTag(null, &quot;ACCOUNTINFO&quot;);</span>
-<span class="fc" id="L254">                    serializer.startTag(null, &quot;KEYNAME&quot;);</span>
-<span class="fc" id="L255">                    serializer.text(&quot;TAG&quot;);</span>
-<span class="fc" id="L256">                    serializer.endTag(null, &quot;KEYNAME&quot;);</span>
-<span class="fc" id="L257">                    serializer.startTag(null, &quot;KEYVALUE&quot;);</span>
-<span class="fc" id="L258">                    serializer.text(TAG);</span>
-<span class="fc" id="L259">                    serializer.endTag(null, &quot;KEYVALUE&quot;);</span>
-<span class="fc" id="L260">                    serializer.endTag(null, &quot;ACCOUNTINFO&quot;);</span>
+<span class="fc bfc" id="L251" title="All 2 branches covered.">                if(!TAG.equals(&quot;&quot;)) {</span>
+<span class="fc" id="L252">                    serializer.startTag(null, &quot;ACCOUNTINFO&quot;);</span>
+<span class="fc" id="L253">                    serializer.startTag(null, &quot;KEYNAME&quot;);</span>
+<span class="fc" id="L254">                    serializer.text(&quot;TAG&quot;);</span>
+<span class="fc" id="L255">                    serializer.endTag(null, &quot;KEYNAME&quot;);</span>
+<span class="fc" id="L256">                    serializer.startTag(null, &quot;KEYVALUE&quot;);</span>
+<span class="fc" id="L257">                    serializer.text(TAG);</span>
+<span class="fc" id="L258">                    serializer.endTag(null, &quot;KEYVALUE&quot;);</span>
+<span class="fc" id="L259">                    serializer.endTag(null, &quot;ACCOUNTINFO&quot;);</span>
                 }
 
-<span class="fc bfc" id="L263" title="All 2 branches covered.">                for (Categories cat : categories) {</span>
-<span class="pc bpc" id="L264" title="1 of 2 branches missed.">                    if(isPrivate) {</span>
-<span class="nc" id="L265">                        cat.toXMLWithoutPrivateData(serializer);</span>
+<span class="fc bfc" id="L262" title="All 2 branches covered.">                for (Categories cat : categories) {</span>
+<span class="pc bpc" id="L263" title="1 of 2 branches missed.">                    if(isPrivate) {</span>
+<span class="nc" id="L264">                        cat.toXMLWithoutPrivateData(serializer);</span>
                     } else {
-<span class="fc" id="L267">                        cat.toXML(serializer);</span>
+<span class="fc" id="L266">                        cat.toXML(serializer);</span>
                     }
-<span class="fc" id="L269">                }</span>
+<span class="fc" id="L268">                }</span>
 
-<span class="fc" id="L271">                serializer.endTag(null, &quot;CONTENT&quot;);</span>
+<span class="fc" id="L270">                serializer.endTag(null, &quot;CONTENT&quot;);</span>
                 // End CONTENT
-<span class="fc" id="L273">                serializer.endTag(null, &quot;REQUEST&quot;);</span>
+<span class="fc" id="L272">                serializer.endTag(null, &quot;REQUEST&quot;);</span>
                 // End REQUEST
 
-<span class="fc" id="L276">                serializer.endDocument();</span>
+<span class="fc" id="L275">                serializer.endDocument();</span>
 
                 // Return XML String
-<span class="fc" id="L279">                return writer.toString();</span>
+<span class="fc" id="L278">                return writer.toString();</span>
 
-<span class="nc" id="L281">            } catch (Exception ex) {</span>
-<span class="nc" id="L282">                FlyveLog.e(FlyveLog.getMessage(String.valueOf(CommonErrorType.UTILS_CREATE_XML), ex.getMessage()));</span>
-<span class="nc" id="L283">                throw new FlyveException(ex.getMessage(), ex.getCause());</span>
+<span class="nc" id="L280">            } catch (Exception ex) {</span>
+<span class="nc" id="L281">                FlyveLog.e(FlyveLog.getMessage(String.valueOf(CommonErrorType.UTILS_CREATE_XML), ex.getMessage()));</span>
+<span class="nc" id="L282">                throw new FlyveException(ex.getMessage(), ex.getCause());</span>
             }
         }
 
-<span class="nc" id="L287">        return &quot;&quot;;</span>
+<span class="nc" id="L286">        return &quot;&quot;;</span>
+    }
+
+    private static String getDeviceId() {
+<span class="fc" id="L290">        String currentTimeStamp = getCurrentTimeStamp(&quot;yyyy-MM-dd-HH-mm-ss&quot;);</span>
+<span class="fc" id="L291">        String hostName = getSystemProperty(&quot;net.hostname&quot;);</span>
+<span class="fc" id="L292">        return hostName.trim() + &quot;-&quot; + currentTimeStamp.trim();</span>
     }
 
     public static Map&lt;String, String&gt; getCatMapInfo(String path) throws FileNotFoundException {
-<span class="fc" id="L291">        Map&lt;String, String&gt; map = new HashMap&lt;&gt;();</span>
-<span class="fc" id="L292">        Scanner s = new Scanner(new File(path));</span>
-<span class="fc bfc" id="L293" title="All 2 branches covered.">        while (s.hasNextLine()) {</span>
-<span class="fc" id="L294">            String[] values = s.nextLine().split(&quot;: &quot;);</span>
-<span class="fc bfc" id="L295" title="All 2 branches covered.">            if (values.length &gt; 1) {</span>
-<span class="fc" id="L296">                map.put(values[0].trim(), values[1].trim());</span>
+<span class="fc" id="L296">        Map&lt;String, String&gt; map = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L297">        Scanner s = new Scanner(new File(path));</span>
+<span class="fc bfc" id="L298" title="All 2 branches covered.">        while (s.hasNextLine()) {</span>
+<span class="fc" id="L299">            String[] values = s.nextLine().split(&quot;: &quot;);</span>
+<span class="fc bfc" id="L300" title="All 2 branches covered.">            if (values.length &gt; 1) {</span>
+<span class="fc" id="L301">                map.put(values[0].trim(), values[1].trim());</span>
             }
-<span class="fc" id="L298">        }</span>
-<span class="fc" id="L299">        return map;</span>
+<span class="fc" id="L303">        }</span>
+<span class="fc" id="L304">        return map;</span>
     }
 
     public static String getValueMapInfo(Map&lt;String, String&gt; mapInfo, String name) {
-<span class="fc bfc" id="L303" title="All 2 branches covered.">        for (String s : mapInfo.keySet()) {</span>
-<span class="fc bfc" id="L304" title="All 2 branches covered.">            if (s.equalsIgnoreCase(name)) {</span>
-<span class="fc" id="L305">                return mapInfo.get(s);</span>
+<span class="fc bfc" id="L308" title="All 2 branches covered.">        for (String s : mapInfo.keySet()) {</span>
+<span class="fc bfc" id="L309" title="All 2 branches covered.">            if (s.equalsIgnoreCase(name)) {</span>
+<span class="fc" id="L310">                return mapInfo.get(s);</span>
             }
-<span class="fc" id="L307">        }</span>
-<span class="fc" id="L308">        return &quot;&quot;;</span>
+<span class="fc" id="L312">        }</span>
+<span class="fc" id="L313">        return &quot;&quot;;</span>
     }
 
     public static String getCatInfoMultiple(String path) {
-<span class="fc" id="L312">        StringBuilder concatInfo = new StringBuilder();</span>
+<span class="fc" id="L317">        StringBuilder concatInfo = new StringBuilder();</span>
         try {
-<span class="nc" id="L314">            Scanner s = new Scanner(new File(path));</span>
-<span class="nc bnc" id="L315" title="All 2 branches missed.">            while (s.hasNextLine()) {</span>
-<span class="nc" id="L316">                concatInfo.append(s.nextLine());</span>
+<span class="nc" id="L319">            Scanner s = new Scanner(new File(path));</span>
+<span class="nc bnc" id="L320" title="All 2 branches missed.">            while (s.hasNextLine()) {</span>
+<span class="nc" id="L321">                concatInfo.append(s.nextLine());</span>
             }
-<span class="fc" id="L318">        } catch (Exception ex) {</span>
-<span class="nc" id="L319">            FlyveLog.e(FlyveLog.getMessage(String.valueOf(CommonErrorType.UTILS_CAT_INFO_MULTIPLE), ex.getMessage()));</span>
-<span class="nc" id="L320">        }</span>
-<span class="nc" id="L321">        return concatInfo.toString();</span>
+<span class="fc" id="L323">        } catch (Exception ex) {</span>
+<span class="nc" id="L324">            FlyveLog.e(FlyveLog.getMessage(String.valueOf(CommonErrorType.UTILS_CAT_INFO_MULTIPLE), ex.getMessage()));</span>
+<span class="nc" id="L325">        }</span>
+<span class="nc" id="L326">        return concatInfo.toString();</span>
     }
 
     public static String getCatInfo(String path) {
         try {
-<span class="fc" id="L326">            Scanner s = new Scanner(new File(path));</span>
-<span class="fc" id="L327">            return s.next();</span>
-<span class="fc" id="L328">        } catch (Exception ex) {</span>
-<span class="nc" id="L329">            FlyveLog.e(FlyveLog.getMessage(String.valueOf(CommonErrorType.UTILS_CAT_INFO), ex.getMessage()));</span>
+<span class="fc" id="L331">            Scanner s = new Scanner(new File(path));</span>
+<span class="fc" id="L332">            return s.next();</span>
+<span class="fc" id="L333">        } catch (Exception ex) {</span>
+<span class="nc" id="L334">            FlyveLog.e(FlyveLog.getMessage(String.valueOf(CommonErrorType.UTILS_CAT_INFO), ex.getMessage()));</span>
         }
-<span class="nc" id="L331">        return &quot;&quot;;</span>
+<span class="nc" id="L336">        return &quot;&quot;;</span>
     }
 
     public static String getSystemProperty(String type) {
-<span class="fc" id="L335">        ArrayList&lt;HashMap&lt;String, String&gt;&gt; arr = getDeviceProperties();</span>
-<span class="pc bpc" id="L336" title="1 of 2 branches missed.">        for (int i = 0; i &lt; arr.size(); i++) {</span>
-<span class="fc" id="L337">            HashMap&lt;String, String&gt; map = arr.get(i);</span>
-<span class="fc bfc" id="L338" title="All 2 branches covered.">            if (map.get(type) != null)</span>
-<span class="fc" id="L339">                return map.get(type);</span>
+<span class="fc" id="L340">        ArrayList&lt;HashMap&lt;String, String&gt;&gt; arr = getDeviceProperties();</span>
+<span class="pc bpc" id="L341" title="1 of 2 branches missed.">        for (int i = 0; i &lt; arr.size(); i++) {</span>
+<span class="fc" id="L342">            HashMap&lt;String, String&gt; map = arr.get(i);</span>
+<span class="fc bfc" id="L343" title="All 2 branches covered.">            if (map.get(type) != null)</span>
+<span class="fc" id="L344">                return map.get(type);</span>
         }
-<span class="nc" id="L341">        return &quot;&quot;;</span>
+<span class="nc" id="L346">        return &quot;&quot;;</span>
     }
 
     public static ArrayList&lt;HashMap&lt;String, String&gt;&gt; getDeviceProperties() {
         try {
             // Run the command
-<span class="fc" id="L347">            Process process = Runtime.getRuntime().exec(&quot;getprop&quot;);</span>
-<span class="fc" id="L348">            BufferedReader bufferedReader = new BufferedReader(</span>
-<span class="fc" id="L349">                    new InputStreamReader(process.getInputStream()));</span>
+<span class="fc" id="L352">            Process process = Runtime.getRuntime().exec(&quot;getprop&quot;);</span>
+<span class="fc" id="L353">            BufferedReader bufferedReader = new BufferedReader(</span>
+<span class="fc" id="L354">                    new InputStreamReader(process.getInputStream()));</span>
 
             // Grab the results
-<span class="fc" id="L352">            ArrayList&lt;HashMap&lt;String, String&gt;&gt; arr = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L357">            ArrayList&lt;HashMap&lt;String, String&gt;&gt; arr = new ArrayList&lt;&gt;();</span>
             String line;
-<span class="fc bfc" id="L354" title="All 2 branches covered.">            while ((line = bufferedReader.readLine()) != null) {</span>
-<span class="fc" id="L355">                String[] value = line.split(&quot;:&quot;);</span>
-<span class="fc" id="L356">                HashMap&lt;String, String&gt; map = new HashMap&lt;&gt;();</span>
-<span class="pc bpc" id="L357" title="1 of 2 branches missed.">                if (value.length &gt;= 2) {</span>
-<span class="fc" id="L358">                    map.put(removeBracket(value[0]), removeBracket(value[1]));</span>
-<span class="fc" id="L359">                    arr.add(map);</span>
+<span class="fc bfc" id="L359" title="All 2 branches covered.">            while ((line = bufferedReader.readLine()) != null) {</span>
+<span class="fc" id="L360">                String[] value = line.split(&quot;:&quot;);</span>
+<span class="fc" id="L361">                HashMap&lt;String, String&gt; map = new HashMap&lt;&gt;();</span>
+<span class="pc bpc" id="L362" title="1 of 2 branches missed.">                if (value.length &gt;= 2) {</span>
+<span class="fc" id="L363">                    map.put(removeBracket(value[0]), removeBracket(value[1]));</span>
+<span class="fc" id="L364">                    arr.add(map);</span>
                 }
-<span class="fc" id="L361">            }</span>
+<span class="fc" id="L366">            }</span>
 
-<span class="fc" id="L363">            return arr;</span>
-<span class="nc" id="L364">        } catch (IOException ex) {</span>
-<span class="nc" id="L365">            FlyveLog.e(FlyveLog.getMessage(String.valueOf(CommonErrorType.UTILS_DEVICE_PROPERTIES), ex.getMessage()));</span>
+<span class="fc" id="L368">            return arr;</span>
+<span class="nc" id="L369">        } catch (IOException ex) {</span>
+<span class="nc" id="L370">            FlyveLog.e(FlyveLog.getMessage(String.valueOf(CommonErrorType.UTILS_DEVICE_PROPERTIES), ex.getMessage()));</span>
         }
 
-<span class="nc" id="L368">        return new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L373">        return new ArrayList&lt;&gt;();</span>
     }
 
     private static String removeBracket(String str) {
-<span class="fc" id="L372">        return str.replaceAll(&quot;\\[&quot;, &quot;&quot;).replaceAll(&quot;]&quot;, &quot;&quot;);</span>
+<span class="fc" id="L377">        return str.replaceAll(&quot;\\[&quot;, &quot;&quot;).replaceAll(&quot;]&quot;, &quot;&quot;);</span>
     }
 
     /** Convert timestamp in a formatted date pattern
@@ -380,32 +382,42 @@ public class Utils {
      * @param pattern string value
      * @return converted time
      */
-    public static String convertTime(long time, String pattern){
-<span class="fc" id="L381">        Date date = new Date(time);</span>
-<span class="fc" id="L382">        Format format = new SimpleDateFormat(pattern, Locale.getDefault());</span>
-<span class="fc" id="L383">        return format.format(date);</span>
+    public static String convertTime(long time, String pattern) {
+<span class="fc" id="L386">        Date date = new Date(time);</span>
+<span class="fc" id="L387">        Format format = new SimpleDateFormat(pattern, Locale.getDefault());</span>
+<span class="fc" id="L388">        return format.format(date);</span>
+    }
+
+    /** Get current date
+     * @param template format date
+     * @return String of the current date
+     */
+    public static String getCurrentTimeStamp(String template) {
+<span class="fc" id="L396">        SimpleDateFormat sdfDate = new SimpleDateFormat(template, Locale.getDefault());</span>
+<span class="fc" id="L397">        Date now = Calendar.getInstance().getTime();</span>
+<span class="fc" id="L398">        return sdfDate.format(now);</span>
     }
 
     public static String loadJSONFromAsset(Context context, String name) {
         String json;
         try {
-<span class="fc" id="L389">            InputStream is = context.getAssets().open(name);</span>
-<span class="fc" id="L390">            int size = is.available();</span>
-<span class="fc" id="L391">            byte[] buffer = new byte[size];</span>
-<span class="fc" id="L392">            is.read(buffer);</span>
-<span class="fc" id="L393">            is.close();</span>
-<span class="fc" id="L394">            json = new String(buffer, &quot;UTF-8&quot;);</span>
-<span class="nc" id="L395">        } catch (IOException ex) {</span>
-<span class="nc" id="L396">            FlyveLog.e(FlyveLog.getMessage(String.valueOf(CommonErrorType.UTILS_LOAD_JSON_ASSET), ex.getMessage()));</span>
-<span class="nc" id="L397">            return null;</span>
-<span class="fc" id="L398">        }</span>
-<span class="fc" id="L399">        return json;</span>
+<span class="fc" id="L404">            InputStream is = context.getAssets().open(name);</span>
+<span class="fc" id="L405">            int size = is.available();</span>
+<span class="fc" id="L406">            byte[] buffer = new byte[size];</span>
+<span class="fc" id="L407">            is.read(buffer);</span>
+<span class="fc" id="L408">            is.close();</span>
+<span class="fc" id="L409">            json = new String(buffer, &quot;UTF-8&quot;);</span>
+<span class="nc" id="L410">        } catch (IOException ex) {</span>
+<span class="nc" id="L411">            FlyveLog.e(FlyveLog.getMessage(String.valueOf(CommonErrorType.UTILS_LOAD_JSON_ASSET), ex.getMessage()));</span>
+<span class="nc" id="L412">            return null;</span>
+<span class="fc" id="L413">        }</span>
+<span class="fc" id="L414">        return json;</span>
     }
 
     /* Checks if external storage is available for read and write */
     private static boolean isExternalStorageWritable() {
-<span class="nc" id="L404">        String state = Environment.getExternalStorageState();</span>
-<span class="nc" id="L405">        return Environment.MEDIA_MOUNTED.equals(state);</span>
+<span class="nc" id="L419">        String state = Environment.getExternalStorageState();</span>
+<span class="nc" id="L420">        return Environment.MEDIA_MOUNTED.equals(state);</span>
     }
 
     /**
@@ -414,66 +426,66 @@ public class Utils {
      * @param filename name of the file
      */
     public static void storeFile(String message, String filename) {
-<span class="fc" id="L414">        String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();</span>
-<span class="fc" id="L415">        File dir = new File(path);</span>
+<span class="fc" id="L429">        String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();</span>
+<span class="fc" id="L430">        File dir = new File(path);</span>
 
-<span class="fc" id="L417">        String state = Environment.getExternalStorageState();</span>
-<span class="pc bpc" id="L418" title="1 of 2 branches missed.">        if (Environment.MEDIA_MOUNTED.equals(state)) {</span>
+<span class="fc" id="L432">        String state = Environment.getExternalStorageState();</span>
+<span class="pc bpc" id="L433" title="1 of 2 branches missed.">        if (Environment.MEDIA_MOUNTED.equals(state)) {</span>
 
-<span class="nc bnc" id="L420" title="All 2 branches missed.">            if(!dir.exists()) {</span>
-<span class="nc bnc" id="L421" title="All 2 branches missed.">                if(dir.mkdirs()) {</span>
-<span class="nc" id="L422">                    FlyveLog.d(&quot;create path&quot;);</span>
+<span class="nc bnc" id="L435" title="All 2 branches missed.">            if(!dir.exists()) {</span>
+<span class="nc bnc" id="L436" title="All 2 branches missed.">                if(dir.mkdirs()) {</span>
+<span class="nc" id="L437">                    FlyveLog.d(&quot;create path&quot;);</span>
                 } else {
-<span class="nc" id="L424">                    FlyveLog.e(&quot;cannot create path&quot;);</span>
-<span class="nc" id="L425">                    return;</span>
+<span class="nc" id="L439">                    FlyveLog.e(&quot;cannot create path&quot;);</span>
+<span class="nc" id="L440">                    return;</span>
                 }
             }
 
-<span class="nc" id="L429">            File logFile = new File(path + &quot;/&quot; + filename);</span>
+<span class="nc" id="L444">            File logFile = new File(path + &quot;/&quot; + filename);</span>
 
-<span class="nc bnc" id="L431" title="All 2 branches missed.">            if (!logFile.exists())  {</span>
+<span class="nc bnc" id="L446" title="All 2 branches missed.">            if (!logFile.exists())  {</span>
                 try  {
-<span class="nc bnc" id="L433" title="All 2 branches missed.">                    if(logFile.createNewFile()) {</span>
-<span class="nc" id="L434">                        FlyveLog.d(&quot;File created&quot;);</span>
+<span class="nc bnc" id="L448" title="All 2 branches missed.">                    if(logFile.createNewFile()) {</span>
+<span class="nc" id="L449">                        FlyveLog.d(&quot;File created&quot;);</span>
                     } else {
-<span class="nc" id="L436">                        FlyveLog.d(&quot;Cannot create file&quot;);</span>
-<span class="nc" id="L437">                        return;</span>
+<span class="nc" id="L451">                        FlyveLog.d(&quot;Cannot create file&quot;);</span>
+<span class="nc" id="L452">                        return;</span>
                     }
-<span class="nc" id="L439">                } catch (IOException ex) {</span>
-<span class="nc" id="L440">                    FlyveLog.e(ex.getMessage());</span>
-<span class="nc" id="L441">                }</span>
+<span class="nc" id="L454">                } catch (IOException ex) {</span>
+<span class="nc" id="L455">                    FlyveLog.e(ex.getMessage());</span>
+<span class="nc" id="L456">                }</span>
             }
 
-<span class="nc" id="L444">            FileWriter fw = null;</span>
+<span class="nc" id="L459">            FileWriter fw = null;</span>
 
             try {
                 //BufferedWriter for performance, true to set append to file flag
-<span class="nc" id="L448">                fw = new FileWriter(logFile, false);</span>
-<span class="nc" id="L449">                BufferedWriter buf = new BufferedWriter(fw);</span>
+<span class="nc" id="L463">                fw = new FileWriter(logFile, false);</span>
+<span class="nc" id="L464">                BufferedWriter buf = new BufferedWriter(fw);</span>
 
-<span class="nc" id="L451">                buf.write(message);</span>
-<span class="nc" id="L452">                buf.newLine();</span>
-<span class="nc" id="L453">                buf.flush();</span>
-<span class="nc" id="L454">                buf.close();</span>
-<span class="nc" id="L455">                fw.close();</span>
-<span class="nc" id="L456">                FlyveLog.d(&quot;Inventory stored&quot;);</span>
+<span class="nc" id="L466">                buf.write(message);</span>
+<span class="nc" id="L467">                buf.newLine();</span>
+<span class="nc" id="L468">                buf.flush();</span>
+<span class="nc" id="L469">                buf.close();</span>
+<span class="nc" id="L470">                fw.close();</span>
+<span class="nc" id="L471">                FlyveLog.d(&quot;Inventory stored&quot;);</span>
             }
-<span class="nc" id="L458">            catch (IOException ex) {</span>
-<span class="nc" id="L459">                FlyveLog.e(ex.getMessage());</span>
+<span class="nc" id="L473">            catch (IOException ex) {</span>
+<span class="nc" id="L474">                FlyveLog.e(ex.getMessage());</span>
             }
             finally {
-<span class="nc bnc" id="L462" title="All 6 branches missed.">                if(fw!=null) {</span>
+<span class="nc bnc" id="L477" title="All 6 branches missed.">                if(fw!=null) {</span>
                     try {
-<span class="nc" id="L464">                        fw.close();</span>
-<span class="nc" id="L465">                    } catch(Exception ex) {</span>
-<span class="nc" id="L466">                        FlyveLog.e(ex.getMessage());</span>
-<span class="nc" id="L467">                    }</span>
+<span class="nc" id="L479">                        fw.close();</span>
+<span class="nc" id="L480">                    } catch(Exception ex) {</span>
+<span class="nc" id="L481">                        FlyveLog.e(ex.getMessage());</span>
+<span class="nc" id="L482">                    }</span>
                 }
-<span class="nc" id="L469">            }</span>
-<span class="nc" id="L470">        } else {</span>
-<span class="fc" id="L471">            FlyveLog.d(&quot;External Storage is not available&quot;);</span>
+<span class="nc" id="L484">            }</span>
+<span class="nc" id="L485">        } else {</span>
+<span class="fc" id="L486">            FlyveLog.d(&quot;External Storage is not available&quot;);</span>
         }
-<span class="fc" id="L473">    }</span>
+<span class="fc" id="L488">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span>Generated by the Android Gradle plugin 2.2.0</div></body></html>
