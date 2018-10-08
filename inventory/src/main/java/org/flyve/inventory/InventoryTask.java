@@ -221,7 +221,9 @@ public class InventoryTask {
                     InventoryTask.runOnUI(new Runnable() {
                         public void run() {
                             running = false;
-                            listener.onTaskError( ex.getCause() );
+                            if (ex.getCause() != null) {
+                                listener.onTaskError(ex.getCause());
+                            }
                         }
                     });
 
@@ -260,7 +262,9 @@ public class InventoryTask {
                     InventoryTask.runOnUI(new Runnable() {
                         public void run() {
                             running = false;
-                            listener.onTaskError( ex.getCause() );
+                            if (ex.getCause() != null) {
+                                listener.onTaskError(ex.getCause());
+                            }
                         }
                     });
                 }
