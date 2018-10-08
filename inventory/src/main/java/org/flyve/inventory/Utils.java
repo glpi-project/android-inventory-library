@@ -35,7 +35,6 @@ import android.text.format.DateFormat;
 import android.util.Xml;
 
 import org.flyve.inventory.categories.Categories;
-import org.flyve.inventory.categories.Networks;
 import org.json.JSONObject;
 import org.xmlpull.v1.XmlSerializer;
 
@@ -51,6 +50,7 @@ import java.io.StringWriter;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -181,7 +181,7 @@ public class Utils {
             JSONObject jsonQuery = new JSONObject();
             jsonQuery.put("query", "INVENTORY");
             jsonQuery.put("versionClient", appVersion);
-            jsonQuery.put("deviceId", Build.SERIAL + "_" + new Networks(context).getMacAddress());
+            jsonQuery.put("deviceId", getDeviceId());
             jsonQuery.put("content", content);
 
             JSONObject jsonRequest = new JSONObject();
@@ -228,8 +228,7 @@ public class Utils {
                 serializer.endTag(null, "VERSIONCLIENT");
 
                 serializer.startTag(null, "DEVICEID");
-
-                serializer.text(Build.SERIAL + "_" + new Networks(context).getMacAddress());
+                serializer.text(getDeviceId());
                 serializer.endTag(null, "DEVICEID");
 
                 // Start CONTENT
@@ -285,6 +284,12 @@ public class Utils {
         }
 
         return "";
+    }
+
+    private static String getDeviceId() {
+        String currentTimeStamp = getCurrentTimeStamp("yyyy-MM-dd-HH-mm-ss");
+        String hostName = getSystemProperty("net.hostname");
+        return hostName.trim() + "-" + currentTimeStamp.trim();
     }
 
     public static Map<String, String> getCatMapInfo(String path) throws FileNotFoundException {
@@ -377,10 +382,20 @@ public class Utils {
      * @param pattern string value
      * @return converted time
      */
-    public static String convertTime(long time, String pattern){
+    public static String convertTime(long time, String pattern) {
         Date date = new Date(time);
         Format format = new SimpleDateFormat(pattern, Locale.getDefault());
         return format.format(date);
+    }
+
+    /** Get current date
+     * @param template format date
+     * @return String of the current date
+     */
+    public static String getCurrentTimeStamp(String template) {
+        SimpleDateFormat sdfDate = new SimpleDateFormat(template, Locale.getDefault());
+        Date now = Calendar.getInstance().getTime();
+        return sdfDate.format(now);
     }
 
     public static String loadJSONFromAsset(Context context, String name) {
