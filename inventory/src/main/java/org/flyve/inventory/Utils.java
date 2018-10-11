@@ -154,22 +154,28 @@ public class Utils {
      */
 
     protected static String createJSON(Context context, ArrayList<Categories> categories, String appVersion,
-                                       boolean isPrivate, String TAG) throws FlyveException {
+                                       boolean isPrivate, String tag) throws FlyveException {
         try {
 
-            if(!TAG.equals("")) {
+            if(!tag.equals("")) {
                 JSONObject accountInfo = new JSONObject();
                 accountInfo.put("keyName", "TAG");
-                accountInfo.put("keyValue", TAG);
+                accountInfo.put("keyValue", tag);
             }
 
             JSONObject jsonAccessLog = new JSONObject();
             jsonAccessLog.put("logDate", DateFormat.format("yyyy-MM-dd H:mm:ss", new Date()).toString());
             jsonAccessLog.put("userId", "N/A");
 
+            JSONObject jsonAccountInfo = new JSONObject();
+            jsonAccessLog.put("keyname", "TAG");
+            jsonAccessLog.put("keyvalue", "N/A");
+
             JSONObject content = new JSONObject();
             content.put("accessLog", jsonAccessLog);
             content.put("accountInfo", jsonAccessLog);
+            content.put("versionClient", appVersion);
+            content.put("accountinfo", tag);
 
             for (Categories cat : categories) {
                 if(isPrivate) {
@@ -204,15 +210,14 @@ public class Utils {
      * @throws FlyveException Exception
      */
     protected static String createXML(Context context, ArrayList<Categories> categories, String appVersion,
-                                      boolean isPrivate, String TAG) throws FlyveException {
+                                      boolean isPrivate, String tag) throws FlyveException {
         if (categories != null) {
             XmlSerializer serializer = Xml.newSerializer();
             StringWriter writer = new StringWriter();
 
             try {
                 serializer.setOutput(writer);
-                serializer
-                        .setFeature(
+                serializer.setFeature(
                                 "http://xmlpull.org/v1/doc/features.html#indent-output",
                                 true);
                 // indentation as 3 spaces
@@ -224,16 +229,29 @@ public class Utils {
                 serializer.text("INVENTORY");
                 serializer.endTag(null, "QUERY");
 
-                serializer.startTag(null, "VERSIONCLIENT");
-                serializer.text(appVersion);
-                serializer.endTag(null, "VERSIONCLIENT");
-
                 serializer.startTag(null, "DEVICEID");
                 serializer.text(getDeviceId());
                 serializer.endTag(null, "DEVICEID");
 
                 // Start CONTENT
                 serializer.startTag(null, "CONTENT");
+
+                serializer.startTag(null, "VERSIONCLIENT");
+                serializer.text(appVersion);
+                serializer.endTag(null, "VERSIONCLIENT");
+
+                // Start ACCOUNTINFO
+                serializer.startTag(null, "ACCOUNTINFO");
+
+                serializer.startTag(null, "KEYNAME");
+                serializer.text("TAG");
+                serializer.endTag(null, "KEYNAME");
+
+                serializer.startTag(null, "KEYVALUE");
+                serializer.text(tag);
+                serializer.endTag(null, "KEYVALUE");
+
+                serializer.endTag(null, "ACCOUNTINFO");
 
                 // Start ACCESSLOG
                 serializer.startTag(null, "ACCESSLOG");
@@ -249,13 +267,13 @@ public class Utils {
                 serializer.endTag(null, "ACCESSLOG");
                 // End ACCESSLOG
 
-                if(!TAG.equals("")) {
+                if(!tag.equals("")) {
                     serializer.startTag(null, "ACCOUNTINFO");
                     serializer.startTag(null, "KEYNAME");
                     serializer.text("TAG");
                     serializer.endTag(null, "KEYNAME");
                     serializer.startTag(null, "KEYVALUE");
-                    serializer.text(TAG);
+                    serializer.text(tag);
                     serializer.endTag(null, "KEYVALUE");
                     serializer.endTag(null, "ACCOUNTINFO");
                 }
