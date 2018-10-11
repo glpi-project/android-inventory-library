@@ -210,8 +210,7 @@ public class Utils {
 
             try {
                 serializer.setOutput(writer);
-                serializer
-                        .setFeature(
+                serializer.setFeature(
                                 "http://xmlpull.org/v1/doc/features.html#indent-output",
                                 true);
                 // indentation as 3 spaces
@@ -223,16 +222,16 @@ public class Utils {
                 serializer.text("INVENTORY");
                 serializer.endTag(null, "QUERY");
 
-                serializer.startTag(null, "VERSIONCLIENT");
-                serializer.text(appVersion);
-                serializer.endTag(null, "VERSIONCLIENT");
-
                 serializer.startTag(null, "DEVICEID");
                 serializer.text(getDeviceId());
                 serializer.endTag(null, "DEVICEID");
 
                 // Start CONTENT
                 serializer.startTag(null, "CONTENT");
+
+                serializer.startTag(null, "VERSIONCLIENT");
+                serializer.text(appVersion);
+                serializer.endTag(null, "VERSIONCLIENT");
 
                 // Start ACCESSLOG
                 serializer.startTag(null, "ACCESSLOG");
