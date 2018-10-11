@@ -40,9 +40,6 @@ import org.w3c.dom.Document;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -172,7 +169,7 @@ public class Hardware extends Categories {
     public String getLastLoggedUser() {
         String value = "N/A";
         try {
-            if (userInfo.size() > 0) {
+            if (userInfo.get(2) != null) {
                 DocumentBuilder newDocumentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
                 String info = userInfo.get(2).trim();
                 Document parse = newDocumentBuilder.parse(new ByteArrayInputStream(info.getBytes()));
@@ -184,11 +181,15 @@ public class Hardware extends Categories {
         return value;
     }
 
+    /**
+     * Get the user tag of the last logged user
+     * @return string the user tag
+     */
     private String getUserTagValue(String tagName) {
         String evaluate = "";
         String value = "N/A";
         try {
-            if (userInfo.size() > 0) {
+            if (userInfo.get(1) != null) {
                 String removeChar = userInfo.get(1).replaceAll("[\"><]", "");
                 if (removeChar.contains("user ")) {
                     evaluate = removeChar.replaceAll(" ", ",").trim();
@@ -213,12 +214,16 @@ public class Hardware extends Categories {
         return value;
     }
 
+    /**
+     * Get user info of the last logged user from an XML
+     */
     private void getUserInfo() {
         userInfo = new ArrayList<>();
         try {
             String temp;
             String[] values = {"su", "cat /data/system/users/0.xml\n", "exit\n"};
-            while ((temp = Utils.getBufferedRootPermission(values).readLine()) != null) {
+            BufferedReader catInfo = Utils.getBufferedSequentialCatInfo(values);
+            while ((temp = catInfo.readLine()) != null) {
                 userInfo.add(temp);
             }
         } catch (Exception ex) {
@@ -233,11 +238,11 @@ public class Hardware extends Categories {
     public String getName() {
         String value = "N/A";
         try {
-            value = Build.MODEL;
+            value = Utils.getSystemProperty("net.hostname");
         } catch (Exception ex) {
             FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.HARDWARE_NAME, ex.getMessage()));
         }
-        return value;
+        return value.trim();
     }
 
     /**
