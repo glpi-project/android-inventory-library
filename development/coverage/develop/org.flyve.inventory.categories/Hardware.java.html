@@ -1,6 +1,3 @@
----
-layout: coverage
----
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../resources/report.css" type="text/css"/><link rel="shortcut icon" href="../resources/report.gif" type="image/gif"/><title>Hardware.java</title><link rel="stylesheet" href="../resources/prettify.css" type="text/css"/><script type="text/javascript" src="../resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory.categories</a> &gt; <span class="el_source">Hardware.java</span></div><h1>Hardware.java</h1><pre class="source lang-java linenums">/**
  *  LICENSE
  * 
@@ -38,12 +35,11 @@ import android.provider.Settings.Secure;
 
 import org.flyve.inventory.CommonErrorType;
 import org.flyve.inventory.FlyveLog;
+import org.flyve.inventory.Utils;
 import org.w3c.dom.Document;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
-import java.io.DataOutputStream;
-import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -82,7 +78,7 @@ public class Hardware extends Categories {
     private Properties props;
     private Context context;
     private static final String OSNAME = &quot;Android&quot;;
-<span class="fc" id="L82">    private ArrayList&lt;String&gt; userInfo = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L81">    private ArrayList&lt;String&gt; userInfo = new ArrayList&lt;&gt;();</span>
 
     /**
      * Indicates whether some other object is &quot;equal to&quot; this one
@@ -91,7 +87,7 @@ public class Hardware extends Categories {
      */
     @Override
     public boolean equals(Object obj) {
-<span class="nc bnc" id="L91" title="All 6 branches missed.">        return obj != null &amp;&amp; getClass() == obj.getClass() &amp;&amp; (!super.equals(obj));</span>
+<span class="nc bnc" id="L90" title="All 6 branches missed.">        return obj != null &amp;&amp; getClass() == obj.getClass() &amp;&amp; (!super.equals(obj));</span>
     }
 
     /**
@@ -100,11 +96,11 @@ public class Hardware extends Categories {
      */
     @Override
     public int hashCode() {
-<span class="nc" id="L100">        int hash = super.hashCode();</span>
-<span class="nc bnc" id="L101" title="All 2 branches missed.">        hash = 89 * hash + (this.context != null ? this.context.hashCode() : 0);</span>
-<span class="nc bnc" id="L102" title="All 2 branches missed.">        hash = 89 * hash + (this.props != null ? this.props.hashCode() : 0);</span>
-<span class="nc bnc" id="L103" title="All 2 branches missed.">        hash = 89 * hash + (this.userInfo != null ? this.userInfo.hashCode() : 0);</span>
-<span class="nc" id="L104">        return hash;</span>
+<span class="nc" id="L99">        int hash = super.hashCode();</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">        hash = 89 * hash + (this.context != null ? this.context.hashCode() : 0);</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">        hash = 89 * hash + (this.props != null ? this.props.hashCode() : 0);</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">        hash = 89 * hash + (this.userInfo != null ? this.userInfo.hashCode() : 0);</span>
+<span class="nc" id="L103">        return hash;</span>
     }
 
     /**
@@ -112,39 +108,39 @@ public class Hardware extends Categories {
      * @param xCtx Context where this class work
      */
     public Hardware(Context xCtx) {
-<span class="fc" id="L112">        super(xCtx);</span>
+<span class="fc" id="L111">        super(xCtx);</span>
 
-<span class="fc" id="L114">        this.context = xCtx;</span>
+<span class="fc" id="L113">        this.context = xCtx;</span>
 
-<span class="fc" id="L116">        props = System.getProperties();</span>
+<span class="fc" id="L115">        props = System.getProperties();</span>
 
         try {
-<span class="fc" id="L119">            getUserInfo();</span>
+<span class="fc" id="L118">            getUserInfo();</span>
 
-<span class="fc" id="L121">            Category c = new Category(&quot;HARDWARE&quot;, &quot;hardware&quot;);</span>
+<span class="fc" id="L120">            Category c = new Category(&quot;HARDWARE&quot;, &quot;hardware&quot;);</span>
 
-<span class="fc" id="L123">            c.put(&quot;DATELASTLOGGEDUSER&quot;, new CategoryValue(getDateLastLoggedUser(), &quot;DATELASTLOGGEDUSER&quot;, &quot;dateLastLoggedUser&quot;));</span>
-<span class="fc" id="L124">            c.put(&quot;LASTLOGGEDUSER&quot;, new CategoryValue(getLastLoggedUser(), &quot;LASTLOGGEDUSER&quot;, &quot;lastLoggedUser&quot;));</span>
-<span class="fc" id="L125">            c.put(&quot;NAME&quot;, new CategoryValue(getName(), &quot;NAME&quot;, &quot;name&quot;));</span>
-<span class="fc" id="L126">            c.put(&quot;OSNAME&quot;, new CategoryValue(OSNAME, &quot;OSNAME&quot;, &quot;osName&quot;));</span>
-<span class="fc" id="L127">            c.put(&quot;OSVERSION&quot;, new CategoryValue(getOsVersion(), &quot;OSVERSION&quot;, &quot;osVersion&quot;));</span>
-<span class="fc" id="L128">            c.put(&quot;ARCHNAME&quot;, new CategoryValue(getArchName(), &quot;ARCHNAME&quot;, &quot;archName&quot;));</span>
-<span class="fc" id="L129">            c.put(&quot;UUID&quot;, new CategoryValue(getUUID(), &quot;UUID&quot;, &quot;uuid&quot;));</span>
-<span class="fc" id="L130">            c.put(&quot;USERID&quot;, new CategoryValue(getUserId(), &quot;USERID&quot;, &quot;userid&quot;));</span>
-<span class="fc" id="L131">            c.put(&quot;MEMORY&quot;, new CategoryValue(new Memory(xCtx).getCapacity(), &quot;MEMORY&quot;, &quot;memory&quot;));</span>
+<span class="fc" id="L122">            c.put(&quot;DATELASTLOGGEDUSER&quot;, new CategoryValue(getDateLastLoggedUser(), &quot;DATELASTLOGGEDUSER&quot;, &quot;dateLastLoggedUser&quot;));</span>
+<span class="fc" id="L123">            c.put(&quot;LASTLOGGEDUSER&quot;, new CategoryValue(getLastLoggedUser(), &quot;LASTLOGGEDUSER&quot;, &quot;lastLoggedUser&quot;));</span>
+<span class="fc" id="L124">            c.put(&quot;NAME&quot;, new CategoryValue(getName(), &quot;NAME&quot;, &quot;name&quot;));</span>
+<span class="fc" id="L125">            c.put(&quot;OSNAME&quot;, new CategoryValue(OSNAME, &quot;OSNAME&quot;, &quot;osName&quot;));</span>
+<span class="fc" id="L126">            c.put(&quot;OSVERSION&quot;, new CategoryValue(getOsVersion(), &quot;OSVERSION&quot;, &quot;osVersion&quot;));</span>
+<span class="fc" id="L127">            c.put(&quot;ARCHNAME&quot;, new CategoryValue(getArchName(), &quot;ARCHNAME&quot;, &quot;archName&quot;));</span>
+<span class="fc" id="L128">            c.put(&quot;UUID&quot;, new CategoryValue(getUUID(), &quot;UUID&quot;, &quot;uuid&quot;));</span>
+<span class="fc" id="L129">            c.put(&quot;USERID&quot;, new CategoryValue(getUserId(), &quot;USERID&quot;, &quot;userid&quot;));</span>
+<span class="fc" id="L130">            c.put(&quot;MEMORY&quot;, new CategoryValue(new Memory(xCtx).getCapacity(), &quot;MEMORY&quot;, &quot;memory&quot;));</span>
 
-<span class="fc" id="L133">            this.add(c);</span>
-<span class="nc" id="L134">        } catch (Exception ex) {</span>
-<span class="nc" id="L135">            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.HARDWARE, ex.getMessage()));</span>
-<span class="fc" id="L136">        }</span>
-<span class="fc" id="L137">    }</span>
+<span class="fc" id="L132">            this.add(c);</span>
+<span class="nc" id="L133">        } catch (Exception ex) {</span>
+<span class="nc" id="L134">            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.HARDWARE, ex.getMessage()));</span>
+<span class="fc" id="L135">        }</span>
+<span class="fc" id="L136">    }</span>
 
     /**
      * Get the if of the user logged
      * @return string id user logged
      */
     public String getUserId() {
-<span class="fc" id="L144">        return getUserTagValue(&quot;id&quot;);</span>
+<span class="fc" id="L143">        return getUserTagValue(&quot;id&quot;);</span>
     }
 
     /**
@@ -152,18 +148,18 @@ public class Hardware extends Categories {
      * @return string the date in simple format
      */
     public String getDateLastLoggedUser() {
-<span class="fc" id="L152">        String value = &quot;N/A&quot;;</span>
+<span class="fc" id="L151">        String value = &quot;N/A&quot;;</span>
         try {
-<span class="fc" id="L154">            String lastLoggedIn = getUserTagValue(&quot;lastLoggedIn&quot;);</span>
-<span class="pc bpc" id="L155" title="1 of 2 branches missed.">            if (!&quot;N/A&quot;.equals(lastLoggedIn)) {</span>
-<span class="nc" id="L156">                SimpleDateFormat sdf = new SimpleDateFormat(&quot;yyyy-mm-dd HH:mm&quot;, Locale.getDefault());</span>
-<span class="nc" id="L157">                Date resultDate = new Date(Long.parseLong(lastLoggedIn));</span>
-<span class="nc" id="L158">                value = sdf.format(resultDate);</span>
+<span class="fc" id="L153">            String lastLoggedIn = getUserTagValue(&quot;lastLoggedIn&quot;);</span>
+<span class="pc bpc" id="L154" title="1 of 2 branches missed.">            if (!&quot;N/A&quot;.equals(lastLoggedIn)) {</span>
+<span class="nc" id="L155">                SimpleDateFormat sdf = new SimpleDateFormat(&quot;yyyy-mm-dd HH:mm&quot;, Locale.getDefault());</span>
+<span class="nc" id="L156">                Date resultDate = new Date(Long.parseLong(lastLoggedIn));</span>
+<span class="nc" id="L157">                value = sdf.format(resultDate);</span>
             }
-<span class="nc" id="L160">        } catch (Exception ex) {</span>
-<span class="nc" id="L161">            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.HARDWARE_DATE_LAST_LOGGED_USER, ex.getMessage()));</span>
-<span class="fc" id="L162">        }</span>
-<span class="fc" id="L163">        return value;</span>
+<span class="nc" id="L159">        } catch (Exception ex) {</span>
+<span class="nc" id="L160">            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.HARDWARE_DATE_LAST_LOGGED_USER, ex.getMessage()));</span>
+<span class="fc" id="L161">        }</span>
+<span class="fc" id="L162">        return value;</span>
     }
 
     /**
@@ -171,66 +167,67 @@ public class Hardware extends Categories {
      * @return string the user name
      */
     public String getLastLoggedUser() {
-<span class="fc" id="L171">        String value = &quot;N/A&quot;;</span>
+<span class="fc" id="L170">        String value = &quot;N/A&quot;;</span>
         try {
-<span class="pc bpc" id="L173" title="1 of 2 branches missed.">            if (userInfo.size() &gt; 0) {</span>
-<span class="nc" id="L174">                DocumentBuilder newDocumentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();</span>
-<span class="nc" id="L175">                String info = userInfo.get(2).trim();</span>
-<span class="nc" id="L176">                Document parse = newDocumentBuilder.parse(new ByteArrayInputStream(info.getBytes()));</span>
-<span class="nc" id="L177">                value = parse.getFirstChild().getTextContent();</span>
+<span class="pc bpc" id="L172" title="3 of 4 branches missed.">            if (userInfo.size() &gt; 0 &amp;&amp; userInfo.get(2) != null) {</span>
+<span class="nc" id="L173">                DocumentBuilder newDocumentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();</span>
+<span class="nc" id="L174">                String info = userInfo.get(2).trim();</span>
+<span class="nc" id="L175">                Document parse = newDocumentBuilder.parse(new ByteArrayInputStream(info.getBytes()));</span>
+<span class="nc" id="L176">                value = parse.getFirstChild().getTextContent();</span>
             }
-<span class="nc" id="L179">        } catch (Exception ex) {</span>
-<span class="nc" id="L180">            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.HARDWARE_LAST_LOGGED_USER, ex.getMessage()));</span>
-<span class="fc" id="L181">        }</span>
-<span class="fc" id="L182">        return value;</span>
+<span class="nc" id="L178">        } catch (Exception ex) {</span>
+<span class="nc" id="L179">            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.HARDWARE_LAST_LOGGED_USER, ex.getMessage()));</span>
+<span class="fc" id="L180">        }</span>
+<span class="fc" id="L181">        return value;</span>
     }
 
+    /**
+     * Get the user tag of the last logged user
+     * @return string the user tag
+     */
     private String getUserTagValue(String tagName) {
-<span class="fc" id="L186">        String evaluate = &quot;&quot;;</span>
-<span class="fc" id="L187">        String value = &quot;N/A&quot;;</span>
+<span class="fc" id="L189">        String evaluate = &quot;&quot;;</span>
+<span class="fc" id="L190">        String value = &quot;N/A&quot;;</span>
         try {
-<span class="pc bpc" id="L189" title="1 of 2 branches missed.">            if (userInfo.size() &gt; 0) {</span>
-<span class="nc" id="L190">                String removeChar = userInfo.get(1).replaceAll(&quot;[\&quot;&gt;&lt;]&quot;, &quot;&quot;);</span>
-<span class="nc bnc" id="L191" title="All 2 branches missed.">                if (removeChar.contains(&quot;user &quot;)) {</span>
-<span class="nc" id="L192">                    evaluate = removeChar.replaceAll(&quot; &quot;, &quot;,&quot;).trim();</span>
+<span class="pc bpc" id="L192" title="3 of 4 branches missed.">            if (userInfo.size() &gt; 0 &amp;&amp; userInfo.get(1) != null) {</span>
+<span class="nc" id="L193">                String removeChar = userInfo.get(1).replaceAll(&quot;[\&quot;&gt;&lt;]&quot;, &quot;&quot;);</span>
+<span class="nc bnc" id="L194" title="All 2 branches missed.">                if (removeChar.contains(&quot;user &quot;)) {</span>
+<span class="nc" id="L195">                    evaluate = removeChar.replaceAll(&quot; &quot;, &quot;,&quot;).trim();</span>
                 }
-<span class="nc" id="L194">                String[] splitValues = evaluate.split(&quot;,&quot;);</span>
-<span class="nc" id="L195">                Map&lt;String, String&gt; results = new HashMap&lt;&gt;();</span>
-<span class="nc bnc" id="L196" title="All 2 branches missed.">                for (String a : splitValues) {</span>
-<span class="nc bnc" id="L197" title="All 2 branches missed.">                    if (a.contains(&quot;=&quot;)) {</span>
-<span class="nc" id="L198">                        String[] keyValues = a.split(&quot;=&quot;, 2);</span>
-<span class="nc" id="L199">                        String key = keyValues[0];</span>
-<span class="nc" id="L200">                        String valueResult = keyValues[1];</span>
-<span class="nc" id="L201">                        results.put(key, valueResult);</span>
+<span class="nc" id="L197">                String[] splitValues = evaluate.split(&quot;,&quot;);</span>
+<span class="nc" id="L198">                Map&lt;String, String&gt; results = new HashMap&lt;&gt;();</span>
+<span class="nc bnc" id="L199" title="All 2 branches missed.">                for (String a : splitValues) {</span>
+<span class="nc bnc" id="L200" title="All 2 branches missed.">                    if (a.contains(&quot;=&quot;)) {</span>
+<span class="nc" id="L201">                        String[] keyValues = a.split(&quot;=&quot;, 2);</span>
+<span class="nc" id="L202">                        String key = keyValues[0];</span>
+<span class="nc" id="L203">                        String valueResult = keyValues[1];</span>
+<span class="nc" id="L204">                        results.put(key, valueResult);</span>
                     }
                 }
-<span class="nc bnc" id="L204" title="All 2 branches missed.">                return results.get(tagName) == null ? &quot;N/A&quot; : results.get(tagName);</span>
+<span class="nc bnc" id="L207" title="All 2 branches missed.">                return results.get(tagName) == null ? &quot;N/A&quot; : results.get(tagName);</span>
             } else {
-<span class="fc" id="L206">                return value;</span>
+<span class="fc" id="L209">                return value;</span>
             }
-<span class="nc" id="L208">        } catch (Exception ex) {</span>
-<span class="nc" id="L209">            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.HARDWARE_USER_TAG, ex.getMessage()));</span>
+<span class="nc" id="L211">        } catch (Exception ex) {</span>
+<span class="nc" id="L212">            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.HARDWARE_USER_TAG, ex.getMessage()));</span>
         }
-<span class="nc" id="L211">        return value;</span>
+<span class="nc" id="L214">        return value;</span>
     }
 
+    /**
+     * Get user info of the last logged user from an XML
+     */
     private void getUserInfo() {
-<span class="fc" id="L215">        userInfo = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L221">        userInfo = new ArrayList&lt;&gt;();</span>
         try {
-<span class="fc" id="L217">            java.lang.Process p = Runtime.getRuntime().exec(&quot;su&quot;);</span>
-<span class="fc" id="L218">            DataOutputStream dos = new DataOutputStream(p.getOutputStream());</span>
-<span class="fc" id="L219">            dos.writeBytes(&quot;cat /data/system/users/0.xml\n&quot;);</span>
-<span class="fc" id="L220">            dos.writeBytes(&quot;exit\n&quot;);</span>
-<span class="fc" id="L221">            dos.flush();</span>
-<span class="fc" id="L222">            dos.close();</span>
-<span class="fc" id="L223">            p.waitFor();</span>
-<span class="fc" id="L224">            BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));</span>
             String temp;
-<span class="pc bpc" id="L226" title="1 of 2 branches missed.">            while ((temp = in.readLine()) != null) {</span>
+<span class="fc" id="L224">            String[] values = {&quot;su&quot;, &quot;cat /data/system/users/0.xml\n&quot;, &quot;exit\n&quot;};</span>
+<span class="fc" id="L225">            BufferedReader catInfo = Utils.getBufferedSequentialCatInfo(values);</span>
+<span class="pc bpc" id="L226" title="1 of 2 branches missed.">            while ((temp = catInfo.readLine()) != null) {</span>
 <span class="nc" id="L227">                userInfo.add(temp);</span>
             }
-<span class="fc" id="L229">        } catch (Exception ex) {</span>
-<span class="fc" id="L230">            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.HARDWARE_USER_INFO, ex.getMessage()));</span>
+<span class="nc" id="L229">        } catch (Exception ex) {</span>
+<span class="nc" id="L230">            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.HARDWARE_USER_INFO, ex.getMessage()));</span>
 <span class="fc" id="L231">        }</span>
 <span class="fc" id="L232">    }</span>
 
@@ -241,11 +238,11 @@ public class Hardware extends Categories {
     public String getName() {
 <span class="fc" id="L239">        String value = &quot;N/A&quot;;</span>
         try {
-<span class="fc" id="L241">            value = Build.MODEL;</span>
+<span class="fc" id="L241">            value = Utils.getSystemProperty(&quot;net.hostname&quot;);</span>
 <span class="nc" id="L242">        } catch (Exception ex) {</span>
 <span class="nc" id="L243">            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.HARDWARE_NAME, ex.getMessage()));</span>
 <span class="fc" id="L244">        }</span>
-<span class="fc" id="L245">        return value;</span>
+<span class="fc" id="L245">        return value.trim();</span>
     }
 
     /**

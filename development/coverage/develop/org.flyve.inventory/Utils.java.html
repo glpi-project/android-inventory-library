@@ -1,6 +1,3 @@
----
-layout: coverage
----
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../resources/report.css" type="text/css"/><link rel="shortcut icon" href="../resources/report.gif" type="image/gif"/><title>Utils.java</title><link rel="stylesheet" href="../resources/prettify.css" type="text/css"/><script type="text/javascript" src="../resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory</a> &gt; <span class="el_source">Utils.java</span></div><h1>Utils.java</h1><pre class="source lang-java linenums">/**
  *  LICENSE
  * 
@@ -43,6 +40,7 @@ import org.xmlpull.v1.XmlSerializer;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -62,89 +60,89 @@ import java.util.Scanner;
 
 public class Utils {
 
-<span class="fc" id="L62">    private static int rating = -1;</span>
+<span class="fc" id="L63">    private static int rating = -1;</span>
 
-<span class="nc" id="L64">    private Utils() {</span>
+<span class="nc" id="L65">    private Utils() {</span>
 
-<span class="nc" id="L66">    }</span>
+<span class="nc" id="L67">    }</span>
 
     /**
      * Detects if it is an emulator or a real dvice
      * @return true for emulator, false for real device
      */
     public static boolean isEmulator() {
-<span class="fc" id="L73">        int newRating = 0;</span>
-<span class="fc bfc" id="L74" title="All 2 branches covered.">        if(rating &lt; 0) {</span>
-<span class="pc bpc" id="L75" title="1 of 2 branches missed.">            if (Build.PRODUCT.contains(&quot;sdk&quot;) ||</span>
-<span class="nc bnc" id="L76" title="All 2 branches missed.">                    Build.PRODUCT.contains(&quot;Andy&quot;) ||</span>
-<span class="nc bnc" id="L77" title="All 2 branches missed.">                    Build.PRODUCT.contains(&quot;ttVM_Hdragon&quot;) ||</span>
-<span class="nc bnc" id="L78" title="All 2 branches missed.">                    Build.PRODUCT.contains(&quot;google_sdk&quot;) ||</span>
-<span class="nc bnc" id="L79" title="All 2 branches missed.">                    Build.PRODUCT.contains(&quot;Droid4X&quot;) ||</span>
-<span class="nc bnc" id="L80" title="All 2 branches missed.">                    Build.PRODUCT.contains(&quot;nox&quot;) ||</span>
-<span class="nc bnc" id="L81" title="All 2 branches missed.">                    Build.PRODUCT.contains(&quot;sdk_x86&quot;) ||</span>
-<span class="nc bnc" id="L82" title="All 2 branches missed.">                    Build.PRODUCT.contains(&quot;sdk_google&quot;) ||</span>
-<span class="nc bnc" id="L83" title="All 2 branches missed.">                    Build.PRODUCT.contains(&quot;vbox86p&quot;)) {</span>
-<span class="fc" id="L84">                newRating++;</span>
+<span class="fc" id="L74">        int newRating = 0;</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">        if(rating &lt; 0) {</span>
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">            if (Build.PRODUCT.contains(&quot;sdk&quot;) ||</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">                    Build.PRODUCT.contains(&quot;Andy&quot;) ||</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">                    Build.PRODUCT.contains(&quot;ttVM_Hdragon&quot;) ||</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">                    Build.PRODUCT.contains(&quot;google_sdk&quot;) ||</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">                    Build.PRODUCT.contains(&quot;Droid4X&quot;) ||</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">                    Build.PRODUCT.contains(&quot;nox&quot;) ||</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">                    Build.PRODUCT.contains(&quot;sdk_x86&quot;) ||</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">                    Build.PRODUCT.contains(&quot;sdk_google&quot;) ||</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">                    Build.PRODUCT.contains(&quot;vbox86p&quot;)) {</span>
+<span class="fc" id="L85">                newRating++;</span>
             }
 
-<span class="pc bpc" id="L87" title="1 of 2 branches missed.">            if (Build.MANUFACTURER.equals(&quot;unknown&quot;) ||</span>
-<span class="nc bnc" id="L88" title="All 2 branches missed.">                    Build.MANUFACTURER.equals(&quot;Genymotion&quot;) ||</span>
-<span class="nc bnc" id="L89" title="All 2 branches missed.">                    Build.MANUFACTURER.contains(&quot;Andy&quot;) ||</span>
-<span class="nc bnc" id="L90" title="All 2 branches missed.">                    Build.MANUFACTURER.contains(&quot;MIT&quot;) ||</span>
-<span class="nc bnc" id="L91" title="All 2 branches missed.">                    Build.MANUFACTURER.contains(&quot;nox&quot;) ||</span>
-<span class="nc bnc" id="L92" title="All 2 branches missed.">                    Build.MANUFACTURER.contains(&quot;TiantianVM&quot;)){</span>
-<span class="fc" id="L93">                newRating++;</span>
+<span class="pc bpc" id="L88" title="1 of 2 branches missed.">            if (Build.MANUFACTURER.equals(&quot;unknown&quot;) ||</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">                    Build.MANUFACTURER.equals(&quot;Genymotion&quot;) ||</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">                    Build.MANUFACTURER.contains(&quot;Andy&quot;) ||</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">                    Build.MANUFACTURER.contains(&quot;MIT&quot;) ||</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">                    Build.MANUFACTURER.contains(&quot;nox&quot;) ||</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">                    Build.MANUFACTURER.contains(&quot;TiantianVM&quot;)){</span>
+<span class="fc" id="L94">                newRating++;</span>
             }
 
-<span class="pc bpc" id="L96" title="1 of 2 branches missed.">            if (Build.BRAND.equals(&quot;generic&quot;) ||</span>
-<span class="nc bnc" id="L97" title="All 2 branches missed.">                    Build.BRAND.equals(&quot;generic_x86&quot;) ||</span>
-<span class="nc bnc" id="L98" title="All 2 branches missed.">                    Build.BRAND.equals(&quot;TTVM&quot;) ||</span>
-<span class="nc bnc" id="L99" title="All 2 branches missed.">                    Build.BRAND.contains(&quot;Andy&quot;)) {</span>
-<span class="fc" id="L100">                newRating++;</span>
+<span class="pc bpc" id="L97" title="1 of 2 branches missed.">            if (Build.BRAND.equals(&quot;generic&quot;) ||</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">                    Build.BRAND.equals(&quot;generic_x86&quot;) ||</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">                    Build.BRAND.equals(&quot;TTVM&quot;) ||</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">                    Build.BRAND.contains(&quot;Andy&quot;)) {</span>
+<span class="fc" id="L101">                newRating++;</span>
             }
 
-<span class="pc bpc" id="L103" title="1 of 2 branches missed.">            if (Build.DEVICE.contains(&quot;generic&quot;) ||</span>
-<span class="nc bnc" id="L104" title="All 2 branches missed.">                    Build.DEVICE.contains(&quot;generic_x86&quot;) ||</span>
-<span class="nc bnc" id="L105" title="All 2 branches missed.">                    Build.DEVICE.contains(&quot;Andy&quot;) ||</span>
-<span class="nc bnc" id="L106" title="All 2 branches missed.">                    Build.DEVICE.contains(&quot;ttVM_Hdragon&quot;) ||</span>
-<span class="nc bnc" id="L107" title="All 2 branches missed.">                    Build.DEVICE.contains(&quot;Droid4X&quot;) ||</span>
-<span class="nc bnc" id="L108" title="All 2 branches missed.">                    Build.DEVICE.contains(&quot;nox&quot;) ||</span>
-<span class="nc bnc" id="L109" title="All 2 branches missed.">                    Build.DEVICE.contains(&quot;generic_x86_64&quot;) ||</span>
-<span class="nc bnc" id="L110" title="All 2 branches missed.">                    Build.DEVICE.contains(&quot;vbox86p&quot;)) {</span>
-<span class="fc" id="L111">                newRating++;</span>
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">            if (Build.DEVICE.contains(&quot;generic&quot;) ||</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">                    Build.DEVICE.contains(&quot;generic_x86&quot;) ||</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">                    Build.DEVICE.contains(&quot;Andy&quot;) ||</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">                    Build.DEVICE.contains(&quot;ttVM_Hdragon&quot;) ||</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">                    Build.DEVICE.contains(&quot;Droid4X&quot;) ||</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">                    Build.DEVICE.contains(&quot;nox&quot;) ||</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">                    Build.DEVICE.contains(&quot;generic_x86_64&quot;) ||</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">                    Build.DEVICE.contains(&quot;vbox86p&quot;)) {</span>
+<span class="fc" id="L112">                newRating++;</span>
             }
 
-<span class="pc bpc" id="L114" title="1 of 2 branches missed.">            if (Build.MODEL.equals(&quot;sdk&quot;) ||</span>
-<span class="nc bnc" id="L115" title="All 2 branches missed.">                    Build.MODEL.equals(&quot;google_sdk&quot;) ||</span>
-<span class="nc bnc" id="L116" title="All 2 branches missed.">                    Build.MODEL.contains(&quot;Droid4X&quot;) ||</span>
-<span class="nc bnc" id="L117" title="All 2 branches missed.">                    Build.MODEL.contains(&quot;TiantianVM&quot;) ||</span>
-<span class="nc bnc" id="L118" title="All 2 branches missed.">                    Build.MODEL.contains(&quot;Andy&quot;) ||</span>
-<span class="nc bnc" id="L119" title="All 2 branches missed.">                    Build.MODEL.equals(&quot;Android SDK built for x86_64&quot;) ||</span>
-<span class="nc bnc" id="L120" title="All 2 branches missed.">                    Build.MODEL.equals(&quot;Android SDK built for x86&quot;)) {</span>
-<span class="fc" id="L121">                newRating++;</span>
+<span class="pc bpc" id="L115" title="1 of 2 branches missed.">            if (Build.MODEL.equals(&quot;sdk&quot;) ||</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">                    Build.MODEL.equals(&quot;google_sdk&quot;) ||</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">                    Build.MODEL.contains(&quot;Droid4X&quot;) ||</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">                    Build.MODEL.contains(&quot;TiantianVM&quot;) ||</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">                    Build.MODEL.contains(&quot;Andy&quot;) ||</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">                    Build.MODEL.equals(&quot;Android SDK built for x86_64&quot;) ||</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">                    Build.MODEL.equals(&quot;Android SDK built for x86&quot;)) {</span>
+<span class="fc" id="L122">                newRating++;</span>
             }
 
-<span class="pc bpc" id="L124" title="1 of 2 branches missed.">            if (Build.HARDWARE.equals(&quot;goldfish&quot;) ||</span>
-<span class="nc bnc" id="L125" title="All 2 branches missed.">                    Build.HARDWARE.equals(&quot;vbox86&quot;) ||</span>
-<span class="nc bnc" id="L126" title="All 2 branches missed.">                    Build.HARDWARE.contains(&quot;nox&quot;) ||</span>
-<span class="nc bnc" id="L127" title="All 2 branches missed.">                    Build.HARDWARE.contains(&quot;ttVM_x86&quot;)) {</span>
-<span class="fc" id="L128">                newRating++;</span>
+<span class="pc bpc" id="L125" title="1 of 2 branches missed.">            if (Build.HARDWARE.equals(&quot;goldfish&quot;) ||</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">                    Build.HARDWARE.equals(&quot;vbox86&quot;) ||</span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">                    Build.HARDWARE.contains(&quot;nox&quot;) ||</span>
+<span class="nc bnc" id="L128" title="All 2 branches missed.">                    Build.HARDWARE.contains(&quot;ttVM_x86&quot;)) {</span>
+<span class="fc" id="L129">                newRating++;</span>
             }
 
-<span class="pc bpc" id="L131" title="1 of 2 branches missed.">            if (Build.FINGERPRINT.contains(&quot;generic/sdk/generic&quot;) ||</span>
-<span class="nc bnc" id="L132" title="All 2 branches missed.">                    Build.FINGERPRINT.contains(&quot;generic_x86/sdk_x86/generic_x86&quot;) ||</span>
-<span class="nc bnc" id="L133" title="All 2 branches missed.">                    Build.FINGERPRINT.contains(&quot;Andy&quot;) ||</span>
-<span class="nc bnc" id="L134" title="All 2 branches missed.">                    Build.FINGERPRINT.contains(&quot;ttVM_Hdragon&quot;) ||</span>
-<span class="nc bnc" id="L135" title="All 2 branches missed.">                    Build.FINGERPRINT.contains(&quot;generic_x86_64&quot;) ||</span>
-<span class="nc bnc" id="L136" title="All 2 branches missed.">                    Build.FINGERPRINT.contains(&quot;generic/google_sdk/generic&quot;) ||</span>
-<span class="nc bnc" id="L137" title="All 2 branches missed.">                    Build.FINGERPRINT.contains(&quot;vbox86p&quot;) ||</span>
-<span class="nc bnc" id="L138" title="All 2 branches missed.">                    Build.FINGERPRINT.contains(&quot;generic/vbox86p/vbox86p&quot;)) {</span>
-<span class="fc" id="L139">                newRating++;</span>
+<span class="pc bpc" id="L132" title="1 of 2 branches missed.">            if (Build.FINGERPRINT.contains(&quot;generic/sdk/generic&quot;) ||</span>
+<span class="nc bnc" id="L133" title="All 2 branches missed.">                    Build.FINGERPRINT.contains(&quot;generic_x86/sdk_x86/generic_x86&quot;) ||</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">                    Build.FINGERPRINT.contains(&quot;Andy&quot;) ||</span>
+<span class="nc bnc" id="L135" title="All 2 branches missed.">                    Build.FINGERPRINT.contains(&quot;ttVM_Hdragon&quot;) ||</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">                    Build.FINGERPRINT.contains(&quot;generic_x86_64&quot;) ||</span>
+<span class="nc bnc" id="L137" title="All 2 branches missed.">                    Build.FINGERPRINT.contains(&quot;generic/google_sdk/generic&quot;) ||</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">                    Build.FINGERPRINT.contains(&quot;vbox86p&quot;) ||</span>
+<span class="nc bnc" id="L139" title="All 2 branches missed.">                    Build.FINGERPRINT.contains(&quot;generic/vbox86p/vbox86p&quot;)) {</span>
+<span class="fc" id="L140">                newRating++;</span>
             }
 
-<span class="fc" id="L142">            rating = newRating;</span>
+<span class="fc" id="L143">            rating = newRating;</span>
         }
-<span class="pc bpc" id="L144" title="1 of 2 branches missed.">        return rating &gt; 3;</span>
+<span class="pc bpc" id="L145" title="1 of 2 branches missed.">        return rating &gt; 3;</span>
     }
 
     /**
@@ -159,48 +157,48 @@ public class Utils {
                                        boolean isPrivate, String tag) throws FlyveException {
         try {
 
-<span class="fc bfc" id="L159" title="All 2 branches covered.">            if(!tag.equals(&quot;&quot;)) {</span>
-<span class="fc" id="L160">                JSONObject accountInfo = new JSONObject();</span>
-<span class="fc" id="L161">                accountInfo.put(&quot;keyName&quot;, &quot;TAG&quot;);</span>
-<span class="fc" id="L162">                accountInfo.put(&quot;keyValue&quot;, tag);</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">            if(!tag.equals(&quot;&quot;)) {</span>
+<span class="fc" id="L161">                JSONObject accountInfo = new JSONObject();</span>
+<span class="fc" id="L162">                accountInfo.put(&quot;keyName&quot;, &quot;TAG&quot;);</span>
+<span class="fc" id="L163">                accountInfo.put(&quot;keyValue&quot;, tag);</span>
             }
 
-<span class="fc" id="L165">            JSONObject jsonAccessLog = new JSONObject();</span>
-<span class="fc" id="L166">            jsonAccessLog.put(&quot;logDate&quot;, DateFormat.format(&quot;yyyy-MM-dd H:mm:ss&quot;, new Date()).toString());</span>
-<span class="fc" id="L167">            jsonAccessLog.put(&quot;userId&quot;, &quot;N/A&quot;);</span>
+<span class="fc" id="L166">            JSONObject jsonAccessLog = new JSONObject();</span>
+<span class="fc" id="L167">            jsonAccessLog.put(&quot;logDate&quot;, DateFormat.format(&quot;yyyy-MM-dd H:mm:ss&quot;, new Date()).toString());</span>
+<span class="fc" id="L168">            jsonAccessLog.put(&quot;userId&quot;, &quot;N/A&quot;);</span>
 
-<span class="fc" id="L169">            JSONObject jsonAccountInfo = new JSONObject();</span>
-<span class="fc" id="L170">            jsonAccessLog.put(&quot;keyname&quot;, &quot;TAG&quot;);</span>
-<span class="fc" id="L171">            jsonAccessLog.put(&quot;keyvalue&quot;, &quot;N/A&quot;);</span>
+<span class="fc" id="L170">            JSONObject jsonAccountInfo = new JSONObject();</span>
+<span class="fc" id="L171">            jsonAccessLog.put(&quot;keyname&quot;, &quot;TAG&quot;);</span>
+<span class="fc" id="L172">            jsonAccessLog.put(&quot;keyvalue&quot;, &quot;N/A&quot;);</span>
 
-<span class="fc" id="L173">            JSONObject content = new JSONObject();</span>
-<span class="fc" id="L174">            content.put(&quot;accessLog&quot;, jsonAccessLog);</span>
-<span class="fc" id="L175">            content.put(&quot;accountInfo&quot;, jsonAccessLog);</span>
-<span class="fc" id="L176">            content.put(&quot;versionClient&quot;, appVersion);</span>
-<span class="fc" id="L177">            content.put(&quot;accountinfo&quot;, tag);</span>
+<span class="fc" id="L174">            JSONObject content = new JSONObject();</span>
+<span class="fc" id="L175">            content.put(&quot;accessLog&quot;, jsonAccessLog);</span>
+<span class="fc" id="L176">            content.put(&quot;accountInfo&quot;, jsonAccessLog);</span>
+<span class="fc" id="L177">            content.put(&quot;versionClient&quot;, appVersion);</span>
+<span class="fc" id="L178">            content.put(&quot;accountinfo&quot;, tag);</span>
 
-<span class="fc bfc" id="L179" title="All 2 branches covered.">            for (Categories cat : categories) {</span>
-<span class="pc bpc" id="L180" title="1 of 2 branches missed.">                if(isPrivate) {</span>
-<span class="nc" id="L181">                    cat.toJSONWithoutPrivateData(content);</span>
+<span class="fc bfc" id="L180" title="All 2 branches covered.">            for (Categories cat : categories) {</span>
+<span class="pc bpc" id="L181" title="1 of 2 branches missed.">                if(isPrivate) {</span>
+<span class="nc" id="L182">                    cat.toJSONWithoutPrivateData(content);</span>
                 } else {
-<span class="fc" id="L183">                    cat.toJSON(content);</span>
+<span class="fc" id="L184">                    cat.toJSON(content);</span>
                 }
-<span class="fc" id="L185">            }</span>
+<span class="fc" id="L186">            }</span>
 
-<span class="fc" id="L187">            JSONObject jsonQuery = new JSONObject();</span>
-<span class="fc" id="L188">            jsonQuery.put(&quot;query&quot;, &quot;INVENTORY&quot;);</span>
-<span class="fc" id="L189">            jsonQuery.put(&quot;versionClient&quot;, appVersion);</span>
-<span class="fc" id="L190">            jsonQuery.put(&quot;deviceId&quot;, getDeviceId());</span>
-<span class="fc" id="L191">            jsonQuery.put(&quot;content&quot;, content);</span>
+<span class="fc" id="L188">            JSONObject jsonQuery = new JSONObject();</span>
+<span class="fc" id="L189">            jsonQuery.put(&quot;query&quot;, &quot;INVENTORY&quot;);</span>
+<span class="fc" id="L190">            jsonQuery.put(&quot;versionClient&quot;, appVersion);</span>
+<span class="fc" id="L191">            jsonQuery.put(&quot;deviceId&quot;, getDeviceId());</span>
+<span class="fc" id="L192">            jsonQuery.put(&quot;content&quot;, content);</span>
 
-<span class="fc" id="L193">            JSONObject jsonRequest = new JSONObject();</span>
-<span class="fc" id="L194">            jsonRequest.put(&quot;request&quot;, jsonQuery);</span>
+<span class="fc" id="L194">            JSONObject jsonRequest = new JSONObject();</span>
+<span class="fc" id="L195">            jsonRequest.put(&quot;request&quot;, jsonQuery);</span>
 
-<span class="fc" id="L196">            return jsonRequest.toString();</span>
+<span class="fc" id="L197">            return jsonRequest.toString();</span>
 
-<span class="nc" id="L198">        } catch (Exception ex) {</span>
-<span class="nc" id="L199">            FlyveLog.e(FlyveLog.getMessage(String.valueOf(CommonErrorType.UTILS_CREATE_JSON), ex.getMessage()));</span>
-<span class="nc" id="L200">            throw new FlyveException(ex.getMessage(), ex.getCause());</span>
+<span class="nc" id="L199">        } catch (Exception ex) {</span>
+<span class="nc" id="L200">            FlyveLog.e(FlyveLog.getMessage(String.valueOf(CommonErrorType.UTILS_CREATE_JSON), ex.getMessage()));</span>
+<span class="nc" id="L201">            throw new FlyveException(ex.getMessage(), ex.getCause());</span>
         }
     }
 
@@ -213,189 +211,200 @@ public class Utils {
      */
     protected static String createXML(Context context, ArrayList&lt;Categories&gt; categories, String appVersion,
                                       boolean isPrivate, String tag) throws FlyveException {
-<span class="pc bpc" id="L213" title="1 of 2 branches missed.">        if (categories != null) {</span>
-<span class="fc" id="L214">            XmlSerializer serializer = Xml.newSerializer();</span>
-<span class="fc" id="L215">            StringWriter writer = new StringWriter();</span>
+<span class="pc bpc" id="L214" title="1 of 2 branches missed.">        if (categories != null) {</span>
+<span class="fc" id="L215">            XmlSerializer serializer = Xml.newSerializer();</span>
+<span class="fc" id="L216">            StringWriter writer = new StringWriter();</span>
 
             try {
-<span class="fc" id="L218">                serializer.setOutput(writer);</span>
-<span class="fc" id="L219">                serializer.setFeature(</span>
+<span class="fc" id="L219">                serializer.setOutput(writer);</span>
+<span class="fc" id="L220">                serializer.setFeature(</span>
                                 &quot;http://xmlpull.org/v1/doc/features.html#indent-output&quot;,
                                 true);
                 // indentation as 3 spaces
 
-<span class="fc" id="L224">                serializer.startDocument(&quot;utf-8&quot;, true);</span>
+<span class="fc" id="L225">                serializer.startDocument(&quot;utf-8&quot;, true);</span>
                 // Start REQUEST
-<span class="fc" id="L226">                serializer.startTag(null, &quot;REQUEST&quot;);</span>
-<span class="fc" id="L227">                serializer.startTag(null, &quot;QUERY&quot;);</span>
-<span class="fc" id="L228">                serializer.text(&quot;INVENTORY&quot;);</span>
-<span class="fc" id="L229">                serializer.endTag(null, &quot;QUERY&quot;);</span>
+<span class="fc" id="L227">                serializer.startTag(null, &quot;REQUEST&quot;);</span>
+<span class="fc" id="L228">                serializer.startTag(null, &quot;QUERY&quot;);</span>
+<span class="fc" id="L229">                serializer.text(&quot;INVENTORY&quot;);</span>
+<span class="fc" id="L230">                serializer.endTag(null, &quot;QUERY&quot;);</span>
 
-<span class="fc" id="L231">                serializer.startTag(null, &quot;DEVICEID&quot;);</span>
-<span class="fc" id="L232">                serializer.text(getDeviceId());</span>
-<span class="fc" id="L233">                serializer.endTag(null, &quot;DEVICEID&quot;);</span>
+<span class="fc" id="L232">                serializer.startTag(null, &quot;DEVICEID&quot;);</span>
+<span class="fc" id="L233">                serializer.text(getDeviceId());</span>
+<span class="fc" id="L234">                serializer.endTag(null, &quot;DEVICEID&quot;);</span>
 
                 // Start CONTENT
-<span class="fc" id="L236">                serializer.startTag(null, &quot;CONTENT&quot;);</span>
+<span class="fc" id="L237">                serializer.startTag(null, &quot;CONTENT&quot;);</span>
 
-<span class="fc" id="L238">                serializer.startTag(null, &quot;VERSIONCLIENT&quot;);</span>
-<span class="fc" id="L239">                serializer.text(appVersion);</span>
-<span class="fc" id="L240">                serializer.endTag(null, &quot;VERSIONCLIENT&quot;);</span>
+<span class="fc" id="L239">                serializer.startTag(null, &quot;VERSIONCLIENT&quot;);</span>
+<span class="fc" id="L240">                serializer.text(appVersion);</span>
+<span class="fc" id="L241">                serializer.endTag(null, &quot;VERSIONCLIENT&quot;);</span>
 
                 // Start ACCOUNTINFO
-<span class="fc" id="L243">                serializer.startTag(null, &quot;ACCOUNTINFO&quot;);</span>
+<span class="fc" id="L244">                serializer.startTag(null, &quot;ACCOUNTINFO&quot;);</span>
 
-<span class="fc" id="L245">                serializer.startTag(null, &quot;KEYNAME&quot;);</span>
-<span class="fc" id="L246">                serializer.text(&quot;TAG&quot;);</span>
-<span class="fc" id="L247">                serializer.endTag(null, &quot;KEYNAME&quot;);</span>
+<span class="fc" id="L246">                serializer.startTag(null, &quot;KEYNAME&quot;);</span>
+<span class="fc" id="L247">                serializer.text(&quot;TAG&quot;);</span>
+<span class="fc" id="L248">                serializer.endTag(null, &quot;KEYNAME&quot;);</span>
 
-<span class="fc" id="L249">                serializer.startTag(null, &quot;KEYVALUE&quot;);</span>
-<span class="fc" id="L250">                serializer.text(tag);</span>
-<span class="fc" id="L251">                serializer.endTag(null, &quot;KEYVALUE&quot;);</span>
+<span class="fc" id="L250">                serializer.startTag(null, &quot;KEYVALUE&quot;);</span>
+<span class="fc" id="L251">                serializer.text(tag);</span>
+<span class="fc" id="L252">                serializer.endTag(null, &quot;KEYVALUE&quot;);</span>
 
-<span class="fc" id="L253">                serializer.endTag(null, &quot;ACCOUNTINFO&quot;);</span>
+<span class="fc" id="L254">                serializer.endTag(null, &quot;ACCOUNTINFO&quot;);</span>
 
                 // Start ACCESSLOG
-<span class="fc" id="L256">                serializer.startTag(null, &quot;ACCESSLOG&quot;);</span>
+<span class="fc" id="L257">                serializer.startTag(null, &quot;ACCESSLOG&quot;);</span>
 
-<span class="fc" id="L258">                serializer.startTag(null, &quot;LOGDATE&quot;);</span>
-<span class="fc" id="L259">                serializer.text(DateFormat.format(&quot;yyyy-MM-dd H:mm:ss&quot;, new Date()).toString());</span>
-<span class="fc" id="L260">                serializer.endTag(null, &quot;LOGDATE&quot;);</span>
+<span class="fc" id="L259">                serializer.startTag(null, &quot;LOGDATE&quot;);</span>
+<span class="fc" id="L260">                serializer.text(DateFormat.format(&quot;yyyy-MM-dd H:mm:ss&quot;, new Date()).toString());</span>
+<span class="fc" id="L261">                serializer.endTag(null, &quot;LOGDATE&quot;);</span>
 
-<span class="fc" id="L262">                serializer.startTag(null, &quot;USERID&quot;);</span>
-<span class="fc" id="L263">                serializer.text(&quot;N/A&quot;);</span>
-<span class="fc" id="L264">                serializer.endTag(null, &quot;USERID&quot;);</span>
+<span class="fc" id="L263">                serializer.startTag(null, &quot;USERID&quot;);</span>
+<span class="fc" id="L264">                serializer.text(&quot;N/A&quot;);</span>
+<span class="fc" id="L265">                serializer.endTag(null, &quot;USERID&quot;);</span>
 
-<span class="fc" id="L266">                serializer.endTag(null, &quot;ACCESSLOG&quot;);</span>
+<span class="fc" id="L267">                serializer.endTag(null, &quot;ACCESSLOG&quot;);</span>
                 // End ACCESSLOG
 
-<span class="fc bfc" id="L269" title="All 2 branches covered.">                if(!tag.equals(&quot;&quot;)) {</span>
-<span class="fc" id="L270">                    serializer.startTag(null, &quot;ACCOUNTINFO&quot;);</span>
-<span class="fc" id="L271">                    serializer.startTag(null, &quot;KEYNAME&quot;);</span>
-<span class="fc" id="L272">                    serializer.text(&quot;TAG&quot;);</span>
-<span class="fc" id="L273">                    serializer.endTag(null, &quot;KEYNAME&quot;);</span>
-<span class="fc" id="L274">                    serializer.startTag(null, &quot;KEYVALUE&quot;);</span>
-<span class="fc" id="L275">                    serializer.text(tag);</span>
-<span class="fc" id="L276">                    serializer.endTag(null, &quot;KEYVALUE&quot;);</span>
-<span class="fc" id="L277">                    serializer.endTag(null, &quot;ACCOUNTINFO&quot;);</span>
+<span class="fc bfc" id="L270" title="All 2 branches covered.">                if(!tag.equals(&quot;&quot;)) {</span>
+<span class="fc" id="L271">                    serializer.startTag(null, &quot;ACCOUNTINFO&quot;);</span>
+<span class="fc" id="L272">                    serializer.startTag(null, &quot;KEYNAME&quot;);</span>
+<span class="fc" id="L273">                    serializer.text(&quot;TAG&quot;);</span>
+<span class="fc" id="L274">                    serializer.endTag(null, &quot;KEYNAME&quot;);</span>
+<span class="fc" id="L275">                    serializer.startTag(null, &quot;KEYVALUE&quot;);</span>
+<span class="fc" id="L276">                    serializer.text(tag);</span>
+<span class="fc" id="L277">                    serializer.endTag(null, &quot;KEYVALUE&quot;);</span>
+<span class="fc" id="L278">                    serializer.endTag(null, &quot;ACCOUNTINFO&quot;);</span>
                 }
 
-<span class="fc bfc" id="L280" title="All 2 branches covered.">                for (Categories cat : categories) {</span>
-<span class="pc bpc" id="L281" title="1 of 2 branches missed.">                    if(isPrivate) {</span>
-<span class="nc" id="L282">                        cat.toXMLWithoutPrivateData(serializer);</span>
+<span class="fc bfc" id="L281" title="All 2 branches covered.">                for (Categories cat : categories) {</span>
+<span class="pc bpc" id="L282" title="1 of 2 branches missed.">                    if(isPrivate) {</span>
+<span class="nc" id="L283">                        cat.toXMLWithoutPrivateData(serializer);</span>
                     } else {
-<span class="fc" id="L284">                        cat.toXML(serializer);</span>
+<span class="fc" id="L285">                        cat.toXML(serializer);</span>
                     }
-<span class="fc" id="L286">                }</span>
+<span class="fc" id="L287">                }</span>
 
-<span class="fc" id="L288">                serializer.endTag(null, &quot;CONTENT&quot;);</span>
+<span class="fc" id="L289">                serializer.endTag(null, &quot;CONTENT&quot;);</span>
                 // End CONTENT
-<span class="fc" id="L290">                serializer.endTag(null, &quot;REQUEST&quot;);</span>
+<span class="fc" id="L291">                serializer.endTag(null, &quot;REQUEST&quot;);</span>
                 // End REQUEST
 
-<span class="fc" id="L293">                serializer.endDocument();</span>
+<span class="fc" id="L294">                serializer.endDocument();</span>
 
                 // Return XML String
-<span class="fc" id="L296">                return writer.toString();</span>
+<span class="fc" id="L297">                return writer.toString();</span>
 
-<span class="nc" id="L298">            } catch (Exception ex) {</span>
-<span class="nc" id="L299">                FlyveLog.e(FlyveLog.getMessage(String.valueOf(CommonErrorType.UTILS_CREATE_XML), ex.getMessage()));</span>
-<span class="nc" id="L300">                throw new FlyveException(ex.getMessage(), ex.getCause());</span>
+<span class="nc" id="L299">            } catch (Exception ex) {</span>
+<span class="nc" id="L300">                FlyveLog.e(FlyveLog.getMessage(String.valueOf(CommonErrorType.UTILS_CREATE_XML), ex.getMessage()));</span>
+<span class="nc" id="L301">                throw new FlyveException(ex.getMessage(), ex.getCause());</span>
             }
         }
 
-<span class="nc" id="L304">        return &quot;&quot;;</span>
+<span class="nc" id="L305">        return &quot;&quot;;</span>
     }
 
     private static String getDeviceId() {
-<span class="fc" id="L308">        String currentTimeStamp = getCurrentTimeStamp(&quot;yyyy-MM-dd-HH-mm-ss&quot;);</span>
-<span class="fc" id="L309">        String hostName = getSystemProperty(&quot;net.hostname&quot;);</span>
-<span class="fc" id="L310">        return hostName.trim() + &quot;-&quot; + currentTimeStamp.trim();</span>
+<span class="fc" id="L309">        String currentTimeStamp = getCurrentTimeStamp(&quot;yyyy-MM-dd-HH-mm-ss&quot;);</span>
+<span class="fc" id="L310">        String hostName = getSystemProperty(&quot;net.hostname&quot;);</span>
+<span class="fc" id="L311">        return hostName.trim() + &quot;-&quot; + currentTimeStamp.trim();</span>
     }
 
     public static Map&lt;String, String&gt; getCatMapInfo(String path) throws FileNotFoundException {
-<span class="fc" id="L314">        Map&lt;String, String&gt; map = new HashMap&lt;&gt;();</span>
-<span class="fc" id="L315">        Scanner s = new Scanner(new File(path));</span>
-<span class="fc bfc" id="L316" title="All 2 branches covered.">        while (s.hasNextLine()) {</span>
-<span class="fc" id="L317">            String[] values = s.nextLine().split(&quot;: &quot;);</span>
-<span class="fc bfc" id="L318" title="All 2 branches covered.">            if (values.length &gt; 1) {</span>
-<span class="fc" id="L319">                map.put(values[0].trim(), values[1].trim());</span>
+<span class="fc" id="L315">        Map&lt;String, String&gt; map = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L316">        Scanner s = new Scanner(new File(path));</span>
+<span class="fc bfc" id="L317" title="All 2 branches covered.">        while (s.hasNextLine()) {</span>
+<span class="fc" id="L318">            String[] values = s.nextLine().split(&quot;: &quot;);</span>
+<span class="fc bfc" id="L319" title="All 2 branches covered.">            if (values.length &gt; 1) {</span>
+<span class="fc" id="L320">                map.put(values[0].trim(), values[1].trim());</span>
             }
-<span class="fc" id="L321">        }</span>
-<span class="fc" id="L322">        return map;</span>
+<span class="fc" id="L322">        }</span>
+<span class="fc" id="L323">        return map;</span>
     }
 
     public static String getValueMapInfo(Map&lt;String, String&gt; mapInfo, String name) {
-<span class="fc bfc" id="L326" title="All 2 branches covered.">        for (String s : mapInfo.keySet()) {</span>
-<span class="fc bfc" id="L327" title="All 2 branches covered.">            if (s.equalsIgnoreCase(name)) {</span>
-<span class="fc" id="L328">                return mapInfo.get(s);</span>
+<span class="fc bfc" id="L327" title="All 2 branches covered.">        for (String s : mapInfo.keySet()) {</span>
+<span class="fc bfc" id="L328" title="All 2 branches covered.">            if (s.equalsIgnoreCase(name)) {</span>
+<span class="fc" id="L329">                return mapInfo.get(s);</span>
             }
-<span class="fc" id="L330">        }</span>
-<span class="fc" id="L331">        return &quot;&quot;;</span>
+<span class="fc" id="L331">        }</span>
+<span class="fc" id="L332">        return &quot;&quot;;</span>
     }
 
     public static String getCatInfoMultiple(String path) {
-<span class="fc" id="L335">        StringBuilder concatInfo = new StringBuilder();</span>
+<span class="fc" id="L336">        StringBuilder concatInfo = new StringBuilder();</span>
         try {
-<span class="nc" id="L337">            Scanner s = new Scanner(new File(path));</span>
-<span class="nc bnc" id="L338" title="All 2 branches missed.">            while (s.hasNextLine()) {</span>
-<span class="nc" id="L339">                concatInfo.append(s.nextLine());</span>
+<span class="nc" id="L338">            Scanner s = new Scanner(new File(path));</span>
+<span class="nc bnc" id="L339" title="All 2 branches missed.">            while (s.hasNextLine()) {</span>
+<span class="nc" id="L340">                concatInfo.append(s.nextLine());</span>
             }
-<span class="fc" id="L341">        } catch (Exception ex) {</span>
-<span class="nc" id="L342">            FlyveLog.e(FlyveLog.getMessage(String.valueOf(CommonErrorType.UTILS_CAT_INFO_MULTIPLE), ex.getMessage()));</span>
-<span class="nc" id="L343">        }</span>
-<span class="nc" id="L344">        return concatInfo.toString();</span>
+<span class="fc" id="L342">        } catch (Exception ex) {</span>
+<span class="nc" id="L343">            FlyveLog.e(FlyveLog.getMessage(String.valueOf(CommonErrorType.UTILS_CAT_INFO_MULTIPLE), ex.getMessage()));</span>
+<span class="nc" id="L344">        }</span>
+<span class="nc" id="L345">        return concatInfo.toString();</span>
     }
 
     public static String getCatInfo(String path) {
         try {
-<span class="fc" id="L349">            Scanner s = new Scanner(new File(path));</span>
-<span class="fc" id="L350">            return s.next();</span>
-<span class="fc" id="L351">        } catch (Exception ex) {</span>
-<span class="nc" id="L352">            FlyveLog.e(FlyveLog.getMessage(String.valueOf(CommonErrorType.UTILS_CAT_INFO), ex.getMessage()));</span>
+<span class="fc" id="L350">            Scanner s = new Scanner(new File(path));</span>
+<span class="fc" id="L351">            return s.next();</span>
+<span class="fc" id="L352">        } catch (Exception ex) {</span>
+<span class="nc" id="L353">            FlyveLog.e(FlyveLog.getMessage(String.valueOf(CommonErrorType.UTILS_CAT_INFO), ex.getMessage()));</span>
         }
-<span class="nc" id="L354">        return &quot;&quot;;</span>
+<span class="nc" id="L355">        return &quot;&quot;;</span>
+    }
+
+    public static BufferedReader getBufferedSequentialCatInfo(String[] values) throws IOException, InterruptedException {
+<span class="fc" id="L359">        Process p = Runtime.getRuntime().exec(values[0]);</span>
+<span class="fc" id="L360">        DataOutputStream dos = new DataOutputStream(p.getOutputStream());</span>
+<span class="fc bfc" id="L361" title="All 2 branches covered.">        for (int i = 1; i &lt; values.length; i++)</span>
+<span class="fc" id="L362">            dos.writeBytes(values[i]);</span>
+<span class="fc" id="L363">        dos.flush();</span>
+<span class="fc" id="L364">        dos.close();</span>
+<span class="fc" id="L365">        p.waitFor();</span>
+<span class="fc" id="L366">        return new BufferedReader(new InputStreamReader(p.getInputStream()));</span>
     }
 
     public static String getSystemProperty(String type) {
-<span class="fc" id="L358">        ArrayList&lt;HashMap&lt;String, String&gt;&gt; arr = getDeviceProperties();</span>
-<span class="pc bpc" id="L359" title="1 of 2 branches missed.">        for (int i = 0; i &lt; arr.size(); i++) {</span>
-<span class="fc" id="L360">            HashMap&lt;String, String&gt; map = arr.get(i);</span>
-<span class="fc bfc" id="L361" title="All 2 branches covered.">            if (map.get(type) != null)</span>
-<span class="fc" id="L362">                return map.get(type);</span>
+<span class="fc" id="L370">        ArrayList&lt;HashMap&lt;String, String&gt;&gt; arr = getDeviceProperties();</span>
+<span class="pc bpc" id="L371" title="1 of 2 branches missed.">        for (int i = 0; i &lt; arr.size(); i++) {</span>
+<span class="fc" id="L372">            HashMap&lt;String, String&gt; map = arr.get(i);</span>
+<span class="fc bfc" id="L373" title="All 2 branches covered.">            if (map.get(type) != null)</span>
+<span class="fc" id="L374">                return map.get(type);</span>
         }
-<span class="nc" id="L364">        return &quot;&quot;;</span>
+<span class="nc" id="L376">        return &quot;&quot;;</span>
     }
 
     public static ArrayList&lt;HashMap&lt;String, String&gt;&gt; getDeviceProperties() {
         try {
             // Run the command
-<span class="fc" id="L370">            Process process = Runtime.getRuntime().exec(&quot;getprop&quot;);</span>
-<span class="fc" id="L371">            BufferedReader bufferedReader = new BufferedReader(</span>
-<span class="fc" id="L372">                    new InputStreamReader(process.getInputStream()));</span>
+<span class="fc" id="L382">            Process process = Runtime.getRuntime().exec(&quot;getprop&quot;);</span>
+<span class="fc" id="L383">            BufferedReader bufferedReader = new BufferedReader(</span>
+<span class="fc" id="L384">                    new InputStreamReader(process.getInputStream()));</span>
 
             // Grab the results
-<span class="fc" id="L375">            ArrayList&lt;HashMap&lt;String, String&gt;&gt; arr = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L387">            ArrayList&lt;HashMap&lt;String, String&gt;&gt; arr = new ArrayList&lt;&gt;();</span>
             String line;
-<span class="fc bfc" id="L377" title="All 2 branches covered.">            while ((line = bufferedReader.readLine()) != null) {</span>
-<span class="fc" id="L378">                String[] value = line.split(&quot;:&quot;);</span>
-<span class="fc" id="L379">                HashMap&lt;String, String&gt; map = new HashMap&lt;&gt;();</span>
-<span class="pc bpc" id="L380" title="1 of 2 branches missed.">                if (value.length &gt;= 2) {</span>
-<span class="fc" id="L381">                    map.put(removeBracket(value[0]), removeBracket(value[1]));</span>
-<span class="fc" id="L382">                    arr.add(map);</span>
+<span class="fc bfc" id="L389" title="All 2 branches covered.">            while ((line = bufferedReader.readLine()) != null) {</span>
+<span class="fc" id="L390">                String[] value = line.split(&quot;:&quot;);</span>
+<span class="fc" id="L391">                HashMap&lt;String, String&gt; map = new HashMap&lt;&gt;();</span>
+<span class="pc bpc" id="L392" title="1 of 2 branches missed.">                if (value.length &gt;= 2) {</span>
+<span class="fc" id="L393">                    map.put(removeBracket(value[0]), removeBracket(value[1]));</span>
+<span class="fc" id="L394">                    arr.add(map);</span>
                 }
-<span class="fc" id="L384">            }</span>
+<span class="fc" id="L396">            }</span>
 
-<span class="fc" id="L386">            return arr;</span>
-<span class="nc" id="L387">        } catch (IOException ex) {</span>
-<span class="nc" id="L388">            FlyveLog.e(FlyveLog.getMessage(String.valueOf(CommonErrorType.UTILS_DEVICE_PROPERTIES), ex.getMessage()));</span>
+<span class="fc" id="L398">            return arr;</span>
+<span class="nc" id="L399">        } catch (IOException ex) {</span>
+<span class="nc" id="L400">            FlyveLog.e(FlyveLog.getMessage(String.valueOf(CommonErrorType.UTILS_DEVICE_PROPERTIES), ex.getMessage()));</span>
         }
 
-<span class="nc" id="L391">        return new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L403">        return new ArrayList&lt;&gt;();</span>
     }
 
     private static String removeBracket(String str) {
-<span class="fc" id="L395">        return str.replaceAll(&quot;\\[&quot;, &quot;&quot;).replaceAll(&quot;]&quot;, &quot;&quot;);</span>
+<span class="fc" id="L407">        return str.replaceAll(&quot;\\[&quot;, &quot;&quot;).replaceAll(&quot;]&quot;, &quot;&quot;);</span>
     }
 
     /** Convert timestamp in a formatted date pattern
@@ -404,9 +413,9 @@ public class Utils {
      * @return converted time
      */
     public static String convertTime(long time, String pattern) {
-<span class="fc" id="L404">        Date date = new Date(time);</span>
-<span class="fc" id="L405">        Format format = new SimpleDateFormat(pattern, Locale.getDefault());</span>
-<span class="fc" id="L406">        return format.format(date);</span>
+<span class="fc" id="L416">        Date date = new Date(time);</span>
+<span class="fc" id="L417">        Format format = new SimpleDateFormat(pattern, Locale.getDefault());</span>
+<span class="fc" id="L418">        return format.format(date);</span>
     }
 
     /** Get current date
@@ -414,31 +423,31 @@ public class Utils {
      * @return String of the current date
      */
     public static String getCurrentTimeStamp(String template) {
-<span class="fc" id="L414">        SimpleDateFormat sdfDate = new SimpleDateFormat(template, Locale.getDefault());</span>
-<span class="fc" id="L415">        Date now = Calendar.getInstance().getTime();</span>
-<span class="fc" id="L416">        return sdfDate.format(now);</span>
+<span class="fc" id="L426">        SimpleDateFormat sdfDate = new SimpleDateFormat(template, Locale.getDefault());</span>
+<span class="fc" id="L427">        Date now = Calendar.getInstance().getTime();</span>
+<span class="fc" id="L428">        return sdfDate.format(now);</span>
     }
 
     public static String loadJSONFromAsset(Context context, String name) {
         String json;
         try {
-<span class="fc" id="L422">            InputStream is = context.getAssets().open(name);</span>
-<span class="fc" id="L423">            int size = is.available();</span>
-<span class="fc" id="L424">            byte[] buffer = new byte[size];</span>
-<span class="fc" id="L425">            is.read(buffer);</span>
-<span class="fc" id="L426">            is.close();</span>
-<span class="fc" id="L427">            json = new String(buffer, &quot;UTF-8&quot;);</span>
-<span class="nc" id="L428">        } catch (IOException ex) {</span>
-<span class="nc" id="L429">            FlyveLog.e(FlyveLog.getMessage(String.valueOf(CommonErrorType.UTILS_LOAD_JSON_ASSET), ex.getMessage()));</span>
-<span class="nc" id="L430">            return null;</span>
-<span class="fc" id="L431">        }</span>
-<span class="fc" id="L432">        return json;</span>
+<span class="fc" id="L434">            InputStream is = context.getAssets().open(name);</span>
+<span class="fc" id="L435">            int size = is.available();</span>
+<span class="fc" id="L436">            byte[] buffer = new byte[size];</span>
+<span class="fc" id="L437">            is.read(buffer);</span>
+<span class="fc" id="L438">            is.close();</span>
+<span class="fc" id="L439">            json = new String(buffer, &quot;UTF-8&quot;);</span>
+<span class="nc" id="L440">        } catch (IOException ex) {</span>
+<span class="nc" id="L441">            FlyveLog.e(FlyveLog.getMessage(String.valueOf(CommonErrorType.UTILS_LOAD_JSON_ASSET), ex.getMessage()));</span>
+<span class="nc" id="L442">            return null;</span>
+<span class="fc" id="L443">        }</span>
+<span class="fc" id="L444">        return json;</span>
     }
 
     /* Checks if external storage is available for read and write */
     private static boolean isExternalStorageWritable() {
-<span class="nc" id="L437">        String state = Environment.getExternalStorageState();</span>
-<span class="nc" id="L438">        return Environment.MEDIA_MOUNTED.equals(state);</span>
+<span class="nc" id="L449">        String state = Environment.getExternalStorageState();</span>
+<span class="nc" id="L450">        return Environment.MEDIA_MOUNTED.equals(state);</span>
     }
 
     /**
@@ -447,66 +456,66 @@ public class Utils {
      * @param filename name of the file
      */
     public static void storeFile(String message, String filename) {
-<span class="fc" id="L447">        String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();</span>
-<span class="fc" id="L448">        File dir = new File(path);</span>
+<span class="fc" id="L459">        String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();</span>
+<span class="fc" id="L460">        File dir = new File(path);</span>
 
-<span class="fc" id="L450">        String state = Environment.getExternalStorageState();</span>
-<span class="pc bpc" id="L451" title="1 of 2 branches missed.">        if (Environment.MEDIA_MOUNTED.equals(state)) {</span>
+<span class="fc" id="L462">        String state = Environment.getExternalStorageState();</span>
+<span class="pc bpc" id="L463" title="1 of 2 branches missed.">        if (Environment.MEDIA_MOUNTED.equals(state)) {</span>
 
-<span class="nc bnc" id="L453" title="All 2 branches missed.">            if(!dir.exists()) {</span>
-<span class="nc bnc" id="L454" title="All 2 branches missed.">                if(dir.mkdirs()) {</span>
-<span class="nc" id="L455">                    FlyveLog.d(&quot;create path&quot;);</span>
+<span class="nc bnc" id="L465" title="All 2 branches missed.">            if(!dir.exists()) {</span>
+<span class="nc bnc" id="L466" title="All 2 branches missed.">                if(dir.mkdirs()) {</span>
+<span class="nc" id="L467">                    FlyveLog.d(&quot;create path&quot;);</span>
                 } else {
-<span class="nc" id="L457">                    FlyveLog.e(&quot;cannot create path&quot;);</span>
-<span class="nc" id="L458">                    return;</span>
+<span class="nc" id="L469">                    FlyveLog.e(&quot;cannot create path&quot;);</span>
+<span class="nc" id="L470">                    return;</span>
                 }
             }
 
-<span class="nc" id="L462">            File logFile = new File(path + &quot;/&quot; + filename);</span>
+<span class="nc" id="L474">            File logFile = new File(path + &quot;/&quot; + filename);</span>
 
-<span class="nc bnc" id="L464" title="All 2 branches missed.">            if (!logFile.exists())  {</span>
+<span class="nc bnc" id="L476" title="All 2 branches missed.">            if (!logFile.exists())  {</span>
                 try  {
-<span class="nc bnc" id="L466" title="All 2 branches missed.">                    if(logFile.createNewFile()) {</span>
-<span class="nc" id="L467">                        FlyveLog.d(&quot;File created&quot;);</span>
+<span class="nc bnc" id="L478" title="All 2 branches missed.">                    if(logFile.createNewFile()) {</span>
+<span class="nc" id="L479">                        FlyveLog.d(&quot;File created&quot;);</span>
                     } else {
-<span class="nc" id="L469">                        FlyveLog.d(&quot;Cannot create file&quot;);</span>
-<span class="nc" id="L470">                        return;</span>
+<span class="nc" id="L481">                        FlyveLog.d(&quot;Cannot create file&quot;);</span>
+<span class="nc" id="L482">                        return;</span>
                     }
-<span class="nc" id="L472">                } catch (IOException ex) {</span>
-<span class="nc" id="L473">                    FlyveLog.e(ex.getMessage());</span>
-<span class="nc" id="L474">                }</span>
+<span class="nc" id="L484">                } catch (IOException ex) {</span>
+<span class="nc" id="L485">                    FlyveLog.e(ex.getMessage());</span>
+<span class="nc" id="L486">                }</span>
             }
 
-<span class="nc" id="L477">            FileWriter fw = null;</span>
+<span class="nc" id="L489">            FileWriter fw = null;</span>
 
             try {
                 //BufferedWriter for performance, true to set append to file flag
-<span class="nc" id="L481">                fw = new FileWriter(logFile, false);</span>
-<span class="nc" id="L482">                BufferedWriter buf = new BufferedWriter(fw);</span>
+<span class="nc" id="L493">                fw = new FileWriter(logFile, false);</span>
+<span class="nc" id="L494">                BufferedWriter buf = new BufferedWriter(fw);</span>
 
-<span class="nc" id="L484">                buf.write(message);</span>
-<span class="nc" id="L485">                buf.newLine();</span>
-<span class="nc" id="L486">                buf.flush();</span>
-<span class="nc" id="L487">                buf.close();</span>
-<span class="nc" id="L488">                fw.close();</span>
-<span class="nc" id="L489">                FlyveLog.d(&quot;Inventory stored&quot;);</span>
+<span class="nc" id="L496">                buf.write(message);</span>
+<span class="nc" id="L497">                buf.newLine();</span>
+<span class="nc" id="L498">                buf.flush();</span>
+<span class="nc" id="L499">                buf.close();</span>
+<span class="nc" id="L500">                fw.close();</span>
+<span class="nc" id="L501">                FlyveLog.d(&quot;Inventory stored&quot;);</span>
             }
-<span class="nc" id="L491">            catch (IOException ex) {</span>
-<span class="nc" id="L492">                FlyveLog.e(ex.getMessage());</span>
+<span class="nc" id="L503">            catch (IOException ex) {</span>
+<span class="nc" id="L504">                FlyveLog.e(ex.getMessage());</span>
             }
             finally {
-<span class="nc bnc" id="L495" title="All 6 branches missed.">                if(fw!=null) {</span>
+<span class="nc bnc" id="L507" title="All 6 branches missed.">                if(fw!=null) {</span>
                     try {
-<span class="nc" id="L497">                        fw.close();</span>
-<span class="nc" id="L498">                    } catch(Exception ex) {</span>
-<span class="nc" id="L499">                        FlyveLog.e(ex.getMessage());</span>
-<span class="nc" id="L500">                    }</span>
+<span class="nc" id="L509">                        fw.close();</span>
+<span class="nc" id="L510">                    } catch(Exception ex) {</span>
+<span class="nc" id="L511">                        FlyveLog.e(ex.getMessage());</span>
+<span class="nc" id="L512">                    }</span>
                 }
-<span class="nc" id="L502">            }</span>
-<span class="nc" id="L503">        } else {</span>
-<span class="fc" id="L504">            FlyveLog.d(&quot;External Storage is not available&quot;);</span>
+<span class="nc" id="L514">            }</span>
+<span class="nc" id="L515">        } else {</span>
+<span class="fc" id="L516">            FlyveLog.d(&quot;External Storage is not available&quot;);</span>
         }
-<span class="fc" id="L506">    }</span>
+<span class="fc" id="L518">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span>Generated by the Android Gradle plugin 2.2.0</div></body></html>
