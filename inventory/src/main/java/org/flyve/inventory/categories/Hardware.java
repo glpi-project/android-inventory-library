@@ -169,7 +169,7 @@ public class Hardware extends Categories {
     public String getLastLoggedUser() {
         String value = "N/A";
         try {
-            if (userInfo.get(2) != null) {
+            if (userInfo.size() > 0 && userInfo.get(2) != null) {
                 DocumentBuilder newDocumentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
                 String info = userInfo.get(2).trim();
                 Document parse = newDocumentBuilder.parse(new ByteArrayInputStream(info.getBytes()));
@@ -189,7 +189,7 @@ public class Hardware extends Categories {
         String evaluate = "";
         String value = "N/A";
         try {
-            if (userInfo.get(1) != null) {
+            if (userInfo.size() > 0 && userInfo.get(1) != null) {
                 String removeChar = userInfo.get(1).replaceAll("[\"><]", "");
                 if (removeChar.contains("user ")) {
                     evaluate = removeChar.replaceAll(" ", ",").trim();
