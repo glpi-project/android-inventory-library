@@ -40,6 +40,7 @@ import org.xmlpull.v1.XmlSerializer;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -334,6 +335,17 @@ public class Utils {
             FlyveLog.e(FlyveLog.getMessage(String.valueOf(CommonErrorType.UTILS_CAT_INFO), ex.getMessage()));
         }
         return "";
+    }
+
+    public static BufferedReader getBufferedRootPermission(String[] values) throws IOException, InterruptedException {
+        Process p = Runtime.getRuntime().exec(values[0]);
+        DataOutputStream dos = new DataOutputStream(p.getOutputStream());
+        for (int i = 1; i < values.length; i++)
+            dos.writeBytes(values[i]);
+        dos.flush();
+        dos.close();
+        p.waitFor();
+        return new BufferedReader(new InputStreamReader(p.getInputStream()));
     }
 
     public static String getSystemProperty(String type) {

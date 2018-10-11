@@ -35,11 +35,13 @@ import android.provider.Settings.Secure;
 
 import org.flyve.inventory.CommonErrorType;
 import org.flyve.inventory.FlyveLog;
+import org.flyve.inventory.Utils;
 import org.w3c.dom.Document;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -214,16 +216,9 @@ public class Hardware extends Categories {
     private void getUserInfo() {
         userInfo = new ArrayList<>();
         try {
-            java.lang.Process p = Runtime.getRuntime().exec("su");
-            DataOutputStream dos = new DataOutputStream(p.getOutputStream());
-            dos.writeBytes("cat /data/system/users/0.xml\n");
-            dos.writeBytes("exit\n");
-            dos.flush();
-            dos.close();
-            p.waitFor();
-            BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
             String temp;
-            while ((temp = in.readLine()) != null) {
+            String[] values = {"su", "cat /data/system/users/0.xml\n", "exit\n"};
+            while ((temp = Utils.getBufferedRootPermission(values).readLine()) != null) {
                 userInfo.add(temp);
             }
         } catch (Exception ex) {
