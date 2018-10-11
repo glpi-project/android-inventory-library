@@ -355,7 +355,7 @@ public class Utils {
         return "";
     }
 
-    public static BufferedReader getBufferedRootPermission(String[] values) throws IOException, InterruptedException {
+    public static BufferedReader getBufferedSequentialCatInfo(String[] values) throws IOException, InterruptedException {
         Process p = Runtime.getRuntime().exec(values[0]);
         DataOutputStream dos = new DataOutputStream(p.getOutputStream());
         for (int i = 1; i < values.length; i++)
