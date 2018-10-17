@@ -43,51 +43,63 @@ public class BiosTest {
     private Context appContext = InstrumentationRegistry.getTargetContext();
 
     @Test
-    public void getBios_date() throws Exception {
+    public void getAssesTag() {
+        Bios bios = new Bios(appContext);
+        assertNotEquals("", bios.getAssetTag() );
+    }
+
+    @Test
+    public void getBiosDate() {
         Bios bios = new Bios(appContext);
         assertNotEquals("", bios.getBiosDate());
     }
 
     @Test
-    public void getBios_manufacturer() throws Exception {
+    public void getBiosManufacturer() {
         Bios bios = new Bios(appContext);
         assertNotEquals("", bios.getBiosManufacturer());
     }
 
     @Test
-    public void getBios_version() throws Exception {
+    public void getBiosVersion() {
         Bios bios = new Bios(appContext);
         assertNotEquals("", bios.getBiosVersion());
     }
 
     @Test
-    public void getMother_board_manufacturer() throws Exception {
+    public void getMotherBoardManufacturer() {
         Bios bios = new Bios(appContext);
-        assertNotEquals("", bios.getMotherBoardManufacturer() );
+        assertNotEquals("", bios.getManufacturer() );
     }
 
     @Test
-    public void getMother_board_model() throws Exception {
+    public void getMotherBoardModel() {
         Bios bios = new Bios(appContext);
-        assertNotEquals("", bios.getMotherBoardModel() );
+        assertNotEquals("", bios.getModel() );
     }
 
     @Test
-    public void getSystemSerialNumber() throws Exception {
-        Bios bios = new Bios(appContext);
-        assertNotEquals("", bios.getSystemSerialNumber() );
-    }
-
-    @Test
-    public void getMotherBoardSerial() throws Exception {
+    public void getMotherBoardSerialNumber() {
         Bios bios = new Bios(appContext);
         assertNotEquals("", bios.getMotherBoardSerial() );
     }
 
     @Test
-    public void getTag() throws Exception {
+    public void getSystemManufacturer() {
         Bios bios = new Bios(appContext);
-        assertNotEquals("", bios.getBuildTag() );
+        assertNotEquals("", bios.getManufacturer() );
+    }
+
+    @Test
+    public void getSystemModel() {
+        Bios bios = new Bios(appContext);
+        assertNotEquals("", bios.getModel() );
+    }
+
+    @Test
+    public void getSystemSerialNumber() {
+        Bios bios = new Bios(appContext);
+        assertNotEquals("", bios.getSystemSerialNumber() );
     }
 
 }
