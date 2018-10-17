@@ -39,18 +39,18 @@ if(project.rootProject.file('local.properties').exists()) {
 }
 
 ext {
-    bintrayRepo = 'inventory'
-    bintrayName = 'android-inventory-library'
+    bintrayRepo = 'glpi'
+    bintrayName = 'java-library-glpi'
     bintrayUserOrg = "flyve-mdm"
 
     publishedGroupId = 'org.flyve'
-    libraryName = 'inventory'
-    artifact = 'inventory'
+    libraryName = 'glpi'
+    artifact = 'glpi'
 
-    libraryDescription = 'Inventory client library written in Java for developing applications on Android'
+    libraryDescription = 'This library created in Java features several functionalities common to all GLPI APIs'
 
-    siteUrl = 'https://github.com/flyve-mdm/android-inventory-library'
-    gitUrl = 'https://github.com/flyve-mdm/android-inventory-library.git'
+    siteUrl = 'https://github.com/glpi-project/java-library-glpi'
+    gitUrl = 'https://github.com/glpi-project/java-library-glpi.git'
 
     libraryVersion = properties.getProperty("version")
 
