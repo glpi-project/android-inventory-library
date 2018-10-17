@@ -78,29 +78,16 @@ public class Bios extends Categories {
 
 			Category c = new Category("BIOS", "bios");
 
-			// Bios Date
+			c.put("ASSETTAG", new CategoryValue(getAssetTag(), "ASSETTAG", "assettag"));
 			c.put("BDATE", new CategoryValue(getBiosDate(), "BDATE", "biosReleaseDate"));
-
-			// Bios Manufacturer
 			c.put("BMANUFACTURER", new CategoryValue(getBiosManufacturer(), "BMANUFACTURER", "biosManufacturer"));
-
-			// Bios version
 			c.put("BVERSION", new CategoryValue(getBiosVersion(), "BVERSION", "biosVersion"));
-
-			// Mother Board Manufacturer
-			c.put("MMANUFACTURER", new CategoryValue(getMotherBoardManufacturer(), "MMANUFACTURER", "motherBoardManufacturer"));
-
-			// Mother Board Model
-			c.put("SMODEL", new CategoryValue(getMotherBoardModel(), "SMODEL", "motherBoardModel"));
-
-			// Mother Board Serial Number
-			c.put("SSN", new CategoryValue(getSystemSerialNumber(), "SSN", "motherBoardSerialNumber"));
-
-			// Build Tag
-			c.put("ASSETTAG", new CategoryValue(getBuildTag(), "ASSETTAG", "assettag"));
-
-			// Build Tag
-			c.put("MSN", new CategoryValue(getMotherBoardSerial(), "MSN", "msn"));
+			c.put("MMANUFACTURER", new CategoryValue(getManufacturer(), "MMANUFACTURER", "motherBoardManufacturer"));
+			c.put("MMODEL", new CategoryValue(getModel(), "MMODEL", "motherBoardModel"));
+			c.put("MSN", new CategoryValue(getMotherBoardSerial(), "MSN", "motherBoardSerialNumber"));
+			c.put("SMANUFACTURER", new CategoryValue(getManufacturer(), "SMANUFACTURER", "systemManufacturer"));
+			c.put("SMODEL", new CategoryValue(getModel(), "SMODEL", "systemModel"));
+			c.put("SSN", new CategoryValue(getSystemSerialNumber(), "SSN", "systemSerialNumber"));
 
 			this.add(c);
 		} catch (Exception ex) {
@@ -154,7 +141,7 @@ public class Bios extends Categories {
 	 * Get the Mother Board Manufacturer
 	 * @return string with the manufacturer
 	 */
-	public String getMotherBoardManufacturer() {
+	public String getManufacturer() {
 		String manufacturer = "N/A";
 		try {
 			manufacturer = Build.MANUFACTURER;
@@ -168,7 +155,7 @@ public class Bios extends Categories {
 	 * Get the Mother Board Model
 	 * @return string with the model
 	 */
-	public String getMotherBoardModel() {
+	public String getModel() {
 		String model = "N/A";
 		try {
 			model = Build.MODEL;
@@ -182,7 +169,7 @@ public class Bios extends Categories {
 	 * Get the Build Tag
 	 * @return string with the model
 	 */
-	public String getBuildTag() {
+	public String getAssetTag() {
 		String tags = "N/A";
 		try {
 			tags = Build.TAGS;

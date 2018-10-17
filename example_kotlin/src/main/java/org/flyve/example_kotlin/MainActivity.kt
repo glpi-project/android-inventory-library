@@ -25,6 +25,16 @@ class MainActivity : AppCompatActivity() {
                 Log.e(LOG, error.message)
             }
         } )
+        inventoryTask.getJSON( object : InventoryTask.OnTaskCompleted {
+            override fun onTaskSuccess(data: String?) {
+                Log.d(LOG, data)
+            }
+
+            override fun onTaskError(error: Throwable?) {
+                Log.e(LOG, error?.message)
+            }
+
+        })
 
     }
 }
