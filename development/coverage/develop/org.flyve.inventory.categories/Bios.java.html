@@ -1,6 +1,3 @@
----
-layout: coverage
----
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../resources/report.css" type="text/css"/><link rel="shortcut icon" href="../resources/report.gif" type="image/gif"/><title>Bios.java</title><link rel="stylesheet" href="../resources/prettify.css" type="text/css"/><script type="text/javascript" src="../resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory.categories</a> &gt; <span class="el_source">Bios.java</span></div><h1>Bios.java</h1><pre class="source lang-java linenums">/**
  *  LICENSE
  * 
@@ -81,48 +78,35 @@ public class Bios extends Categories {
 
 <span class="fc" id="L79">			Category c = new Category(&quot;BIOS&quot;, &quot;bios&quot;);</span>
 
-			// Bios Date
+<span class="fc" id="L81">			c.put(&quot;ASSETTAG&quot;, new CategoryValue(getAssetTag(), &quot;ASSETTAG&quot;, &quot;assettag&quot;));</span>
 <span class="fc" id="L82">			c.put(&quot;BDATE&quot;, new CategoryValue(getBiosDate(), &quot;BDATE&quot;, &quot;biosReleaseDate&quot;));</span>
+<span class="fc" id="L83">			c.put(&quot;BMANUFACTURER&quot;, new CategoryValue(getBiosManufacturer(), &quot;BMANUFACTURER&quot;, &quot;biosManufacturer&quot;));</span>
+<span class="fc" id="L84">			c.put(&quot;BVERSION&quot;, new CategoryValue(getBiosVersion(), &quot;BVERSION&quot;, &quot;biosVersion&quot;));</span>
+<span class="fc" id="L85">			c.put(&quot;MMANUFACTURER&quot;, new CategoryValue(getManufacturer(), &quot;MMANUFACTURER&quot;, &quot;motherBoardManufacturer&quot;));</span>
+<span class="fc" id="L86">			c.put(&quot;MMODEL&quot;, new CategoryValue(getModel(), &quot;MMODEL&quot;, &quot;motherBoardModel&quot;));</span>
+<span class="fc" id="L87">			c.put(&quot;MSN&quot;, new CategoryValue(getMotherBoardSerial(), &quot;MSN&quot;, &quot;motherBoardSerialNumber&quot;));</span>
+<span class="fc" id="L88">			c.put(&quot;SMANUFACTURER&quot;, new CategoryValue(getManufacturer(), &quot;SMANUFACTURER&quot;, &quot;systemManufacturer&quot;));</span>
+<span class="fc" id="L89">			c.put(&quot;SMODEL&quot;, new CategoryValue(getModel(), &quot;SMODEL&quot;, &quot;systemModel&quot;));</span>
+<span class="fc" id="L90">			c.put(&quot;SSN&quot;, new CategoryValue(getSystemSerialNumber(), &quot;SSN&quot;, &quot;systemSerialNumber&quot;));</span>
 
-			// Bios Manufacturer
-<span class="fc" id="L85">			c.put(&quot;BMANUFACTURER&quot;, new CategoryValue(getBiosManufacturer(), &quot;BMANUFACTURER&quot;, &quot;biosManufacturer&quot;));</span>
-
-			// Bios version
-<span class="fc" id="L88">			c.put(&quot;BVERSION&quot;, new CategoryValue(getBiosVersion(), &quot;BVERSION&quot;, &quot;biosVersion&quot;));</span>
-
-			// Mother Board Manufacturer
-<span class="fc" id="L91">			c.put(&quot;MMANUFACTURER&quot;, new CategoryValue(getMotherBoardManufacturer(), &quot;MMANUFACTURER&quot;, &quot;motherBoardManufacturer&quot;));</span>
-
-			// Mother Board Model
-<span class="fc" id="L94">			c.put(&quot;SMODEL&quot;, new CategoryValue(getMotherBoardModel(), &quot;SMODEL&quot;, &quot;motherBoardModel&quot;));</span>
-
-			// Mother Board Serial Number
-<span class="fc" id="L97">			c.put(&quot;SSN&quot;, new CategoryValue(getSystemSerialNumber(), &quot;SSN&quot;, &quot;motherBoardSerialNumber&quot;));</span>
-
-			// Build Tag
-<span class="fc" id="L100">			c.put(&quot;ASSETTAG&quot;, new CategoryValue(getBuildTag(), &quot;ASSETTAG&quot;, &quot;assettag&quot;));</span>
-
-			// Build Tag
-<span class="fc" id="L103">			c.put(&quot;MSN&quot;, new CategoryValue(getMotherBoardSerial(), &quot;MSN&quot;, &quot;msn&quot;));</span>
-
-<span class="fc" id="L105">			this.add(c);</span>
-<span class="nc" id="L106">		} catch (Exception ex) {</span>
-<span class="nc" id="L107">			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.BIOS, ex.getMessage()));</span>
-<span class="fc" id="L108">		}</span>
-<span class="fc" id="L109">	}</span>
+<span class="fc" id="L92">			this.add(c);</span>
+<span class="nc" id="L93">		} catch (Exception ex) {</span>
+<span class="nc" id="L94">			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.BIOS, ex.getMessage()));</span>
+<span class="fc" id="L95">		}</span>
+<span class="fc" id="L96">	}</span>
 
 	/**
 	 * Get the Bios Date
 	 * @return string with the date in simple format
 	 */
 	public String getBiosDate() {
-<span class="fc" id="L116">		String dateInfo = &quot;N/A&quot;;</span>
+<span class="fc" id="L103">		String dateInfo = &quot;N/A&quot;;</span>
 		try {
-<span class="nc" id="L118">			dateInfo = Utils.getCatInfo(&quot;/sys/devices/virtual/dmi/id/bios_date&quot;);</span>
-<span class="fc" id="L119">		} catch (Exception ex) {</span>
-<span class="fc" id="L120">			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.BIOS_DATE, ex.getMessage()));</span>
-<span class="nc" id="L121">		}</span>
-<span class="pc bpc" id="L122" title="1 of 2 branches missed.">		return !dateInfo.equals(&quot;&quot;) ? dateInfo : &quot;N/A&quot;;</span>
+<span class="nc" id="L105">			dateInfo = Utils.getCatInfo(&quot;/sys/devices/virtual/dmi/id/bios_date&quot;);</span>
+<span class="fc" id="L106">		} catch (Exception ex) {</span>
+<span class="fc" id="L107">			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.BIOS_DATE, ex.getMessage()));</span>
+<span class="nc" id="L108">		}</span>
+<span class="pc bpc" id="L109" title="1 of 2 branches missed.">		return !dateInfo.equals(&quot;&quot;) ? dateInfo : &quot;N/A&quot;;</span>
 	}
 
 	/**
@@ -130,13 +114,13 @@ public class Bios extends Categories {
 	 * @return string with the manufacturer
 	 */
 	public String getBiosManufacturer() {
-<span class="fc" id="L130">		String manufacturer = &quot;N/A&quot;;</span>
+<span class="fc" id="L117">		String manufacturer = &quot;N/A&quot;;</span>
 		try {
-<span class="fc" id="L132">			manufacturer= Build.MANUFACTURER;</span>
-<span class="nc" id="L133">		} catch (Exception ex) {</span>
-<span class="nc" id="L134">			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.BIOS_MANUFACTURER, ex.getMessage()));</span>
-<span class="fc" id="L135">		}</span>
-<span class="fc" id="L136">		return manufacturer;</span>
+<span class="fc" id="L119">			manufacturer= Build.MANUFACTURER;</span>
+<span class="nc" id="L120">		} catch (Exception ex) {</span>
+<span class="nc" id="L121">			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.BIOS_MANUFACTURER, ex.getMessage()));</span>
+<span class="fc" id="L122">		}</span>
+<span class="fc" id="L123">		return manufacturer;</span>
 	}
 
 	/**
@@ -144,55 +128,55 @@ public class Bios extends Categories {
 	 * @return string with the bootloader version
 	 */
 	public String getBiosVersion() {
-<span class="fc" id="L144">		String dateInfo = &quot;N/A&quot;;</span>
+<span class="fc" id="L131">		String dateInfo = &quot;N/A&quot;;</span>
 		try {
-<span class="nc" id="L146">			dateInfo = Utils.getCatInfo(&quot;/sys/devices/virtual/dmi/id/bios_version&quot;);</span>
-<span class="fc" id="L147">		} catch (Exception ex) {</span>
-<span class="fc" id="L148">			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.BIOS_VERSION, ex.getMessage()));</span>
-<span class="nc" id="L149">		}</span>
-<span class="pc bpc" id="L150" title="1 of 2 branches missed.">		return !dateInfo.equals(&quot;&quot;) ? dateInfo : &quot;N/A&quot;;</span>
+<span class="nc" id="L133">			dateInfo = Utils.getCatInfo(&quot;/sys/devices/virtual/dmi/id/bios_version&quot;);</span>
+<span class="fc" id="L134">		} catch (Exception ex) {</span>
+<span class="fc" id="L135">			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.BIOS_VERSION, ex.getMessage()));</span>
+<span class="nc" id="L136">		}</span>
+<span class="pc bpc" id="L137" title="1 of 2 branches missed.">		return !dateInfo.equals(&quot;&quot;) ? dateInfo : &quot;N/A&quot;;</span>
 	}
 
 	/**
 	 * Get the Mother Board Manufacturer
 	 * @return string with the manufacturer
 	 */
-	public String getMotherBoardManufacturer() {
-<span class="fc" id="L158">		String manufacturer = &quot;N/A&quot;;</span>
+	public String getManufacturer() {
+<span class="fc" id="L145">		String manufacturer = &quot;N/A&quot;;</span>
 		try {
-<span class="fc" id="L160">			manufacturer = Build.MANUFACTURER;</span>
-<span class="nc" id="L161">		} catch (Exception ex) {</span>
-<span class="nc" id="L162">			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.BIOS_BOARD_MANUFACTURER, ex.getMessage()));</span>
-<span class="fc" id="L163">		}</span>
-<span class="fc" id="L164">		return manufacturer;</span>
+<span class="fc" id="L147">			manufacturer = Build.MANUFACTURER;</span>
+<span class="nc" id="L148">		} catch (Exception ex) {</span>
+<span class="nc" id="L149">			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.BIOS_BOARD_MANUFACTURER, ex.getMessage()));</span>
+<span class="fc" id="L150">		}</span>
+<span class="fc" id="L151">		return manufacturer;</span>
 	}
 
 	/**
 	 * Get the Mother Board Model
 	 * @return string with the model
 	 */
-	public String getMotherBoardModel() {
-<span class="fc" id="L172">		String model = &quot;N/A&quot;;</span>
+	public String getModel() {
+<span class="fc" id="L159">		String model = &quot;N/A&quot;;</span>
 		try {
-<span class="fc" id="L174">			model = Build.MODEL;</span>
-<span class="nc" id="L175">		} catch (Exception ex) {</span>
-<span class="nc" id="L176">			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.BIOS_MOTHER_BOARD_MODEL, ex.getMessage()));</span>
-<span class="fc" id="L177">		}</span>
-<span class="fc" id="L178">		return model;</span>
+<span class="fc" id="L161">			model = Build.MODEL;</span>
+<span class="nc" id="L162">		} catch (Exception ex) {</span>
+<span class="nc" id="L163">			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.BIOS_MOTHER_BOARD_MODEL, ex.getMessage()));</span>
+<span class="fc" id="L164">		}</span>
+<span class="fc" id="L165">		return model;</span>
 	}
 
 	/**
 	 * Get the Build Tag
 	 * @return string with the model
 	 */
-	public String getBuildTag() {
-<span class="fc" id="L186">		String tags = &quot;N/A&quot;;</span>
+	public String getAssetTag() {
+<span class="fc" id="L173">		String tags = &quot;N/A&quot;;</span>
 		try {
-<span class="fc" id="L188">			tags = Build.TAGS;</span>
-<span class="nc" id="L189">		} catch (Exception ex) {</span>
-<span class="nc" id="L190">			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.BIOS_TAG, ex.getMessage()));</span>
-<span class="fc" id="L191">		}</span>
-<span class="fc" id="L192">		return tags;</span>
+<span class="fc" id="L175">			tags = Build.TAGS;</span>
+<span class="nc" id="L176">		} catch (Exception ex) {</span>
+<span class="nc" id="L177">			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.BIOS_TAG, ex.getMessage()));</span>
+<span class="fc" id="L178">		}</span>
+<span class="fc" id="L179">		return tags;</span>
 	}
 
 	/**
@@ -200,13 +184,13 @@ public class Bios extends Categories {
 	 * @return string with the serial mother board
 	 */
 	public String getMotherBoardSerial() {
-<span class="fc" id="L200">		String dateInfo = &quot;N/A&quot;;</span>
+<span class="fc" id="L187">		String dateInfo = &quot;N/A&quot;;</span>
 		try {
-<span class="nc" id="L202">			dateInfo = Utils.getCatInfo(&quot;/sys/devices/virtual/dmi/id/board_serial&quot;);</span>
-<span class="fc" id="L203">		} catch (Exception ex) {</span>
-<span class="fc" id="L204">			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.BIOS_MOTHER_BOARD_SERIAL, ex.getMessage()));</span>
-<span class="nc" id="L205">		}</span>
-<span class="pc bpc" id="L206" title="1 of 2 branches missed.">		return !dateInfo.equals(&quot;&quot;) ? dateInfo : &quot;N/A&quot;;</span>
+<span class="nc" id="L189">			dateInfo = Utils.getCatInfo(&quot;/sys/devices/virtual/dmi/id/board_serial&quot;);</span>
+<span class="fc" id="L190">		} catch (Exception ex) {</span>
+<span class="fc" id="L191">			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.BIOS_MOTHER_BOARD_SERIAL, ex.getMessage()));</span>
+<span class="nc" id="L192">		}</span>
+<span class="pc bpc" id="L193" title="1 of 2 branches missed.">		return !dateInfo.equals(&quot;&quot;) ? dateInfo : &quot;N/A&quot;;</span>
 	}
 
 	/**
@@ -214,35 +198,35 @@ public class Bios extends Categories {
 	 * @return string with the serial number
 	 */
 	public String getSystemSerialNumber() {
-<span class="fc" id="L214">		String systemSerialNumber = &quot;Unknown&quot;;</span>
+<span class="fc" id="L201">		String systemSerialNumber = &quot;Unknown&quot;;</span>
 		try {
-<span class="pc bpc" id="L216" title="1 of 2 branches missed.">			if (!Build.SERIAL.equals(Build.UNKNOWN)) {</span>
+<span class="pc bpc" id="L203" title="1 of 2 branches missed.">			if (!Build.SERIAL.equals(Build.UNKNOWN)) {</span>
 				// Mother Board Serial Number
 				// Since in 2.3.3 a.k.a gingerbread
-<span class="nc" id="L219">				systemSerialNumber = Build.SERIAL;</span>
+<span class="nc" id="L206">				systemSerialNumber = Build.SERIAL;</span>
 			} else {
 				//Try to get the serial by reading /proc/cpuinfo
-<span class="fc" id="L222">				String serial = &quot;&quot;;</span>
+<span class="fc" id="L209">				String serial = &quot;&quot;;</span>
 				try {
-<span class="fc" id="L224">					serial = this.getSerialNumberFromCpuInfo();</span>
-<span class="nc" id="L225">				} catch (Exception ex) {</span>
-<span class="nc" id="L226">					FlyveLog.e(ex.getMessage());</span>
-<span class="fc" id="L227">				}</span>
+<span class="fc" id="L211">					serial = this.getSerialNumberFromCpuInfo();</span>
+<span class="nc" id="L212">				} catch (Exception ex) {</span>
+<span class="nc" id="L213">					FlyveLog.e(ex.getMessage());</span>
+<span class="fc" id="L214">				}</span>
 
-<span class="pc bpc" id="L229" title="2 of 4 branches missed.">				if (!serial.equals(&quot;&quot;) &amp;&amp; !serial.equals(&quot;0000000000000000&quot;)) {</span>
-<span class="nc" id="L230">					systemSerialNumber = serial;</span>
+<span class="pc bpc" id="L216" title="2 of 4 branches missed.">				if (!serial.equals(&quot;&quot;) &amp;&amp; !serial.equals(&quot;0000000000000000&quot;)) {</span>
+<span class="nc" id="L217">					systemSerialNumber = serial;</span>
 				} else {
 					//Last try, use the hidden API!
-<span class="fc" id="L233">					serial = getSerialFromPrivateAPI();</span>
-<span class="pc bpc" id="L234" title="1 of 2 branches missed.">					if (!serial.equals(&quot;&quot;)) {</span>
-<span class="nc" id="L235">						systemSerialNumber = serial;</span>
+<span class="fc" id="L220">					serial = getSerialFromPrivateAPI();</span>
+<span class="pc bpc" id="L221" title="1 of 2 branches missed.">					if (!serial.equals(&quot;&quot;)) {</span>
+<span class="nc" id="L222">						systemSerialNumber = serial;</span>
 					}
 				}
 			}
-<span class="nc" id="L239">		} catch (Exception ex) {</span>
-<span class="nc" id="L240">			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.BIOS_SYSTEM_SERIAL, ex.getMessage()));</span>
-<span class="fc" id="L241">		}</span>
-<span class="fc" id="L242">		return systemSerialNumber;</span>
+<span class="nc" id="L226">		} catch (Exception ex) {</span>
+<span class="nc" id="L227">			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.BIOS_SYSTEM_SERIAL, ex.getMessage()));</span>
+<span class="fc" id="L228">		}</span>
+<span class="fc" id="L229">		return systemSerialNumber;</span>
 	}
 
 	/**
@@ -250,15 +234,15 @@ public class Bios extends Categories {
 	 * @return String with a Serial Device
 	 */
 	private String getSerialFromPrivateAPI() {
-<span class="fc" id="L250">		String serial = &quot;N/A&quot;;</span>
+<span class="fc" id="L237">		String serial = &quot;N/A&quot;;</span>
 		try {
-<span class="fc" id="L252">	        Class&lt;?&gt; c = Class.forName(&quot;android.os.SystemProperties&quot;);</span>
-<span class="fc" id="L253">	        Method get = c.getMethod(&quot;get&quot;, String.class);</span>
-<span class="fc" id="L254">	        serial = (String) get.invoke(c, &quot;ro.serialno&quot;);</span>
-<span class="nc" id="L255">	    } catch (Exception ex) {</span>
-<span class="nc" id="L256">			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.BIOS_SERIAL_PRIVATE, ex.getMessage()));</span>
-<span class="fc" id="L257">	    }</span>
-<span class="fc" id="L258">	    return serial;</span>
+<span class="fc" id="L239">	        Class&lt;?&gt; c = Class.forName(&quot;android.os.SystemProperties&quot;);</span>
+<span class="fc" id="L240">	        Method get = c.getMethod(&quot;get&quot;, String.class);</span>
+<span class="fc" id="L241">	        serial = (String) get.invoke(c, &quot;ro.serialno&quot;);</span>
+<span class="nc" id="L242">	    } catch (Exception ex) {</span>
+<span class="nc" id="L243">			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.BIOS_SERIAL_PRIVATE, ex.getMessage()));</span>
+<span class="fc" id="L244">	    }</span>
+<span class="fc" id="L245">	    return serial;</span>
 	}
 
 	/**
@@ -266,35 +250,35 @@ public class Bios extends Categories {
 	 * @return String
 	 */
 	private String getSerialNumberFromCpuInfo() {
-<span class="fc" id="L266">		String serial = &quot;N/A&quot;;</span>
+<span class="fc" id="L253">		String serial = &quot;N/A&quot;;</span>
 		try {
-<span class="fc" id="L268">			File f = new File(CPUINFO);</span>
-<span class="fc" id="L269">			FileReader fr = null;</span>
+<span class="fc" id="L255">			File f = new File(CPUINFO);</span>
+<span class="fc" id="L256">			FileReader fr = null;</span>
 			try {
-<span class="fc" id="L271">				fr = new FileReader(f);</span>
-<span class="fc" id="L272">				BufferedReader br = new BufferedReader(fr, 8 * 1024);</span>
+<span class="fc" id="L258">				fr = new FileReader(f);</span>
+<span class="fc" id="L259">				BufferedReader br = new BufferedReader(fr, 8 * 1024);</span>
 				String line;
-<span class="fc bfc" id="L274" title="All 2 branches covered.">				while ((line = br.readLine()) != null) {</span>
-<span class="fc bfc" id="L275" title="All 2 branches covered.">					if (line.startsWith(&quot;Serial&quot;)) {</span>
-<span class="fc" id="L276">						FlyveLog.d(line);</span>
-<span class="fc" id="L277">						String[] results = line.split(&quot;:&quot;);</span>
-<span class="fc" id="L278">						serial = results[1].trim();</span>
-<span class="fc" id="L279">					}</span>
+<span class="fc bfc" id="L261" title="All 2 branches covered.">				while ((line = br.readLine()) != null) {</span>
+<span class="fc bfc" id="L262" title="All 2 branches covered.">					if (line.startsWith(&quot;Serial&quot;)) {</span>
+<span class="fc" id="L263">						FlyveLog.d(line);</span>
+<span class="fc" id="L264">						String[] results = line.split(&quot;:&quot;);</span>
+<span class="fc" id="L265">						serial = results[1].trim();</span>
+<span class="fc" id="L266">					}</span>
 				}
-<span class="fc" id="L281">				br.close();</span>
-<span class="fc" id="L282">				fr.close();</span>
-<span class="nc" id="L283">			} catch (IOException e) {</span>
-<span class="nc" id="L284">				FlyveLog.e(e.getMessage());</span>
+<span class="fc" id="L268">				br.close();</span>
+<span class="fc" id="L269">				fr.close();</span>
+<span class="nc" id="L270">			} catch (IOException e) {</span>
+<span class="nc" id="L271">				FlyveLog.e(e.getMessage());</span>
 			} finally {
-<span class="pc bpc" id="L286" title="5 of 6 branches missed.">				if (fr != null) {</span>
-<span class="pc" id="L287">					fr.close();</span>
+<span class="pc bpc" id="L273" title="5 of 6 branches missed.">				if (fr != null) {</span>
+<span class="pc" id="L274">					fr.close();</span>
 				}
-<span class="nc" id="L289">			}</span>
-<span class="nc" id="L290">		} catch (Exception ex) {</span>
-<span class="nc" id="L291">			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.BIOS_CPU_SERIAL, ex.getMessage()));</span>
-<span class="fc" id="L292">		}</span>
+<span class="nc" id="L276">			}</span>
+<span class="nc" id="L277">		} catch (Exception ex) {</span>
+<span class="nc" id="L278">			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.BIOS_CPU_SERIAL, ex.getMessage()));</span>
+<span class="fc" id="L279">		}</span>
 
-<span class="fc" id="L294">		return serial.trim();</span>
+<span class="fc" id="L281">		return serial.trim();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span>Generated by the Android Gradle plugin 2.2.0</div></body></html>
