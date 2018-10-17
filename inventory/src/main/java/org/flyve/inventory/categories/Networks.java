@@ -40,8 +40,10 @@ import org.flyve.inventory.FlyveLog;
 
 import java.io.File;
 import java.math.BigInteger;
+import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetAddress;
+import java.net.InterfaceAddress;
 import java.net.NetworkInterface;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -116,7 +118,6 @@ public class Networks extends Categories {
 				pWM.setWifiEnabled(true);
 			}
 			Category c = new Category("NETWORKS", "networks");
-			c.put("TYPE", new CategoryValue(TYPE, "TYPE", "type"));
 
 			dhcp = pWM.getDhcpInfo();
 			wifi = pWM.getConnectionInfo();
@@ -126,18 +127,22 @@ public class Networks extends Categories {
 			FlyveLog.d("dns2=" + StringUtils.intToIp(dhcp.dns2));
 			FlyveLog.d("leaseDuration=" + dhcp.leaseDuration);
 
+			c.put("DESCRIPTION", new CategoryValue(getDescription(), "DESCRIPTION", "description", true, false));
+			c.put("DRIVER", new CategoryValue(TYPE, "DRIVER", "driver", true, false));
+			c.put("IPADDRESS", new CategoryValue(getIpAddress(), "IPADDRESS", "ipAddress", true, false));
+			c.put("IPADDRESS6", new CategoryValue(getAddressIpV6(), "IPADDRESS6", "ipaddress6", true, false));
+			c.put("IPDHCP", new CategoryValue(getIpDhCp(), "IPDHCP", "ipDhcp", true, false));
+			c.put("IPGATEWAY", new CategoryValue(getIpgateway(), "IPGATEWAY", "ipGateway"));
+			c.put("IPMASK", new CategoryValue(getIpMask(), "IPMASK", "ipMask", true, false));
+			c.put("IPMAS6", new CategoryValue(getMaskIpV6(), "IPMASK6", "ipMask6", true, false));
+			c.put("IPSUBNET", new CategoryValue(getIpSubnet(), "IPSUBNET", "ipSubnet", true, false));
+			c.put("IPSUBNET6", new CategoryValue(getSubnetIpV6(), "IPSUBNET6", "ipSubnet6", true, false));
 			c.put("MACADDR", new CategoryValue(getMacAddress(), "MACADDR", "macAddress"));
 			c.put("SPEED", new CategoryValue(getSpeed(), "SPEED", "speed"));
-			c.put("BSSID", new CategoryValue(getBSSID(), "BSSID", "bssid"));
-			c.put("SSID", new CategoryValue(getSSID(), "SSID", "ssid"));
-			c.put("IPGATEWAY", new CategoryValue(getIpgateway(), "IPGATEWAY", "ipGateway"));
-			c.put("IPADDRESS", new CategoryValue(getIpAddress(), "IPADDRESS", "ipAddress", true, false));
-			c.put("IPMASK", new CategoryValue(getIpMask(), "IPMASK", "ipMask", true, false));
-			c.put("IPDHCP", new CategoryValue(getIpDhCp(), "IPDHCP", "ipDhcp", true, false));
-			c.put("IPSUBNET", new CategoryValue(getIpSubnet(), "IPSUBNET", "ipSubnet", true, false));
 			c.put("STATUS", new CategoryValue(getStatus(), "STATUS", "status", true, false));
-			c.put("DESCRIPTION", new CategoryValue(getDescription(), "DESCRIPTION", "description", true, false));
-			c.put("IPADDRESS6", new CategoryValue(getLocalIpV6(), "IPADDRESS6", "ipaddress6", true, false));
+			c.put("TYPE", new CategoryValue(TYPE, "TYPE", "type"));
+			c.put("WIFI_BSSID", new CategoryValue(getSSID(), "WIFI_BSSID", "wifiBssid"));
+			c.put("WIFI_SSID", new CategoryValue(getBSSID(), "WIFI_SSID", "wifiSsid"));
 
 			this.add(c);
 			// Restore Wifi State
@@ -348,25 +353,53 @@ public class Networks extends Categories {
 		return name;
 	}
 
-	public String getLocalIpV6() {
-		try {
-			for (Enumeration<NetworkInterface> en = NetworkInterface
-					.getNetworkInterfaces(); en.hasMoreElements(); ) {
-				NetworkInterface intf = en.nextElement();
-				for (Enumeration<InetAddress> enumIpAddr = intf
-						.getInetAddresses(); enumIpAddr.hasMoreElements(); ) {
-					InetAddress inetAddress = enumIpAddr.nextElement();
-					System.out.println("ip1--:" + inetAddress);
-					System.out.println("ip2--:" + inetAddress.getHostAddress());
+	public String getAddressIpV6() {
+		InterfaceAddress interfaceIPV6 = getInterfaceByType("IPV6");
+		if (interfaceIPV6 != null) {
+			String address = interfaceIPV6.getAddress().getHostAddress();
+			return address.contains("%") ? address.split("%", 2)[0] : "N/A";
+		} else {
+			return "N/A";
+		}
+	}
 
-					if (!inetAddress.isLoopbackAddress() && inetAddress instanceof Inet6Address) {
-						return inetAddress.getHostAddress();
-					}
+	public String getMaskIpV6() {
+		InterfaceAddress interfaceIPV6 = getInterfaceByType("IPV6");
+		if (interfaceIPV6 != null) {
+			String address = interfaceIPV6.getAddress().getHostAddress();
+			return address.contains("%") ? address.split("%", 2)[0] : "N/A";
+		} else {
+			return "N/A";
+		}
+	}
+
+	/** Get interface address
+	 * @param type IPV6 or IPV4
+	 * @return interface address
+	 */
+	private InterfaceAddress getInterfaceByType(String type) {
+		try {
+			for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements(); ) {
+				NetworkInterface anInterface = en.nextElement();
+				for (InterfaceAddress interfaceAddress : anInterface.getInterfaceAddresses()) {
+					if ("IPV6".equals(type) && interfaceAddress.getAddress() instanceof Inet6Address) {
+						return interfaceAddress;
+					} else if ("IPV4".equals(type) && interfaceAddress.getAddress() instanceof Inet4Address)
+						return interfaceAddress;
 				}
 			}
 		} catch (Exception ex) {
 			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS_LOCAL_IPV6, ex.getMessage()));
 		}
-		return "N/A";
+		return null;
+	}
+
+	public String getSubnetIpV6() {
+		String value = "N/A";
+		String addressIpV6 = getAddressIpV6();
+		if (addressIpV6.contains("::")) {
+			value = addressIpV6.split("::", 2)[0];
+		}
+		return value;
 	}
 }
