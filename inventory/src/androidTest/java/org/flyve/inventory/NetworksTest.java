@@ -113,7 +113,7 @@ public class NetworksTest {
     @Test
     public void getLocalIpV6() throws Exception {
         Networks networks = new Networks(appContext);
-        assertNotEquals("", networks.getLocalIpV6());
+        assertNotEquals("", networks.getAddressIpV6());
     }
 
 }
