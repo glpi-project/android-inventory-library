@@ -45,75 +45,87 @@ public class NetworksTest {
     Context appContext = InstrumentationRegistry.getTargetContext();
 
     @Test
-    public void getMacaddr() throws Exception {
+    public void getMacaddr() {
         Networks networks = new Networks(appContext);
         assertNotEquals("", networks.getMacAddress());
     }
 
     @Test
-    public void getSpeed() throws Exception {
+    public void getSpeed() {
         Networks networks = new Networks(appContext);
         assertNotEquals("", networks.getSpeed());
     }
 
     @Test
-    public void getBSSID() throws Exception {
+    public void getBSSID() {
         Networks networks = new Networks(appContext);
         assertNotEquals("", networks.getBSSID());
     }
 
     @Test
-    public void getSSID() throws Exception {
+    public void getSSID() {
         Networks networks = new Networks(appContext);
         assertNotEquals("", networks.getSSID());
     }
 
     @Test
-    public void getIpgateway() throws Exception {
+    public void getIpgateway() {
         Networks networks = new Networks(appContext);
         assertNotEquals("", networks.getIpgateway());
     }
 
     @Test
-    public void getIpaddress() throws Exception {
+    public void getIpaddress() {
         Networks networks = new Networks(appContext);
         assertNotEquals("", networks.getIpAddress());
     }
 
     @Test
-    public void getIpmask() throws Exception {
+    public void getIpmask() {
         Networks networks = new Networks(appContext);
         assertNotEquals("", networks.getIpMask());
     }
 
     @Test
-    public void getIpdhcp() throws Exception {
+    public void getIpdhcp() {
         Networks networks = new Networks(appContext);
         assertNotEquals("", networks.getIpDhCp());
     }
 
     @Test
-    public void getIpSubnet() throws Exception {
+    public void getIpSubnet() {
         Networks networks = new Networks(appContext);
         assertNotEquals("", networks.getIpSubnet());
     }
 
     @Test
-    public void getStatus() throws Exception {
+    public void getStatus() {
         Networks networks = new Networks(appContext);
         assertNotEquals("", networks.getStatus());
     }
 
     @Test
-    public void getDescription() throws Exception {
+    public void getDescription() {
         Networks networks = new Networks(appContext);
         assertNotEquals("", networks.getDescription());
     }
 
     @Test
-    public void getLocalIpV6() throws Exception {
+    public void getAddressIpV6() {
         Networks networks = new Networks(appContext);
         assertNotEquals("", networks.getAddressIpV6());
+    }
+
+    @Test
+    public void getMaskIpV6() {
+        Networks networks = new Networks(appContext);
+        assertNotEquals("", networks.getMaskIpV6());
+    }
+
+    @Test
+    public void getSubnetIpV6() {
+        Networks networks = new Networks(appContext);
+        assertNotEquals("", networks.getSubnetIpV6());
     }
 
 }

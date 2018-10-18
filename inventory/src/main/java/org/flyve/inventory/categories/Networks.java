@@ -37,18 +37,19 @@ import android.net.wifi.WifiManager;
 
 import org.flyve.inventory.CommonErrorType;
 import org.flyve.inventory.FlyveLog;
+import org.flyve.inventory.Utils;
 
-import java.io.File;
 import java.math.BigInteger;
 import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.InterfaceAddress;
 import java.net.NetworkInterface;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * This class get all the information of the Network
@@ -134,7 +135,7 @@ public class Networks extends Categories {
 			c.put("IPDHCP", new CategoryValue(getIpDhCp(), "IPDHCP", "ipDhcp", true, false));
 			c.put("IPGATEWAY", new CategoryValue(getIpgateway(), "IPGATEWAY", "ipGateway"));
 			c.put("IPMASK", new CategoryValue(getIpMask(), "IPMASK", "ipMask", true, false));
-			c.put("IPMAS6", new CategoryValue(getMaskIpV6(), "IPMASK6", "ipMask6", true, false));
+			c.put("IPMASK6", new CategoryValue(getMaskIpV6(), "IPMASK6", "ipMask6", true, false));
 			c.put("IPSUBNET", new CategoryValue(getIpSubnet(), "IPSUBNET", "ipSubnet", true, false));
 			c.put("IPSUBNET6", new CategoryValue(getSubnetIpV6(), "IPSUBNET6", "ipSubnet6", true, false));
 			c.put("MACADDR", new CategoryValue(getMacAddress(), "MACADDR", "macAddress"));
@@ -318,24 +319,17 @@ public class Networks extends Categories {
 	public String getStatus() {
 		String value = "N/A";
 		try {
-			value = getCatInfo("/sys/class/net/wlan0/operstate");
+			value = Utils.getCatInfo("/sys/class/net/wlan0/operstate");
 		} catch (Exception ex) {
 			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS_STATUS, ex.getMessage()));
 		}
 		return value;
 	}
 
-	private String getCatInfo(String path) {
-		String value = "N/A";
-		try {
-			Scanner s = new Scanner(new File(path));
-			value = s.next();
-		} catch (Exception ex) {
-			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS_CAT_INFO, ex.getMessage()));
-		}
-		return value;
-	}
-
+	/**
+	 * Get description network
+	 * @return string description
+	 */
 	public String getDescription() {
 		String name = "N/A";
 		try {
@@ -353,6 +347,10 @@ public class Networks extends Categories {
 		return name;
 	}
 
+	/**
+	 * Get the address IpV6
+	 * @return string the address IpV6
+	 */
 	public String getAddressIpV6() {
 		InterfaceAddress interfaceIPV6 = getInterfaceByType("IPV6");
 		if (interfaceIPV6 != null) {
@@ -363,14 +361,62 @@ public class Networks extends Categories {
 		}
 	}
 
+
+	/**
+	 * Get mask IpV6
+	 * @return string the mask IpV6
+	 */
 	public String getMaskIpV6() {
 		InterfaceAddress interfaceIPV6 = getInterfaceByType("IPV6");
 		if (interfaceIPV6 != null) {
-			String address = interfaceIPV6.getAddress().getHostAddress();
-			return address.contains("%") ? address.split("%", 2)[0] : "N/A";
+			short prefixLength = interfaceIPV6.getNetworkPrefixLength();
+			return getMaskConvert(prefixLength);
 		} else {
 			return "N/A";
 		}
+	}
+
+	private String getMaskConvert(short prefixLength) {
+		/* Get Binary */
+		int resident = prefixLength % 4;
+		StringBuilder maskTemp = new StringBuilder();
+		StringBuilder maskHexadecimal = new StringBuilder();
+		ArrayList<String> maskBinaryList = new ArrayList<>();
+		for (int i = 1; i < prefixLength + 1; i++) {
+			maskTemp.append("1");
+			if (i % 4 == 0) {
+				maskBinaryList.add(maskTemp.toString());
+				maskTemp.delete(0, 4);
+				continue;
+			}
+			if (i == prefixLength) {
+				if (resident != 0) {
+					char[] repeat = new char[4 - resident];
+					Arrays.fill(repeat, '0');
+					maskTemp.append(new String(repeat));
+					maskBinaryList.add(maskTemp.toString());
+				}
+			}
+		}
+
+		/* Convert to Hexadecimal */
+		resident = maskBinaryList.size() % 4;
+		for (int i = 1; i < maskBinaryList.size() + 1; i++) {
+			int decimal = Integer.parseInt(maskBinaryList.get(i - 1), 2);
+			if (i % 4 == 0) {
+				maskHexadecimal.append(Integer.toString(decimal, 16)).append(":");
+			} else {
+				maskHexadecimal.append(Integer.toString(decimal, 16));
+			}
+			if (i == maskBinaryList.size()) {
+				if (resident != 0) {
+					char[] repeat = new char[4 - resident];
+					Arrays.fill(repeat, '0');
+					maskHexadecimal.append(new String(repeat));
+				}
+			}
+		}
+		return maskHexadecimal.append(":").toString();
 	}
 
 	/** Get interface address
@@ -394,11 +440,15 @@ public class Networks extends Categories {
 		return null;
 	}
 
+	/**
+	 * Get the Subnet IpV6
+	 * @return string Subnet IpV6
+	 */
 	public String getSubnetIpV6() {
 		String value = "N/A";
 		String addressIpV6 = getAddressIpV6();
 		if (addressIpV6.contains("::")) {
-			value = addressIpV6.split("::", 2)[0];
+			value = addressIpV6.split("::", 2)[0] + "::";
 		}
 		return value;
 	}
