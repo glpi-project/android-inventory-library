@@ -69,6 +69,7 @@ public class InventoryTask {
     }
 
     private Context ctx = null;
+    private String[] categories;
     private String appVersion = "";
     private String fileNameXML = "Inventory.xml";
     private String fileNameJSON = "Inventory.json";
@@ -87,8 +88,31 @@ public class InventoryTask {
      */
     public InventoryTask(Context context, String appVersion, Boolean storeResult) {
         this(storeResult);
+        startInventory(context, appVersion);
+    }
+
+    /**
+     * This constructor return a Success XML or Error on asynchronous way
+     * @param context The context to be use
+     * @param appVersion The name of the agent
+     */
+    public InventoryTask(Context context, String appVersion, Boolean storeResult, String[] categories) {
+        this(storeResult);
+        this.categories = categories;
+        startInventory(context, appVersion);
+    }
+
+    /**
+     * This constructor return a Success XML or Error on asynchronous way
+     * @param storeResult Indicate is the result will be stored on file
+     */
+    private InventoryTask(Boolean storeResult) {
+        this.storeResult = storeResult;
+    }
+
+    private void startInventory(Context context, String appVersion) {
         this.appVersion = appVersion;
-        ctx = context;
+        this.ctx = context;
         try {
             if (showFILog) {
                 FormatStrategy formatStrategy = PrettyFormatStrategy.newBuilder().build();
@@ -100,14 +124,6 @@ public class InventoryTask {
     }
 
     /**
-     * This constructor return a Success XML or Error on asynchronous way
-     * @param storeResult Indicate is the result will be stored on file
-     */
-    private InventoryTask(Boolean storeResult) {
-        this.storeResult = storeResult;
-    }
-
-    /**
      * This function load all the categories class dynamically
      * @return ArrayList<Categories>
      */
@@ -115,33 +131,9 @@ public class InventoryTask {
     private ArrayList<Categories> loadCategoriesClass() throws FlyveException {
 
         ArrayList<Categories> mContent = new ArrayList<Categories>();
+        String[] categories = this.categories == null ? getCategories() : this.categories;
 
-        String[] categories = {
-//                "PhoneStatus",
-                "Hardware",
-                "User",
-                "Storage",
-                "OperatingSystem",
-                "Bios",
-                "Memory",
-                "Inputs",
-                "Sensors",
-                "Drives",
-                "Cpus",
-                "Simcards",
-                "Videos",
-                "Cameras",
-                "Networks",
-//                "LocationProviders",
-                "Envs",
-                "Jvm",
-                "Software",
-                "Usb",
-                "Battery",
-                "Controllers"
-        };
-
-        Class<Categories> catClass = null;
+        Class<Categories> catClass;
 
         for(String c : categories) {
             FlyveLog.v(String.format("new INVENTORY of %s", c));
@@ -169,6 +161,33 @@ public class InventoryTask {
             }
         }
         return mContent;
+    }
+
+    private String[] getCategories() {
+        return new String[]{
+//                "PhoneStatus",
+                "Hardware",
+                "User",
+                "Storage",
+                "OperatingSystem",
+                "Bios",
+                "Memory",
+                "Inputs",
+                "Sensors",
+                "Drives",
+                "Cpus",
+                "Simcards",
+                "Videos",
+                "Cameras",
+                "Networks",
+//                "LocationProviders",
+                "Envs",
+                "Jvm",
+                "Software",
+                "Usb",
+                "Battery",
+                "Controllers"
+        };
     }
 
     public void setTag(String tag) {

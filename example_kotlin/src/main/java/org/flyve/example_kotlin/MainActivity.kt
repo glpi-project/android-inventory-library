@@ -14,7 +14,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         InventoryTask.showFILog = true
-        val inventoryTask = InventoryTask(this@MainActivity, "example-app-kotlin", false)
+        val categories: Array<String> = arrayOf("Hardware", "OperatingSystem")
+        val inventoryTask = InventoryTask(this@MainActivity, "example-app-kotlin", false, categories)
         inventoryTask.tag = "Android Lenovo"
         inventoryTask.getXML( object : InventoryTask.OnTaskCompleted {
             override fun onTaskSuccess(data: String) {
