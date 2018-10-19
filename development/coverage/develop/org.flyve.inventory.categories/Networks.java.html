@@ -1,6 +1,3 @@
----
-layout: coverage
----
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../resources/report.css" type="text/css"/><link rel="shortcut icon" href="../resources/report.gif" type="image/gif"/><title>Networks.java</title><link rel="stylesheet" href="../resources/prettify.css" type="text/css"/><script type="text/javascript" src="../resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory.categories</a> &gt; <span class="el_source">Networks.java</span></div><h1>Networks.java</h1><pre class="source lang-java linenums">/**
  *  LICENSE
  * 
@@ -40,16 +37,19 @@ import android.net.wifi.WifiManager;
 
 import org.flyve.inventory.CommonErrorType;
 import org.flyve.inventory.FlyveLog;
+import org.flyve.inventory.Utils;
 
-import java.io.File;
 import java.math.BigInteger;
+import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetAddress;
+import java.net.InterfaceAddress;
 import java.net.NetworkInterface;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * This class get all the information of the Network
@@ -81,13 +81,13 @@ public class Networks extends Categories {
      */
 	@Override
 	public boolean equals(Object obj) {
-<span class="nc bnc" id="L81" title="All 2 branches missed.">		if (obj == null) {</span>
-<span class="nc" id="L82">			return false;</span>
-		}
-<span class="nc bnc" id="L84" title="All 2 branches missed.">		if (getClass() != obj.getClass()) {</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">		if (obj == null) {</span>
 <span class="nc" id="L85">			return false;</span>
 		}
-<span class="nc bnc" id="L87" title="All 2 branches missed.">		return (!super.equals(obj));</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">		if (getClass() != obj.getClass()) {</span>
+<span class="nc" id="L88">			return false;</span>
+		}
+<span class="nc bnc" id="L90" title="All 2 branches missed.">		return (!super.equals(obj));</span>
 	}
 
 	/**
@@ -96,10 +96,10 @@ public class Networks extends Categories {
      */
 	@Override
 	public int hashCode() {
-<span class="nc" id="L96">		int hash = super.hashCode();</span>
-<span class="nc bnc" id="L97" title="All 2 branches missed.">		hash = 89 * hash + (this.dhcp != null ? this.dhcp.hashCode() : 0);</span>
-<span class="nc bnc" id="L98" title="All 2 branches missed.">		hash = 89 * hash + (this.wifi != null ? this.wifi.hashCode() : 0);</span>
-<span class="nc" id="L99">		return hash;</span>
+<span class="nc" id="L99">		int hash = super.hashCode();</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">		hash = 89 * hash + (this.dhcp != null ? this.dhcp.hashCode() : 0);</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">		hash = 89 * hash + (this.wifi != null ? this.wifi.hashCode() : 0);</span>
+<span class="nc" id="L102">		return hash;</span>
 	}
 
 	/**
@@ -107,93 +107,96 @@ public class Networks extends Categories {
 	 * @param xCtx Context where this class work
 	 */
 	public Networks(Context xCtx) {
-<span class="fc" id="L107">		super(xCtx);</span>
+<span class="fc" id="L110">		super(xCtx);</span>
 
-<span class="fc" id="L109">		context = xCtx;</span>
+<span class="fc" id="L112">		context = xCtx;</span>
 		try {
-<span class="fc" id="L111">			WifiManager pWM = (WifiManager) context.getApplicationContext().getSystemService(Service.WIFI_SERVICE);</span>
-<span class="fc" id="L112">			boolean wasWifiEnabled = pWM.isWifiEnabled();</span>
+<span class="fc" id="L114">			WifiManager pWM = (WifiManager) context.getApplicationContext().getSystemService(Service.WIFI_SERVICE);</span>
+<span class="fc" id="L115">			boolean wasWifiEnabled = pWM.isWifiEnabled();</span>
 
 			// Enable Wifi State if not
-<span class="pc bpc" id="L115" title="1 of 2 branches missed.">			if (!wasWifiEnabled) {</span>
-<span class="fc" id="L116">				pWM.setWifiEnabled(true);</span>
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">			if (!wasWifiEnabled) {</span>
+<span class="fc" id="L119">				pWM.setWifiEnabled(true);</span>
 			}
-<span class="fc" id="L118">			Category c = new Category(&quot;NETWORKS&quot;, &quot;networks&quot;);</span>
-<span class="fc" id="L119">			c.put(&quot;TYPE&quot;, new CategoryValue(TYPE, &quot;TYPE&quot;, &quot;type&quot;));</span>
+<span class="fc" id="L121">			Category c = new Category(&quot;NETWORKS&quot;, &quot;networks&quot;);</span>
 
-<span class="fc" id="L121">			dhcp = pWM.getDhcpInfo();</span>
-<span class="fc" id="L122">			wifi = pWM.getConnectionInfo();</span>
+<span class="fc" id="L123">			dhcp = pWM.getDhcpInfo();</span>
+<span class="fc" id="L124">			wifi = pWM.getConnectionInfo();</span>
 
-<span class="fc" id="L124">			FlyveLog.d(&quot;&lt;===WIFI DHCP===&gt;&quot;);</span>
-<span class="fc" id="L125">			FlyveLog.d(&quot;dns1=&quot; + StringUtils.intToIp(dhcp.dns1));</span>
-<span class="fc" id="L126">			FlyveLog.d(&quot;dns2=&quot; + StringUtils.intToIp(dhcp.dns2));</span>
-<span class="fc" id="L127">			FlyveLog.d(&quot;leaseDuration=&quot; + dhcp.leaseDuration);</span>
+<span class="fc" id="L126">			FlyveLog.d(&quot;&lt;===WIFI DHCP===&gt;&quot;);</span>
+<span class="fc" id="L127">			FlyveLog.d(&quot;dns1=&quot; + StringUtils.intToIp(dhcp.dns1));</span>
+<span class="fc" id="L128">			FlyveLog.d(&quot;dns2=&quot; + StringUtils.intToIp(dhcp.dns2));</span>
+<span class="fc" id="L129">			FlyveLog.d(&quot;leaseDuration=&quot; + dhcp.leaseDuration);</span>
 
-<span class="fc" id="L129">			c.put(&quot;MACADDR&quot;, new CategoryValue(getMacAddress(), &quot;MACADDR&quot;, &quot;macAddress&quot;));</span>
-<span class="fc" id="L130">			c.put(&quot;SPEED&quot;, new CategoryValue(getSpeed(), &quot;SPEED&quot;, &quot;speed&quot;));</span>
-<span class="fc" id="L131">			c.put(&quot;BSSID&quot;, new CategoryValue(getBSSID(), &quot;BSSID&quot;, &quot;bssid&quot;));</span>
-<span class="fc" id="L132">			c.put(&quot;SSID&quot;, new CategoryValue(getSSID(), &quot;SSID&quot;, &quot;ssid&quot;));</span>
-<span class="fc" id="L133">			c.put(&quot;IPGATEWAY&quot;, new CategoryValue(getIpgateway(), &quot;IPGATEWAY&quot;, &quot;ipGateway&quot;));</span>
-<span class="fc" id="L134">			c.put(&quot;IPADDRESS&quot;, new CategoryValue(getIpAddress(), &quot;IPADDRESS&quot;, &quot;ipAddress&quot;, true, false));</span>
-<span class="fc" id="L135">			c.put(&quot;IPMASK&quot;, new CategoryValue(getIpMask(), &quot;IPMASK&quot;, &quot;ipMask&quot;, true, false));</span>
-<span class="fc" id="L136">			c.put(&quot;IPDHCP&quot;, new CategoryValue(getIpDhCp(), &quot;IPDHCP&quot;, &quot;ipDhcp&quot;, true, false));</span>
-<span class="fc" id="L137">			c.put(&quot;IPSUBNET&quot;, new CategoryValue(getIpSubnet(), &quot;IPSUBNET&quot;, &quot;ipSubnet&quot;, true, false));</span>
-<span class="fc" id="L138">			c.put(&quot;STATUS&quot;, new CategoryValue(getStatus(), &quot;STATUS&quot;, &quot;status&quot;, true, false));</span>
-<span class="fc" id="L139">			c.put(&quot;DESCRIPTION&quot;, new CategoryValue(getDescription(), &quot;DESCRIPTION&quot;, &quot;description&quot;, true, false));</span>
-<span class="fc" id="L140">			c.put(&quot;IPADDRESS6&quot;, new CategoryValue(getLocalIpV6(), &quot;IPADDRESS6&quot;, &quot;ipaddress6&quot;, true, false));</span>
+<span class="fc" id="L131">			c.put(&quot;DESCRIPTION&quot;, new CategoryValue(getDescription(), &quot;DESCRIPTION&quot;, &quot;description&quot;, true, false));</span>
+<span class="fc" id="L132">			c.put(&quot;DRIVER&quot;, new CategoryValue(TYPE, &quot;DRIVER&quot;, &quot;driver&quot;, true, false));</span>
+<span class="fc" id="L133">			c.put(&quot;IPADDRESS&quot;, new CategoryValue(getIpAddress(), &quot;IPADDRESS&quot;, &quot;ipAddress&quot;, true, false));</span>
+<span class="fc" id="L134">			c.put(&quot;IPADDRESS6&quot;, new CategoryValue(getAddressIpV6(), &quot;IPADDRESS6&quot;, &quot;ipaddress6&quot;, true, false));</span>
+<span class="fc" id="L135">			c.put(&quot;IPDHCP&quot;, new CategoryValue(getIpDhCp(), &quot;IPDHCP&quot;, &quot;ipDhcp&quot;, true, false));</span>
+<span class="fc" id="L136">			c.put(&quot;IPGATEWAY&quot;, new CategoryValue(getIpgateway(), &quot;IPGATEWAY&quot;, &quot;ipGateway&quot;));</span>
+<span class="fc" id="L137">			c.put(&quot;IPMASK&quot;, new CategoryValue(getIpMask(), &quot;IPMASK&quot;, &quot;ipMask&quot;, true, false));</span>
+<span class="fc" id="L138">			c.put(&quot;IPMASK6&quot;, new CategoryValue(getMaskIpV6(), &quot;IPMASK6&quot;, &quot;ipMask6&quot;, true, false));</span>
+<span class="fc" id="L139">			c.put(&quot;IPSUBNET&quot;, new CategoryValue(getIpSubnet(), &quot;IPSUBNET&quot;, &quot;ipSubnet&quot;, true, false));</span>
+<span class="fc" id="L140">			c.put(&quot;IPSUBNET6&quot;, new CategoryValue(getSubnetIpV6(), &quot;IPSUBNET6&quot;, &quot;ipSubnet6&quot;, true, false));</span>
+<span class="fc" id="L141">			c.put(&quot;MACADDR&quot;, new CategoryValue(getMacAddress(), &quot;MACADDR&quot;, &quot;macAddress&quot;));</span>
+<span class="fc" id="L142">			c.put(&quot;SPEED&quot;, new CategoryValue(getSpeed(), &quot;SPEED&quot;, &quot;speed&quot;));</span>
+<span class="fc" id="L143">			c.put(&quot;STATUS&quot;, new CategoryValue(getStatus(), &quot;STATUS&quot;, &quot;status&quot;, true, false));</span>
+<span class="fc" id="L144">			c.put(&quot;TYPE&quot;, new CategoryValue(TYPE, &quot;TYPE&quot;, &quot;type&quot;));</span>
+<span class="fc" id="L145">			c.put(&quot;WIFI_BSSID&quot;, new CategoryValue(getSSID(), &quot;WIFI_BSSID&quot;, &quot;wifiBssid&quot;));</span>
+<span class="fc" id="L146">			c.put(&quot;WIFI_SSID&quot;, new CategoryValue(getBSSID(), &quot;WIFI_SSID&quot;, &quot;wifiSsid&quot;));</span>
 
-<span class="fc" id="L142">			this.add(c);</span>
+<span class="fc" id="L148">			this.add(c);</span>
 			// Restore Wifi State
-<span class="pc bpc" id="L144" title="1 of 2 branches missed.">			if (!wasWifiEnabled) {</span>
-<span class="fc" id="L145">				pWM.setWifiEnabled(false);</span>
+<span class="pc bpc" id="L150" title="1 of 2 branches missed.">			if (!wasWifiEnabled) {</span>
+<span class="fc" id="L151">				pWM.setWifiEnabled(false);</span>
 			}
-<span class="nc" id="L147">		} catch (Exception ex) {</span>
-<span class="nc" id="L148">			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS, ex.getMessage()));</span>
-<span class="fc" id="L149">		}</span>
-<span class="fc" id="L150">	}</span>
+<span class="nc" id="L153">		} catch (Exception ex) {</span>
+<span class="nc" id="L154">			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS, ex.getMessage()));</span>
+<span class="fc" id="L155">		}</span>
+<span class="fc" id="L156">	}</span>
 
 	/**
 	 * Get the Media Access Control address
 	 * @return string the MAC address
 	 */
 	public String getMacAddress() {
-<span class="fc" id="L157">		String macAddress = &quot;N/A&quot;;</span>
+<span class="fc" id="L163">		String macAddress = &quot;N/A&quot;;</span>
 		try {
-<span class="fc" id="L159">			macAddress = wifi.getMacAddress();</span>
+<span class="fc" id="L165">			macAddress = wifi.getMacAddress();</span>
 
 			// if get default mac address
-<span class="pc bpc" id="L162" title="3 of 4 branches missed.">			if (macAddress == null || macAddress.contains(&quot;02:00:00:00:00:00&quot;)) {</span>
-<span class="fc" id="L163">				macAddress = getMACAddress(&quot;wlan0&quot;);</span>
-<span class="pc bpc" id="L164" title="1 of 2 branches missed.">				if (macAddress.isEmpty()) {</span>
-<span class="nc" id="L165">					macAddress = getMACAddress(&quot;eth0&quot;);</span>
+<span class="pc bpc" id="L168" title="3 of 4 branches missed.">			if (macAddress == null || macAddress.contains(&quot;02:00:00:00:00:00&quot;)) {</span>
+<span class="fc" id="L169">				macAddress = getMACAddress(&quot;wlan0&quot;);</span>
+<span class="pc bpc" id="L170" title="1 of 2 branches missed.">				if (macAddress.isEmpty()) {</span>
+<span class="nc" id="L171">					macAddress = getMACAddress(&quot;eth0&quot;);</span>
 				}
 			}
-<span class="nc" id="L168">		} catch (Exception ex) {</span>
-<span class="nc" id="L169">			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS_MAC_ADDRESS, ex.getMessage()));</span>
-<span class="fc" id="L170">		}</span>
+<span class="nc" id="L174">		} catch (Exception ex) {</span>
+<span class="nc" id="L175">			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS_MAC_ADDRESS, ex.getMessage()));</span>
+<span class="fc" id="L176">		}</span>
 
-<span class="fc" id="L172">		return macAddress;</span>
+<span class="fc" id="L178">		return macAddress;</span>
 	}
 
 	private String getMACAddress(String interfaceName) {
 		try {
-<span class="fc" id="L177">			List&lt;NetworkInterface&gt; interfaces = Collections.list(NetworkInterface.getNetworkInterfaces());</span>
-<span class="fc bfc" id="L178" title="All 2 branches covered.">			for (NetworkInterface intf : interfaces) {</span>
-<span class="pc bpc" id="L179" title="1 of 2 branches missed.">				if (interfaceName != null) {</span>
-<span class="pc bpc" id="L180" title="1 of 2 branches missed.">					if (!intf.getName().equalsIgnoreCase(interfaceName)) continue;</span>
+<span class="fc" id="L183">			List&lt;NetworkInterface&gt; interfaces = Collections.list(NetworkInterface.getNetworkInterfaces());</span>
+<span class="fc bfc" id="L184" title="All 2 branches covered.">			for (NetworkInterface intf : interfaces) {</span>
+<span class="pc bpc" id="L185" title="1 of 2 branches missed.">				if (interfaceName != null) {</span>
+<span class="pc bpc" id="L186" title="1 of 2 branches missed.">					if (!intf.getName().equalsIgnoreCase(interfaceName)) continue;</span>
 				}
-<span class="nc" id="L182">				byte[] mac = intf.getHardwareAddress();</span>
-<span class="nc bnc" id="L183" title="All 2 branches missed.">				if (mac==null) return &quot;&quot;;</span>
-<span class="nc" id="L184">				StringBuilder buf = new StringBuilder();</span>
-<span class="nc bnc" id="L185" title="All 2 branches missed.">				for (byte aMac : mac) buf.append(String.format(&quot;%02X:&quot;,aMac));</span>
-<span class="nc bnc" id="L186" title="All 2 branches missed.">				if (buf.length()&gt;0) buf.deleteCharAt(buf.length()-1);</span>
-<span class="nc" id="L187">				return buf.toString();</span>
+<span class="nc" id="L188">				byte[] mac = intf.getHardwareAddress();</span>
+<span class="nc bnc" id="L189" title="All 2 branches missed.">				if (mac==null) return &quot;&quot;;</span>
+<span class="nc" id="L190">				StringBuilder buf = new StringBuilder();</span>
+<span class="nc bnc" id="L191" title="All 2 branches missed.">				for (byte aMac : mac) buf.append(String.format(&quot;%02X:&quot;,aMac));</span>
+<span class="nc bnc" id="L192" title="All 2 branches missed.">				if (buf.length()&gt;0) buf.deleteCharAt(buf.length()-1);</span>
+<span class="nc" id="L193">				return buf.toString();</span>
 			}
-<span class="nc" id="L189">		} catch (Exception ex) {</span>
-<span class="nc" id="L190">			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS_MAC_ADDRESS_VALUE, ex.getMessage()));</span>
-<span class="fc" id="L191">		}</span>
+<span class="nc" id="L195">		} catch (Exception ex) {</span>
+<span class="nc" id="L196">			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS_MAC_ADDRESS_VALUE, ex.getMessage()));</span>
+<span class="fc" id="L197">		}</span>
 
-<span class="fc" id="L193">		return &quot;N/A&quot;;</span>
+<span class="fc" id="L199">		return &quot;N/A&quot;;</span>
 	}
 
 	/**
@@ -201,13 +204,13 @@ public class Networks extends Categories {
 	 * @return string the current speed in Mbps
 	 */
 	public String getSpeed() {
-<span class="fc" id="L201">		String value = &quot;N/A&quot;;</span>
+<span class="fc" id="L207">		String value = &quot;N/A&quot;;</span>
 		try {
-<span class="fc" id="L203">			value = String.valueOf(wifi.getLinkSpeed());</span>
-<span class="nc" id="L204">		} catch (Exception ex) {</span>
-<span class="nc" id="L205">			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS_SPEED, ex.getMessage()));</span>
-<span class="fc" id="L206">		}</span>
-<span class="fc" id="L207">		return value;</span>
+<span class="fc" id="L209">			value = String.valueOf(wifi.getLinkSpeed());</span>
+<span class="nc" id="L210">		} catch (Exception ex) {</span>
+<span class="nc" id="L211">			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS_SPEED, ex.getMessage()));</span>
+<span class="fc" id="L212">		}</span>
+<span class="fc" id="L213">		return value;</span>
 	}
 
 	/**
@@ -215,13 +218,13 @@ public class Networks extends Categories {
 	 * @return string the BSSID of the current access point
 	 */
 	public String getBSSID() {
-<span class="fc" id="L215">		String value = &quot;N/A&quot;;</span>
+<span class="fc" id="L221">		String value = &quot;N/A&quot;;</span>
 		try {
-<span class="fc" id="L217">			value = String.valueOf(wifi.getBSSID());</span>
-<span class="nc" id="L218">		} catch (Exception ex) {</span>
-<span class="nc" id="L219">			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS_BSS_ID, ex.getMessage()));</span>
-<span class="fc" id="L220">		}</span>
-<span class="fc" id="L221">		return value;</span>
+<span class="fc" id="L223">			value = String.valueOf(wifi.getBSSID());</span>
+<span class="nc" id="L224">		} catch (Exception ex) {</span>
+<span class="nc" id="L225">			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS_BSS_ID, ex.getMessage()));</span>
+<span class="fc" id="L226">		}</span>
+<span class="fc" id="L227">		return value;</span>
 	}
 
 	/**
@@ -230,13 +233,13 @@ public class Networks extends Categories {
 	 * 
 	 */
 	public String getSSID() {
-<span class="fc" id="L230">		String value = &quot;N/A&quot;;</span>
+<span class="fc" id="L236">		String value = &quot;N/A&quot;;</span>
 		try {
-<span class="fc" id="L232">			value = String.valueOf(wifi.getSSID());</span>
-<span class="nc" id="L233">		} catch (Exception ex) {</span>
-<span class="nc" id="L234">			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS_SS_ID, ex.getMessage()));</span>
-<span class="fc" id="L235">		}</span>
-<span class="fc" id="L236">		return value;</span>
+<span class="fc" id="L238">			value = String.valueOf(wifi.getSSID());</span>
+<span class="nc" id="L239">		} catch (Exception ex) {</span>
+<span class="nc" id="L240">			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS_SS_ID, ex.getMessage()));</span>
+<span class="fc" id="L241">		}</span>
+<span class="fc" id="L242">		return value;</span>
 	}
 
 	/**
@@ -244,13 +247,13 @@ public class Networks extends Categories {
 	 * @return string the gateway IP address
 	 */
 	public String getIpgateway() {
-<span class="fc" id="L244">		String value = &quot;N/A&quot;;</span>
+<span class="fc" id="L250">		String value = &quot;N/A&quot;;</span>
 		try {
-<span class="fc" id="L246">			value = StringUtils.intToIp(dhcp.gateway);</span>
-<span class="nc" id="L247">		} catch (Exception ex) {</span>
-<span class="nc" id="L248">			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS_IP_GATEWAY, ex.getMessage()));</span>
-<span class="fc" id="L249">		}</span>
-<span class="fc" id="L250">		return value;</span>
+<span class="fc" id="L252">			value = StringUtils.intToIp(dhcp.gateway);</span>
+<span class="nc" id="L253">		} catch (Exception ex) {</span>
+<span class="nc" id="L254">			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS_IP_GATEWAY, ex.getMessage()));</span>
+<span class="fc" id="L255">		}</span>
+<span class="fc" id="L256">		return value;</span>
 	}
 
 	/**
@@ -258,13 +261,13 @@ public class Networks extends Categories {
 	 * @return string the current IP address
 	 */
 	public String getIpAddress() {
-<span class="fc" id="L258">		String value = &quot;N/A&quot;;</span>
+<span class="fc" id="L264">		String value = &quot;N/A&quot;;</span>
 		try {
-<span class="fc" id="L260">			value = StringUtils.intToIp(dhcp.ipAddress);</span>
-<span class="nc" id="L261">		} catch (Exception ex) {</span>
-<span class="nc" id="L262">			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS_IP_ADDRESS, ex.getMessage()));</span>
-<span class="fc" id="L263">		}</span>
-<span class="fc" id="L264">		return value;</span>
+<span class="fc" id="L266">			value = StringUtils.intToIp(dhcp.ipAddress);</span>
+<span class="nc" id="L267">		} catch (Exception ex) {</span>
+<span class="nc" id="L268">			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS_IP_ADDRESS, ex.getMessage()));</span>
+<span class="fc" id="L269">		}</span>
+<span class="fc" id="L270">		return value;</span>
 	}
 
 	/**
@@ -272,13 +275,13 @@ public class Networks extends Categories {
 	 * @return string the netmask
 	 */
 	public String getIpMask() {
-<span class="fc" id="L272">		String value = &quot;N/A&quot;;</span>
+<span class="fc" id="L278">		String value = &quot;N/A&quot;;</span>
 		try {
-<span class="fc" id="L274">			value = StringUtils.intToIp(dhcp.netmask);</span>
-<span class="nc" id="L275">		} catch (Exception ex) {</span>
-<span class="nc" id="L276">			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS_IP_MASK, ex.getMessage()));</span>
-<span class="fc" id="L277">		}</span>
-<span class="fc" id="L278">		return value;</span>
+<span class="fc" id="L280">			value = StringUtils.intToIp(dhcp.netmask);</span>
+<span class="nc" id="L281">		} catch (Exception ex) {</span>
+<span class="nc" id="L282">			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS_IP_MASK, ex.getMessage()));</span>
+<span class="fc" id="L283">		}</span>
+<span class="fc" id="L284">		return value;</span>
 	}
 
 	/**
@@ -286,13 +289,13 @@ public class Networks extends Categories {
 	 * @return string the server address
 	 */
 	public String getIpDhCp() {
-<span class="fc" id="L286">		String value = &quot;N/A&quot;;</span>
+<span class="fc" id="L292">		String value = &quot;N/A&quot;;</span>
 		try {
-<span class="fc" id="L288">			value = StringUtils.intToIp(dhcp.serverAddress);</span>
-<span class="nc" id="L289">		} catch (Exception ex) {</span>
-<span class="nc" id="L290">			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS_IP_DH_CP, ex.getMessage()));</span>
-<span class="fc" id="L291">		}</span>
-<span class="fc" id="L292">		return value;</span>
+<span class="fc" id="L294">			value = StringUtils.intToIp(dhcp.serverAddress);</span>
+<span class="nc" id="L295">		} catch (Exception ex) {</span>
+<span class="nc" id="L296">			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS_IP_DH_CP, ex.getMessage()));</span>
+<span class="fc" id="L297">		}</span>
+<span class="fc" id="L298">		return value;</span>
 	}
 
 	/**
@@ -300,13 +303,13 @@ public class Networks extends Categories {
 	 * @return string the IP Subnet
 	 */
 	public String getIpSubnet() {
-<span class="fc" id="L300">		String value = &quot;N/A&quot;;</span>
+<span class="fc" id="L306">		String value = &quot;N/A&quot;;</span>
 		try {
-<span class="fc" id="L302">			value = StringUtils.getSubNet(wifi.getIpAddress());</span>
-<span class="nc" id="L303">		} catch (Exception ex) {</span>
-<span class="nc" id="L304">			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS_IP_SUBNET, ex.getMessage()));</span>
-<span class="fc" id="L305">		}</span>
-<span class="fc" id="L306">		return value;</span>
+<span class="fc" id="L308">			value = StringUtils.getSubNet(wifi.getIpAddress());</span>
+<span class="nc" id="L309">		} catch (Exception ex) {</span>
+<span class="nc" id="L310">			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS_IP_SUBNET, ex.getMessage()));</span>
+<span class="fc" id="L311">		}</span>
+<span class="fc" id="L312">		return value;</span>
 	}
 
 	/**
@@ -314,63 +317,140 @@ public class Networks extends Categories {
 	 * @return string the IP Subnet
 	 */
 	public String getStatus() {
-<span class="fc" id="L314">		String value = &quot;N/A&quot;;</span>
+<span class="fc" id="L320">		String value = &quot;N/A&quot;;</span>
 		try {
-<span class="fc" id="L316">			value = getCatInfo(&quot;/sys/class/net/wlan0/operstate&quot;);</span>
-<span class="nc" id="L317">		} catch (Exception ex) {</span>
-<span class="nc" id="L318">			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS_STATUS, ex.getMessage()));</span>
-<span class="fc" id="L319">		}</span>
-<span class="fc" id="L320">		return value;</span>
+<span class="nc" id="L322">			value = Utils.getCatInfo(&quot;/sys/class/net/wlan0/operstate&quot;);</span>
+<span class="fc" id="L323">		} catch (Exception ex) {</span>
+<span class="fc" id="L324">			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS_STATUS, ex.getMessage()));</span>
+<span class="nc" id="L325">		}</span>
+<span class="fc" id="L326">		return value;</span>
 	}
 
-	private String getCatInfo(String path) {
-<span class="fc" id="L324">		String value = &quot;N/A&quot;;</span>
-		try {
-<span class="nc" id="L326">			Scanner s = new Scanner(new File(path));</span>
-<span class="nc" id="L327">			value = s.next();</span>
-<span class="fc" id="L328">		} catch (Exception ex) {</span>
-<span class="fc" id="L329">			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS_CAT_INFO, ex.getMessage()));</span>
-<span class="nc" id="L330">		}</span>
-<span class="fc" id="L331">		return value;</span>
-	}
-
+	/**
+	 * Get description network
+	 * @return string description
+	 */
 	public String getDescription() {
-<span class="fc" id="L335">		String name = &quot;N/A&quot;;</span>
+<span class="fc" id="L334">		String name = &quot;N/A&quot;;</span>
 		try {
-<span class="fc" id="L337">			int ipAddress = wifi.getIpAddress();</span>
-<span class="fc" id="L338">			byte[] ip = BigInteger.valueOf(ipAddress).toByteArray();</span>
-<span class="nc" id="L339">			InetAddress inetAddress = InetAddress.getByAddress(ip);</span>
-<span class="nc" id="L340">			NetworkInterface netInterface = NetworkInterface.getByInetAddress(inetAddress);</span>
-<span class="nc bnc" id="L341" title="All 2 branches missed.">			if (netInterface != null ) {</span>
-<span class="nc" id="L342">				name = netInterface.getDisplayName();</span>
-<span class="nc" id="L343">				return name;</span>
+<span class="fc" id="L336">			int ipAddress = wifi.getIpAddress();</span>
+<span class="fc" id="L337">			byte[] ip = BigInteger.valueOf(ipAddress).toByteArray();</span>
+<span class="nc" id="L338">			InetAddress inetAddress = InetAddress.getByAddress(ip);</span>
+<span class="nc" id="L339">			NetworkInterface netInterface = NetworkInterface.getByInetAddress(inetAddress);</span>
+<span class="nc bnc" id="L340" title="All 2 branches missed.">			if (netInterface != null ) {</span>
+<span class="nc" id="L341">				name = netInterface.getDisplayName();</span>
+<span class="nc" id="L342">				return name;</span>
 			}
-<span class="fc" id="L345">		} catch (Exception ex) {</span>
-<span class="fc" id="L346">			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS_DESCRIPTION, ex.getMessage()));</span>
-<span class="nc" id="L347">		}</span>
-<span class="fc" id="L348">		return name;</span>
+<span class="fc" id="L344">		} catch (Exception ex) {</span>
+<span class="fc" id="L345">			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS_DESCRIPTION, ex.getMessage()));</span>
+<span class="nc" id="L346">		}</span>
+<span class="fc" id="L347">		return name;</span>
 	}
 
-	public String getLocalIpV6() {
-		try {
-			for (Enumeration&lt;NetworkInterface&gt; en = NetworkInterface
-<span class="pc bpc" id="L354" title="1 of 2 branches missed.">					.getNetworkInterfaces(); en.hasMoreElements(); ) {</span>
-<span class="fc" id="L355">				NetworkInterface intf = en.nextElement();</span>
-<span class="fc" id="L356">				for (Enumeration&lt;InetAddress&gt; enumIpAddr = intf</span>
-<span class="fc bfc" id="L357" title="All 2 branches covered.">						.getInetAddresses(); enumIpAddr.hasMoreElements(); ) {</span>
-<span class="fc" id="L358">					InetAddress inetAddress = enumIpAddr.nextElement();</span>
-<span class="fc" id="L359">					System.out.println(&quot;ip1--:&quot; + inetAddress);</span>
-<span class="fc" id="L360">					System.out.println(&quot;ip2--:&quot; + inetAddress.getHostAddress());</span>
+	/**
+	 * Get the address IpV6
+	 * @return string the address IpV6
+	 */
+	public String getAddressIpV6() {
+<span class="fc" id="L355">		InterfaceAddress interfaceIPV6 = getInterfaceByType(&quot;IPV6&quot;);</span>
+<span class="pc bpc" id="L356" title="1 of 2 branches missed.">		if (interfaceIPV6 != null) {</span>
+<span class="fc" id="L357">			String address = interfaceIPV6.getAddress().getHostAddress();</span>
+<span class="pc bpc" id="L358" title="1 of 2 branches missed.">			return address.contains(&quot;%&quot;) ? address.split(&quot;%&quot;, 2)[0] : &quot;N/A&quot;;</span>
+		} else {
+<span class="nc" id="L360">			return &quot;N/A&quot;;</span>
+		}
+	}
 
-<span class="pc bpc" id="L362" title="1 of 4 branches missed.">					if (!inetAddress.isLoopbackAddress() &amp;&amp; inetAddress instanceof Inet6Address) {</span>
-<span class="fc" id="L363">						return inetAddress.getHostAddress();</span>
-					}
-<span class="fc" id="L365">				}</span>
-<span class="fc" id="L366">			}</span>
-<span class="nc" id="L367">		} catch (Exception ex) {</span>
-<span class="nc" id="L368">			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS_LOCAL_IPV6, ex.getMessage()));</span>
-<span class="nc" id="L369">		}</span>
-<span class="nc" id="L370">		return &quot;N/A&quot;;</span>
+
+	/**
+	 * Get mask IpV6
+	 * @return string the mask IpV6
+	 */
+	public String getMaskIpV6() {
+<span class="fc" id="L370">		InterfaceAddress interfaceIPV6 = getInterfaceByType(&quot;IPV6&quot;);</span>
+<span class="pc bpc" id="L371" title="1 of 2 branches missed.">		if (interfaceIPV6 != null) {</span>
+<span class="fc" id="L372">			short prefixLength = interfaceIPV6.getNetworkPrefixLength();</span>
+<span class="fc" id="L373">			return getMaskConvert(prefixLength);</span>
+		} else {
+<span class="nc" id="L375">			return &quot;N/A&quot;;</span>
+		}
+	}
+
+	private String getMaskConvert(short prefixLength) {
+		/* Get Binary */
+<span class="fc" id="L381">		int resident = prefixLength % 4;</span>
+<span class="fc" id="L382">		StringBuilder maskTemp = new StringBuilder();</span>
+<span class="fc" id="L383">		StringBuilder maskHexadecimal = new StringBuilder();</span>
+<span class="fc" id="L384">		ArrayList&lt;String&gt; maskBinaryList = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L385" title="All 2 branches covered.">		for (int i = 1; i &lt; prefixLength + 1; i++) {</span>
+<span class="fc" id="L386">			maskTemp.append(&quot;1&quot;);</span>
+<span class="fc bfc" id="L387" title="All 2 branches covered.">			if (i % 4 == 0) {</span>
+<span class="fc" id="L388">				maskBinaryList.add(maskTemp.toString());</span>
+<span class="fc" id="L389">				maskTemp.delete(0, 4);</span>
+<span class="fc" id="L390">				continue;</span>
+			}
+<span class="pc bpc" id="L392" title="1 of 2 branches missed.">			if (i == prefixLength) {</span>
+<span class="nc bnc" id="L393" title="All 2 branches missed.">				if (resident != 0) {</span>
+<span class="nc" id="L394">					char[] repeat = new char[4 - resident];</span>
+<span class="nc" id="L395">					Arrays.fill(repeat, '0');</span>
+<span class="nc" id="L396">					maskTemp.append(new String(repeat));</span>
+<span class="nc" id="L397">					maskBinaryList.add(maskTemp.toString());</span>
+				}
+			}
+		}
+
+		/* Convert to Hexadecimal */
+<span class="fc" id="L403">		resident = maskBinaryList.size() % 4;</span>
+<span class="fc bfc" id="L404" title="All 2 branches covered.">		for (int i = 1; i &lt; maskBinaryList.size() + 1; i++) {</span>
+<span class="fc" id="L405">			int decimal = Integer.parseInt(maskBinaryList.get(i - 1), 2);</span>
+<span class="fc bfc" id="L406" title="All 2 branches covered.">			if (i % 4 == 0) {</span>
+<span class="fc" id="L407">				maskHexadecimal.append(Integer.toString(decimal, 16)).append(&quot;:&quot;);</span>
+			} else {
+<span class="fc" id="L409">				maskHexadecimal.append(Integer.toString(decimal, 16));</span>
+			}
+<span class="fc bfc" id="L411" title="All 2 branches covered.">			if (i == maskBinaryList.size()) {</span>
+<span class="pc bpc" id="L412" title="1 of 2 branches missed.">				if (resident != 0) {</span>
+<span class="nc" id="L413">					char[] repeat = new char[4 - resident];</span>
+<span class="nc" id="L414">					Arrays.fill(repeat, '0');</span>
+<span class="nc" id="L415">					maskHexadecimal.append(new String(repeat));</span>
+				}
+			}
+		}
+<span class="fc" id="L419">		return maskHexadecimal.append(&quot;:&quot;).toString();</span>
+	}
+
+	/** Get interface address
+	 * @param type IPV6 or IPV4
+	 * @return interface address
+	 */
+	private InterfaceAddress getInterfaceByType(String type) {
+		try {
+<span class="pc bpc" id="L428" title="1 of 2 branches missed.">			for (Enumeration&lt;NetworkInterface&gt; en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements(); ) {</span>
+<span class="fc" id="L429">				NetworkInterface anInterface = en.nextElement();</span>
+<span class="pc bpc" id="L430" title="1 of 2 branches missed.">				for (InterfaceAddress interfaceAddress : anInterface.getInterfaceAddresses()) {</span>
+<span class="pc bpc" id="L431" title="2 of 4 branches missed.">					if (&quot;IPV6&quot;.equals(type) &amp;&amp; interfaceAddress.getAddress() instanceof Inet6Address) {</span>
+<span class="fc" id="L432">						return interfaceAddress;</span>
+<span class="nc bnc" id="L433" title="All 4 branches missed.">					} else if (&quot;IPV4&quot;.equals(type) &amp;&amp; interfaceAddress.getAddress() instanceof Inet4Address)</span>
+<span class="nc" id="L434">						return interfaceAddress;</span>
+<span class="nc" id="L435">				}</span>
+<span class="nc" id="L436">			}</span>
+<span class="nc" id="L437">		} catch (Exception ex) {</span>
+<span class="nc" id="L438">			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS_LOCAL_IPV6, ex.getMessage()));</span>
+<span class="nc" id="L439">		}</span>
+<span class="nc" id="L440">		return null;</span>
+	}
+
+	/**
+	 * Get the Subnet IpV6
+	 * @return string Subnet IpV6
+	 */
+	public String getSubnetIpV6() {
+<span class="fc" id="L448">		String value = &quot;N/A&quot;;</span>
+<span class="fc" id="L449">		String addressIpV6 = getAddressIpV6();</span>
+<span class="pc bpc" id="L450" title="1 of 2 branches missed.">		if (addressIpV6.contains(&quot;::&quot;)) {</span>
+<span class="fc" id="L451">			value = addressIpV6.split(&quot;::&quot;, 2)[0] + &quot;::&quot;;</span>
+		}
+<span class="fc" id="L453">		return value;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span>Generated by the Android Gradle plugin 2.2.0</div></body></html>
