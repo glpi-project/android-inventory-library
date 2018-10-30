@@ -31,6 +31,7 @@ package org.flyve.inventory;
 import android.content.Context;
 import android.os.Build;
 import android.os.Environment;
+import android.telephony.TelephonyManager;
 import android.text.format.DateFormat;
 import android.util.Xml;
 
@@ -167,7 +168,6 @@ public class Utils {
             jsonAccessLog.put("logDate", DateFormat.format("yyyy-MM-dd H:mm:ss", new Date()).toString());
             jsonAccessLog.put("userId", "N/A");
 
-            JSONObject jsonAccountInfo = new JSONObject();
             jsonAccessLog.put("keyname", "TAG");
             jsonAccessLog.put("keyvalue", "N/A");
 
@@ -189,6 +189,10 @@ public class Utils {
             jsonQuery.put("query", "INVENTORY");
             jsonQuery.put("versionClient", appVersion);
             jsonQuery.put("deviceId", getDeviceId());
+            TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+            if (telephonyManager != null) {
+                jsonQuery.put("IMEI", telephonyManager.getDeviceId());
+            }
             jsonQuery.put("content", content);
 
             JSONObject jsonRequest = new JSONObject();
@@ -232,6 +236,13 @@ public class Utils {
                 serializer.startTag(null, "DEVICEID");
                 serializer.text(getDeviceId());
                 serializer.endTag(null, "DEVICEID");
+
+                serializer.startTag(null, "IMEI");
+                TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+                if (telephonyManager != null) {
+                    serializer.text(telephonyManager.getDeviceId());
+                }
+                serializer.endTag(null, "IMEI");
 
                 // Start CONTENT
                 serializer.startTag(null, "CONTENT");
