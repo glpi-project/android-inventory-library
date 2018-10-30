@@ -2,6 +2,60 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.11.0"></a>
+# [0.11.0](https://github.com/flyve-mdm/android-inventory-library/compare/0.10.0...0.11.0) (2018-10-30)
+
+
+### Bug Fixes
+
+* **camera:** validated size of the list ([8f43920](https://github.com/flyve-mdm/android-inventory-library/commit/8f43920))
+* **character:** remove character & of the output ([b0a50f3](https://github.com/flyve-mdm/android-inventory-library/commit/b0a50f3))
+* **date:** convert timestamp in format date ([6b5b3c5](https://github.com/flyve-mdm/android-inventory-library/commit/6b5b3c5))
+* **deviceId:** change output xml and json to deviceId ([3183c00](https://github.com/flyve-mdm/android-inventory-library/commit/3183c00))
+* **deviceId:** validated exception error ([e546d04](https://github.com/flyve-mdm/android-inventory-library/commit/e546d04))
+
+
+### Features
+
+* **camera:** added read list with the same name node ([cc634be](https://github.com/flyve-mdm/android-inventory-library/commit/cc634be))
+* **camera:** added read list with the same name to JSON ([d505ae9](https://github.com/flyve-mdm/android-inventory-library/commit/d505ae9))
+* **camera:** updated information about camera ([c3d5af7](https://github.com/flyve-mdm/android-inventory-library/commit/c3d5af7))
+* **cpus:** add information about cpus ([963fac5](https://github.com/flyve-mdm/android-inventory-library/commit/963fac5))
+* **filog:** activate and desactivate debug information ([ec6af9e](https://github.com/flyve-mdm/android-inventory-library/commit/ec6af9e))
+* **filog:** change name class FILog to FlyveLog ([c9607e7](https://github.com/flyve-mdm/android-inventory-library/commit/c9607e7))
+* **filog:** handle exception error to the battery ([6807476](https://github.com/flyve-mdm/android-inventory-library/commit/6807476))
+* **filog:** handle exception error to the bios ([7446242](https://github.com/flyve-mdm/android-inventory-library/commit/7446242))
+* **filog:** handle exception error to the bluetooth ([c13f173](https://github.com/flyve-mdm/android-inventory-library/commit/c13f173))
+* **filog:** handle exception error to the Camera ([4b88063](https://github.com/flyve-mdm/android-inventory-library/commit/4b88063))
+* **filog:** handle exception error to the Categories ([e0bf557](https://github.com/flyve-mdm/android-inventory-library/commit/e0bf557))
+* **filog:** handle exception error to the controllers ([e65cb63](https://github.com/flyve-mdm/android-inventory-library/commit/e65cb63))
+* **filog:** handle exception error to the cpu ([e7c3141](https://github.com/flyve-mdm/android-inventory-library/commit/e7c3141))
+* **filog:** handle exception error to the Drives ([9e08ac1](https://github.com/flyve-mdm/android-inventory-library/commit/9e08ac1))
+* **filog:** handle exception error to the Hardware ([2ad5847](https://github.com/flyve-mdm/android-inventory-library/commit/2ad5847))
+* **filog:** handle exception error to the Inputs ([49aac85](https://github.com/flyve-mdm/android-inventory-library/commit/49aac85))
+* **filog:** handle exception error to the Location and Jvm ([d75982d](https://github.com/flyve-mdm/android-inventory-library/commit/d75982d))
+* **filog:** handle exception error to the memory ([dd55b2b](https://github.com/flyve-mdm/android-inventory-library/commit/dd55b2b))
+* **filog:** handle exception error to the networks ([c33973d](https://github.com/flyve-mdm/android-inventory-library/commit/c33973d))
+* **filog:** handle exception error to the Operating System ([32af542](https://github.com/flyve-mdm/android-inventory-library/commit/32af542))
+* **filog:** handle exception error to the Phone Status ([bf8cf25](https://github.com/flyve-mdm/android-inventory-library/commit/bf8cf25))
+* **filog:** handle exception error to the Sensors and SIM ([f236fb0](https://github.com/flyve-mdm/android-inventory-library/commit/f236fb0))
+* **filog:** handle exception error to the Software ([83a4bd4](https://github.com/flyve-mdm/android-inventory-library/commit/83a4bd4))
+* **filog:** handle exception error to the Storage ([63a5b4d](https://github.com/flyve-mdm/android-inventory-library/commit/63a5b4d))
+* **filog:** handle exception error to the Usb ([b739999](https://github.com/flyve-mdm/android-inventory-library/commit/b739999))
+* **filog:** handle exception error to the User ([5bf30d2](https://github.com/flyve-mdm/android-inventory-library/commit/5bf30d2))
+* **filog:** handle exception error to the Utils ([df070bd](https://github.com/flyve-mdm/android-inventory-library/commit/df070bd))
+* **filog:** remove concat message by xml string ([57f8438](https://github.com/flyve-mdm/android-inventory-library/commit/57f8438))
+* **hardware:** add validated size to userinfo list ([4881ef4](https://github.com/flyve-mdm/android-inventory-library/commit/4881ef4))
+* **hardware:** changed name hardware ([22ff2c7](https://github.com/flyve-mdm/android-inventory-library/commit/22ff2c7))
+* **networks:** add information about networks ([fb70ba6](https://github.com/flyve-mdm/android-inventory-library/commit/fb70ba6))
+* **networks:** add maskipv6 ([804e93f](https://github.com/flyve-mdm/android-inventory-library/commit/804e93f))
+* **os:** add informaiton about operating system ([89599da](https://github.com/flyve-mdm/android-inventory-library/commit/89599da))
+* **partial:** partial information of the categories ([a48e03c](https://github.com/flyve-mdm/android-inventory-library/commit/a48e03c))
+* **tags:** added tag information ([1f103f3](https://github.com/flyve-mdm/android-inventory-library/commit/1f103f3))
+* **version:** embedded version client inside content tag ([a8743e9](https://github.com/flyve-mdm/android-inventory-library/commit/a8743e9))
+
+
+
 <a name="0.10.0"></a>
 # [0.10.0](https://github.com/flyve-mdm/android-inventory-library/compare/0.9.0...0.10.0) (2018-09-26)
 
