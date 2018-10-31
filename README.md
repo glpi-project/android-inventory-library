@@ -37,24 +37,29 @@ You can find more information about the Inventory Protocol here:
 
 **What's included?**
 
-* Hardware
-* Bios
-* Memory
-* Inputs
-* Sensors
-* Drives
-* Cpus
-* Simcards
-* Videos
-* Cameras
-* Networks
-* Envs
-* Jvm
-* Softwares
-* Usb
-* Battery
+- Account Info
+- Accesslog
+- Hardware
+- User
+- Storages
+- Operating System
+- BIOS
+- Memories
+- Inputs
+- Sensors
+- Drives
+- CPUs
+- Videos
+- Cameras
+- Networks
+- Environments variables
+- JVMS
+- Softwares
+- USB
+- Battery
+- Controllers
 
-Visit our [website](http://flyve.org/android-inventory-library/) for more information.
+Visit our [website](http://flyve.org/android-inventory-library/) for every element specification.
 
 ## Build Status
 
