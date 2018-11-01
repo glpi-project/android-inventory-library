@@ -166,16 +166,18 @@ public class OperatingSystem extends Categories {
         }
     }
 
-    private String getSSHKey() {
+    public String getSSHKey() {
         String encryptedMessage = "N/A";
         try {
-            Map keyPair = CryptoUtil.generateKeyPair();
-            String publicKey = (String)keyPair.get("publicKey");
-            encryptedMessage = CryptoUtil.encrypt("Test message...", publicKey);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                Map keyPair = CryptoUtil.generateKeyPair();
+                String publicKey = (String) keyPair.get("publicKey");
+                encryptedMessage = CryptoUtil.encrypt("Test message...", publicKey);
+            }
         } catch (Exception ex) {
             FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.OPERATING_SYSTEM_SSH_KEY, ex.getMessage()));
         }
-        return encryptedMessage;
+        return "ssh-rsa " + encryptedMessage;
     }
 
     public String getBootTime() {
