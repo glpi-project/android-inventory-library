@@ -33,6 +33,7 @@ import android.os.Build;
 import android.os.SystemClock;
 
 import org.flyve.inventory.CommonErrorType;
+import org.flyve.inventory.CryptoUtil;
 import org.flyve.inventory.FlyveLog;
 import org.flyve.inventory.Utils;
 
@@ -46,6 +47,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Properties;
 import java.util.TimeZone;
 
@@ -150,7 +152,7 @@ public class OperatingSystem extends Categories {
             c.put("KERNEL_NAME", new CategoryValue("linux", "KERNEL_NAME", "kernelName"));
             c.put("KERNEL_VERSION", new CategoryValue(getKernelVersion(), "KERNEL_VERSION", "kernelVersion"));
             c.put("NAME", new CategoryValue(getAndroidVersion(Build.VERSION.SDK_INT), "NAME", "Name"));
-            c.put("SSH_KEY", new CategoryValue(" ", "SSH_KEY", "sshKey"));
+            c.put("SSH_KEY", new CategoryValue(getSSHKey(), "SSH_KEY", "sshKey"));
             c.put("VERSION", new CategoryValue(String.valueOf(Build.VERSION.SDK_INT), "VERSION", "Version"));
             Category category = new Category("TIMEZONE", "timezone");
             category.put("NAME", new CategoryValue( getTimeZoneShortName(), "NAME", "name"));
@@ -162,6 +164,18 @@ public class OperatingSystem extends Categories {
         } catch (Exception ex) {
             FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.OPERATING_SYSTEM, ex.getMessage()));
         }
+    }
+
+    private String getSSHKey() {
+        String encryptedMessage = "N/A";
+        try {
+            Map keyPair = CryptoUtil.generateKeyPair();
+            String publicKey = (String)keyPair.get("publicKey");
+            encryptedMessage = CryptoUtil.encrypt("Test message...", publicKey);
+        } catch (Exception ex) {
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.OPERATING_SYSTEM_SSH_KEY, ex.getMessage()));
+        }
+        return encryptedMessage;
     }
 
     public String getBootTime() {
