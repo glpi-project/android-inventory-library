@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../resources/report.css" type="text/css"/><link rel="shortcut icon" href="../resources/report.gif" type="image/gif"/><title>CryptoUtil.java</title><link rel="stylesheet" href="../resources/prettify.css" type="text/css"/><script type="text/javascript" src="../resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">org.flyve.inventory</a> &gt; <span class="el_source">CryptoUtil.java</span></div><h1>CryptoUtil.java</h1><pre class="source lang-java linenums">package org.flyve.inventory;
+
+import android.util.Base64;
+
+import java.nio.charset.StandardCharsets;
+import java.security.InvalidKeyException;
+import java.security.KeyFactory;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.X509EncodedKeySpec;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+
+<span class="nc" id="L24">public class CryptoUtil {</span>
+
+    private final static String CRYPTO_METHOD = &quot;RSA&quot;;
+    private final static int CRYPTO_BITS = 2048;
+
+    public static Map&lt;String, String&gt; generateKeyPair()
+            throws NoSuchAlgorithmException,
+            NoSuchPaddingException,
+            InvalidKeyException,
+            IllegalBlockSizeException,
+            BadPaddingException {
+
+<span class="nc" id="L36">        KeyPairGenerator kpg = KeyPairGenerator.getInstance(CRYPTO_METHOD);</span>
+<span class="nc" id="L37">        kpg.initialize(CRYPTO_BITS);</span>
+<span class="nc" id="L38">        KeyPair kp = kpg.genKeyPair();</span>
+<span class="nc" id="L39">        PublicKey publicKey = kp.getPublic();</span>
+<span class="nc" id="L40">        PrivateKey privateKey = kp.getPrivate();</span>
+
+<span class="nc" id="L42">        Map&lt;String, String&gt; map = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L43">        map.put(&quot;privateKey&quot;, Base64.encodeToString(privateKey.getEncoded(), Base64.DEFAULT));</span>
+<span class="nc" id="L44">        map.put(&quot;publicKey&quot;, Base64.encodeToString(publicKey.getEncoded(), Base64.DEFAULT));</span>
+<span class="nc" id="L45">        return map;</span>
+    }
+
+    public static String encrypt(String plain, String pubk)
+            throws NoSuchAlgorithmException,
+            NoSuchPaddingException,
+            InvalidKeyException,
+            IllegalBlockSizeException,
+            BadPaddingException,
+            InvalidKeySpecException {
+
+<span class="nc" id="L56">        Cipher cipher = Cipher.getInstance(&quot;RSA/ECB/OAEPWithSHA1AndMGF1Padding&quot;);</span>
+<span class="nc" id="L57">        cipher.init(Cipher.ENCRYPT_MODE, stringToPublicKey(pubk));</span>
+<span class="nc" id="L58">        byte[] encryptedBytes = cipher.doFinal(plain.getBytes(StandardCharsets.UTF_8));</span>
+
+<span class="nc" id="L60">        return Base64.encodeToString(encryptedBytes, Base64.DEFAULT);</span>
+    }
+
+    public static String decrypt(String result, String privk)
+            throws NoSuchPaddingException,
+            NoSuchAlgorithmException,
+            BadPaddingException,
+            IllegalBlockSizeException,
+            InvalidKeySpecException,
+            InvalidKeyException {
+
+<span class="nc" id="L71">        Cipher cipher = Cipher.getInstance(&quot;RSA/ECB/OAEPWithSHA1AndMGF1Padding&quot;);</span>
+<span class="nc" id="L72">        cipher.init(Cipher.DECRYPT_MODE, stringToPrivateKey(privk));</span>
+<span class="nc" id="L73">        byte[] decryptedBytes = cipher.doFinal(Base64.decode(result, Base64.DEFAULT));</span>
+<span class="nc" id="L74">        return new String(decryptedBytes);</span>
+    }
+
+    private static PublicKey stringToPublicKey(String publicKeyString)
+            throws InvalidKeySpecException,
+            NoSuchAlgorithmException {
+
+<span class="nc" id="L81">            byte[] keyBytes = Base64.decode(publicKeyString, Base64.DEFAULT);</span>
+<span class="nc" id="L82">            X509EncodedKeySpec spec = new X509EncodedKeySpec(keyBytes);</span>
+<span class="nc" id="L83">            KeyFactory keyFactory = KeyFactory.getInstance(CRYPTO_METHOD);</span>
+<span class="nc" id="L84">            return keyFactory.generatePublic(spec);</span>
+    }
+
+    private static PrivateKey stringToPrivateKey(String privateKeyString)
+            throws InvalidKeySpecException,
+            NoSuchAlgorithmException {
+
+<span class="nc" id="L91">        byte [] pkcs8EncodedBytes = Base64.decode(privateKeyString, Base64.DEFAULT);</span>
+<span class="nc" id="L92">        PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(pkcs8EncodedBytes);</span>
+<span class="nc" id="L93">        KeyFactory kf = KeyFactory.getInstance(CRYPTO_METHOD);</span>
+<span class="nc" id="L94">        return kf.generatePrivate(keySpec);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span>Generated by the Android Gradle plugin 2.2.0</div></body></html>
