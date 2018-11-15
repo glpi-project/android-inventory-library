@@ -187,7 +187,7 @@ public class InventoryTask {
                 "Usb",
                 "Battery",
                 "Controllers",
-                "MODEMS"
+                "Modems"
         };
     }
 

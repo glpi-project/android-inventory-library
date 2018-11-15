@@ -51,11 +51,8 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onTaskSuccess(String data) {
                         Log.d(TAG, data);
-                        //inventoryTask.shareInventory( 2);
-
                         try {
-                            String base64 = data;
-                            getSyncWebData("http://10.0.0.6:8000/1e6dwka1", base64, null);
+                            getSyncWebData("http://10.0.0.6:8000/1e6dwka1", data, null);
                         } catch (Exception ex) {
                             Log.e(TAG, ex.getMessage());
                         }
