@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 #
 #  LICENSE
 #
@@ -26,26 +26,10 @@
 #  --------------------------------------------------------------------------------
 #
 
-# Since we will download a video, we require integrity checking with CRC32c
-# But the crcmod installation in the docker image isn't using the module's C extension
-# So, uninstall it and install again with the C extension
-echo "y" | sudo pip uninstall crcmod
+GH_COMMIT_MESSAGE=$(git log --pretty=oneline -n 1 $CIRCLE_SHA1)
+echo $GH_COMMIT_MESSAGE
 
-sudo pip install -U crcmod
-
-# create json key file
-echo $GCLOUD_SERVICE_KEY | base64 --decode --ignore-garbage > ${HOME}/gcloud-service-key.json
-
-# activate the account
-gcloud auth activate-service-account --key-file ${HOME}/gcloud-service-key.json
-
-# config the project
-gcloud config set project ${GCLOUD_PROJECT}
-
-# Run Instrumented test
-gcloud firebase test android run \
-  --type instrumentation \
-  --app $(ls -dt ~/flyve_mdm/app/build/outputs/apk/debug/*.apk | head -1) \
-  --test $(ls -dt ~/flyve_mdm/app/build/outputs/apk/androidTest/debug/*.apk | head -1) \
-  --device model=Nexus6,version=25,locale=en,orientation=portrait  \
-  --timeout 90s
+if [[ $GH_COMMIT_MESSAGE = *"build(manifest): increase version value"* ]]; then
+    echo "Invalid running"
+    exit 1
+fi
