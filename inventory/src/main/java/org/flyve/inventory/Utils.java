@@ -237,13 +237,6 @@ public class Utils {
                 serializer.text(getDeviceId());
                 serializer.endTag(null, "DEVICEID");
 
-                serializer.startTag(null, "IMEI");
-                TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-                if (telephonyManager != null) {
-                    serializer.text(telephonyManager.getDeviceId());
-                }
-                serializer.endTag(null, "IMEI");
-
                 // Start CONTENT
                 serializer.startTag(null, "CONTENT");
 

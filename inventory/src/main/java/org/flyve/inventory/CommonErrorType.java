@@ -241,4 +241,7 @@ public class CommonErrorType {
     public static final int UTILS_CREATE_JSON = 2403;
     public static final int UTILS_DEVICE_PROPERTIES = 2404;
     public static final int UTILS_LOAD_JSON_ASSET = 2405;
+
+    /* Modems */
+    public static final int MODEMS = 2500;
 }
