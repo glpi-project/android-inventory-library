@@ -94,6 +94,8 @@ public class Modems extends Categories {
                         imeiList.add(telephonyManager.getDeviceId(i));
                     }
                 }
+            } else {
+                imeiList.add("N/A");
             }
         } else {
             String imei = telephonyManager.getDeviceId();
