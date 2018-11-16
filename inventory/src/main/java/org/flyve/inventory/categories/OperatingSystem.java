@@ -33,6 +33,7 @@ import android.os.Build;
 import android.os.SystemClock;
 
 import org.flyve.inventory.CommonErrorType;
+import org.flyve.inventory.CryptoUtil;
 import org.flyve.inventory.FlyveLog;
 import org.flyve.inventory.Utils;
 
@@ -46,6 +47,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Properties;
 import java.util.TimeZone;
 
@@ -150,7 +152,7 @@ public class OperatingSystem extends Categories {
             c.put("KERNEL_NAME", new CategoryValue("linux", "KERNEL_NAME", "kernelName"));
             c.put("KERNEL_VERSION", new CategoryValue(getKernelVersion(), "KERNEL_VERSION", "kernelVersion"));
             c.put("NAME", new CategoryValue(getAndroidVersion(Build.VERSION.SDK_INT), "NAME", "Name"));
-            c.put("SSH_KEY", new CategoryValue(" ", "SSH_KEY", "sshKey"));
+            c.put("SSH_KEY", new CategoryValue(getSSHKey(), "SSH_KEY", "sshKey"));
             c.put("VERSION", new CategoryValue(String.valueOf(Build.VERSION.SDK_INT), "VERSION", "Version"));
             Category category = new Category("TIMEZONE", "timezone");
             category.put("NAME", new CategoryValue( getTimeZoneShortName(), "NAME", "name"));
@@ -162,6 +164,20 @@ public class OperatingSystem extends Categories {
         } catch (Exception ex) {
             FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.OPERATING_SYSTEM, ex.getMessage()));
         }
+    }
+
+    public String getSSHKey() {
+        String encryptedMessage = "N/A";
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                Map keyPair = CryptoUtil.generateKeyPair();
+                String publicKey = (String) keyPair.get("publicKey");
+                encryptedMessage = CryptoUtil.encrypt("Test message...", publicKey);
+            }
+        } catch (Exception ex) {
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.OPERATING_SYSTEM_SSH_KEY, ex.getMessage()));
+        }
+        return "ssh-rsa " + encryptedMessage;
     }
 
     public String getBootTime() {
@@ -238,64 +254,84 @@ public class OperatingSystem extends Categories {
         return value;
     }
 
-    private String getAndroidVersion(int sdk) {
-        switch (sdk) {
-            case 1:
-                return "Android 1.0";
-            case 2:
-                return "Petit Four (Android 1.1)";
-            case 3:
-                return "Cupcake (Android 1.5)";
-            case 4:
-                return "Donut (Android 1.6)";
-            case 5:
-                return "Eclair (Android 2.0)";
-            case 6:
-                return "Eclair (Android 2.0.1)";
-            case 7:
-                return "Eclair (Android 2.1)";
-            case 8:
-                return "Froyo (Android 2.2)";
-            case 9:
-                return "Gingerbread (Android 2.3)";
-            case 10:
-                return "Gingerbread (Android 2.3.3)";
-            case 11:
-                return "Honeycomb (Android 3.0)";
-            case 12:
-                return "Honeycomb (Android 3.1)";
-            case 13:
-                return "Honeycomb (Android 3.2)";
-            case 14:
-                return "Ice Cream Sandwich (Android 4.0)";
-            case 15:
-                return "Ice Cream Sandwich (Android 4.0.3)";
-            case 16:
-                return "Jelly Bean (Android 4.1)";
-            case 17:
-                return "Jelly Bean (Android 4.2)";
-            case 18:
-                return "Jelly Bean (Android 4.3)";
-            case 19:
-                return "KitKat (Android 4.4)";
-            case 20:
-                return "KitKat Watch (Android 4.4)";
-            case 21:
-                return "Lollipop (Android 5.0)";
-            case 22:
-                return "Lollipop (Android 5.1)";
-            case 23:
-                return "Marshmallow (Android 6.0)";
-            case 24:
-                return "Nougat (Android 7.0)";
-            case 25:
-                return "Nougat (Android 7.1.1)";
-            case 26:
-                return "Oreo (Android 8.0)";
-            case 27:
-                return "Oreo (Android 8.1)";
-            default:
-                return "N/A";
+    private String getAndroidVersion(final int sdk) {
+
+        String version = "N/A";
+        try
+        {
+            SDK sdkEnum = SDK.values()[ sdk - 1 ];
+            version = sdkEnum.toString();
         }
+        finally
+        {
+            return version;
+        }
+    }
+
+    private static enum SDK{
+
+        SDK1("","1.0"),
+        SDK2(NameOS.PETIT_FOUR,"1.1"),
+        SDK3(NameOS.CUPCAKE,"1.5"),
+        SDK4(NameOS.DONUT,"1.6"),
+        SDK5(NameOS.ECLAIR,"2.0"),
+        SDK6(NameOS.ECLAIR,"2.0.1"),
+        SDK7(NameOS.ECLAIR,"2.1"),
+        SDK8(NameOS.FROYO,"2.2"),
+        SDK9(NameOS.GINGERBREAD,"2.3"),
+        SDK10(NameOS.GINGERBREAD,"2.3.3"),
+        SDK11(NameOS.HONEYCOMB,"3.0"),
+        SDK12(NameOS.HONEYCOMB,"3.1"),
+        SDK13(NameOS.HONEYCOMB,"3.2"),
+        SDK14(NameOS.ICE_CREAM_SANDWICH,"4.0"),
+        SDK15(NameOS.ICE_CREAM_SANDWICH,"4.0.3"),
+        SDK16(NameOS.JELLY_BEAN,"4.1"),
+        SDK17(NameOS.JELLY_BEAN,"4.2"),
+        SDK18(NameOS.JELLY_BEAN,"4.3"),
+        SDK19(NameOS.KITKAT,"4.4"),
+        SDK20(NameOS.KITKAT_WATCH,"4.4"),
+        SDK21(NameOS.LOLLIPOP,"5.0"),
+        SDK22(NameOS.LOLLIPOP,"5.1"),
+        SDK23(NameOS.MARSHMALLOW,"6.0"),
+        SDK24(NameOS.NOUGAT,"7.0"),
+        SDK25(NameOS.NOUGAT,"7.1.1"),
+        SDK26(NameOS.OREO,"8.0"),
+        SDK27(NameOS.OREO,"8.1");
+
+        private final String name;
+        private final String version;
+        private static final String ANDROID="Android";
+
+        SDK( final String name,final String version){
+
+            this.name=name;
+            this.version=version;
+        }
+
+        @Override
+        public String toString() {
+
+            return (name+" "+ANDROID+" "+version).trim();
+        }
+
+        private static final class NameOS{
+
+            public static final String PETIT_FOUR="Petit Four";
+            public static final String CUPCAKE="Cupcake";
+            public static final String DONUT="Donut";
+            public static final String ECLAIR = "Eclair";
+            public static final String FROYO="Froyo";
+            public static final String GINGERBREAD="Gingerbread";
+            public static final String HONEYCOMB="Honeycomb";
+            public static final String ICE_CREAM_SANDWICH="Ice Cream Sandwich";
+            public static final String JELLY_BEAN="Jelly Bean";
+            public static final String KITKAT="KitKat";
+            public static final String KITKAT_WATCH="KitKat Watch";
+            public static final String LOLLIPOP = "Lollipop";
+            public static final String MARSHMALLOW="Marshmallow";
+            public static final String NOUGAT="Nougat";
+            public static final String OREO="Oreo";
+        }
+
     }
 }

@@ -167,8 +167,7 @@ public class CategoryValue {
         return values;
     }
 
-    private boolean hasCharToReplace(final String val)
-    {
+    private boolean hasCharToReplace(final String val) {
         return val.matches(REGEX);
     }
 }

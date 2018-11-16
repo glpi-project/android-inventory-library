@@ -62,4 +62,9 @@ public class OperatingSystemTest {
     public void getCurrentTimezoneOffset() {
         assertNotEquals("", new OperatingSystem(appContext).getCurrentTimezoneOffset());
     }
+
+    @Test
+    public void getSSHKey() {
+        assertNotEquals("", new OperatingSystem(appContext).getSSHKey());
+    }
 }
