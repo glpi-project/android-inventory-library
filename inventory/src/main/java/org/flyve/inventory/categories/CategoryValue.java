@@ -41,13 +41,34 @@ public class CategoryValue {
     private Category category;
     private List<String> values;
 
+    private static final String REGEX="[<>&]";
     /** Normal category
      * @param value
      * @param xmlName
      * @param jsonName
      */
     public CategoryValue(String value, String xmlName, String jsonName) {
-        this(value,xmlName,jsonName,false,false);
+        if (value == null) {
+            value = "";
+        }
+
+        if (xmlName == null) {
+            xmlName = "";
+        }
+
+        if (jsonName == null) {
+            jsonName = "";
+        }
+
+        if (hasCharToReplace(value)) {
+            value = value.replaceAll(REGEX, "");
+        }
+
+        this.value = value;
+        this.jsonName = jsonName;
+        this.xmlName = xmlName;
+        this.isPrivate = false;
+        this.hasCDATA = false;
     }
 
     public CategoryValue(String value, String xmlName, String jsonName, Boolean isPrivate, Boolean hasCDATA) {
@@ -63,8 +84,8 @@ public class CategoryValue {
             jsonName = "";
         }
 
-        if (value.contains("<") || value.contains(">") || value.contains("&")) {
-            value = value.replaceAll("[<>&]", "");
+        if (hasCharToReplace(value)) {
+            value = value.replaceAll(REGEX, "");
         }
 
         this.value = value;
@@ -94,8 +115,8 @@ public class CategoryValue {
 
         for (int i = 0; i < values.size(); i++) {
             String value = values.get(i);
-            if (value.contains("<") || value.contains(">") || value.contains("&")) {
-                String s = value.replaceAll("[<>&]", "");
+            if (hasCharToReplace(value)) {
+                String s = value.replaceAll(REGEX, "");
                 values.add(i, s);
             }
         }
@@ -144,5 +165,9 @@ public class CategoryValue {
 
     public List<String> getValues() {
         return values;
+    }
+
+    private boolean hasCharToReplace(final String val) {
+        return val.matches(REGEX);
     }
 }
