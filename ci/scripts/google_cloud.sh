@@ -34,18 +34,16 @@ echo "y" | sudo pip uninstall crcmod
 sudo pip install -U crcmod
 
 # create json key file
-echo $GCLOUD_SERVICE_KEY | base64 --decode --ignore-garbage > ${HOME}/gcloud-service-key.json
+#echo $GCLOUD_SERVICE_KEY | base64 --decode --ignore-garbage > ${HOME}/gcloud-service-key.json
+echo ${GCLOUD_SERVICE_KEY} > ${HOME}/gcp-key.json
 
-# activate the account
-gcloud auth activate-service-account --key-file ${HOME}/gcloud-service-key.json
-
-# config the project
-gcloud config set project ${GCLOUD_PROJECT}
+gcloud auth activate-service-account --key-file ${HOME}/gcp-key.json
+gcloud --quiet config set project ${GCLOUD_PROJECT}
 
 # Run Instrumented test
 gcloud firebase test android run \
   --type instrumentation \
-  --app $(ls -dt ~/flyve_mdm/app/build/outputs/apk/debug/*.apk | head -1) \
-  --test $(ls -dt ~/flyve_mdm/app/build/outputs/apk/androidTest/debug/*.apk | head -1) \
+  --app ~/flyve_mdm/example_java/build/outputs/apk/androidTest/debug/example_java-debug-androidTest.apk \
+  --test ~/flyve_mdm/example_java/build/outputs/apk/debug/example_java-debug.apk \
   --device model=Nexus6,version=25,locale=en,orientation=portrait  \
   --timeout 90s
