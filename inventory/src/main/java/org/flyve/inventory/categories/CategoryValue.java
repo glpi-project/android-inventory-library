@@ -47,27 +47,7 @@ public class CategoryValue {
      * @param jsonName
      */
     public CategoryValue(String value, String xmlName, String jsonName) {
-        if (value == null) {
-            value = "";
-        }
-
-        if (xmlName == null) {
-            xmlName = "";
-        }
-
-        if (jsonName == null) {
-            jsonName = "";
-        }
-
-        if (value.contains("<") || value.contains(">") || value.contains("&")) {
-            value = value.replaceAll("[<>&]", "");
-        }
-
-        this.value = value;
-        this.jsonName = jsonName;
-        this.xmlName = xmlName;
-        this.isPrivate = false;
-        this.hasCDATA = false;
+        this(value,xmlName,jsonName,false,false);
     }
 
     public CategoryValue(String value, String xmlName, String jsonName, Boolean isPrivate, Boolean hasCDATA) {

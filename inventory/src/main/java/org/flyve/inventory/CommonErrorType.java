@@ -164,6 +164,7 @@ public class CommonErrorType {
     public static final int OPERATING_SYSTEM_KERNEL = 1402;
     public static final int OPERATING_SYSTEM_TIME_ZONE = 1403;
     public static final int OPERATING_SYSTEM_CURRENT = 1404;
+    public static final int OPERATING_SYSTEM_SSH_KEY = 1405;
 
     /* Phone Status */
     public static final int PHONE_STATUS = 1500;
