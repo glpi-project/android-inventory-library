@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.12.0"></a>
+# [0.12.0](https://github.com/flyve-mdm/android-inventory-library/compare/0.11.0...0.12.0) (2018-11-20)
+
+
+### Features
+
+* **imei:** add new category modems and tag imei ([b1058db](https://github.com/flyve-mdm/android-inventory-library/commit/b1058db))
+* **imei:** added imei information at the inventory ([c535382](https://github.com/flyve-mdm/android-inventory-library/commit/c535382))
+* **imei:** validated empty slot SIM card ([211007f](https://github.com/flyve-mdm/android-inventory-library/commit/211007f))
+* **os:** add information about ssh ([42d52ad](https://github.com/flyve-mdm/android-inventory-library/commit/42d52ad))
+* **os:** added test to ssh and validation to API 19 higher ([afae20a](https://github.com/flyve-mdm/android-inventory-library/commit/afae20a))
+
+
+
 <a name="0.11.0"></a>
 # [0.11.0](https://github.com/flyve-mdm/android-inventory-library/compare/0.10.0...0.11.0) (2018-10-30)
 
