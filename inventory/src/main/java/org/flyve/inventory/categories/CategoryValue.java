@@ -41,6 +41,7 @@ public class CategoryValue {
     private Category category;
     private List<String> values;
 
+    private static final String REGEX="[<>&]";
     /** Normal category
      * @param value
      * @param xmlName
@@ -59,8 +60,8 @@ public class CategoryValue {
             jsonName = "";
         }
 
-        if (value.contains("<") || value.contains(">") || value.contains("&")) {
-            value = value.replaceAll("[<>&]", "");
+        if (hasCharToReplace(value)) {
+            value = value.replaceAll(REGEX, "");
         }
 
         this.value = value;
@@ -83,8 +84,8 @@ public class CategoryValue {
             jsonName = "";
         }
 
-        if (value.contains("<") || value.contains(">") || value.contains("&")) {
-            value = value.replaceAll("[<>&]", "");
+        if (hasCharToReplace(value)) {
+            value = value.replaceAll(REGEX, "");
         }
 
         this.value = value;
@@ -114,8 +115,8 @@ public class CategoryValue {
 
         for (int i = 0; i < values.size(); i++) {
             String value = values.get(i);
-            if (value.contains("<") || value.contains(">") || value.contains("&")) {
-                String s = value.replaceAll("[<>&]", "");
+            if (hasCharToReplace(value)) {
+                String s = value.replaceAll(REGEX, "");
                 values.add(i, s);
             }
         }
@@ -164,5 +165,9 @@ public class CategoryValue {
 
     public List<String> getValues() {
         return values;
+    }
+
+    private boolean hasCharToReplace(final String val) {
+        return val.matches(REGEX);
     }
 }

@@ -33,15 +33,6 @@ public class Processes
     public Processes(String xType, String tagName) {
         super(xType, tagName);
         // TODO review how to get all the processes
-/*
-        Category c = new Category(mCtx, "PROCESSES");
-        ActivityManager  activityManager = (ActivityManager) mFusionApp.getSystemService(Service.ACTIVITY_SERVICE);
-
-        List<RunningAppProcessInfo> ps = activityManager.getRunningAppProcesses();
-        for(RunningAppProcessInfo process : ps) {
-              content.add(new Processes(mFusionApp,process));
-          }
-          */
     }
 
     /**
