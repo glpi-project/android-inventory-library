@@ -104,6 +104,7 @@ public class Modems extends Categories {
             }
         } catch (Exception ex) {
             imeiList.add("N/A");
+            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.MODEMS_IMEI, ex.getMessage()));
         }
         return imeiList;
     }
