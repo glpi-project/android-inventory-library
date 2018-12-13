@@ -83,23 +83,27 @@ public class Modems extends Categories {
      */
     public ArrayList<String> getIMEI() {
         ArrayList<String> imeiList = new ArrayList<>();
-        TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
-            SubscriptionManager subscriptionManager = (SubscriptionManager) context.getSystemService(Context.TELEPHONY_SUBSCRIPTION_SERVICE);
-            assert subscriptionManager != null;
-            List<SubscriptionInfo> multipleSim = subscriptionManager.getActiveSubscriptionInfoList();
-            if (multipleSim != null && multipleSim.size() > 0) {
-                for (int i = 0; i < multipleSim.size(); i++) {
-                    if (telephonyManager != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        imeiList.add(telephonyManager.getDeviceId(i));
+        try {
+            TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+                SubscriptionManager subscriptionManager = (SubscriptionManager) context.getSystemService(Context.TELEPHONY_SUBSCRIPTION_SERVICE);
+                assert subscriptionManager != null;
+                List<SubscriptionInfo> multipleSim = subscriptionManager.getActiveSubscriptionInfoList();
+                if (multipleSim != null && multipleSim.size() > 0) {
+                    for (int i = 0; i < multipleSim.size(); i++) {
+                        if (telephonyManager != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            imeiList.add(telephonyManager.getDeviceId(i));
+                        }
                     }
+                } else {
+                    imeiList.add("N/A");
                 }
             } else {
-                imeiList.add("N/A");
+                String imei = telephonyManager.getDeviceId();
+                imeiList.add(imei != null ? imei : "N/A");
             }
-        } else {
-            String imei = telephonyManager.getDeviceId();
-            imeiList.add(imei != null ? imei : "N/A");
+        } catch (Exception ex) {
+            imeiList.add("N/A");
         }
         return imeiList;
     }
