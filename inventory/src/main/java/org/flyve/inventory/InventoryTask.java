@@ -163,9 +163,8 @@ public class InventoryTask {
         return mContent;
     }
 
-    private String[] getCategories() {
+    public String[] getCategories() {
         return new String[]{
-//                "PhoneStatus",
                 "Hardware",
                 "User",
                 "Storage",
@@ -180,7 +179,6 @@ public class InventoryTask {
                 "Videos",
                 "Cameras",
                 "Networks",
-//                "LocationProviders",
                 "Envs",
                 "Jvm",
                 "Software",
