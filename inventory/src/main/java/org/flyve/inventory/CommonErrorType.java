@@ -244,4 +244,5 @@ public class CommonErrorType {
 
     /* Modems */
     public static final int MODEMS = 2500;
+    public static final int MODEMS_IMEI = 2501;
 }
