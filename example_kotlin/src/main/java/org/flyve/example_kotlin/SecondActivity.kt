@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import kotlinx.android.synthetic.main.activity_main.*
 import org.flyve.inventory.InventoryTask
 
 class SecondActivity : AppCompatActivity() {
@@ -43,13 +42,5 @@ class SecondActivity : AppCompatActivity() {
                 Log.e(LOG, error.message)
             }
         })
-        textHello.setOnClickListener {
-            inventoryTask?.isEndIterCategories = true
-        }
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-        inventoryTask?.isEndIterCategories = true
     }
 }
