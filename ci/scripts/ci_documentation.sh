@@ -53,7 +53,7 @@ sudo rm ./development/code-documentation/$CIRCLE_BRANCH/stylesheet.css
 # sudo rm ./development/test-report/$CIRCLE_BRANCH/css/style.css
 
 # add new css
-cp ./css/codeDocumentation.css ./development/code-documentation/$CIRCLE_BRANCH/stylesheet.css
+cp ./css/javadoc.scss ./development/code-documentation/$CIRCLE_BRANCH/stylesheet.css
 # cp ./css/coverage.css ./development/coverage/$CIRCLE_BRANCH/resources/report.css
 # cp ./css/testReports.css ./development/test-report/$CIRCLE_BRANCH/css/style.css
 # touch ./development/test-report/$CIRCLE_BRANCH/css/base-style.css
