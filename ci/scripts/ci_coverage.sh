@@ -27,24 +27,24 @@
 #  --------------------------------------------------------------------------------
 #
 
-COVERAGE_PATH="development/coverage/$CIRCLE_BRANCH"
-TEST_PATH="development/test-report/$CIRCLE_BRANCH"
+# COVERAGE_PATH="development/coverage/$CIRCLE_BRANCH"
+# TEST_PATH="development/test-report/$CIRCLE_BRANCH"
 
-# create code coverage report
-./gradlew :inventory:createDebugCoverageReport
+# # create code coverage report
+# ./gradlew :inventory:createDebugCoverageReport
 
-# replace .resources with resource because github doesn't support folders with "_" or "." at the beginning
-mv inventory/build/reports/coverage/debug/.resources inventory/build/reports/coverage/debug/resources
+# # replace .resources with resource because github doesn't support folders with "_" or "." at the beginning
+# mv inventory/build/reports/coverage/debug/.resources inventory/build/reports/coverage/debug/resources
 
-# find and replace links to the old name of file
-grep -rl .resources inventory/build/reports/coverage/debug/ | xargs sed -i 's|.resources|resources|g'
+# # find and replace links to the old name of file
+# grep -rl .resources inventory/build/reports/coverage/debug/ | xargs sed -i 's|.resources|resources|g'
 
-# replace .sessions
-mv inventory/build/reports/coverage/debug/.sessions.html inventory/build/reports/coverage/debug/sessions.html
+# # replace .sessions
+# mv inventory/build/reports/coverage/debug/.sessions.html inventory/build/reports/coverage/debug/sessions.html
 
-# find and replace links to the old name of file
-grep -rl .sessions.html inventory/build/reports/coverage/debug/ | xargs sed -i 's|.sessions.html|sessions.html|g'
+# # find and replace links to the old name of file
+# grep -rl .sessions.html inventory/build/reports/coverage/debug/ | xargs sed -i 's|.sessions.html|sessions.html|g'
 
-yarn gh-pages --dist inventory/build/reports/coverage/debug/  --dest $COVERAGE_PATH -m "docs(development): update coverage"
+# yarn gh-pages --dist inventory/build/reports/coverage/debug/  --dest $COVERAGE_PATH -m "docs(development): update coverage"
 
-yarn gh-pages --dist inventory/build/reports/androidTests/connected/ --dest $TEST_PATH -m "docs(development): update coverage"
+# yarn gh-pages --dist inventory/build/reports/androidTests/connected/ --dest $TEST_PATH -m "docs(development): update coverage"
