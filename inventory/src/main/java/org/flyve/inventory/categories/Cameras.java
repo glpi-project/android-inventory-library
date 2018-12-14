@@ -109,10 +109,7 @@ public class Cameras
                         c.put("MANUFACTURER", new CategoryValue(getManufacturer(index), "MANUFACTURER", "manufacturer"));
                     }
                     c.put("RESOLUTIONVIDEO", new CategoryValue(getVideoResolution(index), "RESOLUTIONVIDEO", "resolutionvideo"));
-                    ArrayList<String> supportValue = getSupportValue();
-                    if (supportValue.size() > 0) {
-                        c.put("SUPPORTS", new CategoryValue(supportValue, "SUPPORTS", "supports"));
-                    }
+                    c.put("SUPPORTS", new CategoryValue("N/A", "SUPPORTS", "supports"));
                     c.put("MODEL", new CategoryValue(getModel(index), "MODEL", "model"));
                     this.add(c);
                 }
