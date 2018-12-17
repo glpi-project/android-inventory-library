@@ -122,12 +122,13 @@ workflows:
       #         ignore:
       #           - master
       - documentation:
-          # requires:
-          #   - test_instrumentation
+          requires:
+            - build
           filters:
             branches:
               only:
                 - develop
+                - master
       - deploy_production:
           requires:
             - build
