@@ -2,7 +2,7 @@
  *  LICENSE
  *
  *  This file is part of Flyve MDM Inventory Library for Android.
- *
+ * 
  *  Inventory Library for Android is a subproject of Flyve MDM.
  *  Flyve MDM is a mobile device management software.
  *
@@ -16,14 +16,11 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *  ---------------------------------------------------------------------
- *  @author    Rafael Hernandez - <rhernandez@teclib.com>
- *  @author    Ivan del Pino    - <idelpino@teclib.com>
- *  @copyright Copyright Teclib. All rights reserved.
- *  @copyright Copyright FusionInventory.
+ *  @copyright Copyright © 2018 Teclib. All rights reserved.
  *  @license   GPLv3 https://www.gnu.org/licenses/gpl-3.0.html
  *  @link      https://github.com/flyve-mdm/android-inventory-library
- *  @link      http://flyve.org/android-inventory-library/
  *  @link      https://flyve-mdm.com
+ *  @link      http://flyve.org/android-inventory-library
  *  ---------------------------------------------------------------------
  */
 
