@@ -18,7 +18,7 @@
     "agent",
     "teclib"
   ],
-  "author": "Rafael Hernandez <rhernandez@teclib.com> (https://flyve-mdm.com)",
+  "author": "Ivan Del Pino <idelpino@teclib.com> (https://flyve-mdm.com)",
   "license": "GPL-3.0",
   "bugs": {
     "url": "https://github.com/flyve-mdm/android-inventory-library/issues"
