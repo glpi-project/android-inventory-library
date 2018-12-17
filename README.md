@@ -12,7 +12,7 @@
 [![GitHub release](https://img.shields.io/github/release/flyve-mdm/android-inventory-library.svg)](https://github.com/flyve-mdm/android-inventory-library/releases)
 [![Maven Central](https://img.shields.io/maven-central/v/com.flyvemdm/inventory.svg)](https://bintray.com/flyve-mdm/inventory/android-inventory-library/)
 
-Flyve MDM is a Mobile device management software that enables you to secure and manage all the mobile devices of your business or family via a web-based console.
+Flyve MDM allows your company to maintain control of all mobile devices, whilst providing comprehensive protection and enhanced security for sensitive corporate data, via a centralized management console.
 
 To get started, check out [Flyve MDM Website](https://flyve-mdm.com/)!
 
@@ -30,12 +30,12 @@ To get started, check out [Flyve MDM Website](https://flyve-mdm.com/)!
 
 ## Synopsis
 
-This library helps you to create a complete inventory of your Android devices: both hardware and software informations are collected. You get the data about processor, memory, drives, sensors, etc., and also the list and description of installed application on any devices in a beautiful XML as protocol compatible with FusionInventory for GLPI.
+The Inventory Library for Android collects a complete inventory of your Android devices. It allows you to export your inventory in a beautiful XML or JSON as protocol compatible with FusionInventory for GLPI.
 
 You can find more information about the Inventory Protocol here:
 <http://fusioninventory.org/documentation/dev/spec/protocol/inventory.html>
 
-**What's included?**
+### Data collected
 
 - Account Info
 - Accesslog
