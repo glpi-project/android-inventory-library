@@ -39,7 +39,7 @@ if(project.rootProject.file('local.properties').exists()) {
 }
 
 ext {
-    bintrayRepo = 'inventory'
+    bintrayRepo = 'teclib-repository'
     bintrayName = 'android-inventory-library'
     bintrayUserOrg = "flyve-mdm"
 
@@ -54,13 +54,13 @@ ext {
 
     libraryVersion = properties.getProperty("version")
 
-    developerId = 'rafaelje'
-    developerName = 'Rafael Hernandez'
-    developerEmail = 'rhernandez@teclib.com'
+    developerId = 'ivans51'
+    developerName = 'Ivan Del Pino'
+    developerEmail = 'idelpino@teclib.com'
 
-    licenseName = 'The Apache Software License, Version 2.0'
-    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-    allLicenses = ["Apache-2.0"]
+    licenseName = 'GNU GENERAL PUBLIC LICENSE, Version 3.0'
+    licenseUrl = 'https://www.gnu.org/licenses/gpl-3.0.html'
+    allLicenses = ["GPL-3.0"]
 }
 
 apply from: 'bintray.gradle'
