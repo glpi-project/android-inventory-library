@@ -30,7 +30,7 @@
 GIT_TAG=$(jq -r ".version" package.json)
 
 # push tag to github
-yarn conventional-github-releaser -p angular -t $GITHUB_TOKEN 2> /dev/null || true
+yarn conventional-github-releaser -p angular -t $GH_TOKEN 2> /dev/null || true
 
 # Create zip example code
 sudo zip -r $CIRCLE_ARTIFACTS/java_example_code.zip example_java*
