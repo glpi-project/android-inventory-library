@@ -233,7 +233,7 @@ public class Cpus extends Categories {
         String value = "N/A";
         try {
             Map<String, String> cpuInfo = Utils.getCatMapInfo("/proc/cpuinfo");
-            String cpuName = Utils.getValueMapInfo(cpuInfo, "model name").trim();
+            String cpuName = Utils.getValueMapCase(cpuInfo, "Processor").trim();
             if (!"".equals(cpuName)){
                 value = cpuName;
             }
