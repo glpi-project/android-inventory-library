@@ -236,6 +236,11 @@ public class Cpus extends Categories {
             String cpuName = Utils.getValueMapCase(cpuInfo, "Processor").trim();
             if (!"".equals(cpuName)){
                 value = cpuName;
+            } else {
+                cpuName = Utils.getValueMapCase(cpuInfo, "model name").trim();
+                if (!"".equals(cpuName)){
+                    value = cpuName;
+                }
             }
         } catch (Exception ex) {
             FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.CPU_NAME, ex.getMessage()));
