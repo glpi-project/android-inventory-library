@@ -230,30 +230,22 @@ public class Cpus extends Categories {
      */
 
     public String getCpuName() {
-        String cpuName = "N/A";
+        String value = "N/A";
         try {
-            FileReader fr = null;
-            BufferedReader br = null;
-            try {
-                File f = new File(CPUINFO);
-                fr = new FileReader(f);
-                br = new BufferedReader(fr, 8 * 1024);
-                String info = br.readLine();
-                cpuName = info.replaceAll("(.*):\\ (.*)", "$2");
-            } catch (IOException e) {
-                FlyveLog.e(e.getMessage());
-            } finally {
-                if (fr != null) {
-                    fr.close();
-                }
-                if (br != null) {
-                    br.close();
+            Map<String, String> cpuInfo = Utils.getCatMapInfo("/proc/cpuinfo");
+            String cpuName = Utils.getValueMapCase(cpuInfo, "Processor").trim();
+            if (!"".equals(cpuName)){
+                value = cpuName;
+            } else {
+                cpuName = Utils.getValueMapCase(cpuInfo, "model name").trim();
+                if (!"".equals(cpuName)){
+                    value = cpuName;
                 }
             }
         } catch (Exception ex) {
             FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.CPU_NAME, ex.getMessage()));
         }
-        return cpuName;
+        return value;
     }
 
     /**
