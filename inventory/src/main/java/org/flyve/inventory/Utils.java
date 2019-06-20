@@ -334,6 +334,15 @@ public class Utils {
         return "";
     }
 
+    public static String getValueMapCase(Map<String, String> mapInfo, String name) {
+        for (String s : mapInfo.keySet()) {
+            if (s.equals(name)) {
+                return mapInfo.get(s);
+            }
+        }
+        return "";
+    }
+
     public static String getCatInfoMultiple(String path) {
         StringBuilder concatInfo = new StringBuilder();
         try {
