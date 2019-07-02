@@ -197,28 +197,32 @@ public class Bios extends Categories {
 	public String getSystemSerialNumber() {
 		String systemSerialNumber = "Unknown";
 		try {
-			if (!Build.SERIAL.equals(Build.UNKNOWN)) {
-				// Mother Board Serial Number
-				// Since in 2.3.3 a.k.a gingerbread
-				systemSerialNumber = Build.SERIAL;
-			} else {
-				//Try to get the serial by reading /proc/cpuinfo
-				String serial = "";
-				try {
-					serial = this.getSerialNumberFromCpuInfo();
-				} catch (Exception ex) {
-					FlyveLog.e(ex.getMessage());
-				}
+			//Try to get the serial by reading /proc/cpuinfo
+			String serial = "";
 
-				if (!serial.equals("") && !serial.equals("0000000000000000")) {
-					systemSerialNumber = serial;
+			//First, use the hidden API!
+			//Versions < Android 7 get bad serial with Build.SERIAL
+			serial = getSerialFromPrivateAPI();
+
+			if (serial.equals("")) {
+				if (!Build.SERIAL.equals(Build.UNKNOWN)) {
+					// Mother Board Serial Number
+					// Since in 2.3.3 a.k.a gingerbread
+					systemSerialNumber = Build.SERIAL;
 				} else {
-					//Last try, use the hidden API!
-					serial = getSerialFromPrivateAPI();
-					if (!serial.equals("")) {
+
+					try {
+						serial = this.getSerialNumberFromCpuInfo();
+					} catch (Exception ex) {
+						FlyveLog.e(ex.getMessage());
+					}
+
+					if (!serial.equals("") && !serial.equals("0000000000000000")) {
 						systemSerialNumber = serial;
 					}
 				}
+			} else {
+				systemSerialNumber = serial;
 			}
 		} catch (Exception ex) {
 			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.BIOS_SYSTEM_SERIAL, ex.getMessage()));
@@ -231,15 +235,35 @@ public class Bios extends Categories {
 	 * @return String with a Serial Device
 	 */
 	private String getSerialFromPrivateAPI() {
-		String serial = "N/A";
+
+		String serialNumber;
+
 		try {
-	        Class<?> c = Class.forName("android.os.SystemProperties");
-	        Method get = c.getMethod("get", String.class);
-	        serial = (String) get.invoke(c, "ro.serialno");
-	    } catch (Exception ex) {
+			Class<?> c = Class.forName("android.os.SystemProperties");
+			Method get = c.getMethod("get", String.class);
+
+			serialNumber = (String) get.invoke(c, "gsm.sn1");
+
+			if (serialNumber.equals("")) {
+				serialNumber = (String) get.invoke(c, "ril.serialnumber");
+
+				if (serialNumber.equals("")) {
+					serialNumber = (String) get.invoke(c, "ro.serialno");
+
+					if (serialNumber.equals("")) {
+						serialNumber = (String) get.invoke(c, "sys.serialnumber");
+					}
+				}
+			}
+
+
+
+		} catch (Exception ex) {
 			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.BIOS_SERIAL_PRIVATE, ex.getMessage()));
-	    }
-	    return serial;
+			serialNumber = "";
+		}
+
+		return serialNumber;
 	}
 
 	/**
