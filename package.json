@@ -29,5 +29,10 @@
     "gh-pages": "^2.0.0",
     "node-github-release": "^0.1.1",
     "standard-version": "^5.0.0"
+  },
+  "dependencies": {
+    "lodash": "^4.17.13",
+    "lodash.merge": "^4.6.2",
+    "lodash.template": "^4.5.0"
   }
 }
