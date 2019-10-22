@@ -26,8 +26,12 @@
 
 package org.flyve.inventory.categories;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Build;
+import android.support.v4.content.ContextCompat;
+import android.util.Log;
 
 import org.flyve.inventory.CommonErrorType;
 import org.flyve.inventory.FlyveLog;
@@ -205,22 +209,34 @@ public class Bios extends Categories {
 			serial = getSerialFromPrivateAPI();
 
 			if (serial.equals("")) {
-				if (!Build.SERIAL.equals(Build.UNKNOWN)) {
-					// Mother Board Serial Number
-					// Since in 2.3.3 a.k.a gingerbread
-					systemSerialNumber = Build.SERIAL;
-				} else {
 
-					try {
-						serial = this.getSerialNumberFromCpuInfo();
-					} catch (Exception ex) {
-						FlyveLog.e(ex.getMessage());
-					}
+				if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O &&
+						ContextCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE)
+							== PackageManager.PERMISSION_GRANTED) {
+					serial = android.os.Build.getSerial();
+				} else{
+					serial = android.os.Build.SERIAL;
+				}
 
-					if (!serial.equals("") && !serial.equals("0000000000000000")) {
-						systemSerialNumber = serial;
+				if (serial.equals("") || serial.equalsIgnoreCase(android.os.Build.UNKNOWN)) {
+					if (!Build.SERIAL.equals(Build.UNKNOWN)) {
+						// Mother Board Serial Number
+						// Since in 2.3.3 a.k.a gingerbread
+						systemSerialNumber = Build.SERIAL;
+					} else {
+
+						try {
+							serial = this.getSerialNumberFromCpuInfo();
+						} catch (Exception ex) {
+							FlyveLog.e(ex.getMessage());
+						}
+
+						if (!serial.equals("") && !serial.equals("0000000000000000")) {
+							systemSerialNumber = serial;
+						}
 					}
 				}
+
 			} else {
 				systemSerialNumber = serial;
 			}

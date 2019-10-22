@@ -1,3 +1,44 @@
+
+Skip to content
+
+    Why GitHub?
+                          
+
+
+                    
+Enterprise
+Explore
+                      
+
+                    
+Marketplace
+Pricing
+                       
+
+
+                        
+
+Sign in
+Sign up
+
+6
+10
+
+    16
+
+flyve-mdm/android-inventory-library
+Code
+Issues 9
+Pull requests 1
+Projects 2
+Security
+Insights
+Join GitHub today
+
+GitHub is home to over 40 million developers working together to host and review code, manage projects, and build software together.
+android-inventory-library/inventory/src/main/res/raw/specification.dtd
+@rafaelje rafaelje test(lint): linting with SonarQube (#9) 701bad2 on 30 Jun 2017
+719 lines (679 sloc) 23.9 KB
 <!DOCTYPE REQUEST
 [
 <!ELEMENT DEVICEID (#PCDATA)>
@@ -717,3 +758,19 @@
     <!-- message type, ie "SNMPQUERY" -->
 <!ELEMENT QUERY (#PCDATA)>
 ]>
+
+    © 2019 GitHub, Inc.
+    Terms
+    Privacy
+    Security
+    Status
+    Help
+
+    Contact GitHub
+    Pricing
+    API
+    Training
+    Blog
+    About
+
+
