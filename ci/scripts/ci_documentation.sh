@@ -35,6 +35,9 @@ ci/scripts/ci_generate_documentation.sh
 
 # Update layouts and styles of development folder for correct display on project site
 
+#checkout uncommited changes
+git checkout -- yarn.lock
+
 # get gh-pages branch
 git fetch origin gh-pages
 
