@@ -190,7 +190,7 @@ public class Utils {
             jsonQuery.put("deviceId", getDeviceId());
             TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
             if (telephonyManager != null &&
-                    (context.checkPermission(android.Manifest.permission.READ_PHONE_STATE, android.os.Process.myPid(), android.os.Process.myUid())) == PackageManager.PERMISSION_GRANTED) {
+                    (context.checkPermission(android.Manifest.permission.READ_PHONE_STATE, android.os.Process.myPid(), android.os.Process.myUid()) == PackageManager.PERMISSION_GRANTED)) {
                 jsonQuery.put("IMEI", telephonyManager.getDeviceId());
             }
             jsonQuery.put("content", content);
