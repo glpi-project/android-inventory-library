@@ -27,6 +27,7 @@
 package org.flyve.inventory;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Environment;
 import android.telephony.TelephonyManager;
@@ -188,7 +189,8 @@ public class Utils {
             jsonQuery.put("versionClient", appVersion);
             jsonQuery.put("deviceId", getDeviceId());
             TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-            if (telephonyManager != null) {
+            if (telephonyManager != null &&
+                    (context.checkPermission(android.Manifest.permission.READ_PHONE_STATE, android.os.Process.myPid(), android.os.Process.myUid())) == PackageManager.PERMISSION_GRANTED) {
                 jsonQuery.put("IMEI", telephonyManager.getDeviceId());
             }
             jsonQuery.put("content", content);
