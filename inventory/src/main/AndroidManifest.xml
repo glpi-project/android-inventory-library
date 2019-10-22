@@ -18,5 +18,4 @@
     <uses-feature android:name="android.hardware.camera.autofocus" android:required="false"/>
     <application android:allowBackup="true" android:label="@string/app_name">
     </application>
-    <uses-sdk android:minSdkVersion="12" android:targetSdkVersion="15" />
 </manifest>
