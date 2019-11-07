@@ -16,7 +16,8 @@
     "flyve",
     "library",
     "agent",
-    "teclib"
+    "teclib",
+    "glpi"
   ],
   "author": "Ivan Del Pino <idelpino@teclib.com> (https://flyve-mdm.com)",
   "license": "GPL-3.0",
