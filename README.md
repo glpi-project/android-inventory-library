@@ -82,11 +82,13 @@ Download the latest JAR, grab via Maven, insert on `build.gradle` at app level o
 </dependency>
 ```
 
-### Gradle
+### Gradle app
 
 ```groovy
-compile 'org.flyve:inventory:1.0.0'
+implementation 'org.flyve:inventory:1.1.0@aar'
 ```
+
+
 
 ### Apache Ivy
 
