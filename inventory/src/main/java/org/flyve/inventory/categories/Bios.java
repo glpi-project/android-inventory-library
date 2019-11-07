@@ -28,6 +28,7 @@ package org.flyve.inventory.categories;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
@@ -42,6 +43,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.util.UUID;
 
 /**
  * This class get all the information of the Bios
@@ -60,6 +62,7 @@ public class Bios extends Categories {
 	 */
 	private static final long serialVersionUID = -559572118090134691L;
 	private static final String CPUINFO = "/proc/cpuinfo";
+	private static final String PREF_UNIQUE_ID = "PREF_UNIQUE_ID";
 	private final Context context;
 
 	// <!ELEMENT BIOS (SMODEL, SMANUFACTURER, SSN, BDATE, BVERSION,
@@ -88,7 +91,7 @@ public class Bios extends Categories {
 			c.put("MSN", new CategoryValue(getMotherBoardSerial(), "MSN", "motherBoardSerialNumber"));
 			c.put("SMANUFACTURER", new CategoryValue(getManufacturer(), "SMANUFACTURER", "systemManufacturer"));
 			c.put("SMODEL", new CategoryValue(getModel(), "SMODEL", "systemModel"));
-			c.put("SSN", new CategoryValue(getSystemSerialNumber(), "SSN", "systemSerialNumber"));
+			c.put("SSN", new CategoryValue(getSystemUniqueID(), "SSN", "systemSerialNumber"));
 
 			this.add(c);
 		} catch (Exception ex) {
@@ -194,6 +197,29 @@ public class Bios extends Categories {
 		return !dateInfo.equals("") ? dateInfo : "N/A";
 	}
 
+
+	/**
+	 * Get the System Unique Identifier
+	 * @return string with Unique Identifier
+	 */
+	public String getSystemUniqueID() {
+		String uniqueID;
+
+		SharedPreferences sharedPrefs = context.getSharedPreferences(
+				PREF_UNIQUE_ID, Context.MODE_PRIVATE);
+		uniqueID = sharedPrefs.getString(PREF_UNIQUE_ID, null);
+		if (uniqueID == null) {
+			uniqueID = UUID.randomUUID().toString();
+			SharedPreferences.Editor editor = sharedPrefs.edit();
+			editor.putString(PREF_UNIQUE_ID, uniqueID);
+			editor.apply();
+		}
+
+		return uniqueID;
+
+	}
+
+
 	/**
 	 * Get the System serial number
 	 * @return string with the serial number
@@ -209,7 +235,6 @@ public class Bios extends Categories {
 			serial = getSerialFromPrivateAPI();
 
 			if (serial.equals("")) {
-
 				if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O &&
 						ContextCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE)
 							== PackageManager.PERMISSION_GRANTED) {
