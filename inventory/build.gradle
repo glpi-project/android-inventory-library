@@ -23,6 +23,11 @@ android {
     }
 }
 
+configurations {
+    javadocDeps
+}
+
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -50,6 +55,32 @@ ext {
     publishedGroupId = 'org.flyve'
     libraryName = 'inventory'
     artifact = 'inventory'
+
+
+
+
+    task sourcesJar(type: Jar) {
+        from android.sourceSets.main.java.srcDirs
+        classifier = 'sources'
+    }
+
+    task javadoc(type: Javadoc) {
+        source = android.sourceSets.main.java.srcDirs
+        classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+        classpath += configurations.javadocDeps
+        failOnError false
+    }
+
+    task javadocJar(type: Jar, dependsOn: javadoc) {
+        classifier = 'javadoc'
+        from javadoc.destinationDir
+    }
+
+    artifacts {
+        archives javadocJar
+        archives sourcesJar
+    }
+
 
     libraryDescription = 'Inventory client library written in Java for developing applications on Android'
 
