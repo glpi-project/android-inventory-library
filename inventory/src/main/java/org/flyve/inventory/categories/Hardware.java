@@ -29,6 +29,7 @@ package org.flyve.inventory.categories;
 import android.content.Context;
 import android.os.Build;
 import android.provider.Settings.Secure;
+import android.util.Log;
 
 import org.flyve.inventory.CommonErrorType;
 import org.flyve.inventory.FlyveLog;
@@ -239,6 +240,12 @@ public class Hardware extends Categories {
         } catch (Exception ex) {
             FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.HARDWARE_NAME, ex.getMessage()));
         }
+
+        //name cannot be empty (for glpi inventory)
+        if(value.isEmpty()){
+            value = Build.MODEL;
+        }
+
         return value.trim();
     }
 
