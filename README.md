@@ -10,8 +10,7 @@
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
 [![Greenkeeper badge](https://badges.greenkeeper.io/flyve-mdm/android-inventory-library.svg)](https://greenkeeper.io/)
 [![GitHub release](https://img.shields.io/github/release/flyve-mdm/android-inventory-library.svg)](https://github.com/flyve-mdm/android-inventory-library/releases)
-[![Maven Central](https://img.shields.io/maven-central/v/com.flyvemdm/inventory.svg)](https://bintray.com/flyve-mdm/inventory/android-inventory-library/)
-
+[![Bintray Jcenter](https://img.shields.io/bintray/v/flyve-mdm/teclib-repository/android-inventory-library)](https://bintray.com/flyve-mdm/teclib-repository/android-inventory-library/)
 Flyve MDM allows your company to maintain control of all mobile devices, whilst providing comprehensive protection and enhanced security for sensitive corporate data, via a centralized management console.
 
 To get started, check out [Flyve MDM Website](https://flyve-mdm.com/)!
