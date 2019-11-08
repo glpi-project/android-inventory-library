@@ -32,6 +32,7 @@ import android.net.Uri;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.v4.content.FileProvider;
 import android.util.Log;
 
 import com.orhanobut.logger.AndroidLogAdapter;
@@ -334,9 +335,13 @@ public class InventoryTask {
         intent.setType("text/plain");
         String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
         if(type==1) {
-            intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(path + "/Inventory.json")));
+            Uri json = FileProvider.getUriForFile(ctx, ctx.getApplicationContext().getPackageName() + ".provider",new File(path + "/Inventory.json"));
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.putExtra(Intent.EXTRA_STREAM,  json);
         } else {
-            intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(path + "/Inventory.xml")));
+            Uri xml = FileProvider.getUriForFile(ctx, ctx.getApplicationContext().getPackageName() + ".provider",new File(path + "/Inventory.xml"));
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.putExtra(Intent.EXTRA_STREAM, xml);
         }
         this.ctx.startActivity(Intent.createChooser(intent, "Share your inventory"));
     }

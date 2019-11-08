@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">example_kotlin</string>
+    <string name="dialog_share_title">Select the format to share</string>
+    <string-array name="export_list">
+        <item>XML</item>
+        <item>JSON</item>
+    </string-array>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
 </resources>
