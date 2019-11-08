@@ -26,6 +26,7 @@
 #
 
 GIT_TAG=$(jq -r ".version" package.json)
+GITHUB_TOKEN=$GH_TOKEN
 
 # push tag to github
 yarn conventional-github-releaser -p angular -t $GH_TOKEN 2> /dev/null || true
@@ -36,14 +37,14 @@ sudo zip -r $CIRCLE_ARTIFACTS/kotlin_example_code.zip example_kotlin*
 
 # Update release name
 yarn github-release edit \
---user $CIRCLE_PROJECT_USERNAME \
+--user $GH_USER \
 --repo $CIRCLE_PROJECT_REPONAME \
 --tag ${GIT_TAG} \
 --name "Inventory Engine v${GIT_TAG}" \
 
 # Upload example code release
 yarn github-release upload \
---user $CIRCLE_PROJECT_USERNAME \
+--user $GH_USER \
 --repo $CIRCLE_PROJECT_REPONAME \
 --tag ${GIT_TAG} \
 --name "java_example.zip" \
@@ -51,7 +52,7 @@ yarn github-release upload \
 
 # Upload example code release
 yarn github-release upload \
---user $CIRCLE_PROJECT_USERNAME \
+--user $GH_USER \
 --repo $CIRCLE_PROJECT_REPONAME \
 --tag ${GIT_TAG} \
 --name "kotlin_example.zip" \
