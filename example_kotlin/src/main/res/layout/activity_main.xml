@@ -28,10 +28,4 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.612" />
 
-    <Button
-        android:id="@+id/callTestActivity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Call"/>
-
 </android.support.constraint.ConstraintLayout>

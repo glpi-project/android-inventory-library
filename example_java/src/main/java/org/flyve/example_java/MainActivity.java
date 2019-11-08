@@ -99,7 +99,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -127,39 +126,33 @@ public class MainActivity extends AppCompatActivity {
         btnRun.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                inventoryTask = new InventoryTask(MainActivity.this, "example-app-java", true);
-                inventoryTask.getXML(new InventoryTask.OnTaskCompleted() {
-                    @Override
-                    public void onTaskSuccess(String data) {
-                        Log.d(TAG, data);
-                        try {
-                            getSyncWebData("http://10.0.0.6:8000/1e6dwka1", data, null);
-                        } catch (Exception ex) {
-                            Log.e(TAG, ex.getMessage());
-                        }
-                        Toast.makeText(MainActivity.this, "Inventory Success, check the log", Toast.LENGTH_SHORT).show();
+            inventoryTask = new InventoryTask(MainActivity.this, "example-app-java", true);
+            inventoryTask.getXML(new InventoryTask.OnTaskCompleted() {
+                @Override
+                public void onTaskSuccess(String data) {
+                    Log.d(TAG, data);
+                    Toast.makeText(MainActivity.this, "Inventory Success, check the log", Toast.LENGTH_SHORT).show();
+                }
 
-                    }
+                @Override
+                public void onTaskError(Throwable error) {
+                    Log.e(TAG, error.getMessage());
+                    Toast.makeText(MainActivity.this, "Inventory fail, check the log", Toast.LENGTH_SHORT).show();
+                }
+            });
+            inventoryTask.getJSON(new InventoryTask.OnTaskCompleted() {
+                @Override
+                public void onTaskSuccess(String data) {
+                    Log.d(TAG, data);
+                    //show btn share
+                    btnShare.setVisibility(View.VISIBLE);
+                }
 
-                    @Override
-                    public void onTaskError(Throwable error) {
-                        Log.e(TAG, error.getMessage());
-                        Toast.makeText(MainActivity.this, "Inventory fail, check the log", Toast.LENGTH_SHORT).show();
-                    }
-                });
-                inventoryTask.getJSON(new InventoryTask.OnTaskCompleted() {
-                    @Override
-                    public void onTaskSuccess(String data) {
-                        Log.d(TAG, data);
-                        //show btn share
-                        btnShare.setVisibility(View.VISIBLE);
-                    }
-
-                    @Override
-                    public void onTaskError(Throwable error) {
-                        Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                @Override
+                public void onTaskError(Throwable error) {
+                    Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                }
+            });
             }
         });
     }
