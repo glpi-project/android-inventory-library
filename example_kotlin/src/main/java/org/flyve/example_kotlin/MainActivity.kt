@@ -71,9 +71,6 @@ class MainActivity : AppCompatActivity() {
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        callTestActivity.setOnClickListener {
-            startActivity(Intent(this, SecondActivity::class.java))
-        }
         permission()
         textHello.setOnClickListener({ generateTask() })
 
