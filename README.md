@@ -76,7 +76,7 @@ Download the latest JAR, grab via Maven, insert on `build.gradle` at app level o
 <dependency>
   <groupId>org.flyve</groupId>
   <artifactId>inventory</artifactId>
-  <version>1.0.0</version>
+  <version>1.3.0</version>
   <type>pom</type>
 </dependency>
 ```
@@ -84,7 +84,7 @@ Download the latest JAR, grab via Maven, insert on `build.gradle` at app level o
 ### Gradle app
 
 ```groovy
-implementation 'org.flyve:inventory:1.1.0@aar'
+implementation 'org.flyve:inventory:1.3.0@aar'
 ```
 
 
@@ -92,7 +92,7 @@ implementation 'org.flyve:inventory:1.1.0@aar'
 ### Apache Ivy
 
 ```
-<dependency org='org.flyve' name='inventory' rev='0.1.0'>
+<dependency org='org.flyve' name='inventory' rev='1.3.0'>
   <artifact name='inventory' ext='pom' ></artifact>
 </dependency>
 ```
