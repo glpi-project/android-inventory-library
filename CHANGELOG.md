@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/flyve-mdm/android-inventory-library/compare/1.2.0...1.3.0) (2019-11-08)
+
+
+### Features
+
+* **build:** add javadoc.jar and source.jaar generation ([3357459](https://github.com/flyve-mdm/android-inventory-library/commit/3357459268d8738cdebddc09d08bb668b93d0d28))
+* **core:** bump version ([d9697cf](https://github.com/flyve-mdm/android-inventory-library/commit/d9697cf39f415e97e76a2669c02d7e9c5df6a607))
+
+
+### Bug Fixes
+
+* **build:** fix env variable not define ([1d27462](https://github.com/flyve-mdm/android-inventory-library/commit/1d27462192d6338a0e2f52294f2c2c9f02446f61))
+* **inventory:** clean UUID ([5ff2e17](https://github.com/flyve-mdm/android-inventory-library/commit/5ff2e1767a3f049e4bb54a6e9bd768e902d5f78b))
+* **inventory:** get model name if hostname return empty value ([101a624](https://github.com/flyve-mdm/android-inventory-library/commit/101a624c283c0a5efad600c4bfdac909a9bc4d02))
+* **share-inventory:** use file provider for URI ([ed85ab2](https://github.com/flyve-mdm/android-inventory-library/commit/ed85ab299cf7266e08141bf94a58e2aa4c69b9ba))
+
 ## [1.2.0](https://github.com/flyve-mdm/android-inventory-library/compare/1.1.0...1.2.0) (2019-11-08)
 
 
