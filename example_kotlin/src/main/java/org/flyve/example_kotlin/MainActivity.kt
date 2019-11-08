@@ -27,17 +27,46 @@
 package org.flyve.example_kotlin
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.view.View
+import android.widget.Button
 import kotlinx.android.synthetic.main.activity_main.*
 import org.flyve.inventory.InventoryTask
 
 class MainActivity : AppCompatActivity() {
 
     val LOG = "inventory.example"
+
+
+    fun showDialogShare(context: Context) {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(R.string.dialog_share_title)
+        val type = IntArray(1)
+        //list of items
+        val items = context.resources.getStringArray(R.array.export_list)
+        builder.setSingleChoiceItems(items, 0
+        ) { dialog, which -> type[0] = which }
+        val positiveText = context.getString(android.R.string.ok)
+        builder.setPositiveButton(positiveText
+        ) { dialog, which ->
+            // positive button logic
+            InventoryTask(this@MainActivity, this@MainActivity.LOG, false).shareInventory(type[0])
+        }
+        val negativeText = context.getString(android.R.string.cancel)
+        builder.setNegativeButton(negativeText
+        ) { dialog, which ->
+            // negative button logic
+        }
+        val dialog = builder.create()
+        // display dialog
+        dialog.show()
+    }
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +76,11 @@ class MainActivity : AppCompatActivity() {
         }
         permission()
         textHello.setOnClickListener({ generateTask() })
+
+        val btnShare = findViewById<Button>(R.id.btnShare)
+        btnShare.setOnClickListener { showDialogShare(applicationContext) }
+
+        btnShare.visibility = View.INVISIBLE
     }
 
     private fun permission() {
@@ -75,6 +109,8 @@ class MainActivity : AppCompatActivity() {
         inventoryTask.getJSON(object : InventoryTask.OnTaskCompleted {
             override fun onTaskSuccess(data: String?) {
                 Log.d(LOG, data)
+                //show btn share
+                btnShare.visibility = View.VISIBLE
             }
 
             override fun onTaskError(error: Throwable?) {
