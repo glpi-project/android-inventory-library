@@ -209,7 +209,7 @@ public class Bios extends Categories {
 				PREF_UNIQUE_ID, Context.MODE_PRIVATE);
 		uniqueID = sharedPrefs.getString(PREF_UNIQUE_ID, null);
 		if (uniqueID == null) {
-			uniqueID = UUID.randomUUID().toString();
+			uniqueID = UUID.randomUUID().toString().replace("-", "");
 			SharedPreferences.Editor editor = sharedPrefs.edit();
 			editor.putString(PREF_UNIQUE_ID, uniqueID);
 			editor.apply();
