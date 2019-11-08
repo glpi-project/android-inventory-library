@@ -70,17 +70,6 @@ Visit our [website](http://flyve.org/android-inventory-library/) for every eleme
 
 Download the latest JAR, grab via Maven, insert on `build.gradle` at app level or use Apache Ivy.
 
-### Maven
-
-```xml
-<dependency>
-  <groupId>org.flyve</groupId>
-  <artifactId>inventory</artifactId>
-  <version>1.3.0</version>
-  <type>pom</type>
-</dependency>
-```
-
 ### Gradle app
 
 ```groovy
