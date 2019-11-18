@@ -27,6 +27,7 @@
 package org.flyve.inventory.categories;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -91,7 +92,7 @@ public class Bios extends Categories {
 			c.put("MSN", new CategoryValue(getMotherBoardSerial(), "MSN", "motherBoardSerialNumber"));
 			c.put("SMANUFACTURER", new CategoryValue(getManufacturer(), "SMANUFACTURER", "systemManufacturer"));
 			c.put("SMODEL", new CategoryValue(getModel(), "SMODEL", "systemModel"));
-			c.put("SSN", new CategoryValue(getSystemUniqueID(), "SSN", "systemSerialNumber"));
+			c.put("SSN", new CategoryValue(getSystemSerialNumber(), "SSN", "systemSerialNumber"));
 
 			this.add(c);
 		} catch (Exception ex) {
@@ -224,6 +225,7 @@ public class Bios extends Categories {
 	 * Get the System serial number
 	 * @return string with the serial number
 	 */
+	@SuppressLint("HardwareIds")
 	public String getSystemSerialNumber() {
 		String systemSerialNumber = "Unknown";
 		try {
