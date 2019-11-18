@@ -38,14 +38,14 @@ sudo zip -r $CIRCLE_ARTIFACTS/kotlin_example_code.zip example_kotlin*
 # Update release name
 yarn github-release edit \
 --user $GH_USER \
---repo $CIRCLE_PROJECT_REPONAME \
+--repo "$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME" \
 --tag ${GIT_TAG} \
 --name "Inventory Engine v${GIT_TAG}" \
 
 # Upload example code release
 yarn github-release upload \
 --user $GH_USER \
---repo $CIRCLE_PROJECT_REPONAME \
+--repo "$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME" \
 --tag ${GIT_TAG} \
 --name "java_example.zip" \
 --file $CIRCLE_ARTIFACTS/java_example_code.zip
@@ -53,7 +53,7 @@ yarn github-release upload \
 # Upload example code release
 yarn github-release upload \
 --user $GH_USER \
---repo $CIRCLE_PROJECT_REPONAME \
+--repo "$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME" \
 --tag ${GIT_TAG} \
 --name "kotlin_example.zip" \
 --file $CIRCLE_ARTIFACTS/kotlin_example_code.zip
