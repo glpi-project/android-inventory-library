@@ -35,7 +35,9 @@ import android.text.format.DateFormat;
 import android.util.Xml;
 
 import org.flyve.inventory.categories.Categories;
+import org.flyve.inventory.categories.Hardware;
 import org.json.JSONObject;
+import org.w3c.dom.CharacterData;
 import org.xmlpull.v1.XmlSerializer;
 
 import java.io.BufferedReader;
@@ -187,7 +189,7 @@ public class Utils {
             JSONObject jsonQuery = new JSONObject();
             jsonQuery.put("query", "INVENTORY");
             jsonQuery.put("versionClient", appVersion);
-            jsonQuery.put("deviceId", getDeviceId());
+            jsonQuery.put("deviceId", getDeviceId(context));
             TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
             if (telephonyManager != null &&
                     (context.checkPermission(android.Manifest.permission.READ_PHONE_STATE, android.os.Process.myPid(), android.os.Process.myUid()) == PackageManager.PERMISSION_GRANTED)) {
@@ -234,7 +236,7 @@ public class Utils {
                 serializer.endTag(null, "QUERY");
 
                 serializer.startTag(null, "DEVICEID");
-                serializer.text(getDeviceId());
+                serializer.text(getDeviceId(context));
                 serializer.endTag(null, "DEVICEID");
 
                 // Start CONTENT
@@ -309,10 +311,15 @@ public class Utils {
         return "";
     }
 
-    private static String getDeviceId() {
+    private static String getDeviceId(Context context) {
+
+        Hardware hardware = new Hardware(context);
         String currentTimeStamp = getCurrentTimeStamp("yyyy-MM-dd-HH-mm-ss");
-        String hostName = getSystemProperty("net.hostname");
-        return hostName.trim() + "-" + currentTimeStamp.trim();
+        String name = hardware.getName();
+
+        String deviceID =  name.trim() + "-" + currentTimeStamp.trim();
+
+        return deviceID.replaceAll("\\s","");
     }
 
     public static Map<String, String> getCatMapInfo(String path) throws FileNotFoundException {
