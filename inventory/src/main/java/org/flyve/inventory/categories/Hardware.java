@@ -242,7 +242,7 @@ public class Hardware extends Categories {
         }
 
         //name cannot be empty (for glpi inventory)
-        if(value.isEmpty()){
+        if(value.isEmpty() || value.equalsIgnoreCase(android.os.Build.UNKNOWN)){
             value = Build.MODEL;
         }
 
