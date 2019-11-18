@@ -270,6 +270,15 @@ public class Bios extends Categories {
 		} catch (Exception ex) {
 			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.BIOS_SYSTEM_SERIAL, ex.getMessage()));
 		}
+
+		//serial cannot by empty
+		//get uuid of need
+		if(systemSerialNumber.equalsIgnoreCase("Unknown")
+			|| systemSerialNumber.isEmpty()
+			|| systemSerialNumber.equalsIgnoreCase(android.os.Build.UNKNOWN) ){
+			Hardware hardware = new Hardware(context);
+			systemSerialNumber = hardware.getUUID();
+		}
 		return systemSerialNumber;
 	}
 
