@@ -274,8 +274,9 @@ public class Bios extends Categories {
 		//serial cannot by empty
 		//get uuid of need
 		if(systemSerialNumber.equalsIgnoreCase("Unknown")
-			|| systemSerialNumber.isEmpty()
-			|| systemSerialNumber.equalsIgnoreCase(android.os.Build.UNKNOWN) ){
+				|| systemSerialNumber.equalsIgnoreCase("N/A")
+				|| systemSerialNumber.isEmpty()
+				|| systemSerialNumber.equalsIgnoreCase(android.os.Build.UNKNOWN) ){
 			Hardware hardware = new Hardware(context);
 			systemSerialNumber = hardware.getUUID();
 		}
