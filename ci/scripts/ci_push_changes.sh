@@ -37,7 +37,7 @@ git checkout develop
 git rebase master
 
 # push develop
-git push origin develop
+git push --force origin develop
 
 # return to master
 git checkout master
