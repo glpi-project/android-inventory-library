@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.5](https://github.com/flyve-mdm/android-inventory-library/compare/1.3.4...1.3.5) (2019-11-18)
+
+
+### Bug Fixes
+
+* **build:** fix github-release ([c0ab0ce](https://github.com/flyve-mdm/android-inventory-library/commit/c0ab0ced5326eafecce16bb4fae9bd6db28ae090))
+
 ### [1.3.4](https://github.com/flyve-mdm/android-inventory-library/compare/1.3.3...1.3.4) (2019-11-18)
 
 
