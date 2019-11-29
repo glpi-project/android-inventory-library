@@ -261,7 +261,7 @@ public class Utils {
                 serializer.endTag(null, "LOGDATE");
 
                 serializer.startTag(null, "USERID");
-                serializer.text("N/A");
+                serializer.text("");
                 serializer.endTag(null, "USERID");
 
                 serializer.endTag(null, "ACCESSLOG");
