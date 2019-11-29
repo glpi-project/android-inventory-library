@@ -182,7 +182,7 @@ public class OperatingSystem extends Categories {
         String value = "N/A";
         try {
             long milliSeconds = System.currentTimeMillis() - SystemClock.elapsedRealtime();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd HH:mm", Locale.getDefault());
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss", Locale.getDefault());
             Date resultDate = new Date(milliSeconds);
             value = sdf.format(resultDate);
         } catch (Exception ex) {
