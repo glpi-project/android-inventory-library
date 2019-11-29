@@ -290,7 +290,7 @@ public class Cameras
             case 842094169:
                 return "YV12";
             default:
-                return "N/A";
+                return "";
         }
     }
 
