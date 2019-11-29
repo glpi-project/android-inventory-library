@@ -39,10 +39,9 @@ echo ${GCLOUD_SERVICE_KEY} > ${HOME}/gcp-key.json
 gcloud auth activate-service-account --key-file ${HOME}/gcp-key.json
 gcloud --quiet config set project ${GCLOUD_PROJECT}
 
-# Run Instrumented test
 gcloud firebase test android run \
   --type instrumentation \
-  --app ~/flyve_mdm/example_java/build/outputs/apk/androidTest/debug/example_java-debug-androidTest.apk \
-  --test ~/flyve_mdm/example_java/build/outputs/apk/debug/example_java-debug.apk \
+  --app ~/flyve_mdm/example_java/build/outputs/apk/debug/example_java-debug.apk \
+  --test ~/flyve_mdm/example_java/build/outputs/apk/androidTest/debug/example_java-debug-androidTest.apk \
   --device model=Nexus6,version=25,locale=en,orientation=portrait  \
-  --timeout 90s
+  --timeout 180s
