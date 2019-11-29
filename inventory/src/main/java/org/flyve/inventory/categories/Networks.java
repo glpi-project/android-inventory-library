@@ -67,6 +67,7 @@ public class Networks extends Categories {
 
 	// Properties of this component
 	private static final String TYPE = "WIFI";
+	private static final String NO_DECSRIPTION_PROVIDED = "No description found";
 	private DhcpInfo dhcp;
 	private WifiInfo wifi;
 	private final Context context;
@@ -341,6 +342,10 @@ public class Networks extends Categories {
 		} catch (Exception ex) {
 			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS_DESCRIPTION, ex.getMessage()));
 		}
+
+		//change name
+		name = NO_DECSRIPTION_PROVIDED;
+
 		return name;
 	}
 
