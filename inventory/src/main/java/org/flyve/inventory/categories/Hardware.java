@@ -150,7 +150,7 @@ public class Hardware extends Categories {
         try {
             String lastLoggedIn = getUserTagValue("lastLoggedIn");
             if (!"N/A".equals(lastLoggedIn)) {
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd HH:mm", Locale.getDefault());
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss", Locale.getDefault());
                 Date resultDate = new Date(Long.parseLong(lastLoggedIn));
                 value = sdf.format(resultDate);
             }

@@ -141,6 +141,10 @@ public class CategoryValue {
         return value;
     }
 
+    public void setValue(String newValue) {
+        this.value = newValue;
+    }
+
     public String getJsonName() {
         return jsonName;
     }

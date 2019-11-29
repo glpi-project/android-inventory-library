@@ -121,7 +121,10 @@ public class Category extends LinkedHashMap<String, CategoryValue> {
        if (value != null) {
            if (value.getCategory() == null) {
                String s = value.getValue();
-               if (s != null && !s.equals("") && !s.equals(Build.UNKNOWN)){
+               if (s != null && !s.equals(Build.UNKNOWN)){
+                   if(s.equalsIgnoreCase("N/A") || s.equalsIgnoreCase("N\\/A")){
+                       value.setValue("");
+                   }
                    return super.put(key, value);
                } else if (value.getValues() != null && value.getValues().size() > 0) {
                    return super.put(key, value);

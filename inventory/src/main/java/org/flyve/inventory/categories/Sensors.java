@@ -70,7 +70,7 @@ public class Sensors extends Categories {
 				Category c = new Category("SENSORS", "sensors");
 
 				c.put("NAME", new CategoryValue(getName(s), "NAME", "name"));
-				c.put("MANUFACTURER", new CategoryValue(getManufacturer(s), "NAME", "manufacturer"));
+				c.put("MANUFACTURER", new CategoryValue(getManufacturer(s), "MANUFACTURER", "manufacturer"));
 				c.put("TYPE", new CategoryValue(getType(s), "TYPE", "type"));
 				c.put("POWER", new CategoryValue(getPower(s), "POWER", "power"));
 				c.put("VERSION", new CategoryValue(getVersion(s), "VERSION", "version"));

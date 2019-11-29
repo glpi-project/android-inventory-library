@@ -159,18 +159,12 @@ public class Utils {
                                        boolean isPrivate, String tag) throws FlyveException {
         try {
 
-            if(!tag.equals("")) {
-                JSONObject accountInfo = new JSONObject();
-                accountInfo.put("keyName", "TAG");
-                accountInfo.put("keyValue", tag);
-            }
-
             JSONObject jsonAccessLog = new JSONObject();
-            jsonAccessLog.put("logDate", DateFormat.format("yyyy-MM-dd H:mm:ss", new Date()).toString());
-            jsonAccessLog.put("userId", "N/A");
+            jsonAccessLog.put("logDate", DateFormat.format("yyyy-MM-dd HH:mm:ss", new Date()).toString());
+            jsonAccessLog.put("userId", "");
 
             jsonAccessLog.put("keyname", "TAG");
-            jsonAccessLog.put("keyvalue", "N/A");
+            jsonAccessLog.put("keyvalue", tag);
 
             JSONObject content = new JSONObject();
             content.put("accessLog", jsonAccessLog);
@@ -263,7 +257,7 @@ public class Utils {
                 serializer.startTag(null, "ACCESSLOG");
 
                 serializer.startTag(null, "LOGDATE");
-                serializer.text(DateFormat.format("yyyy-MM-dd H:mm:ss", new Date()).toString());
+                serializer.text(DateFormat.format("yyyy-MM-dd HH:mm:ss", new Date()).toString());
                 serializer.endTag(null, "LOGDATE");
 
                 serializer.startTag(null, "USERID");
@@ -273,16 +267,6 @@ public class Utils {
                 serializer.endTag(null, "ACCESSLOG");
                 // End ACCESSLOG
 
-                if(!tag.equals("")) {
-                    serializer.startTag(null, "ACCOUNTINFO");
-                    serializer.startTag(null, "KEYNAME");
-                    serializer.text("TAG");
-                    serializer.endTag(null, "KEYNAME");
-                    serializer.startTag(null, "KEYVALUE");
-                    serializer.text(tag);
-                    serializer.endTag(null, "KEYVALUE");
-                    serializer.endTag(null, "ACCOUNTINFO");
-                }
 
                 for (Categories cat : categories) {
                     if(isPrivate) {
