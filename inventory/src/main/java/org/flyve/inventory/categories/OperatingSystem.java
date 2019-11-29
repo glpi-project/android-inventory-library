@@ -165,7 +165,7 @@ public class OperatingSystem extends Categories {
     }
 
     public String getSSHKey() {
-        String encryptedMessage = "N/A";
+        String encryptedMessage = "";
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                 Map keyPair = CryptoUtil.generateKeyPair();
