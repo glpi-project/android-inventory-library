@@ -226,29 +226,29 @@ public class Utils {
                 // Start REQUEST
                 serializer.startTag(null, "REQUEST");
                 serializer.startTag(null, "QUERY");
-                serializer.text("INVENTORY");
+                serializer.text("<![CDATA[" + "INVENTORY" + "]]>");
                 serializer.endTag(null, "QUERY");
 
                 serializer.startTag(null, "DEVICEID");
-                serializer.text(getDeviceId(context));
+                serializer.text("<![CDATA[" + getDeviceId(context) + "]]>");
                 serializer.endTag(null, "DEVICEID");
 
                 // Start CONTENT
                 serializer.startTag(null, "CONTENT");
 
                 serializer.startTag(null, "VERSIONCLIENT");
-                serializer.text(appVersion);
+                serializer.text("<![CDATA[" + appVersion + "]]>");
                 serializer.endTag(null, "VERSIONCLIENT");
 
                 // Start ACCOUNTINFO
                 serializer.startTag(null, "ACCOUNTINFO");
 
                 serializer.startTag(null, "KEYNAME");
-                serializer.text("TAG");
+                serializer.text("<![CDATA[" + "TAG" + "]]>");
                 serializer.endTag(null, "KEYNAME");
 
                 serializer.startTag(null, "KEYVALUE");
-                serializer.text(tag);
+                serializer.text("<![CDATA[" + tag + "]]>");
                 serializer.endTag(null, "KEYVALUE");
 
                 serializer.endTag(null, "ACCOUNTINFO");
@@ -257,7 +257,7 @@ public class Utils {
                 serializer.startTag(null, "ACCESSLOG");
 
                 serializer.startTag(null, "LOGDATE");
-                serializer.text(DateFormat.format("yyyy-MM-dd HH:mm:ss", new Date()).toString());
+                serializer.text("<![CDATA[" + DateFormat.format("yyyy-MM-dd HH:mm:ss", new Date()).toString()+ "]]>");
                 serializer.endTag(null, "LOGDATE");
 
                 serializer.startTag(null, "USERID");
