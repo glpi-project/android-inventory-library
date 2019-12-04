@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.4.0](https://github.com/flyve-mdm/android-inventory-library/compare/1.3.6...1.4.0) (2019-12-04)
+
+
+### Features
+
+* **build:** add instrumentation test ([6e23dad](https://github.com/flyve-mdm/android-inventory-library/commit/6e23dadf16bacce4e7528c9bbbd6a3244d13c9b0))
+
+
+### Bug Fixes
+
+* **inventory:** add all node valuesto CDATA format ([a7eb49e](https://github.com/flyve-mdm/android-inventory-library/commit/a7eb49e8ae022234a3cddd221d182aec41e1ebf0))
+* **inventory:** fix inventory XML / JSON data ([b19540a](https://github.com/flyve-mdm/android-inventory-library/commit/b19540a6ebee18453e88c7406c8ff6c294f9db9f))
+* **inventory:** return empty rather than N/A ([1488f58](https://github.com/flyve-mdm/android-inventory-library/commit/1488f58a18fd50273a1f54abf719eb52bd397971))
+
 ### [1.3.6](https://github.com/flyve-mdm/android-inventory-library/compare/1.3.5...1.3.6) (2019-11-18)
 
 
