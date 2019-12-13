@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.1](https://github.com/flyve-mdm/android-inventory-library/compare/1.4.0...1.4.1) (2019-12-13)
+
+
+### Bug Fixes
+
+* **inventory:** fix anonymous inventory ([e392f1f](https://github.com/flyve-mdm/android-inventory-library/commit/e392f1f554370ffd4319eb8fe85b137c4b171d3b))
+* **log:** improve log ([f2c5fe4](https://github.com/flyve-mdm/android-inventory-library/commit/f2c5fe4502729a75e0bd9eb0506b2906278a24dc))
+* **package:** update https-proxy-agent to version 4.0.0 ([fc00bc4](https://github.com/flyve-mdm/android-inventory-library/commit/fc00bc4a5e18713b6bbaf17cf46ddf6343be013d))
+
 ## [1.4.0](https://github.com/flyve-mdm/android-inventory-library/compare/1.3.6...1.4.0) (2019-12-04)
 
 
