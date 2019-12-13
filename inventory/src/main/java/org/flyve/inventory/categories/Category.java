@@ -161,7 +161,8 @@ public class Category extends LinkedHashMap<String, CategoryValue> {
             serializer.startTag(null, mType);
 
             for (Map.Entry<String, CategoryValue> entry : this.entrySet()) {
-                if(!this.get(entry.getKey()).isPrivate()) {
+                if(this.get(entry.getKey()).isPrivate() != null
+                        && !this.get(entry.getKey()).isPrivate()) {
                     setXMLValues(serializer, entry);
                 }
             }
@@ -240,7 +241,8 @@ public class Category extends LinkedHashMap<String, CategoryValue> {
         try {
             JSONObject jsonCategories = new JSONObject();
             for (Map.Entry<String,CategoryValue> entry : this.entrySet()) {
-                if(!this.get(entry.getKey()).isPrivate()) {
+                if(this.get(entry.getKey()).isPrivate() != null
+                        && !this.get(entry.getKey()).isPrivate()) {
                     setJSONValues(jsonCategories, entry);
                 }
             }
