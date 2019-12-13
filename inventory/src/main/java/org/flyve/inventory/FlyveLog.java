@@ -52,7 +52,7 @@ public final class FlyveLog {
      */
     public static void d(String message) {
         if(message != null) {
-            Logger.d(TAG, message);
+            Log.d(TAG, message);
         }
     }
 
@@ -62,7 +62,7 @@ public final class FlyveLog {
      */
     public static void v(String message) {
         if(message != null) {
-            Logger.v(TAG, message);
+            Log.v(TAG, message);
         }
     }
 
@@ -72,7 +72,7 @@ public final class FlyveLog {
      */
     public static void i(String message) {
         if(message != null) {
-            Logger.i(TAG, message);
+            Log.i(TAG, message);
         }
     }
 
@@ -82,27 +82,7 @@ public final class FlyveLog {
      */
     public static void e(String message) {
         if(message != null) {
-            Logger.e(TAG, message);
-        }
-    }
-
-    /**
-     * Sends a WARN log message
-     * @param message to log
-     */
-    public static void w(String message) {
-        if(message != null) {
-            Logger.w(TAG, message);
-        }
-    }
-
-    /**
-     * Reports a condition that should never happen, wts (What a Terrible Failure)
-     * @param message to log
-     */
-    public static void wtf(String message) {
-        if(message != null) {
-            Logger.wtf(TAG, message);
+            Log.e(TAG, message);
         }
     }
 
