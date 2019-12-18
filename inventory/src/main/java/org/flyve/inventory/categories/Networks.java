@@ -28,7 +28,11 @@ package org.flyve.inventory.categories;
 
 import android.app.Service;
 import android.content.Context;
+import android.net.ConnectivityManager;
 import android.net.DhcpInfo;
+import android.net.Network;
+import android.net.NetworkCapabilities;
+import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 
@@ -42,6 +46,8 @@ import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.InterfaceAddress;
 import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -316,13 +322,52 @@ public class Networks extends Categories {
 	 */
 	public String getStatus() {
 		String value = "N/A";
+
 		try {
 			value = Utils.getCatInfo("/sys/class/net/wlan0/operstate");
-		} catch (Exception ex) {
-			InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.NETWORKS_STATUS, ex.getMessage()));
+		}catch (Exception ex){
+			InventoryLog.d(InventoryLog.getMessage(context, CommonErrorType.NETWORKS_STATUS, "Unable to get WIFI status from /sys/class/net/wlan0/operstate try with API"));
 		}
+
+		if(value.trim().isEmpty() || value.equalsIgnoreCase("N/A")){
+			if(isConnectedToWifi()){
+				value = "up";
+			}else{
+				value = "down";
+			}
+		}
+
 		return value;
 	}
+
+
+	/**
+	 * Try to know if device is connected to WIFI
+	 * @return true or false
+	 */
+	private boolean isConnectedToWifi() {
+		ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+		if (connectivityManager == null) {
+			return false;
+		}
+
+		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+			Network network = connectivityManager.getActiveNetwork();
+			NetworkCapabilities capabilities = connectivityManager.getNetworkCapabilities(network);
+			if (capabilities == null) {
+				return false;
+			}
+			return capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI);
+		} else {
+			NetworkInfo networkInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+			if (networkInfo == null) {
+				return false;
+			}
+			return networkInfo.isConnected();
+		}
+	}
+
+
 
 	/**
 	 * Get description network
@@ -331,18 +376,21 @@ public class Networks extends Categories {
 	public String getDescription() {
 		String name = "N/A";
 		try {
-			int ipAddress = wifi.getIpAddress();
-			byte[] ip = BigInteger.valueOf(ipAddress).toByteArray();
-			InetAddress inetAddress = InetAddress.getByAddress(ip);
-			NetworkInterface netInterface = NetworkInterface.getByInetAddress(inetAddress);
+			String ipadressString = Utils.getIPAddress(true);
+			InetAddress address = InetAddress.getByName(ipadressString);
+			NetworkInterface netInterface = NetworkInterface.getByInetAddress(address);
 			if (netInterface != null ) {
 				name = netInterface.getDisplayName();
 				return name;
 			}
-		} catch (Exception ex) {
+		} catch (UnknownHostException ex) {
+			InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.NETWORKS_DESCRIPTION, ex.getMessage()));
+		} catch (SocketException ex){
+			InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.NETWORKS_DESCRIPTION, ex.getMessage()));
+		} catch(Exception ex){
 			InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.NETWORKS_DESCRIPTION, ex.getMessage()));
 		}
-
+		
 		//change name
 		name = NO_DECSRIPTION_PROVIDED;
 
