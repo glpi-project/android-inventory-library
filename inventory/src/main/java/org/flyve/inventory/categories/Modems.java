@@ -36,7 +36,9 @@ import org.flyve.inventory.CommonErrorType;
 import org.flyve.inventory.InventoryLog;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * This class get all the information of the Controllers
@@ -62,15 +64,20 @@ public class Modems extends Categories {
      */
 	public Modems(Context xCtx) {
         super(xCtx);
-
         context = xCtx;
 
         try {
-            Category c = new Category("MODEMS", "modems");
-            for (String imei : getIMEI()) {
-                c.put("IMEI", new CategoryValue(imei, "IMEI", "imei"));
+            ArrayList<String> imeiList;
+            imeiList = getIMEI();
+
+            for (String imei :imeiList) {
+                if(imei != null && !imei.equalsIgnoreCase("N/A")){
+                    Category c = new Category("MODEMS", "modems");
+                    c.put("IMEI", new CategoryValue(imei, "IMEI", "imei"));
+                    this.add(c);
+                }
             }
-            this.add(c);
+
         } catch (Exception ex) {
             InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.MODEMS, ex.getMessage()));
         }
@@ -91,7 +98,10 @@ public class Modems extends Categories {
                 if (multipleSim != null && multipleSim.size() > 0) {
                     for (int i = 0; i < multipleSim.size(); i++) {
                         if (telephonyManager != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                            imeiList.add(telephonyManager.getDeviceId(i));
+                            if(telephonyManager.getDeviceId(i) != null){
+                                imeiList.add(telephonyManager.getDeviceId(i));
+                            }
+
                         }
                     }
                 } else {
