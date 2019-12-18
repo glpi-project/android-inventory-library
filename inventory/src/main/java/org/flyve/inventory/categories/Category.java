@@ -29,7 +29,7 @@ package org.flyve.inventory.categories;
 import android.os.Build;
 
 import org.flyve.inventory.CommonErrorType;
-import org.flyve.inventory.FlyveLog;
+import org.flyve.inventory.InventoryLog;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.xmlpull.v1.XmlSerializer;
@@ -152,7 +152,7 @@ public class Category extends LinkedHashMap<String, CategoryValue> {
 
             serializer.endTag(null, mType);
         } catch (Exception ex) {
-            FlyveLog.e(FlyveLog.getMessage(String.valueOf(CommonErrorType.CATEGORY_TO_XML), ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(String.valueOf(CommonErrorType.CATEGORY_TO_XML), ex.getMessage()));
         }
     }
 
@@ -169,7 +169,7 @@ public class Category extends LinkedHashMap<String, CategoryValue> {
 
             serializer.endTag(null, mType);
         } catch (Exception ex) {
-            FlyveLog.e(FlyveLog.getMessage(String.valueOf(CommonErrorType.CATEGORY_TO_XML_WITHOUT_PRIVATE), ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(String.valueOf(CommonErrorType.CATEGORY_TO_XML_WITHOUT_PRIVATE), ex.getMessage()));
         }
     }
 
@@ -232,7 +232,7 @@ public class Category extends LinkedHashMap<String, CategoryValue> {
 
             return jsonCategories;
         } catch ( Exception ex ) {
-            FlyveLog.e(FlyveLog.getMessage(String.valueOf(CommonErrorType.CATEGORY_TO_JSON), ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(String.valueOf(CommonErrorType.CATEGORY_TO_JSON), ex.getMessage()));
             return new JSONObject();
         }
     }
@@ -249,7 +249,7 @@ public class Category extends LinkedHashMap<String, CategoryValue> {
 
             return jsonCategories;
         } catch ( Exception ex ) {
-            FlyveLog.e(FlyveLog.getMessage(String.valueOf(CommonErrorType.CATEGORY_TO_JSON_WITHOUT_PRIVATE), ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(String.valueOf(CommonErrorType.CATEGORY_TO_JSON_WITHOUT_PRIVATE), ex.getMessage()));
             return new JSONObject();
         }
     }

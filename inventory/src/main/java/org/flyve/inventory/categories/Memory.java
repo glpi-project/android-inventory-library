@@ -30,7 +30,7 @@ package org.flyve.inventory.categories;
 import android.content.Context;
 
 import org.flyve.inventory.CommonErrorType;
-import org.flyve.inventory.FlyveLog;
+import org.flyve.inventory.InventoryLog;
 import org.flyve.inventory.Utils;
 
 import java.io.BufferedReader;
@@ -83,7 +83,7 @@ public class Memory extends Categories {
 
             this.add(c);
         } catch (Exception ex) {
-            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.MEMORY, ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.MEMORY, ex.getMessage()));
         }
     }
 
@@ -112,14 +112,14 @@ public class Memory extends Categories {
 
                 br.close();
             } catch (IOException e) {
-                FlyveLog.e(e.getMessage());
+                InventoryLog.e(e.getMessage());
             } finally {
                 if (fr != null) {
                     fr.close();
                 }
             }
         } catch (Exception ex) {
-            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.MEMORY_CAPACITY, ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.MEMORY_CAPACITY, ex.getMessage()));
         }
         return capacity;
 	}
@@ -139,7 +139,7 @@ public class Memory extends Categories {
                 }
             }
         } catch (Exception ex) {
-            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.MEMORY_RAM_INFO, ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.MEMORY_RAM_INFO, ex.getMessage()));
         }
     }
 
@@ -154,7 +154,7 @@ public class Memory extends Categories {
                 ramInfo[1] = "N/A";
             }
         } catch (Exception ex) {
-            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.MEMORY_SPLIT_RAM_INFO, ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.MEMORY_SPLIT_RAM_INFO, ex.getMessage()));
         }
     }
 
@@ -168,7 +168,7 @@ public class Memory extends Categories {
                 }
             }
         } catch (Exception ex) {
-            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.MEMORY_RAM_PROP, ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.MEMORY_RAM_PROP, ex.getMessage()));
         }
         return null;
     }
@@ -178,7 +178,7 @@ public class Memory extends Categories {
         try {
             value = ramInfo[0];
         } catch (Exception ex) {
-            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.MEMORY_TYPE, ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.MEMORY_TYPE, ex.getMessage()));
         }
         return value;
     }
@@ -188,7 +188,7 @@ public class Memory extends Categories {
         try {
             value = ramInfo[1];
         } catch (Exception ex) {
-            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.MEMORY_SPEED, ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.MEMORY_SPEED, ex.getMessage()));
         }
         return value;
     }

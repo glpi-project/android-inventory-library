@@ -29,7 +29,7 @@ package org.flyve.inventory.categories;
 import android.content.Context;
 
 import org.flyve.inventory.CommonErrorType;
-import org.flyve.inventory.FlyveLog;
+import org.flyve.inventory.InventoryLog;
 
 import java.util.Properties;
 
@@ -75,7 +75,7 @@ public class Jvm extends Categories {
 
             this.add(c);
         } catch (Exception ex) {
-            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.JVM, ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.JVM, ex.getMessage()));
         }
     }
 
@@ -89,7 +89,7 @@ public class Jvm extends Categories {
         try {
             value = props.getProperty("java.vm.name");
         } catch (Exception ex) {
-            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.JVM_NAME, ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.JVM_NAME, ex.getMessage()));
         }
         return value;
     }
@@ -104,7 +104,7 @@ public class Jvm extends Categories {
         try {
             value = props.getProperty("java.vm.vendor");
         } catch (Exception ex) {
-            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.JVM_VENDOR, ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.JVM_VENDOR, ex.getMessage()));
         }
         return value;
     }
@@ -121,7 +121,7 @@ public class Jvm extends Categories {
             language += "_";
             language += props.getProperty("user.region");
         } catch (Exception ex) {
-            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.JVM_LANGUAGE, ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.JVM_LANGUAGE, ex.getMessage()));
         }
         return language;
     }
@@ -136,7 +136,7 @@ public class Jvm extends Categories {
         try {
             value = props.getProperty("java.runtime.version");
         } catch (Exception ex) {
-            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.JVM_RUNTIME, ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.JVM_RUNTIME, ex.getMessage()));
         }
         return value;
     }
@@ -151,7 +151,7 @@ public class Jvm extends Categories {
         try {
             value = props.getProperty("java.home");
         } catch (Exception ex) {
-            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.JVM_HOME, ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.JVM_HOME, ex.getMessage()));
         }
         return value;
     }
@@ -166,7 +166,7 @@ public class Jvm extends Categories {
         try {
             value = props.getProperty("java.vm.version");
         } catch (Exception ex) {
-            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.JVM_VERSION, ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.JVM_VERSION, ex.getMessage()));
         }
         return value;
     }
@@ -181,7 +181,7 @@ public class Jvm extends Categories {
         try {
             value = props.getProperty("java.class.path");
         } catch (Exception ex) {
-            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.JVM_CLASS_PATH, ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.JVM_CLASS_PATH, ex.getMessage()));
         }
         return value;
     }

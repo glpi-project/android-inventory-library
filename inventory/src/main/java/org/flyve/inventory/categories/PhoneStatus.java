@@ -32,7 +32,7 @@ import android.telephony.ServiceState;
 import android.telephony.TelephonyManager;
 
 import org.flyve.inventory.CommonErrorType;
-import org.flyve.inventory.FlyveLog;
+import org.flyve.inventory.InventoryLog;
 
 /**
  * This class get all the information of the Network
@@ -100,7 +100,7 @@ public class PhoneStatus extends Categories {
                 }
             }, PhoneStateListener.LISTEN_SERVICE_STATE);
         } catch (Exception ex) {
-            FlyveLog.e(FlyveLog.getMessage(xCtx, CommonErrorType.PHONE_STATUS, ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(xCtx, CommonErrorType.PHONE_STATUS, ex.getMessage()));
         }
     }
 }

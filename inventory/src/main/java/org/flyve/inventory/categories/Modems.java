@@ -33,7 +33,7 @@ import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 
 import org.flyve.inventory.CommonErrorType;
-import org.flyve.inventory.FlyveLog;
+import org.flyve.inventory.InventoryLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,7 +72,7 @@ public class Modems extends Categories {
             }
             this.add(c);
         } catch (Exception ex) {
-            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.MODEMS, ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.MODEMS, ex.getMessage()));
         }
     }
 
@@ -103,7 +103,7 @@ public class Modems extends Categories {
             }
         } catch (Exception ex) {
             imeiList.add("N/A");
-            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.MODEMS_IMEI, ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.MODEMS_IMEI, ex.getMessage()));
         }
         return imeiList;
     }

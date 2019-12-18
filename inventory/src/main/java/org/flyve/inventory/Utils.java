@@ -37,7 +37,6 @@ import android.util.Xml;
 import org.flyve.inventory.categories.Categories;
 import org.flyve.inventory.categories.Hardware;
 import org.json.JSONObject;
-import org.w3c.dom.CharacterData;
 import org.xmlpull.v1.XmlSerializer;
 
 import java.io.BufferedReader;
@@ -197,7 +196,7 @@ public class Utils {
             return jsonRequest.toString();
 
         } catch (Exception ex) {
-            FlyveLog.e(FlyveLog.getMessage(String.valueOf(CommonErrorType.UTILS_CREATE_JSON), ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(String.valueOf(CommonErrorType.UTILS_CREATE_JSON), ex.getMessage()));
             throw new FlyveException(ex.getMessage(), ex.getCause());
         }
     }
@@ -287,7 +286,7 @@ public class Utils {
                 return writer.toString();
 
             } catch (Exception ex) {
-                FlyveLog.e(FlyveLog.getMessage(String.valueOf(CommonErrorType.UTILS_CREATE_XML), ex.getMessage()));
+                InventoryLog.e(InventoryLog.getMessage(String.valueOf(CommonErrorType.UTILS_CREATE_XML), ex.getMessage()));
                 throw new FlyveException(ex.getMessage(), ex.getCause());
             }
         }
@@ -344,7 +343,7 @@ public class Utils {
                 concatInfo.append(s.nextLine());
             }
         } catch (Exception ex) {
-            FlyveLog.e(FlyveLog.getMessage(String.valueOf(CommonErrorType.UTILS_CAT_INFO_MULTIPLE), ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(String.valueOf(CommonErrorType.UTILS_CAT_INFO_MULTIPLE), ex.getMessage()));
         }
         return concatInfo.toString();
     }
@@ -354,7 +353,7 @@ public class Utils {
             Scanner s = new Scanner(new File(path));
             return s.next();
         } catch (Exception ex) {
-            FlyveLog.e(FlyveLog.getMessage(String.valueOf(CommonErrorType.UTILS_CAT_INFO), ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(String.valueOf(CommonErrorType.UTILS_CAT_INFO), ex.getMessage()));
         }
         return "";
     }
@@ -401,7 +400,7 @@ public class Utils {
 
             return arr;
         } catch (IOException ex) {
-            FlyveLog.e(FlyveLog.getMessage(String.valueOf(CommonErrorType.UTILS_DEVICE_PROPERTIES), ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(String.valueOf(CommonErrorType.UTILS_DEVICE_PROPERTIES), ex.getMessage()));
         }
 
         return new ArrayList<>();
@@ -442,7 +441,7 @@ public class Utils {
             is.close();
             json = new String(buffer, "UTF-8");
         } catch (IOException ex) {
-            FlyveLog.e(FlyveLog.getMessage(String.valueOf(CommonErrorType.UTILS_LOAD_JSON_ASSET), ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(String.valueOf(CommonErrorType.UTILS_LOAD_JSON_ASSET), ex.getMessage()));
             return null;
         }
         return json;
@@ -468,9 +467,9 @@ public class Utils {
 
             if(!dir.exists()) {
                 if(dir.mkdirs()) {
-                    FlyveLog.d("create path");
+                    InventoryLog.d("create path");
                 } else {
-                    FlyveLog.e("cannot create path");
+                    InventoryLog.e("cannot create path");
                     return;
                 }
             }
@@ -480,13 +479,13 @@ public class Utils {
             if (!logFile.exists())  {
                 try  {
                     if(logFile.createNewFile()) {
-                        FlyveLog.d("File created");
+                        InventoryLog.d("File created");
                     } else {
-                        FlyveLog.d("Cannot create file");
+                        InventoryLog.d("Cannot create file");
                         return;
                     }
                 } catch (IOException ex) {
-                    FlyveLog.e(ex.getMessage());
+                    InventoryLog.e(ex.getMessage());
                 }
             }
 
@@ -502,22 +501,22 @@ public class Utils {
                 buf.flush();
                 buf.close();
                 fw.close();
-                FlyveLog.d("Inventory stored");
+                InventoryLog.d("Inventory stored");
             }
             catch (IOException ex) {
-                FlyveLog.e(ex.getMessage());
+                InventoryLog.e(ex.getMessage());
             }
             finally {
                 if(fw!=null) {
                     try {
                         fw.close();
                     } catch(Exception ex) {
-                        FlyveLog.e(ex.getMessage());
+                        InventoryLog.e(ex.getMessage());
                     }
                 }
             }
         } else {
-            FlyveLog.d("External Storage is not available");
+            InventoryLog.d("External Storage is not available");
         }
     }
 

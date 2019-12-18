@@ -28,7 +28,7 @@ package org.flyve.inventory.categories;
 
 import android.content.Context;
 
-import org.flyve.inventory.FlyveLog;
+import org.flyve.inventory.InventoryLog;
 
 import java.util.Map;
 
@@ -66,7 +66,7 @@ public class Envs extends Categories {
                 this.add(c);
             }
         } catch (Exception ex) {
-            FlyveLog.e(ex.getMessage());
+            InventoryLog.e(ex.getMessage());
         }
     }
 }
