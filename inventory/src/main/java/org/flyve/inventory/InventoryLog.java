@@ -35,7 +35,7 @@ import com.orhanobut.logger.Logger;
 /**
  * This is a Utils class grapper for Log
  */
-public final class FlyveLog {
+public final class InventoryLog {
 
     // This is the tag to search on console
     static final String TAG = "InventoryLibrary";
@@ -43,7 +43,7 @@ public final class FlyveLog {
     /**
      * private constructor to prevent instances of this class
      */
-    private FlyveLog() {
+    private InventoryLog() {
     }
 
     /**

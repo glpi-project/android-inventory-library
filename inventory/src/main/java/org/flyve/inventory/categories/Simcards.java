@@ -32,7 +32,7 @@ import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 
 import org.flyve.inventory.CommonErrorType;
-import org.flyve.inventory.FlyveLog;
+import org.flyve.inventory.InventoryLog;
 
 import java.lang.reflect.Method;
 import java.util.List;
@@ -135,7 +135,7 @@ public class Simcards extends Categories {
                 }
             }
         } catch (Exception ex) {
-            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.SIM_CARDS, ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.SIM_CARDS, ex.getMessage()));
         }
     }
 
@@ -152,7 +152,7 @@ public class Simcards extends Categories {
                 return subscriptionManager.getActiveSubscriptionInfoList();
             }
         } catch (Exception ex) {
-            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.SIM_CARDS_MULTIPLE, ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.SIM_CARDS_MULTIPLE, ex.getMessage()));
         }
         return null;
     }
@@ -175,7 +175,7 @@ public class Simcards extends Categories {
                 return Integer.parseInt(obPhone.toString());
             }
         } catch (Exception ex) {
-            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.SIM_CARDS_STATE_BY_SLOT, ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.SIM_CARDS_STATE_BY_SLOT, ex.getMessage()));
         }
 
         return 0;
@@ -190,7 +190,7 @@ public class Simcards extends Categories {
         try {
             value = mTM.getSimCountryIso();
         } catch (Exception ex) {
-            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.SIM_CARDS_COUNTRY, ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.SIM_CARDS_COUNTRY, ex.getMessage()));
         }
         return value;
     }
@@ -204,7 +204,7 @@ public class Simcards extends Categories {
         try {
             value = mTM.getSimOperator();
         } catch (Exception ex) {
-            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.SIM_CARDS_OPERATOR_CODE, ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.SIM_CARDS_OPERATOR_CODE, ex.getMessage()));
         }
         return value;
     }
@@ -218,7 +218,7 @@ public class Simcards extends Categories {
         try {
             value = mTM.getSimOperatorName();
         } catch (Exception ex) {
-            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.SIM_CARDS_OPERATOR_NAME, ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.SIM_CARDS_OPERATOR_NAME, ex.getMessage()));
         }
         return value;
     }
@@ -232,7 +232,7 @@ public class Simcards extends Categories {
         try {
             value = mTM.getSimSerialNumber();
         } catch (Exception ex) {
-            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.SIM_CARDS_SERIAL, ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.SIM_CARDS_SERIAL, ex.getMessage()));
         }
         return value;
     }
@@ -270,7 +270,7 @@ public class Simcards extends Categories {
                     break;
             }
         } catch (Exception ex) {
-            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.SIM_CARDS_STATE, ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.SIM_CARDS_STATE, ex.getMessage()));
         }
         return mState;
     }
@@ -284,7 +284,7 @@ public class Simcards extends Categories {
         try {
             value = mTM.getLine1Number();
         } catch (Exception ex) {
-            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.SIM_CARDS_LINE_NUMBER, ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.SIM_CARDS_LINE_NUMBER, ex.getMessage()));
         }
         return value;
     }
@@ -298,7 +298,7 @@ public class Simcards extends Categories {
         try {
             value = mTM.getSubscriberId();
         } catch (Exception ex) {
-            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.SIM_CARDS_SUBSCRIBER_ID, ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.SIM_CARDS_SUBSCRIBER_ID, ex.getMessage()));
         }
         return value;
     }
