@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.2](https://github.com/flyve-mdm/android-inventory-library/compare/1.4.1...1.4.2) (2019-12-18)
+
+
+### Bug Fixes
+
+* **core:** request permssion for modem infos ([2247525](https://github.com/flyve-mdm/android-inventory-library/commit/22475257ef68452812f57097adce29ffa914ae7d))
+* **inventory:** improve imei inventory ([0f8a851](https://github.com/flyve-mdm/android-inventory-library/commit/0f8a851f10567353d87a5b6ab83a809a5eef47d2))
+
 ### [1.4.1](https://github.com/flyve-mdm/android-inventory-library/compare/1.4.0...1.4.1) (2019-12-13)
 
 
