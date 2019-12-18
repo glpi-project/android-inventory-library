@@ -30,7 +30,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 
 import org.flyve.inventory.CommonErrorType;
-import org.flyve.inventory.FlyveLog;
+import org.flyve.inventory.InventoryLog;
 
 /**
  * This class get all the information of the Bluetooth
@@ -99,7 +99,7 @@ public class Bluetooth extends Categories {
                 c.put("NAME", new CategoryValue(getName(), "NAME", "name"));
                 this.add(c);
             } catch (Exception ex) {
-                FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.BLUETOOTH, ex.getMessage()));
+                InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.BLUETOOTH, ex.getMessage()));
             }
         }
     }
@@ -113,7 +113,7 @@ public class Bluetooth extends Categories {
         try {
             address = adapter.getAddress();
         } catch (Exception ex) {
-            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.BLUETOOTH_HARDWARE_ADDRESS, ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.BLUETOOTH_HARDWARE_ADDRESS, ex.getMessage()));
         }
         return address;
     }
@@ -127,7 +127,7 @@ public class Bluetooth extends Categories {
         try {
             name = adapter.getName();
         } catch (Exception ex) {
-            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.BLUETOOTH_NAME, ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.BLUETOOTH_NAME, ex.getMessage()));
         }
         return name;
     }

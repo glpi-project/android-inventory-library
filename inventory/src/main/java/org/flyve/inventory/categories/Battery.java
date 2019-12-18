@@ -33,7 +33,7 @@ import android.os.BatteryManager;
 import android.os.Build;
 
 import org.flyve.inventory.CommonErrorType;
-import org.flyve.inventory.FlyveLog;
+import org.flyve.inventory.InventoryLog;
 
 /**
  * This class get all the information of the baterry like level, voltage, temperature, status, health, technology
@@ -112,7 +112,7 @@ public class Battery extends Categories {
 				}
 			}
 		} catch (Exception ex) {
-			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.BATTERY, ex.getMessage()));
+			InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.BATTERY, ex.getMessage()));
 		}
 	}
 
@@ -122,7 +122,7 @@ public class Battery extends Categories {
 			batteryIntent.getStringExtra("technology");
 			return technology;
 		} catch (Exception ex) {
-			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.BATTERY_TECHNOLOGY, ex.getMessage()));
+			InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.BATTERY_TECHNOLOGY, ex.getMessage()));
 		}
 		return technology;
 	}
@@ -133,7 +133,7 @@ public class Battery extends Categories {
 			float extra = batteryIntent.getIntExtra("temperature", 0);
 			temperature = String.valueOf(extra / 10) + "c";
 		} catch (Exception ex) {
-			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.BATTERY_TEMPERATURE, ex.getMessage()));
+			InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.BATTERY_TEMPERATURE, ex.getMessage()));
 		}
 		return temperature;
 	}
@@ -143,7 +143,7 @@ public class Battery extends Categories {
 		try {
 			voltage = String.valueOf((float) batteryIntent.getIntExtra("voltage", 0) / 1000) + "V";
 		} catch (Exception ex) {
-			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.BATTERY_VOLTAGE, ex.getMessage()));
+			InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.BATTERY_VOLTAGE, ex.getMessage()));
 		}
 		return voltage;
 	}
@@ -153,7 +153,7 @@ public class Battery extends Categories {
 		try {
 			level = String.valueOf(batteryIntent.getIntExtra("level", 0)) + "%";
 		} catch (Exception ex) {
-			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.BATTERY_LEVEL, ex.getMessage()));
+			InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.BATTERY_LEVEL, ex.getMessage()));
 		}
 		return level;
 	}
@@ -177,7 +177,7 @@ public class Battery extends Categories {
 				health = "Unknown";
 			}
 		} catch (Exception ex) {
-			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.BATTERY_HEALTH, ex.getMessage()));
+			InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.BATTERY_HEALTH, ex.getMessage()));
 		}
         return health;
 	}
@@ -199,7 +199,7 @@ public class Battery extends Categories {
 				status = "Unknown";
 			}
 		}  catch (Exception ex) {
-			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.BATTERY_STATUS, ex.getMessage()));
+			InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.BATTERY_STATUS, ex.getMessage()));
 		}
         return status;
 	}
@@ -238,7 +238,7 @@ public class Battery extends Categories {
 				capacityValue = String.valueOf(batteryCapacity);
 			}
 		}  catch (Exception ex) {
-			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.BATTERY_CAPACITY, ex.getMessage()));
+			InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.BATTERY_CAPACITY, ex.getMessage()));
 		}
 		return capacityValue;
 	}

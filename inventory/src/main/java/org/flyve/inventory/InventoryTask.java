@@ -135,7 +135,7 @@ public class InventoryTask {
         Class<Categories> catClass;
 
         for(String c : categories) {
-            FlyveLog.v(String.format("new INVENTORY of %s", c));
+            InventoryLog.v(String.format("new INVENTORY of %s", c));
 
             // Loading the class with name of the ArrayList
             try {
@@ -144,7 +144,7 @@ public class InventoryTask {
 
             }
             catch (Exception ex) {
-                FlyveLog.e( ex.getCause().toString() );
+                InventoryLog.e( ex.getCause().toString() );
                 throw new FlyveException(ex.getMessage(), ex.getCause());
             }
 
@@ -154,7 +154,7 @@ public class InventoryTask {
                     Constructor<Categories> co = catClass.getConstructor(Context.class);
                     mContent.add(co.newInstance(ctx));
                 } catch ( Exception ex ) {
-                    FlyveLog.e( ex.getCause().toString() );
+                    InventoryLog.e( ex.getCause().toString() );
                     throw new FlyveException(ex.getMessage(), ex.getCause());
                 }
             }

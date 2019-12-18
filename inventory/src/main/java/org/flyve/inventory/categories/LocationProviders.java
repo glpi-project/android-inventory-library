@@ -32,7 +32,7 @@ import android.location.LocationManager;
 import android.location.LocationProvider;
 
 import org.flyve.inventory.CommonErrorType;
-import org.flyve.inventory.FlyveLog;
+import org.flyve.inventory.InventoryLog;
 
 import java.util.List;
 
@@ -79,7 +79,7 @@ public class LocationProviders extends Categories {
                 }
             }
         } catch (Exception ex) {
-            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.LOCATION, ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.LOCATION, ex.getMessage()));
         }
     }
 
@@ -93,7 +93,7 @@ public class LocationProviders extends Categories {
         try {
             value = lProvider.getName();
         } catch (Exception ex) {
-            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.LOCATION_NAME, ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.LOCATION_NAME, ex.getMessage()));
         }
         return value;
     }

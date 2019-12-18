@@ -29,7 +29,7 @@ package org.flyve.inventory.categories;
 import android.content.Context;
 
 import org.flyve.inventory.CommonErrorType;
-import org.flyve.inventory.FlyveLog;
+import org.flyve.inventory.InventoryLog;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -114,7 +114,7 @@ public class Storage extends Categories {
                 }
             }
         } catch (Exception ex) {
-            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.STORAGE, ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.STORAGE, ex.getMessage()));
         }
     }
 
@@ -138,7 +138,7 @@ public class Storage extends Categories {
 
             return values;
         } catch (Exception ex) {
-            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.STORAGE_PARTITION, ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.STORAGE_PARTITION, ex.getMessage()));
         }
 
         return null;
@@ -157,7 +157,7 @@ public class Storage extends Categories {
                 }
             }
         } catch (Exception ex) {
-            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.STORAGE_VALUES, ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.STORAGE_VALUES, ex.getMessage()));
         }
 
         return arr;

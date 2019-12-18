@@ -32,7 +32,7 @@ import android.os.SystemClock;
 
 import org.flyve.inventory.CommonErrorType;
 import org.flyve.inventory.CryptoUtil;
-import org.flyve.inventory.FlyveLog;
+import org.flyve.inventory.InventoryLog;
 import org.flyve.inventory.Utils;
 
 import java.io.BufferedReader;
@@ -160,7 +160,7 @@ public class OperatingSystem extends Categories {
             this.add(c);
 
         } catch (Exception ex) {
-            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.OPERATING_SYSTEM, ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.OPERATING_SYSTEM, ex.getMessage()));
         }
     }
 
@@ -173,7 +173,7 @@ public class OperatingSystem extends Categories {
                 encryptedMessage = CryptoUtil.encrypt("Test message...", publicKey);
             }
         } catch (Exception ex) {
-            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.OPERATING_SYSTEM_SSH_KEY, ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.OPERATING_SYSTEM_SSH_KEY, ex.getMessage()));
         }
         return "ssh-rsa " + encryptedMessage;
     }
@@ -186,7 +186,7 @@ public class OperatingSystem extends Categories {
             Date resultDate = new Date(milliSeconds);
             value = sdf.format(resultDate);
         } catch (Exception ex) {
-            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.OPERATING_SYSTEM_BOOT_TIME, ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.OPERATING_SYSTEM_BOOT_TIME, ex.getMessage()));
         }
         return value;
     }
@@ -207,7 +207,7 @@ public class OperatingSystem extends Categories {
             br.close();
             value = line;
         } catch (Exception ex) {
-            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.OPERATING_SYSTEM_KERNEL, ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.OPERATING_SYSTEM_KERNEL, ex.getMessage()));
         }
         return value;
     }
@@ -220,14 +220,14 @@ public class OperatingSystem extends Categories {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EE MMM dd HH:mm:ss zzz yyyy", Locale.US);
             simpleDateFormat.setTimeZone(timeZone);
 
-            FlyveLog.i("Time zone: " + timeZone.getID());
-            FlyveLog.i("default time zone: " + TimeZone.getDefault().getID());
+            InventoryLog.i("Time zone: " + timeZone.getID());
+            InventoryLog.i("default time zone: " + TimeZone.getDefault().getID());
 
-            FlyveLog.i("UTC:     " + simpleDateFormat.format(calendar.getTime()));
-            FlyveLog.i("Default: " + calendar.getTime());
+            InventoryLog.i("UTC:     " + simpleDateFormat.format(calendar.getTime()));
+            InventoryLog.i("Default: " + calendar.getTime());
             value = timeZone.getDisplayName();
         } catch (Exception ex) {
-            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.OPERATING_SYSTEM_TIME_ZONE, ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.OPERATING_SYSTEM_TIME_ZONE, ex.getMessage()));
         }
         return  value;
     }
@@ -247,7 +247,7 @@ public class OperatingSystem extends Categories {
 
             value = offset;
         } catch (Exception ex) {
-            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.OPERATING_SYSTEM_CURRENT, ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.OPERATING_SYSTEM_CURRENT, ex.getMessage()));
         }
         return value;
     }

@@ -33,7 +33,7 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 
 import org.flyve.inventory.CommonErrorType;
-import org.flyve.inventory.FlyveLog;
+import org.flyve.inventory.InventoryLog;
 import org.flyve.inventory.Utils;
 
 import java.math.BigInteger;
@@ -121,10 +121,10 @@ public class Networks extends Categories {
 			dhcp = pWM.getDhcpInfo();
 			wifi = pWM.getConnectionInfo();
 
-			FlyveLog.d("<===WIFI DHCP===>");
-			FlyveLog.d("dns1=" + StringUtils.intToIp(dhcp.dns1));
-			FlyveLog.d("dns2=" + StringUtils.intToIp(dhcp.dns2));
-			FlyveLog.d("leaseDuration=" + dhcp.leaseDuration);
+			InventoryLog.d("<===WIFI DHCP===>");
+			InventoryLog.d("dns1=" + StringUtils.intToIp(dhcp.dns1));
+			InventoryLog.d("dns2=" + StringUtils.intToIp(dhcp.dns2));
+			InventoryLog.d("leaseDuration=" + dhcp.leaseDuration);
 
 			c.put("DESCRIPTION", new CategoryValue(getDescription(), "DESCRIPTION", "description", true, false));
 			c.put("DRIVER", new CategoryValue(TYPE, "DRIVER", "driver", true, false));
@@ -149,7 +149,7 @@ public class Networks extends Categories {
 				pWM.setWifiEnabled(false);
 			}
 		} catch (Exception ex) {
-			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS, ex.getMessage()));
+			InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.NETWORKS, ex.getMessage()));
 		}
 	}
 
@@ -170,7 +170,7 @@ public class Networks extends Categories {
 				}
 			}
 		} catch (Exception ex) {
-			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS_MAC_ADDRESS, ex.getMessage()));
+			InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.NETWORKS_MAC_ADDRESS, ex.getMessage()));
 		}
 
 		return macAddress;
@@ -191,7 +191,7 @@ public class Networks extends Categories {
 				return buf.toString();
 			}
 		} catch (Exception ex) {
-			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS_MAC_ADDRESS_VALUE, ex.getMessage()));
+			InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.NETWORKS_MAC_ADDRESS_VALUE, ex.getMessage()));
 		}
 
 		return "N/A";
@@ -206,7 +206,7 @@ public class Networks extends Categories {
 		try {
 			value = String.valueOf(wifi.getLinkSpeed());
 		} catch (Exception ex) {
-			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS_SPEED, ex.getMessage()));
+			InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.NETWORKS_SPEED, ex.getMessage()));
 		}
 		return value;
 	}
@@ -220,7 +220,7 @@ public class Networks extends Categories {
 		try {
 			value = String.valueOf(wifi.getBSSID());
 		} catch (Exception ex) {
-			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS_BSS_ID, ex.getMessage()));
+			InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.NETWORKS_BSS_ID, ex.getMessage()));
 		}
 		return value;
 	}
@@ -235,7 +235,7 @@ public class Networks extends Categories {
 		try {
 			value = String.valueOf(wifi.getSSID());
 		} catch (Exception ex) {
-			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS_SS_ID, ex.getMessage()));
+			InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.NETWORKS_SS_ID, ex.getMessage()));
 		}
 		return value;
 	}
@@ -249,7 +249,7 @@ public class Networks extends Categories {
 		try {
 			value = StringUtils.intToIp(dhcp.gateway);
 		} catch (Exception ex) {
-			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS_IP_GATEWAY, ex.getMessage()));
+			InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.NETWORKS_IP_GATEWAY, ex.getMessage()));
 		}
 		return value;
 	}
@@ -263,7 +263,7 @@ public class Networks extends Categories {
 		try {
 			value = StringUtils.intToIp(dhcp.ipAddress);
 		} catch (Exception ex) {
-			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS_IP_ADDRESS, ex.getMessage()));
+			InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.NETWORKS_IP_ADDRESS, ex.getMessage()));
 		}
 		return value;
 	}
@@ -277,7 +277,7 @@ public class Networks extends Categories {
 		try {
 			value = StringUtils.intToIp(dhcp.netmask);
 		} catch (Exception ex) {
-			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS_IP_MASK, ex.getMessage()));
+			InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.NETWORKS_IP_MASK, ex.getMessage()));
 		}
 		return value;
 	}
@@ -291,7 +291,7 @@ public class Networks extends Categories {
 		try {
 			value = StringUtils.intToIp(dhcp.serverAddress);
 		} catch (Exception ex) {
-			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS_IP_DH_CP, ex.getMessage()));
+			InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.NETWORKS_IP_DH_CP, ex.getMessage()));
 		}
 		return value;
 	}
@@ -305,7 +305,7 @@ public class Networks extends Categories {
 		try {
 			value = StringUtils.getSubNet(wifi.getIpAddress());
 		} catch (Exception ex) {
-			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS_IP_SUBNET, ex.getMessage()));
+			InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.NETWORKS_IP_SUBNET, ex.getMessage()));
 		}
 		return value;
 	}
@@ -319,7 +319,7 @@ public class Networks extends Categories {
 		try {
 			value = Utils.getCatInfo("/sys/class/net/wlan0/operstate");
 		} catch (Exception ex) {
-			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS_STATUS, ex.getMessage()));
+			InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.NETWORKS_STATUS, ex.getMessage()));
 		}
 		return value;
 	}
@@ -340,7 +340,7 @@ public class Networks extends Categories {
 				return name;
 			}
 		} catch (Exception ex) {
-			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS_DESCRIPTION, ex.getMessage()));
+			InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.NETWORKS_DESCRIPTION, ex.getMessage()));
 		}
 
 		//change name
@@ -437,7 +437,7 @@ public class Networks extends Categories {
 				}
 			}
 		} catch (Exception ex) {
-			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.NETWORKS_LOCAL_IPV6, ex.getMessage()));
+			InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.NETWORKS_LOCAL_IPV6, ex.getMessage()));
 		}
 		return null;
 	}

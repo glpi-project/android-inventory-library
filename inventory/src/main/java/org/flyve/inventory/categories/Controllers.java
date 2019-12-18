@@ -29,7 +29,7 @@ package org.flyve.inventory.categories;
 import android.content.Context;
 
 import org.flyve.inventory.CommonErrorType;
-import org.flyve.inventory.FlyveLog;
+import org.flyve.inventory.InventoryLog;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -72,7 +72,7 @@ public class Controllers extends Categories {
                 }
             }
         } catch (Exception ex) {
-            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.CONTROLLERS, ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.CONTROLLERS, ex.getMessage()));
         }
     }
 
@@ -104,7 +104,7 @@ public class Controllers extends Categories {
                 Collections.sort(arrayList);
             }
         } catch (Exception ex) {
-            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.CONTROLLERS_DRIVERS, ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.CONTROLLERS_DRIVERS, ex.getMessage()));
         }
         return arrayList;
     }
@@ -125,7 +125,7 @@ public class Controllers extends Categories {
                 }
             }
         } catch (Exception ex) {
-            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.CONTROLLERS_FILE, ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.CONTROLLERS_FILE, ex.getMessage()));
         }
         return value;
     }

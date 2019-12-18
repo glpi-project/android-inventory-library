@@ -30,7 +30,7 @@ import android.content.Context;
 import android.content.res.Configuration;
 
 import org.flyve.inventory.CommonErrorType;
-import org.flyve.inventory.FlyveLog;
+import org.flyve.inventory.InventoryLog;
 
 /**
  * This class get all the information of the Inputs
@@ -109,7 +109,7 @@ public class Inputs extends Categories {
 
 			this.add(c);
 		} catch (Exception ex) {
-			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.INPUTS, ex.getMessage()));
+			InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.INPUTS, ex.getMessage()));
 		}
 	}
 
@@ -132,7 +132,7 @@ public class Inputs extends Categories {
 					break;
 			}
 		} catch (Exception ex) {
-			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.INPUTS_KEY_BOARD, ex.getMessage()));
+			InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.INPUTS_KEY_BOARD, ex.getMessage()));
 		}
 
 		return val;
@@ -160,7 +160,7 @@ public class Inputs extends Categories {
 					break;
 			}
 		} catch (Exception ex) {
-			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.INPUTS_TOUCH_SCREEN, ex.getMessage()));
+			InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.INPUTS_TOUCH_SCREEN, ex.getMessage()));
 		}
 		return val;
 	}

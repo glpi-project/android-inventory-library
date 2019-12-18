@@ -29,10 +29,9 @@ package org.flyve.inventory.categories;
 import android.content.Context;
 import android.os.Build;
 import android.provider.Settings.Secure;
-import android.util.Log;
 
 import org.flyve.inventory.CommonErrorType;
-import org.flyve.inventory.FlyveLog;
+import org.flyve.inventory.InventoryLog;
 import org.flyve.inventory.Utils;
 import org.w3c.dom.Document;
 
@@ -129,7 +128,7 @@ public class Hardware extends Categories {
 
             this.add(c);
         } catch (Exception ex) {
-            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.HARDWARE, ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.HARDWARE, ex.getMessage()));
         }
     }
 
@@ -155,7 +154,7 @@ public class Hardware extends Categories {
                 value = sdf.format(resultDate);
             }
         } catch (Exception ex) {
-            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.HARDWARE_DATE_LAST_LOGGED_USER, ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.HARDWARE_DATE_LAST_LOGGED_USER, ex.getMessage()));
         }
         return value;
     }
@@ -174,7 +173,7 @@ public class Hardware extends Categories {
                 value = parse.getFirstChild().getTextContent();
             }
         } catch (Exception ex) {
-            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.HARDWARE_LAST_LOGGED_USER, ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.HARDWARE_LAST_LOGGED_USER, ex.getMessage()));
         }
         return value;
     }
@@ -207,7 +206,7 @@ public class Hardware extends Categories {
                 return value;
             }
         } catch (Exception ex) {
-            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.HARDWARE_USER_TAG, ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.HARDWARE_USER_TAG, ex.getMessage()));
         }
         return value;
     }
@@ -225,7 +224,7 @@ public class Hardware extends Categories {
                 userInfo.add(temp);
             }
         } catch (Exception ex) {
-            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.HARDWARE_USER_INFO, ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.HARDWARE_USER_INFO, ex.getMessage()));
         }
     }
 
@@ -238,7 +237,7 @@ public class Hardware extends Categories {
         try {
             value = Utils.getSystemProperty("net.hostname");
         } catch (Exception ex) {
-            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.HARDWARE_NAME, ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.HARDWARE_NAME, ex.getMessage()));
         }
 
         //name cannot be empty (for glpi inventory)
@@ -258,7 +257,7 @@ public class Hardware extends Categories {
         try {
             value = Build.VERSION.RELEASE;
         } catch (Exception ex) {
-            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.HARDWARE_VERSION, ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.HARDWARE_VERSION, ex.getMessage()));
         }
         return value;
     }
@@ -272,7 +271,7 @@ public class Hardware extends Categories {
         try {
             value = props.getProperty("os.arch");
         } catch (Exception ex) {
-            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.HARDWARE_ARCH_NAME, ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.HARDWARE_ARCH_NAME, ex.getMessage()));
         }
         return value;
     }
@@ -286,7 +285,7 @@ public class Hardware extends Categories {
         try {
             value = Secure.getString(context.getContentResolver(), Secure.ANDROID_ID);
         } catch (Exception ex) {
-            FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.HARDWARE_UUID, ex.getMessage()));
+            InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.HARDWARE_UUID, ex.getMessage()));
         }
         return value;
     }

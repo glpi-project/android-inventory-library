@@ -31,7 +31,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorManager;
 
 import org.flyve.inventory.CommonErrorType;
-import org.flyve.inventory.FlyveLog;
+import org.flyve.inventory.InventoryLog;
 
 import java.util.List;
 
@@ -78,7 +78,7 @@ public class Sensors extends Categories {
 				this.add(c);
 			}
 		} catch (Exception ex) {
-			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.SENSORS, ex.getMessage()));
+			InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.SENSORS, ex.getMessage()));
 		}
 	}
 
@@ -92,7 +92,7 @@ public class Sensors extends Categories {
 		try {
 			value = s.getName();
 		} catch (Exception ex) {
-			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.SENSORS_NAME, ex.getMessage()));
+			InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.SENSORS_NAME, ex.getMessage()));
 		}
 		return value;
 	}
@@ -107,7 +107,7 @@ public class Sensors extends Categories {
 		try {
 			value = s.getVendor();
 		} catch (Exception ex) {
-			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.SENSORS_MANUFACTURER, ex.getMessage()));
+			InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.SENSORS_MANUFACTURER, ex.getMessage()));
 		}
 		return value;
 	}
@@ -151,7 +151,7 @@ public class Sensors extends Categories {
 					break;
 			}
 		} catch (Exception ex) {
-			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.SENSORS_TYPE, ex.getMessage()));
+			InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.SENSORS_TYPE, ex.getMessage()));
 		}
 		return valueType;
 	}
@@ -166,7 +166,7 @@ public class Sensors extends Categories {
 		try {
 			value = String.valueOf(s.getPower());
 		} catch (Exception ex) {
-			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.SENSORS_POWER, ex.getMessage()));
+			InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.SENSORS_POWER, ex.getMessage()));
 		}
 		return value;
 	}
@@ -181,7 +181,7 @@ public class Sensors extends Categories {
 		try {
 			value = String.valueOf(s.getVersion());
 		} catch (Exception ex) {
-			FlyveLog.e(FlyveLog.getMessage(context, CommonErrorType.SENSORS_VERSION, ex.getMessage()));
+			InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.SENSORS_VERSION, ex.getMessage()));
 		}
 		return value;
 	}
