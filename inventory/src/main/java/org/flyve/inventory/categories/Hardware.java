@@ -37,6 +37,7 @@ import org.w3c.dom.Document;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
+import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -47,6 +48,7 @@ import java.util.Properties;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+
 
 /**
  * This class get all the information of the Environment
@@ -234,14 +236,38 @@ public class Hardware extends Categories {
      */
     public String getName() {
         String value = "N/A";
+
+
+
         try {
             value = Utils.getSystemProperty("net.hostname");
         } catch (Exception ex) {
-            InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.HARDWARE_NAME, ex.getMessage()));
+            InventoryLog.d(InventoryLog.getMessage(context, CommonErrorType.HARDWARE_NAME, "Unable to get NAME from Utils.getSystemProperty(\"net.hostname\")"));
+        }
+
+        //try hidden API
+        if(value.trim().isEmpty()
+                || value.equalsIgnoreCase(android.os.Build.UNKNOWN)
+                || value.equalsIgnoreCase("N/A")){
+            try {
+                Method getString = Build.class.getDeclaredMethod("getString", String.class);
+                getString.setAccessible(true);
+                value = getString.invoke(null, "net.hostname").toString();
+            } catch (Exception ex) {
+                InventoryLog.d(InventoryLog.getMessage(context, CommonErrorType.HARDWARE_NAME, "Unable to get NAME from getString invocation on net.hostname"));
+            }
+        }
+
+        //try to construct net.hostname like android
+        //https://android.stackexchange.com/questions/37/how-do-i-change-the-name-of-my-android-device/60425#60425
+        if(!getUUID().isEmpty() && !getUUID().equalsIgnoreCase(("N/A")) && getUUID() != null){
+            value =  "android-"+getUUID();
         }
 
         //name cannot be empty (for glpi inventory)
-        if(value.trim().isEmpty() || value.equalsIgnoreCase(android.os.Build.UNKNOWN)){
+        if(value.trim().isEmpty()
+                || value.equalsIgnoreCase(android.os.Build.UNKNOWN)
+                || value.equalsIgnoreCase("N/A")){
             value = Build.MODEL;
         }
 
