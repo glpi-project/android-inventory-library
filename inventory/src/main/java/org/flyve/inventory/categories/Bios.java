@@ -291,6 +291,7 @@ public class Bios extends Categories {
 		try {
 			Class<?> c = Class.forName("android.os.SystemProperties");
 			Method get = c.getMethod("get", String.class);
+			get.setAccessible(true);
 
 			// (?) Lenovo Tab (https://stackoverflow.com/a/34819027/1276306)
 			serialNumber = (String) get.invoke(c, "gsm.sn1");
