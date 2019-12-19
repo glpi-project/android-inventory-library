@@ -80,7 +80,7 @@ public class Networks extends Categories {
 
 	/**
      * Indicates whether some other object is "equal to" this one
-     * @param Object obj the reference object with which to compare
+     * @param @Object obj the reference object with which to compare
      * @return boolean true if the object is the same as the one given in argument
      */
 	@Override
@@ -365,6 +365,7 @@ public class Networks extends Categories {
 			}
 			return networkInfo.isConnected();
 		}
+
 	}
 
 
@@ -390,7 +391,7 @@ public class Networks extends Categories {
 		} catch(Exception ex){
 			InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.NETWORKS_DESCRIPTION, ex.getMessage()));
 		}
-		
+
 		//change name
 		name = NO_DECSRIPTION_PROVIDED;
 
