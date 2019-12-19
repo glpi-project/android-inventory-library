@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.3](https://github.com/flyve-mdm/android-inventory-library/compare/1.4.2...1.4.3) (2019-12-19)
+
+
+### Bug Fixes
+
+* **bios:** Set the accessible  flag for this object ([828956b](https://github.com/flyve-mdm/android-inventory-library/commit/828956b71d80db1dbf968a8a5c13b85a1b04281d))
+* **build:** fix dependencies ([47a69e7](https://github.com/flyve-mdm/android-inventory-library/commit/47a69e7e2c9e8369a6360e3a73638b49e9d0b895))
+* **core:** add support for HTTP ([66412d3](https://github.com/flyve-mdm/android-inventory-library/commit/66412d33b5079181e494ef4d67e60d2a7ee0b85a))
+* **doc:** fix word typo in doc ([67a13ac](https://github.com/flyve-mdm/android-inventory-library/commit/67a13ac25d2ce40d7dad352a292d3cd046de5993))
+* **hardware:** construct net.hostname like android core id empty ([4417b13](https://github.com/flyve-mdm/android-inventory-library/commit/4417b13fb630008f9d7e404d4753e5029af2fcaa))
+* **hardware:** detect correctly empty value for hardware name ([67f8dac](https://github.com/flyve-mdm/android-inventory-library/commit/67f8daca91fc752892f8635226a95f111e15096c))
+* **network:** detect correctly network description ([deb61dc](https://github.com/flyve-mdm/android-inventory-library/commit/deb61dc26e08c9bafa670ffcf33a71324aee9484))
+* **user:** add permission to correctly query user infos ([b20852b](https://github.com/flyve-mdm/android-inventory-library/commit/b20852b7403d30c3182604d4ff8784bb475f30bd))
+
 ### [1.4.2](https://github.com/flyve-mdm/android-inventory-library/compare/1.4.1...1.4.2) (2019-12-18)
 
 
