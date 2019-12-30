@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.4](https://github.com/flyve-mdm/android-inventory-library/compare/1.4.3...1.4.4) (2019-12-30)
+
+
+### Bug Fixes
+
+* **inventory:** add data tyo CDATA node ([65e6505](https://github.com/flyve-mdm/android-inventory-library/commit/65e650502263b4e4343ea8236c264056849001b2))
+
 ### [1.4.3](https://github.com/flyve-mdm/android-inventory-library/compare/1.4.2...1.4.3) (2019-12-19)
 
 

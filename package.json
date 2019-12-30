@@ -1,6 +1,6 @@
 {
   "name": "@teclib/android-inventory-library",
-  "version": "1.4.3",
+  "version": "1.4.4",
   "description": "Flyve MDM Inventory Library for Android",
   "main": "index.js",
   "scripts": {
