@@ -123,7 +123,7 @@ public class CategoryValue {
         this.jsonName = jsonName;
         this.xmlName = xmlName;
         this.isPrivate = false;
-        this.hasCDATA = false;
+        this.hasCDATA = true;
     }
 
     /** Embed an category inside in another category
