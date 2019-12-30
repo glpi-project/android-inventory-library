@@ -198,14 +198,14 @@ public class Category extends LinkedHashMap<String, CategoryValue> {
                 for (Entry<String, CategoryValue> entries : category.entrySet()) {
                     String xmlName = entries.getKey();
                     for (String value : category.get(xmlName).getValues()) {
-                        setChildXMLValue(serializer, xmlName, value, false);
+                        setChildXMLValue(serializer, xmlName, value, category.get(xmlName).hasCDATA());
                     }
                 }
             } else {
                 for (Entry<String, CategoryValue> entries : category.entrySet()) {
                     String xmlName = entries.getKey();
                     String value = category.get(xmlName).getValue();
-                    setChildXMLValue(serializer, xmlName, value, false);
+                    setChildXMLValue(serializer, xmlName, value, category.get(xmlName).hasCDATA());
                 }
             }
             serializer.endTag(null, category.getType());
