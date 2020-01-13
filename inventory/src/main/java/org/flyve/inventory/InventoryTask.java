@@ -332,14 +332,15 @@ public class InventoryTask {
 
     public void shareInventory(int type){
         Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("text/plain");
         String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
         if(type==1) {
             Uri json = FileProvider.getUriForFile(ctx, ctx.getApplicationContext().getPackageName() + ".provider",new File(path + "/Inventory.json"));
+            intent.setType("application/json");
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             intent.putExtra(Intent.EXTRA_STREAM,  json);
         } else {
             Uri xml = FileProvider.getUriForFile(ctx, ctx.getApplicationContext().getPackageName() + ".provider",new File(path + "/Inventory.xml"));
+            intent.setType("application/xml");
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             intent.putExtra(Intent.EXTRA_STREAM, xml);
         }
