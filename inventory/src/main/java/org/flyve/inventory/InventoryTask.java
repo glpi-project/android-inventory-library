@@ -85,6 +85,7 @@ public class InventoryTask {
      * This constructor return a Success XML or Error on asynchronous way
      * @param context The context to be use
      * @param appVersion The name of the agent
+     * @param storeResult Boolean
      */
     public InventoryTask(Context context, String appVersion, Boolean storeResult) {
         this(storeResult);
@@ -95,6 +96,8 @@ public class InventoryTask {
      * This constructor return a Success XML or Error on asynchronous way
      * @param context The context to be use
      * @param appVersion The name of the agent
+     * @param storeResult Boolean
+     * @param categories String[]
      */
     public InventoryTask(Context context, String appVersion, Boolean storeResult, String[] categories) {
         this(storeResult);
@@ -292,7 +295,7 @@ public class InventoryTask {
     }
 
     /**
-     * Return a JSON String synchronously
+     * @return json String
      */
     public String getJSONSync() {
         try {
@@ -312,7 +315,7 @@ public class InventoryTask {
     }
 
     /**
-     * Return a XML String synchronously
+     * @return xml String
      */
     public String getXMLSyn() {
         try {

@@ -41,9 +41,9 @@ public class CategoryValue {
 
     private static final String REGEX="[<>&]";
     /** Normal category
-     * @param value
-     * @param xmlName
-     * @param jsonName
+     * @param value String value
+     * @param xmlName String xml name
+     * @param jsonName String json name
      */
     public CategoryValue(String value, String xmlName, String jsonName) {
         if (value == null) {
@@ -94,9 +94,9 @@ public class CategoryValue {
     }
 
     /** Insert list of values to the Category
-     * @param values
-     * @param xmlName
-     * @param jsonName
+     * @param values List<String> list of values
+     * @param xmlName String xml name
+     * @param jsonName String json name
      */
     public CategoryValue(List<String> values, String xmlName, String jsonName) {
         if (values == null) {

@@ -141,8 +141,9 @@ public class Simcards extends Categories {
 
 
     /**
-     * Get list sim card
-     * @return true API >= 22
+     * Get list sim card only for API >= 22
+     * @param xCtx Context
+     * @return true
      */
     public List<SubscriptionInfo> getMultipleSim(Context xCtx) {
         try {
@@ -239,8 +240,9 @@ public class Simcards extends Categories {
 
     /**
      * Get state of the Simcard
+     * @param xCtx Context
+     * @param slotId int
      * @return string the Simcard state
-     * @param xCtx
      */
     public String getState(Context xCtx, int slotId) {
         String mState = "N/A";
