@@ -62,3 +62,6 @@ node_modules
 /captures
 .externalNativeBuild
 /development
+
+#ignore javadoc
+/javadoc
