@@ -82,7 +82,6 @@ public class Cameras
 	public Cameras(Context xCtx) {
         super(xCtx);
         context = xCtx;
-
         cameraVendors = Utils.loadJSONFromAsset(xCtx, "camera_vendors.json");
 
         // Get resolutions of the camera
@@ -256,7 +255,9 @@ public class Cameras
                     if (outputFormats != null) {
                         for (int value : outputFormats) {
                             String type = typeFormat(value);
-                            types.add(type.replaceAll("[<>]", ""));
+                            if(!type.isEmpty()){
+                                types.add(type.replaceAll("[<>]", ""));
+                            }
                         }
                     }
                 }
@@ -269,6 +270,8 @@ public class Cameras
 
     private String typeFormat(int i) {
         switch (i) {
+            case 0:
+                return "UNKNOWN";
             case 4:
                 return "RGB_565";
             case 16:
@@ -279,16 +282,38 @@ public class Cameras
                 return "YUY2";
             case 32:
                 return "RAW_SENSOR";
+            case 34:
+                return "PRIVATE";
             case 35:
                 return "YUV_420_888";
+            case 36:
+                return "RAW_PRIVATE";
             case 37:
                 return "RAW10";
+            case 38:
+                return "RAW12";
             case 39:
                 return "YUV_422_888";
+            case 40:
+                return "YUV_444_888";
+            case 41:
+                return "FLEX_RGB_888";
+            case 42:
+                return "FLEX_RGBA_8888";
             case 256:
                 return "JPEG";
+            case 257:
+                return "DEPTH_POINT_CLOUD";
             case 842094169:
                 return "YV12";
+            case 1144402265:
+                return "DEPTH16";
+            case 1212500294:
+                return "HEIC";
+            case 1768253795:
+                return "DEPTH_JPEG";
+            case 538982489:
+                return "Y8";
             default:
                 return "";
         }
@@ -319,22 +344,27 @@ public class Cameras
      * @param index number of camera
      * @return String video resolution camera
      */
-    public String getVideoResolution(int index) {
+    public ArrayList<String> getVideoResolution(int index) {
+        ArrayList<String> resolutions = new ArrayList<>();
         String value = "N/A";
         try {
             Camera open = Camera.open(index);
             Camera.Parameters parameters = open.getParameters();
             List<Camera.Size> supportedVideoSizes = parameters.getSupportedVideoSizes();
             if (supportedVideoSizes != null) {
-                Camera.Size infoSize = supportedVideoSizes.get(supportedVideoSizes.size() - 1);
-                int width = infoSize.width;
-                int height = infoSize.height;
-                value = width + "x" + height;
+                for (int i = 0; i <supportedVideoSizes.size(); i++ ){
+                    Camera.Size infoSize = supportedVideoSizes.get(i);
+                    int width = infoSize.width;
+                    int height = infoSize.height;
+                    value = width + "x" + height;
+                    resolutions.add(value);
+                }
             }
         } catch (Exception ex) {
             InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.CAMERA_VIDEO_RESOLUTION, ex.getMessage()));
         }
-        return value;
+
+        return resolutions;
     }
 
     /**
