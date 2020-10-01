@@ -2,7 +2,7 @@
  *  LICENSE
  *
  *  This file is part of Flyve MDM Inventory Library for Android.
- * 
+ *
  *  Inventory Library for Android is a subproject of Flyve MDM.
  *  Flyve MDM is a mobile device management software.
  *
@@ -51,7 +51,6 @@ import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
@@ -137,7 +136,7 @@ public class Cameras
 
     /**
      * Get info characteristics of the camera
-     * @param xCtx
+     * @param xCtx Context
      * @param index number of the camera
      * @return CameraCharacteristics type object
      */
@@ -157,7 +156,7 @@ public class Cameras
 
     /**
      * Get resolution from the camera
-     * @param characteristics
+     * @param characteristics CameraCharacteristics
      * @return String resolution camera
      */
     public String getResolution(CameraCharacteristics characteristics) {
@@ -194,7 +193,7 @@ public class Cameras
 
     /**
      * Get direction the camera faces relative to device screen
-     * @param characteristics
+     * @param characteristics CameraCharacteristics
      * @return String The camera device faces the same direction as the device's screen
      */
     public String getFacingState(CameraCharacteristics characteristics) {
@@ -224,7 +223,7 @@ public class Cameras
 
     /**
      * Whether this camera device has a flash unit.
-     * @param characteristics
+     * @param characteristics CameraCharacteristics
      * @return String 0 no available, 1 is available
      */
     public String getFlashUnit(CameraCharacteristics characteristics) {
@@ -242,7 +241,7 @@ public class Cameras
 
     /**
      * Get image format camera
-     * @param characteristics
+     * @param characteristics CameraCharacteristics
      * @return String image format camera
      */
     public ArrayList<String> getImageFormat(CameraCharacteristics characteristics) {
@@ -321,7 +320,7 @@ public class Cameras
 
     /**
      * Get orientation camera
-     * @param characteristics
+     * @param characteristics CameraCharacteristics
      * @return String orientation camera
      */
     public String getOrientation(CameraCharacteristics characteristics) {
@@ -346,7 +345,7 @@ public class Cameras
      */
     public ArrayList<String> getVideoResolution(int index) {
         ArrayList<String> resolutions = new ArrayList<>();
-        String value = "N/A";
+        String value;
         try {
             Camera open = Camera.open(index);
             Camera.Parameters parameters = open.getParameters();
@@ -369,7 +368,7 @@ public class Cameras
 
     /**
      * Get focal length camera
-     * @param characteristics
+     * @param characteristics CameraCharacteristics
      * @return String focal length camera
      */
     public String getFocalLength(CameraCharacteristics characteristics) {
@@ -396,7 +395,7 @@ public class Cameras
 
     /**
      * Get sensor size camera
-     * @param characteristics
+     * @param characteristics CameraCharacteristics
      * @return String sensor size camera
      */
     public String getSensorSize(CameraCharacteristics characteristics) {
@@ -411,10 +410,8 @@ public class Cameras
                         return Math.round(width * 100) / 100.0d + "x" + Math.round(height * 100) / 100.0d;
                     }
                 }
-                return value;
-            } else {
-                return value;
             }
+            return value;
         } catch (Exception ex) {
             InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.CAMERA_SENSOR_SIZE, ex.getMessage()));
         }
@@ -485,9 +482,8 @@ public class Cameras
      */
     public ArrayList<String> getSupportValue() {
         ArrayList<String> arrayList = new ArrayList<>();
-        Iterator it = getCatInfoCamera("/system/lib/libcameracustom.so", "SENSOR_DRVNAME_", 100).iterator();
-        while (it.hasNext()) {
-            arrayList.add(((String) it.next()).toLowerCase(Locale.US));
+        for (String s : getCatInfoCamera("/system/lib/libcameracustom.so", "SENSOR_DRVNAME_", 100)) {
+            arrayList.add(s.toLowerCase(Locale.US));
         }
         return arrayList;
     }

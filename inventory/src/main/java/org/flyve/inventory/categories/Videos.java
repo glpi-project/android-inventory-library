@@ -54,7 +54,7 @@ public class Videos extends Categories {
 
     /**
      * Indicates whether some other object is "equal to" this one
-     * @param Object obj the reference object with which to compare
+     * @param obj Object the reference object with which to compare
      * @return boolean true if the object is the same as the one given in argument
      */
     @Override
