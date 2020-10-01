@@ -29,8 +29,8 @@ package org.flyve.inventory;
 import android.content.Context;
 import android.hardware.Camera;
 import android.hardware.camera2.CameraCharacteristics;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.runner.AndroidJUnit4;
+import androidx.test.InstrumentationRegistry;
+import androidx.test.runner.AndroidJUnit4;
 
 import org.flyve.inventory.categories.Cameras;
 import org.junit.Test;
