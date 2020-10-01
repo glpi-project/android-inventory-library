@@ -28,7 +28,7 @@ package org.flyve.inventory;
 
 import android.content.Context;
 import android.os.Environment;
-import android.support.test.InstrumentationRegistry;
+import androidx.test.InstrumentationRegistry;
 
 import org.flyve.inventory.categories.Drives;
 
