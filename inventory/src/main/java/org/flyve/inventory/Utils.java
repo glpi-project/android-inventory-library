@@ -154,6 +154,9 @@ public class Utils {
      * Create a JSON String with al the Categories available
      * @param categories ArrayList with the categories
      * @param appVersion Name of the agent
+     * @param context Context
+     * @param isPrivate boolean
+     * @param tag String
      * @return String with JSON
      * @throws FlyveException Exception
      */
@@ -209,6 +212,9 @@ public class Utils {
      * Create a XML String with al the Categories available
      * @param categories ArrayList with the categories
      * @param appVersion Name of the agent
+     * @param context Context
+     * @param isPrivate boolean
+     * @param tag String
      * @return String with XML
      * @throws FlyveException Exception
      */

@@ -86,7 +86,8 @@ public class Category extends LinkedHashMap<String, CategoryValue> {
 
     /**
      * This constructor load the Context of the instance and the name of the node in XML
-     * @param xType name of the node
+     * @param xType String name of the node
+     * @param tagName String name of the tag
      */
     public Category(String xType, String tagName) {
         mType = xType;
@@ -222,6 +223,7 @@ public class Category extends LinkedHashMap<String, CategoryValue> {
 
     /**
      * This is a public function that create a JSON
+     * @return JSONObject
      */
     public JSONObject toJSON() {
         try {

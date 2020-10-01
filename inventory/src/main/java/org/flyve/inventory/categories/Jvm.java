@@ -81,7 +81,7 @@ public class Jvm extends Categories {
 
     /**
      * Get the name of the Java Virtual Machine (JVM)
-     * @param props
+     * @param props Properties
      * @return string the JVM implementation name
      */
     public String getName(Properties props) {
@@ -96,7 +96,7 @@ public class Jvm extends Categories {
 
     /**
      * Get the vendor of the JVM
-     * @param props
+     * @param props Properties
      * @return string the JVM vendor
      */
     public String getVendor(Properties props) {
@@ -111,7 +111,7 @@ public class Jvm extends Categories {
 
     /**
      * Get the language
-     * @param props
+     * @param props Properties
      * @return string the JVM locale language
      */
     public String getLanguage(Properties props) {
@@ -128,7 +128,7 @@ public class Jvm extends Categories {
 
     /**
      * Get the runtime version
-     * @param props
+     * @param props Properties
      * @return string the java runtime version
      */
     public String getRuntime(Properties props) {
@@ -143,7 +143,7 @@ public class Jvm extends Categories {
 
     /**
      * Get the java directory
-     * @param props
+     * @param props Properties
      * @return string the installation directory
      */
     public String getHome(Properties props) {
@@ -158,7 +158,7 @@ public class Jvm extends Categories {
 
     /**
      * Get the JVM version
-     * @param props
+     * @param props Properties
      * @return string the JVM implementation version
      */
     public String getVersion(Properties props) {
@@ -173,7 +173,7 @@ public class Jvm extends Categories {
 
     /**
      * Get the java class path
-     * @param props
+     * @param props Properties
      * @return string the class path
      */
     public String getClasspath(Properties props) {
