@@ -85,7 +85,7 @@ public class LocationProviders extends Categories {
 
     /**
      * Get the provider name
-     * @param lProvider
+     * @param lProvider LocationProvider
      * @return string the name of the provider
      */
     public String getName(LocationProvider lProvider) {
