@@ -141,7 +141,7 @@ public class Simcards extends Categories {
 
 
     /**
-     * Get list sim card only for API >= 22
+     * Get list sim card only for API equal or sup 22
      * @param xCtx Context
      * @return true
      */

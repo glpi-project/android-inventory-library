@@ -30,7 +30,7 @@ DOC_PATH="development/code-documentation/$CIRCLE_BRANCH"
 # Generate javadoc this folder must be on .gitignore
 #javadoc -d $DOC_PATH -sourcepath ./inventory/src/main/java -subpackages . -bootclasspath $ANDROID_HOME/platforms/android-29/android.jar
 
-./gradlew :inventory:javadoc
+./gradlew :inventory:javadoc -PcustomDestination=$DOC_PATH
 
 # delete the index.html file
 sudo rm $DOC_PATH/index.html

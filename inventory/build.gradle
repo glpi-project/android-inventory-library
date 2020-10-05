@@ -89,8 +89,14 @@ ext {
         classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
         classpath += configurations.implementation
         classpath += fileTree(dir: "$buildDir/tmp/aarsToJars/")
-        destinationDir = file("../javadoc/")
-        failOnError false
+
+        if (!project.hasProperty("customDestination")) {
+            customDestination = "development"
+        }
+
+        println "Destination for javadoc is "+customDestination
+        destinationDir = file("../"+customDestination)
+        failOnError true
     }
 
 

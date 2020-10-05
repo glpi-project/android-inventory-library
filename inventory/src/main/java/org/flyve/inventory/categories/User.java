@@ -107,6 +107,7 @@ public class User extends Categories {
 
     /**
      * Get the user name
+     * @return string userName
      */
     public String getUserName() {
         String userName = "N/A";
