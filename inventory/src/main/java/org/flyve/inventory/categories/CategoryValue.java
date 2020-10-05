@@ -94,7 +94,7 @@ public class CategoryValue {
     }
 
     /** Insert list of values to the Category
-     * @param values List<String> list of values
+     * @param values List list of values
      * @param xmlName String xml name
      * @param jsonName String json name
      */

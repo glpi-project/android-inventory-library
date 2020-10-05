@@ -60,7 +60,7 @@ jobs:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "example_java/build.gradle" }}
       - run:
           name: Build
-          command: ./gradlew :inventory:build
+          command: ./gradlew :inventory:build 
       - save_cache:
           paths:
             - ~/.gradle
