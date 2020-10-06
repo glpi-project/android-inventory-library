@@ -63,9 +63,6 @@ ext {
     libraryName = 'inventory'
     artifact = 'inventory'
 
-
-
-
     task sourcesJar(type: Jar) {
         from android.sourceSets.main.java.srcDirs
         classifier = 'sources'
