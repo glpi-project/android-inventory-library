@@ -92,7 +92,8 @@ public class Cameras
                     Category c = new Category("CAMERAS", "cameras");
                     CameraCharacteristics chars = getCharacteristics(xCtx, index);
                     if (chars != null) {
-                        c.put("RESOLUTION", new CategoryValue(getResolution(chars), "RESOLUTION", "resolution"));
+                        c.put("DESIGNATION", new CategoryValue(Integer.toString(index), "DESIGNATION", "designation"));
+                        c.put("RESOLUTIONIMAGE", new CategoryValue(getResolution(chars), "RESOLUTIONIMAGE", "resolutionimage"));
                         c.put("LENSFACING", new CategoryValue(getFacingState(chars), "LENSFACING", "lensfacing"));
                         c.put("FLASHUNIT", new CategoryValue(getFlashUnit(chars), "FLASHUNIT", "flashunit"));
                         c.put("IMAGEFORMATS", new CategoryValue(getImageFormat(chars), "IMAGEFORMATS", "imageformats"));
@@ -159,7 +160,9 @@ public class Cameras
      * @param characteristics CameraCharacteristics
      * @return String resolution camera
      */
-    public String getResolution(CameraCharacteristics characteristics) {
+    public ArrayList<String> getResolution(CameraCharacteristics characteristics) {
+        ArrayList<String> resolutions = new ArrayList<>();
+
         String value = "N/A";
         try {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
@@ -172,23 +175,28 @@ public class Cameras
                         if (rect != null) {
                             width = rect.width();
                             height = rect.height();
+                            value = width + "x" + height;
+                            resolutions.add(value);
                         }
                     } else {
-                        Size size = outputSizes[outputSizes.length - 1];
-                        width = size.getWidth();
-                        height = size.getHeight();
+                        for (int i = 0; i <outputSizes.length; i++ ) {
+                            Size size = outputSizes[i];
+                            width = size.getWidth();
+                            height = size.getHeight();
+                            value = width + "x" + height;
+                            resolutions.add(value);
+                        }
                     }
-                    value = width + "x" + height;
                 } else {
-                    return value;
+                    return resolutions;
                 }
             } else {
-                return value;
+                return resolutions;
             }
         } catch (Exception ex) {
             InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.CAMERA_RESOLUTION, ex.getMessage()));
         }
-        return value;
+        return resolutions;
     }
 
     /**
