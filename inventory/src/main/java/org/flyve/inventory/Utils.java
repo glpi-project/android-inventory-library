@@ -188,6 +188,7 @@ public class Utils {
 
             JSONObject jsonQuery = new JSONObject();
             jsonQuery.put("query", "INVENTORY");
+            jsonQuery.put("itemtype", "Phone");
             jsonQuery.put("versionClient", appVersion);
             jsonQuery.put("deviceId", getDeviceId(context));
             TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
@@ -237,6 +238,10 @@ public class Utils {
                 serializer.startTag(null, "QUERY");
                 serializer.text("<![CDATA[" + "INVENTORY" + "]]>");
                 serializer.endTag(null, "QUERY");
+
+                serializer.startTag(null, "ITEMTYPE");
+                serializer.text("<![CDATA[" + "Phone" + "]]>");
+                serializer.endTag(null, "ITEMTYPE");
 
                 serializer.startTag(null, "DEVICEID");
                 serializer.text("<![CDATA[" + getDeviceId(context) + "]]>");
