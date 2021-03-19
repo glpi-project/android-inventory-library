@@ -194,7 +194,12 @@ public class Utils {
             TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
             if (telephonyManager != null &&
                     (context.checkPermission(android.Manifest.permission.READ_PHONE_STATE, android.os.Process.myPid(), android.os.Process.myUid()) == PackageManager.PERMISSION_GRANTED)) {
-                jsonQuery.put("IMEI", telephonyManager.getDeviceId());
+                //Since Android 10 getDeviceID thrown error
+                try{
+                    jsonQuery.put("IMEI", telephonyManager.getDeviceId());
+                }catch (Exception e){
+                    InventoryLog.e(e.getMessage() + e.getCause());
+                }
             }
             jsonQuery.put("content", content);
 
