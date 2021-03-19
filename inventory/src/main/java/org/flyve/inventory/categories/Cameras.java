@@ -91,9 +91,10 @@ public class Cameras
                 for (int index = 0; index < count; index++) {
                     Category c = new Category("CAMERAS", "cameras");
                     CameraCharacteristics chars = getCharacteristics(xCtx, index);
+                    c.put("DESIGNATION", new CategoryValue(Integer.toString(index), "DESIGNATION", "designation"));
                     if (chars != null) {
-                        c.put("DESIGNATION", new CategoryValue(Integer.toString(index), "DESIGNATION", "designation"));
-                        c.put("RESOLUTIONIMAGE", new CategoryValue(getResolution(chars), "RESOLUTIONIMAGE", "resolutionimage"));
+
+                        c.put("RESOLUTION", new CategoryValue(getResolution(chars), "RESOLUTION", "resolution"));
                         c.put("LENSFACING", new CategoryValue(getFacingState(chars), "LENSFACING", "lensfacing"));
                         c.put("FLASHUNIT", new CategoryValue(getFlashUnit(chars), "FLASHUNIT", "flashunit"));
                         c.put("IMAGEFORMATS", new CategoryValue(getImageFormat(chars), "IMAGEFORMATS", "imageformats"));
