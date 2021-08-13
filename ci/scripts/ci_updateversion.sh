@@ -27,7 +27,6 @@
 
 # increment version on package.json, create tag and commit with changelog
 yarn run release -m "ci(release): generate CHANGELOG.md for version %s"
-
 GIT_TAG=$(jq -r ".version" package.json)
 
 # send changelog only when merged in master branch
