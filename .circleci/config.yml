@@ -101,22 +101,22 @@ jobs:
             - ~/.gradle
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "inventory/build.gradle" }}
 
-  documentation:
-    <<: *android_config
-    steps:
-      - checkout
-      - *update_licenses
-      - *restore_gradle_cache
-      - run:
-          name: Setup environment
-          command: source ci/scripts/ci_setup.sh
-      - run:
-          name: Documentation
-          command: source ci/scripts/ci_documentation.sh
-      - save_cache:
-          paths:
-            - ~/.gradle
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "inventory/build.gradle" }}
+  #documentation:
+  #  <<: *android_config
+  #  steps:
+  #    - checkout
+  #    - *update_licenses
+  #    - *restore_gradle_cache
+  #    - run:
+  #        name: Setup environment
+  #        command: source ci/scripts/ci_setup.sh
+  #    - run:
+  #        name: Documentation
+  #        command: source ci/scripts/ci_documentation.sh
+  #    - save_cache:
+  #        paths:
+  #          - ~/.gradle
+  #        key: jars-{{ checksum "build.gradle" }}-{{ checksum  "inventory/build.gradle" }}
 
 workflows:
   version: 2
@@ -132,15 +132,15 @@ workflows:
             branches:
               ignore:
                 - master
-      - documentation:
-          context: org-global
-          requires:
-            - build
-          filters:
-            branches:
-              only:
-                - develop
-                - master
+      #- documentation:
+      #    context: org-global
+      #    requires:
+      #      - build
+      #    filters:
+      #      branches:
+      #        only:
+      #          - develop
+      #          - master
       - deploy_production:
           context: org-global
           requires:
