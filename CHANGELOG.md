@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.5.0](https://github.com/flyve-mdm/android-inventory-library/compare/1.4.4...1.5.0) (2021-08-13)
+
+
+### Features
+
+* **inventory:** improve camera process ([3b778ef](https://github.com/flyve-mdm/android-inventory-library/commit/3b778efd57588d3d3284e752c9a29bc3590351e6))
+* **inventory:** native inventory compat ([c6ceb4f](https://github.com/flyve-mdm/android-inventory-library/commit/c6ceb4fb7cdfee6b43552c4f8789dfe4c37c0469))
+* **inventory:** retrieve more informations from camera ([58de937](https://github.com/flyve-mdm/android-inventory-library/commit/58de9371e0035194d71c4ae4c4c548c3d1f83d93))
+
+
+### Bug Fixes
+
+* **build:** disable documentation step ([8dc8e60](https://github.com/flyve-mdm/android-inventory-library/commit/8dc8e609dabb36b3d3c690c4352111af8ca87e1e))
+* **build:** fix javadoc generation ([7f705de](https://github.com/flyve-mdm/android-inventory-library/commit/7f705deca65e8581d5dfe241a5edcdeb95f90874))
+* **inventory:** always set designation ([1d3d726](https://github.com/flyve-mdm/android-inventory-library/commit/1d3d7267a5cdab5c260f03abdb20c63c13eafc7a))
+* **inventory:** catch error when get IMEI ([0108fdc](https://github.com/flyve-mdm/android-inventory-library/commit/0108fdc6676c1edaefe4a14e96dc8495206f4107))
+* **javadoc:** fix javadoc ([7ad7ddd](https://github.com/flyve-mdm/android-inventory-library/commit/7ad7ddd3eeb0e2b0aee9324982946bf899c29df5))
+* **package:** update https-proxy-agent to version 5.0.0 ([359cda3](https://github.com/flyve-mdm/android-inventory-library/commit/359cda3b78e219e41442b17a94c96df02e76ce20))
+* **share:** explicit content type ([b944fb9](https://github.com/flyve-mdm/android-inventory-library/commit/b944fb9ac0db7c128048d59d98d6209ec4c893f7))
+
 ### [1.4.4](https://github.com/flyve-mdm/android-inventory-library/compare/1.4.3...1.4.4) (2019-12-30)
 
 
