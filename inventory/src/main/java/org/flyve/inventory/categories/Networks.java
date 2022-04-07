@@ -243,6 +243,10 @@ public class Networks extends Categories {
 		} catch (Exception ex) {
 			InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.NETWORKS_SS_ID, ex.getMessage()));
 		}
+
+		//remove char ex: <unknown ssid>
+		value = value.replace("<","");
+		value = value.replace(">","");
 		return value;
 	}
 
