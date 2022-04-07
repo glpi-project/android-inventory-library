@@ -91,7 +91,7 @@ public class Cameras
                 for (int index = 0; index < count; index++) {
                     Category c = new Category("CAMERAS", "cameras");
                     CameraCharacteristics chars = getCharacteristics(xCtx, index);
-                    c.put("DESIGNATION", new CategoryValue(Integer.toString(index), "DESIGNATION", "designation"));
+                    c.put("DESIGNATION", new CategoryValue("Camera "+Integer.toString(index), "DESIGNATION", "designation"));
                     if (chars != null) {
 
                         c.put("RESOLUTION", new CategoryValue(getResolution(chars), "RESOLUTION", "resolution"));
@@ -236,11 +236,11 @@ public class Cameras
      * @return String 0 no available, 1 is available
      */
     public String getFlashUnit(CameraCharacteristics characteristics) {
-        String value = "N/A";
+        String value = "0";
         try {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                 Boolean bool = characteristics.get(CameraCharacteristics.FLASH_INFO_AVAILABLE);
-                return bool != null ? bool ? "1" : "0" : "N/A";
+                return bool != null ? bool ? "1" : "0" : "0";
             }
         } catch (Exception ex) {
             InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.CAMERA_FLASH_UNIT, ex.getMessage()));
