@@ -199,14 +199,14 @@ public class Category extends LinkedHashMap<String, CategoryValue> {
                 for (Entry<String, CategoryValue> entries : category.entrySet()) {
                     String xmlName = entries.getKey();
                     for (String value : category.get(xmlName).getValues()) {
-                        setChildXMLValue(serializer, xmlName, value, category.get(xmlName).hasCDATA());
+                        setChildXMLValue(serializer, xmlName, value, false);
                     }
                 }
             } else {
                 for (Entry<String, CategoryValue> entries : category.entrySet()) {
                     String xmlName = entries.getKey();
                     String value = category.get(xmlName).getValue();
-                    setChildXMLValue(serializer, xmlName, value, category.get(xmlName).hasCDATA());
+                    setChildXMLValue(serializer, xmlName, value, false);
                 }
             }
             serializer.endTag(null, category.getType());

@@ -241,33 +241,33 @@ public class Utils {
                 // Start REQUEST
                 serializer.startTag(null, "REQUEST");
                 serializer.startTag(null, "QUERY");
-                serializer.text("<![CDATA[" + "INVENTORY" + "]]>");
+                serializer.text("INVENTORY");
                 serializer.endTag(null, "QUERY");
 
                 serializer.startTag(null, "ITEMTYPE");
-                serializer.text("<![CDATA[" + asset_type + "]]>");
+                serializer.text(asset_type);
                 serializer.endTag(null, "ITEMTYPE");
 
                 serializer.startTag(null, "DEVICEID");
-                serializer.text("<![CDATA[" + getDeviceId(context) + "]]>");
+                serializer.text(getDeviceId(context));
                 serializer.endTag(null, "DEVICEID");
 
                 // Start CONTENT
                 serializer.startTag(null, "CONTENT");
 
                 serializer.startTag(null, "VERSIONCLIENT");
-                serializer.text("<![CDATA[" + appVersion + "]]>");
+                serializer.text(appVersion);
                 serializer.endTag(null, "VERSIONCLIENT");
 
                 // Start ACCOUNTINFO
                 serializer.startTag(null, "ACCOUNTINFO");
 
                 serializer.startTag(null, "KEYNAME");
-                serializer.text("<![CDATA[" + "TAG" + "]]>");
+                serializer.text("TAG");
                 serializer.endTag(null, "KEYNAME");
 
                 serializer.startTag(null, "KEYVALUE");
-                serializer.text("<![CDATA[" + tag + "]]>");
+                serializer.text(tag);
                 serializer.endTag(null, "KEYVALUE");
 
                 serializer.endTag(null, "ACCOUNTINFO");
@@ -276,7 +276,7 @@ public class Utils {
                 serializer.startTag(null, "ACCESSLOG");
 
                 serializer.startTag(null, "LOGDATE");
-                serializer.text("<![CDATA[" + DateFormat.format("yyyy-MM-dd HH:mm:ss", new Date()).toString()+ "]]>");
+                serializer.text(DateFormat.format("yyyy-MM-dd HH:mm:ss", new Date()).toString());
                 serializer.endTag(null, "LOGDATE");
 
                 serializer.startTag(null, "USERID");
@@ -480,9 +480,12 @@ public class Utils {
      */
     public static void storeFile(String message, String filename) {
         String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
+        InventoryLog.e(path);
         File dir = new File(path);
 
         String state = Environment.getExternalStorageState();
+        InventoryLog.e(state);
+
         if (Environment.MEDIA_MOUNTED.equals(state)) {
 
             if(!dir.exists()) {
