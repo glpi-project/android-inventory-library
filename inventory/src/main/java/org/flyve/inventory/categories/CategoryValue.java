@@ -66,7 +66,7 @@ public class CategoryValue {
         this.jsonName = jsonName;
         this.xmlName = xmlName;
         this.isPrivate = false;
-        this.hasCDATA = true;
+        this.hasCDATA = false;
     }
 
     public CategoryValue(String value, String xmlName, String jsonName, Boolean isPrivate, Boolean hasCDATA) {
