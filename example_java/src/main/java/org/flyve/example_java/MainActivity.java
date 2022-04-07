@@ -37,6 +37,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -116,6 +117,9 @@ public class MainActivity extends AppCompatActivity {
                 },
                 1);
 
+        final RadioButton btnComputer = findViewById(R.id.radioButton_computer);
+        btnComputer.setChecked(true);
+
         final Button btnShare = findViewById(R.id.btnShare);
         btnShare.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -131,6 +135,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
             inventoryTask = new InventoryTask(MainActivity.this, "example-app-java", true);
+
+            if(btnComputer.isChecked()){
+                inventoryTask.setAssetItemtype("Computer");
+            } else {
+                inventoryTask.setAssetItemtype("Phone");
+            }
+
             inventoryTask.getXML(new InventoryTask.OnTaskCompleted() {
                 @Override
                 public void onTaskSuccess(String data) {

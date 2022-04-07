@@ -5,7 +5,45 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="org.flyve.example_kotlin.MainActivity">
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:text="Asset type"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <RadioGroup
+        android:id="@+id/radioGroup_itemtype"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/textView2">
+
+        <RadioButton
+            android:id="@+id/radioButton_computer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Computer" />
+
+        <RadioButton
+            android:id="@+id/radioButton_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Phone" />
+    </RadioGroup>
     <Button
         android:id="@+id/textHello"
         android:layout_width="wrap_content"
