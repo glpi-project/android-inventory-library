@@ -33,6 +33,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.RadioButton
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -72,10 +73,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         permission()
-        textHello.setOnClickListener({ generateTask() })
+
 
         val btnShare = findViewById<Button>(R.id.btnShare)
         btnShare.setOnClickListener { showDialogShare(applicationContext) }
+
+        val btnComputer = findViewById<RadioButton>(R.id.radioButton_computer)
+        btnComputer.isChecked = true
+
+        textHello.setOnClickListener({ generateTask(btnComputer) })
 
         btnShare.visibility = View.INVISIBLE
     }
@@ -88,11 +94,17 @@ class MainActivity : AppCompatActivity() {
                         Manifest.permission.CAMERA), 1)
     }
 
-    private fun generateTask() {
+    private fun generateTask(btnComputer: RadioButton ) {
         InventoryTask.showFILog = true
         //        val categories: Array<String> = arrayOf("Hardware", "OperatingSystem")
         val appVersion = "example-app-kotlin"
         val inventoryTask = InventoryTask(this@MainActivity, appVersion, false)
+
+        if (btnComputer.isChecked) {
+            inventoryTask.assetItemtype = "Computer"
+        } else {
+            inventoryTask.assetItemtype = "Phone"
+        }
         inventoryTask.tag = "Android Lenovo"
         inventoryTask.getXML(object : InventoryTask.OnTaskCompleted {
             override fun onTaskSuccess(data: String) {

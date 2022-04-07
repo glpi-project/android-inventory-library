@@ -75,6 +75,7 @@ public class InventoryTask {
     private String fileNameJSON = "Inventory.json";
     private Boolean storeResult = false;
     private String TAG = "";
+    private String ITEMTYPE = "Computer";
     private boolean privateData = false;
 
     public Boolean isRunning() {
@@ -200,6 +201,14 @@ public class InventoryTask {
         return TAG;
     }
 
+    public void setAssetItemtype(String asset_itemtype) {
+        ITEMTYPE = asset_itemtype;
+    }
+
+    public String getAssetItemtype() {
+        return ITEMTYPE;
+    }
+
     public void setPrivateData(boolean enable) {
         privateData = enable;
     }
@@ -221,7 +230,7 @@ public class InventoryTask {
 
                 try {
                     ArrayList<Categories> mContent = loadCategoriesClass();
-                    String xml = Utils.createXML(ctx, mContent, InventoryTask.this.appVersion, getPrivateData(), getTag());
+                    String xml = Utils.createXML(ctx, mContent, InventoryTask.this.appVersion, getPrivateData(), getTag(), getAssetItemtype());
                     xml = xml.replaceAll("&lt;", "<");
                     xml = xml.replaceAll("&gt;", ">");
                     xml = xml.replaceAll("&", "");
@@ -266,7 +275,7 @@ public class InventoryTask {
 
                 try {
                     ArrayList<Categories> mContent = loadCategoriesClass();
-                    final String json = Utils.createJSON(ctx, mContent, InventoryTask.this.appVersion, getPrivateData(), getTag());
+                    final String json = Utils.createJSON(ctx, mContent, InventoryTask.this.appVersion, getPrivateData(), getTag(), getAssetItemtype());
 
                     if(storeResult) {
                         Utils.storeFile(json, fileNameJSON);
@@ -300,7 +309,7 @@ public class InventoryTask {
     public String getJSONSync() {
         try {
             ArrayList<Categories> mContent = loadCategoriesClass();
-            String json = Utils.createJSON(ctx, mContent, InventoryTask.this.appVersion, getPrivateData(), getTag());
+            String json = Utils.createJSON(ctx, mContent, InventoryTask.this.appVersion, getPrivateData(), getTag(), getAssetItemtype());
 
             if(storeResult) {
                 Utils.storeFile(json, fileNameJSON);
@@ -320,7 +329,7 @@ public class InventoryTask {
     public String getXMLSyn() {
         try {
             ArrayList<Categories> mContent = loadCategoriesClass();
-            String xml = Utils.createXML(ctx, mContent, InventoryTask.this.appVersion, getPrivateData(), getTag());
+            String xml = Utils.createXML(ctx, mContent, InventoryTask.this.appVersion, getPrivateData(), getTag(), getAssetItemtype());
 
             if(storeResult) {
                 Utils.storeFile(xml, fileNameXML);

@@ -162,7 +162,7 @@ public class Utils {
      */
 
     protected static String createJSON(Context context, ArrayList<Categories> categories, String appVersion,
-                                       boolean isPrivate, String tag) throws FlyveException {
+                                       boolean isPrivate, String tag, String asset_itemtype) throws FlyveException {
         try {
 
             JSONObject jsonAccessLog = new JSONObject();
@@ -188,7 +188,7 @@ public class Utils {
 
             JSONObject jsonQuery = new JSONObject();
             jsonQuery.put("query", "INVENTORY");
-            jsonQuery.put("itemtype", "Phone");
+            jsonQuery.put("itemtype", asset_itemtype);
             jsonQuery.put("versionClient", appVersion);
             jsonQuery.put("deviceId", getDeviceId(context));
             TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
@@ -225,7 +225,7 @@ public class Utils {
      * @throws FlyveException Exception
      */
     protected static String createXML(Context context, ArrayList<Categories> categories, String appVersion,
-                                      boolean isPrivate, String tag) throws FlyveException {
+                                      boolean isPrivate, String tag, String asset_type) throws FlyveException {
         if (categories != null) {
             XmlSerializer serializer = Xml.newSerializer();
             StringWriter writer = new StringWriter();
@@ -245,7 +245,7 @@ public class Utils {
                 serializer.endTag(null, "QUERY");
 
                 serializer.startTag(null, "ITEMTYPE");
-                serializer.text("<![CDATA[" + "Phone" + "]]>");
+                serializer.text("<![CDATA[" + asset_type + "]]>");
                 serializer.endTag(null, "ITEMTYPE");
 
                 serializer.startTag(null, "DEVICEID");
