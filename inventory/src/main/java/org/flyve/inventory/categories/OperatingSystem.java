@@ -296,8 +296,11 @@ public class OperatingSystem extends Categories {
         SDK26(NameOS.OREO,"8.0"),
         SDK27(NameOS.OREO,"8.1"),
         SDK28(NameOS.PIE,"9.0"),
-        SDK29(NameOS.Q,"10.0");
-        
+        SDK29(NameOS.Q,"10.0"),
+        SDK30(NameOS.RED_VELVET_CAKE, "11.0"),
+        SDK31(NameOS.SNOW_CONE, "12.0"),
+        SDK32(NameOS.SNOW_CONE_V2, "12L"),
+        SDK33(NameOS.TIRAMISU, "13.0");
 
         private final String name;
         private final String version;
@@ -334,6 +337,10 @@ public class OperatingSystem extends Categories {
             public static final String OREO="Oreo";
             public static final String PIE="Pie";
             public static final String Q="Q";
+            public static final String RED_VELVET_CAKE="Red Velvet Cake";
+            public static final String SNOW_CONE="Snow Cone";
+            public static final String SNOW_CONE_V2="Snow Cone";
+            public static final String TIRAMISU="Tiramisu";
         }
 
     }
