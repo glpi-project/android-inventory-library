@@ -28,6 +28,8 @@ package org.flyve.inventory;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.Handler;
@@ -46,6 +48,7 @@ import org.flyve.inventory.categories.Categories;
 import java.io.File;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class generate the XML file
@@ -236,7 +239,7 @@ public class InventoryTask {
                     xml = xml.replaceAll("&", "");
 
                     if(storeResult) {
-                        Utils.storeFile(xml, fileNameXML);
+                        Utils.storeFile(ctx.getApplicationContext(), xml, fileNameXML);
                     }
 
                     final String finalXml = xml;
@@ -278,7 +281,7 @@ public class InventoryTask {
                     final String json = Utils.createJSON(ctx, mContent, InventoryTask.this.appVersion, getPrivateData(), getTag(), getAssetItemtype());
 
                     if(storeResult) {
-                        Utils.storeFile(json, fileNameJSON);
+                        Utils.storeFile(ctx.getApplicationContext(), json, fileNameJSON);
                     }
 
                     InventoryTask.runOnUI(new Runnable() {
@@ -312,7 +315,7 @@ public class InventoryTask {
             String json = Utils.createJSON(ctx, mContent, InventoryTask.this.appVersion, getPrivateData(), getTag(), getAssetItemtype());
 
             if(storeResult) {
-                Utils.storeFile(json, fileNameJSON);
+                Utils.storeFile(ctx.getApplicationContext(), json, fileNameJSON);
             }
 
             return json;
@@ -332,7 +335,7 @@ public class InventoryTask {
             String xml = Utils.createXML(ctx, mContent, InventoryTask.this.appVersion, getPrivateData(), getTag(), getAssetItemtype());
 
             if(storeResult) {
-                Utils.storeFile(xml, fileNameXML);
+                Utils.storeFile(ctx.getApplicationContext(), xml, fileNameXML);
             }
 
             return xml;
@@ -344,20 +347,28 @@ public class InventoryTask {
     }
 
     public void shareInventory(int type){
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
         if(type==1) {
-            Uri json = FileProvider.getUriForFile(ctx, ctx.getApplicationContext().getPackageName() + ".provider",new File(path + "/Inventory.json"));
-            intent.setType("application/json");
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            intent.putExtra(Intent.EXTRA_STREAM,  json);
+            File file = new File(ctx.getFilesDir()  , "Inventory.json");
+            final Uri data = FileProvider.getUriForFile(this.ctx, ctx.getApplicationContext().getPackageName() + ".provider", file);
+            this.ctx.grantUriPermission(this.ctx.getPackageName(), data, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            final Intent intent = new Intent(Intent.ACTION_SEND)
+                    .setType("application/json")
+                    .addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                    .putExtra(Intent.EXTRA_STREAM, data)
+                    .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            this.ctx.startActivity(intent);
         } else {
-            Uri xml = FileProvider.getUriForFile(ctx, ctx.getApplicationContext().getPackageName() + ".provider",new File(path + "/Inventory.xml"));
-            intent.setType("application/xml");
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            intent.putExtra(Intent.EXTRA_STREAM, xml);
+
+            File file = new File(ctx.getFilesDir()  , "Inventory.xml");
+            final Uri data = FileProvider.getUriForFile(this.ctx, ctx.getApplicationContext().getPackageName() + ".provider", file);
+            this.ctx.grantUriPermission(this.ctx.getPackageName(), data, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            final Intent intent = new Intent(Intent.ACTION_SEND)
+                .setType("application/xml")
+                .addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                .putExtra(Intent.EXTRA_STREAM, data)
+                .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            this.ctx.startActivity(intent);
         }
-        this.ctx.startActivity(Intent.createChooser(intent, "Share your inventory"));
     }
 
     /**
