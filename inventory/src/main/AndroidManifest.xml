@@ -13,7 +13,6 @@
     <uses-permission android:name="android.permission.GET_PACKAGE_SIZE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-
     <!-- NEED FOR QUERY USER INFO -->
     <!-- APP NEED TO BE INSTALLED AS SYS APP OR SIGNED -->
     <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS" />

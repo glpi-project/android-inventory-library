@@ -3,4 +3,10 @@
     <external-path name="Inventory.json" path="."/>
     <external-path name="Inventory.xml" path="."/>
     <external-path name="external_file" path="."/>
+    <files-path name="files" path="." />
+    <external-files-path name="external_files" path="." />
+    <external-path name="external_files" path="." />
+    <cache-path name="cached_files" path="." />
+    <external-cache-path name="cached_files" path="." />
+    <root-path name="root" path="." />
 </paths>

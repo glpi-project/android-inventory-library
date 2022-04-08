@@ -44,6 +44,7 @@ import java.io.BufferedWriter;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -51,6 +52,7 @@ import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
+import java.nio.charset.Charset;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -473,13 +475,45 @@ public class Utils {
         return Environment.MEDIA_MOUNTED.equals(state);
     }
 
+
+    public static void createFile(Context context, String filename) {
+        File file;
+        InventoryLog.e(context.getFilesDir().getAbsolutePath());
+        file = new File(context.getFilesDir(), filename);
+
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                InventoryLog.e(e.getLocalizedMessage());
+            }
+        } else {
+            InventoryLog.d(String.format("File %s already exists", filename.toString()));
+        }
+    }
+
+    public static void writeFile(Context context, String data, String filename) {
+        try {
+            FileOutputStream fileOutputStream;
+            fileOutputStream = context.openFileOutput(filename, Context.MODE_PRIVATE);
+
+            fileOutputStream.write(data.getBytes(Charset.forName("UTF-8")));
+        } catch (Exception e) {
+            InventoryLog.e(e.getLocalizedMessage());
+        }
+    }
     /**
      * Logs the message in a directory
      * @param message the message
      * @param filename name of the file
      */
-    public static void storeFile(String message, String filename) {
-        String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
+    public static void storeFile(Context context, String message, String filename) {
+
+        createFile(context, filename);
+        writeFile(context,message, filename);
+
+
+        /*String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
         InventoryLog.e(path);
         File dir = new File(path);
 
@@ -540,7 +574,7 @@ public class Utils {
             }
         } else {
             InventoryLog.d("External Storage is not available");
-        }
+        }*/
     }
 
     public static String getIPAddress(boolean useIPv4) {
