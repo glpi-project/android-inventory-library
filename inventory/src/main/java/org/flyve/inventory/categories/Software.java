@@ -101,7 +101,10 @@ public class Software extends Categories {
                 Category c = new Category("SOFTWARES", "softwares");
 
                 String softwareName = getName(p);
-                if(softwareName.equals("N/A")) continue; // Skip software if name is not available
+
+                if (softwareName.isEmpty() || softwareName.equals("N/A")) {
+                    continue; //if softwareName is empty then continue
+                }
 
                 c.put("NAME", new CategoryValue(softwareName, "NAME", "name"));
                 c.put("COMMENTS", new CategoryValue(getPackage(p), "COMMENTS", "comments"));
