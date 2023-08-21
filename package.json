@@ -26,21 +26,21 @@
   "homepage": "https://github.com/flyve-mdm/android-inventory-library#readme",
   "devDependencies": {
     "conventional-github-releaser": "^3.1.2",
-    "gh-pages": "^3.0.0",
-    "node-github-release": "^0.1.1",
-    "standard-version": "^8.0.1"
+    "gh-pages": "^6.0.0",
+    "node-github-release": "^0.2.1",
+    "standard-version": "^9.5.0"
   },
   "dependencies": {
-    "dot-prop": "^4.2.1",
+    "dot-prop": "^8.0.2",
     "follow-redirects": "^1.14",
     "got": "^13",
     "http-cache-semantics": "^4.1.1",
-    "https-proxy-agent": "^3.0.0",
+    "https-proxy-agent": "^7.0.1",
     "lodash": "^4.17.21",
     "lodash.merge": "^4.6.2",
     "lodash.template": "^4.5.0",
     "semver": "^7",
     "semver-regex": "^4.0.3",
-    "trim-newlines": "^4"
+    "trim-newlines": "^5.0.0"
   }
 }
