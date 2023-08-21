@@ -100,7 +100,10 @@ public class Software extends Categories {
 
                 Category c = new Category("SOFTWARES", "softwares");
 
-                c.put("NAME", new CategoryValue(getName(p), "NAME", "name"));
+                softwareName = getName(p);
+                if(softwareName.equals("N/A")) continue; // Skip software if name is not available
+
+                c.put("NAME", new CategoryValue(softwareName, "NAME", "name"));
                 c.put("COMMENTS", new CategoryValue(getPackage(p), "COMMENTS", "comments"));
                 c.put("VERSION", new CategoryValue(getVersion(p), "VERSION", "version"));
                 c.put("FILESIZE", new CategoryValue(getFileSize(p), "FILESIZE", "fileSize"));
