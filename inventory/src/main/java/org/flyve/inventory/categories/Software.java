@@ -100,7 +100,7 @@ public class Software extends Categories {
 
                 Category c = new Category("SOFTWARES", "softwares");
 
-                softwareName = getName(p);
+                String softwareName = getName(p);
                 if(softwareName.equals("N/A")) continue; // Skip software if name is not available
 
                 c.put("NAME", new CategoryValue(softwareName, "NAME", "name"));
