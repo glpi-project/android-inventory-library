@@ -112,18 +112,20 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onTaskError(error: Throwable) {
-                Log.e(LOG, error.message)
+                error.message?.let { Log.e(LOG, it) }
             }
         })
         inventoryTask.getJSON(object : InventoryTask.OnTaskCompleted {
             override fun onTaskSuccess(data: String?) {
-                Log.d(LOG, data)
+                if (data != null) {
+                    Log.d(LOG, data)
+                }
                 //show btn share
                 btnShare.visibility = View.VISIBLE
             }
 
             override fun onTaskError(error: Throwable?) {
-                Log.e(LOG, error?.message)
+                error?.message?.let { Log.e(LOG, it) }
             }
 
         })
