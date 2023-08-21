@@ -39,6 +39,6 @@ ci/scripts/ci_push_changes.sh
 ci/scripts/ci_github_release.sh
 
 # run bintray script
-ci/scripts/ci_bintray.sh
+#ci/scripts/ci_bintray.sh
 
 fi
