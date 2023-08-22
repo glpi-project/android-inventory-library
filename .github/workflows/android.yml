@@ -1,7 +1,6 @@
 name: GLPI Android Inventory Library CI
 
 env:
-  # The name of the main module repository
   module_java: example_java
   module_kotlin: example_kotlin
 
@@ -10,7 +9,7 @@ on:
     branches: [ "develop" ]
 
 jobs:
-  setup-build:
+  setup:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
