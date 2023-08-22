@@ -21,6 +21,10 @@ jobs:
         distribution: 'temurin'
         cache: gradle
 
+    # Create source code archive
+    - name: Prepare source code archive
+      run: tar --exclude='build' -zcvf source_code.tar.gz ./
+
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
@@ -37,12 +41,12 @@ jobs:
       run: ./gradlew assemble
 
     # Create ZIP artifact for module_java (without build folder)
-    - name: ZIP artifact for module_java
-      run: zip java_example_code.zip ${{ env.module_java }} -x ${{ env.module_java }}/build/
+    - name: Prepare ZIP archive for module_java
+      run: tar --exclude='build' -zcvf java_example_code.tar.gz ${{ env.module_java }}
 
     # Create ZIP archive for module_kotlin (without build folder)
-    - name: ZIP archive for module_kotlin
-      run: zip kotlin_example_code.zip ${{ env.module_kotlin }} -x ${{ env.module_kotlin }}/build/
+    - name: Prepare ZIP archive for module_kotlin
+      run: tar --exclude='build' -zcvf java_example_code.tar.gz ${{ env.module_kotlin }}
 
     # Upload APK Artifact for for module_java
     - name: Upload APK Debug for Java
@@ -58,14 +62,23 @@ jobs:
         name: ${{ env.module_kotlin }} - APK debug
         path: ${{ env.module_kotlin }}/build/outputs/apk/debug/
 
-    # Upload ZIP file for module_java
-    - name: Upload ZIP Library Debug - Java
+    # Upload Library Debug Archive For Module_java
+    - name: Upload Library Debug Archive - Java
       uses: actions/upload-artifact@v3
       with:
+        name: java_example_code.zip
         path: java_example_code.zip
 
-    # Upload ZIP file for module_kotlin
-    - name: Upload ZIP Library Debug - Kotlin
+    # Upload Library Debug Archive For Module_kotlin
+    - name: Upload Library Debug Archive - Kotlin
       uses: actions/upload-artifact@v3
       with:
+        name: kotlin_example_code.zip
         path: kotlin_example_code.zip
+
+    # Upload Source Code Archive
+    - name: Upload Source Code Archive
+      uses: actions/upload-artifact@v3
+      with:
+        name: source_code.zip
+        path: source_code.zip
