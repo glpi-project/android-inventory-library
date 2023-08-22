@@ -52,10 +52,11 @@ jobs:
     # See : https://medium.com/firebase-developers/github-actions-firebase-test-lab-4bc830685a99   #
     ################################################################################################
     # Login to Google using Firebase Admin SDK Service Agent Key
-    - name: Login to Google Cloud
+    - id: 'auth'
+      name: Login to Google Cloud
       uses: 'google-github-actions/auth@v1'
       with:
-        credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+        credentials_json: ${{ secrets.GCP_CREDENTIALS }}
 
     - name: 'Set up Cloud SDK'
       uses: 'google-github-actions/setup-gcloud@v1'
