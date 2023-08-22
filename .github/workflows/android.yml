@@ -53,10 +53,12 @@ jobs:
     ################################################################################################
     # Login to Google using Firebase Admin SDK Service Agent Key
     - name: Login to Google Cloud
-      uses: GoogleCloudPlatform/github-actions/setup-gcloud@v1.1.1
+      uses: 'google-github-actions/auth@v1'
       with:
-        version: `270.0.0`
-        service_account_key: ${{ secrets.GCLOUD_AUTH }}
+        credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+
+    - name: 'Set up Cloud SDK'
+      uses: 'google-github-actions/setup-gcloud@v1'
 
     # Set Firebase Project ID
     - name: Set current project
