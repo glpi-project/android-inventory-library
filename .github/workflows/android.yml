@@ -62,12 +62,12 @@ jobs:
     - name: Upload Library Debug Archive - Java
       uses: actions/upload-artifact@v3
       with:
-        name: java_example_code.zip
-        path: java_example_code.zip
+        name: java_example_code.tar.gz
+        path: java_example_code.tar.gz
 
     # Upload Library Debug Archive For Module_kotlin
     - name: Upload Library Debug Archive - Kotlin
       uses: actions/upload-artifact@v3
       with:
-        name: kotlin_example_code.zip
-        path: kotlin_example_code.zip
+        name: kotlin_example_code.tar.gz
+        path: kotlin_example_code.tar.gz
