@@ -1,0 +1,9 @@
+Nexus6:
+  type: instrumentation
+  app: java_example/build/outputs/apk/debug/example_java-debug.apk
+  test: java_example/build/outputs/apk/androidTest/debug/example_java-debug-androidTest.apk
+  device:
+    - model: Nexus6
+      version: 25
+      locale: 'en'
+      orientation: portrait
