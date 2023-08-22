@@ -32,9 +32,9 @@ jobs:
       run: ./gradlew build
 
 
-    ####################
-    # Create APK(s)    #
-    ####################
+    #############################
+    # Create APK / AAR / JAR    #
+    #############################
     # Create APK Debug
     - name: Build Debug APK
       run: ./gradlew assembleDebug
@@ -44,17 +44,19 @@ jobs:
       run: ./gradlew assemble
 
     # Create APK For Firebase Instrumentation Tests
-    - name: Assemble Android Instrumentation Tests
+    - name: Build Debug Test APK (for Firebase Test Lab)
       run: ./gradlew assembleDebugAndroidTest
 
     # Create AAR and JAR package
-    - name: Build JAR and AAR release
+    - name: Build JAR and AAR package
       run: ./gradlew :inventory:build
 
 
     ################################################################################################
     # Run Firebase Test Lab                                                                        #
     # See : https://medium.com/firebase-developers/github-actions-firebase-test-lab-4bc830685a99   #
+    # See : https://github.com/google-github-actions/auth                                          #
+    # See : https://github.com/google-github-actions/setup-gcloud                                  #
     ################################################################################################
     # Login to Google using Firebase Admin SDK Service Agent Key
     - id: 'auth'
@@ -79,9 +81,9 @@ jobs:
         --device model=Nexus6,version=25,locale=en,orientation=portrait
 
 
-    ############################################
-    # Upload Artifacts and Source Code         #
-    ############################################
+    ##########################################
+    # Upload Artifacts (APK / AAR / JAR)     #
+    ##########################################
     # Upload APK for Java version
     - name: Upload APK Debug for Java
       uses: actions/upload-artifact@v3
