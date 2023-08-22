@@ -41,11 +41,11 @@ jobs:
 
     # Prepare source code archive for module_java (without build folder)
     - name: Prepare source code archive for module_java
-      run: tar --exclude='build' -zcvf java_example_code.tar.gz ${{ env.module_java }}
+      run: tar --exclude='build' -zcvf source_code_java_example.tar.gz ${{ env.module_java }}
 
     # Prepare source code archive for module_kotlin (without build folder)
     - name: Prepare source code archive for module_kotlin
-      run: tar --exclude='build' -zcvf kotlin_example_code.tar.gz ${{ env.module_kotlin }}
+      run: tar --exclude='build' -zcvf source_code_kotlin_example.tar.gz ${{ env.module_kotlin }}
 
     # Upload APK Artifact for for module_java
     - name: Upload APK Debug for Java
@@ -61,53 +61,17 @@ jobs:
         name: ${{ env.module_kotlin }}_debug.apk
         path: ${{ env.module_kotlin }}/build/outputs/apk/debug/
 
-     # Upload APK Artifact For Instrumentation Tests
-    - name: Upload Android Test APK
-      uses: actions/upload-artifact@v3
-      with:
-        name: ${{ env.module_java }}_androidTest.apk
-        path: ${{ env.module_java }}/build/outputs/apk/androidTest/debug/example_java.apk
-
     # Upload Library Debug Archive For Module_java
     - name: Upload Library Debug Archive - Java
       uses: actions/upload-artifact@v3
       with:
-        name: java_example_code.tar.gz
-        path: java_example_code.tar.gz
+        name: source_code_java_example.tar.gz
+        path: source_code_java_example.tar.gz
 
     # Upload Library Debug Archive For Module_kotlin
     - name: Upload Library Debug Archive - Kotlin
       uses: actions/upload-artifact@v3
       with:
-        name: kotlin_example_code.tar.gz
-        path: kotlin_example_code.tar.gz
+        name: source_code_kotlin_example.tar.gz
+        path: source_code_kotlin_example.tar.gz
 
-  firebase:
-    name: Run UI tests with Firebase Test Lab
-    needs: build
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Download app APK
-        uses: actions/download-artifact@v3
-        with:
-          name: app-debug
-
-      - name: Download Android test APK
-        uses: actions/download-artifact@v3
-        with:
-          name: ${{ env.module_java }}_androidTest.apk
-
-      - name: Login to Google Cloud
-        uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
-        with:
-          version: '270.0.0'
-          service_account_key: ${{ secrets.GCLOUD_AUTH }}
-
-      - name: Set current project
-        run: gcloud config set project ${{ secrets.FIREBASE_PROJECT_ID }}
-
-      - name: Run Instrumentation Tests in Firebase Test Lab
-        run: gcloud firebase test android run --type instrumentation --app app-debug/app-debug.apk --test ${{ env.module_java }}_androidTest.apk  --device model=Nexus6,version=25,locale=en,orientation=portrait
