@@ -51,15 +51,15 @@ jobs:
     - name: Upload APK Debug for Java
       uses: actions/upload-artifact@v3
       with:
-        name: ${{ env.module_java }}_debug.apk
-        path: ${{ env.module_java }}/build/outputs/apk/debug/
+        name: ${{ env.module_java }}_debug
+        path: ${{ env.module_java }}/build/outputs/apk/debug/${{ env.module_java }}-debug.apk
 
     # Upload APK Artifact for module_kotlin
     - name: Upload APK Debug for Kotlin
       uses: actions/upload-artifact@v3
       with:
-        name: ${{ env.module_kotlin }}_debug.apk
-        path: ${{ env.module_kotlin }}/build/outputs/apk/debug/
+        name: ${{ env.module_kotlin }}_debug
+        path: ${{ env.module_kotlin }}/build/outputs/apk/debug/${{ env.module_kotlin }}-debug.apk
 
     # Upload Library Debug Archive For Module_java
     - name: Upload Library Debug Archive - Java
