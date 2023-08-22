@@ -43,7 +43,7 @@ jobs:
     - name: Prepare source code archive for module_java
       run: tar --exclude='build' -zcvf java_example_code.tar.gz ${{ env.module_java }}
 
-    Prepare source code archive for module_kotlin (without build folder)
+    # Prepare source code archive for module_kotlin (without build folder)
     - name: Prepare source code archive for module_kotlin
       run: tar --exclude='build' -zcvf kotlin_example_code.tar.gz ${{ env.module_kotlin }}
 
