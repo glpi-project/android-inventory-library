@@ -23,26 +23,51 @@ jobs:
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
+
     # Build project
     - name: Build with Gradle
       run: ./gradlew build
-    # Create APK Debug for java module
+
+    # Create APK Debug
     - name: Build apk debug project (APK)
       run: ./gradlew assembleDebug
-    # Create APK Release for kotlin module
+
+    # Create APK Release
     - name: Build apk release project (APK)
       run: ./gradlew assemble
 
-    # Upload Artifact Build for module_java
+    # Create ZIP artifact for module_java (without build folder)
+    - name: ZIP artifact for module_java
+      run: zip java_example_code.zip ${{ env.module_java }} -x ${{ env.module_java }}/build/
+
+    # Create ZIP archive for module_kotlin (without build folder)
+    - name: ZIP archive for module_kotlin
+      run: zip kotlin_example_code.zip ${{ env.module_kotlin }} -x ${{ env.module_kotlin }}/build/
+
+    # Upload APK Artifact for for module_java
     - name: Upload APK Debug - ${{ env.module_java }}
       uses: actions/upload-artifact@v3
       with:
-        name: ${{ env.module_java }} - APK(s) debug generated
+        name: ${{ env.module_java }} - APK debug
         path: ${{ env.module_java }}/build/outputs/apk/debug/
 
-    # Upload Artifact Build for module_kotlin
+    # Upload APK Artifact for module_kotlin
     - name: Upload APK Debug - ${{ env.module_kotlin }}
       uses: actions/upload-artifact@v3
       with:
-        name: ${{ env.module_kotlin }} - APK(s) debug generated
+        name: ${{ env.module_kotlin }} - APK debug
         path: ${{ env.module_kotlin }}/build/outputs/apk/debug/
+
+    # Upload ZIP file for module_java
+    - name: Upload ZIP Library Debug - ${{ env.module_java }}
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ env.module_java }}.zip
+        path: java_example_code.zip
+
+    # Upload ZIP file for module_kotlin
+    - name: Upload ZIP Library Debug - ${{ env.module_kotlin }}
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ env.module_kotlin }}.zip
+        path: java_example_code.zip
