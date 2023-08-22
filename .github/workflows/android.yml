@@ -33,16 +33,16 @@ jobs:
     - name: Build apk release project (APK)
       run: ./gradlew assemble
 
-    # Upload Artifact Build for example_java
-    - name: Upload APK Debug - ${{ env.example_java }}
+    # Upload Artifact Build for module_java
+    - name: Upload APK Debug - ${{ env.module_java }}
       uses: actions/upload-artifact@v3
       with:
-        name: ${{ env.example_java }} - APK(s) debug generated
-        path: ${{ env.example_java }}/build/outputs/apk/debug/
+        name: ${{ env.module_java }} - APK(s) debug generated
+        path: ${{ env.module_java }}/build/outputs/apk/debug/
 
-    # Upload Artifact Build for example_java
-    - name: Upload APK Debug - ${{ env.example_kotlin }}
+    # Upload Artifact Build for module_kotlin
+    - name: Upload APK Debug - ${{ env.module_kotlin }}
       uses: actions/upload-artifact@v3
       with:
-        name: ${{ env.example_kotlin }} - APK(s) debug generated
-        path: ${{ env.example_kotlin }}/build/outputs/apk/debug/
+        name: ${{ env.module_kotlin }} - APK(s) debug generated
+        path: ${{ env.module_kotlin }}/build/outputs/apk/debug/
