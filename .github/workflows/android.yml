@@ -33,11 +33,19 @@ jobs:
 
     # Create APK For Instrumentation Tests
     - name: Assemble Android Instrumentation Tests
-      run: bash ./gradlew assembleDebugAndroidTest
+      run: ./gradlew assembleDebugAndroidTest
 
     # Create APK Release
     - name: Build apk release project (APK)
       run: ./gradlew assemble
+
+
+    - name: Run tests on Firebase Test Lab
+        uses: asadmansr/Firebase-Test-Lab-Action@v1.0
+        with:
+          arg-spec: '.github/workflows/firebase.yml:Nexus6'
+        env:
+          SERVICE_ACCOUNT: ${{ secrets.SERVICE_ACCOUNT }}
 
     # Prepare source code archive for module_java (without build folder)
     - name: Prepare source code archive for module_java
@@ -51,27 +59,26 @@ jobs:
     - name: Upload APK Debug for Java
       uses: actions/upload-artifact@v3
       with:
-        name: ${{ env.module_java }}_debug
+        name: Java-Debug-APK
         path: ${{ env.module_java }}/build/outputs/apk/debug/${{ env.module_java }}-debug.apk
 
     # Upload APK Artifact for module_kotlin
     - name: Upload APK Debug for Kotlin
       uses: actions/upload-artifact@v3
       with:
-        name: ${{ env.module_kotlin }}_debug
+        name: Kotlin-Debug-APK
         path: ${{ env.module_kotlin }}/build/outputs/apk/debug/${{ env.module_kotlin }}-debug.apk
 
     # Upload Library Debug Archive For Module_java
     - name: Upload Library Debug Archive - Java
       uses: actions/upload-artifact@v3
       with:
-        name: source_code_java_example.tar.gz
+        name: Source-Java
         path: source_code_java_example.tar.gz
 
     # Upload Library Debug Archive For Module_kotlin
     - name: Upload Library Debug Archive - Kotlin
       uses: actions/upload-artifact@v3
       with:
-        name: source_code_kotlin_example.tar.gz
+        name: Source-Kotlin
         path: source_code_kotlin_example.tar.gz
-
