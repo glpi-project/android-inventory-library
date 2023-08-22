@@ -3,6 +3,7 @@ name: GLPI Android Inventory Library CI
 env:
   module_java: example_java
   module_kotlin: example_kotlin
+  module_inventory: inventory
 
 on:
   pull_request:
@@ -35,16 +36,20 @@ jobs:
     # Create APK(s)    #
     ####################
     # Create APK Debug
-    - name: Build APK debug project
+    - name: Build Debug APK
       run: ./gradlew assembleDebug
+
+    # Create APK Release
+    - name: Build Release APK
+      run: ./gradlew assemble
 
     # Create APK For Firebase Instrumentation Tests
     - name: Assemble Android Instrumentation Tests
       run: ./gradlew assembleDebugAndroidTest
 
-    # Create APK Release
-    - name: Build apk release project (APK)
-      run: ./gradlew assemble
+    # Create AAR and JAR package
+    - name: Build JAR and AAR release
+      run: ./gradlew :inventory:build
 
 
     ################################################################################################
@@ -68,51 +73,39 @@ jobs:
     # Run Instrumentation Tests in Firebase Test Lab
     - name: Run Instrumentation Tests in Firebase Test Lab
       run: |
-      gcloud firebase test android run --type instrumentation
-      --app ${{ env.module_java }}/build/outputs/apk/debug/example_java-debug.apk
-      --test ${{ env.module_java }}/build/outputs/apk/androidTest/debug/example_java-debug-androidTest.apk
-      --device model=Nexus6,version=25,locale=en,orientation=portrait
+        gcloud firebase test android run --type instrumentation
+        --app ${{ env.module_java }}/build/outputs/apk/debug/example_java-debug.apk
+        --test ${{ env.module_java }}/build/outputs/apk/androidTest/debug/example_java-debug-androidTest.apk
+        --device model=Nexus6,version=25,locale=en,orientation=portrait
 
 
-    #############################
-    # Prepare Source Code       #
-    #############################
-    # Prepare source code archive for module_java (without build folder)
-    - name: Prepare source code archive for module_java
-      run: tar --exclude='build' -zcvf source_code_java_example.tar.gz ${{ env.module_java }}
-
-    # Prepare source code archive for module_kotlin (without build folder)
-    - name: Prepare source code archive for module_kotlin
-      run: tar --exclude='build' -zcvf source_code_kotlin_example.tar.gz ${{ env.module_kotlin }}
-
-
-    #############################
-    # Upload Artifacts          #
-    #############################
-    # Upload APK Artifact for for module_java
+    ############################################
+    # Upload Artifacts and Source Code         #
+    ############################################
+    # Upload APK for Java version
     - name: Upload APK Debug for Java
       uses: actions/upload-artifact@v3
       with:
         name: Java-Debug-APK
         path: ${{ env.module_java }}/build/outputs/apk/debug/${{ env.module_java }}-debug.apk
 
-    # Upload APK Artifact for module_kotlin
+    # Upload APK for Kotlin version
     - name: Upload APK Debug for Kotlin
       uses: actions/upload-artifact@v3
       with:
         name: Kotlin-Debug-APK
         path: ${{ env.module_kotlin }}/build/outputs/apk/debug/${{ env.module_kotlin }}-debug.apk
 
-    # Upload Library Debug Archive For Module_java
-    - name: Upload Library Debug Archive - Java
+    # Upload Debug AAR for inventory module
+    - name: Upload Debug AAR for Inventory Library
       uses: actions/upload-artifact@v3
       with:
-        name: Source-Java
-        path: source_code_java_example.tar.gz
+        name: Inventory-Library-Debug-AAR
+        path: ${{ env.module_inventory }}/build/outputs/aar/${{ env.module_inventory }}-debug.aar
 
-    # Upload Library Debug Archive For Module_kotlin
-    - name: Upload Library Debug Archive - Kotlin
+    # Upload JAR for inventory module
+    - name: Upload JAR for inventory module
       uses: actions/upload-artifact@v3
       with:
-        name: Source-Kotlin
-        path: source_code_kotlin_example.tar.gz
+        name: Inventory-Library-Debug-AAR
+        path: ${{ env.module_inventory }}/build/libs/${{ env.module_inventory }}-sources.jar
