@@ -45,29 +45,27 @@ jobs:
       run: zip kotlin_example_code.zip ${{ env.module_kotlin }} -x ${{ env.module_kotlin }}/build/
 
     # Upload APK Artifact for for module_java
-    - name: Upload APK Debug - ${{ env.module_java }}
+    - name: Upload APK Debug for Java
       uses: actions/upload-artifact@v3
       with:
         name: ${{ env.module_java }} - APK debug
         path: ${{ env.module_java }}/build/outputs/apk/debug/
 
     # Upload APK Artifact for module_kotlin
-    - name: Upload APK Debug - ${{ env.module_kotlin }}
+    - name: Upload APK Debug for Kotlin
       uses: actions/upload-artifact@v3
       with:
         name: ${{ env.module_kotlin }} - APK debug
         path: ${{ env.module_kotlin }}/build/outputs/apk/debug/
 
     # Upload ZIP file for module_java
-    - name: Upload ZIP Library Debug - ${{ env.module_java }}
+    - name: Upload ZIP Library Debug - Java
       uses: actions/upload-artifact@v3
       with:
-        name: ${{ env.module_java }}.zip
         path: java_example_code.zip
 
     # Upload ZIP file for module_kotlin
-    - name: Upload ZIP Library Debug - ${{ env.module_kotlin }}
+    - name: Upload ZIP Library Debug - Kotlin
       uses: actions/upload-artifact@v3
       with:
-        name: ${{ env.module_kotlin }}.zip
-        path: java_example_code.zip
+        path: kotlin_example_code.zip
