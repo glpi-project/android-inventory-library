@@ -21,10 +21,6 @@ jobs:
         distribution: 'temurin'
         cache: gradle
 
-    # Create source code archive
-    - name: Prepare source code archive
-      run: tar --exclude='build' -zcvf source_code.tar.gz ./
-
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
@@ -75,10 +71,3 @@ jobs:
       with:
         name: kotlin_example_code.zip
         path: kotlin_example_code.zip
-
-    # Upload Source Code Archive
-    - name: Upload Source Code Archive
-      uses: actions/upload-artifact@v3
-      with:
-        name: source_code.zip
-        path: source_code.zip
