@@ -45,6 +45,7 @@ jobs:
   build-archive:
     runs-on: ubuntu-latest
     needs: build
+    steps:
     # Create ZIP artifact for module_java (without build folder)
     - name: Prepare ZIP archive for module_java
       run: tar --exclude='build' -zcvf java_example_code.tar.gz ${{ env.module_java }}
