@@ -63,10 +63,10 @@ jobs:
 
      # Upload APK Artifact For Instrumentation Tests
     - name: Upload Android Test APK
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ env.module_java }}_androidTest.apk
-          path: ${{ env.module_java }}/build/outputs/apk/androidTest/debug/example_java.apk
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ env.module_java }}_androidTest.apk
+        path: ${{ env.module_java }}/build/outputs/apk/androidTest/debug/example_java.apk
 
     # Upload Library Debug Archive For Module_java
     - name: Upload Library Debug Archive - Java
