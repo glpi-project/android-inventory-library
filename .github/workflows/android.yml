@@ -20,18 +20,25 @@ jobs:
         distribution: 'temurin'
         cache: gradle
 
+    ##############################
+    # Prepare / Build project    #
+    ##############################
+    # Grant execute permission for gradlew
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
-
-    # Build project
+    # Build app
     - name: Build with Gradle
       run: ./gradlew build
 
+
+    ####################
+    # Create APK(s)    #
+    ####################
     # Create APK Debug
-    - name: Build apk debug project (APK)
+    - name: Build APK debug project
       run: ./gradlew assembleDebug
 
-    # Create APK For Instrumentation Tests
+    # Create APK For Firebase Instrumentation Tests
     - name: Assemble Android Instrumentation Tests
       run: ./gradlew assembleDebugAndroidTest
 
@@ -40,13 +47,29 @@ jobs:
       run: ./gradlew assemble
 
 
-    - name: Run tests on Firebase Test Lab
-        uses: asadmansr/Firebase-Test-Lab-Action@v1.0
-        with:
-          arg-spec: '.github/workflows/firebase.yml:Nexus6'
-        env:
-          SERVICE_ACCOUNT: ${{ secrets.SERVICE_ACCOUNT }}
+    ################################################################################################
+    # Run Firebase Test Lab                                                                        #
+    # See : https://medium.com/firebase-developers/github-actions-firebase-test-lab-4bc830685a99   #
+    ################################################################################################
+    # Login to Google using Firebase Admin SDK Service Agent Key
+    - name: Login to Google Cloud
+      uses: GoogleCloudPlatform/github-actions/setup-gcloud@v1.1.1
+      with:
+        version: `270.0.0`
+        service_account_key: ${{ secrets.GCLOUD_AUTH }}
 
+    # Set Firebase Project ID
+    - name: Set current project
+      run: gcloud config set project ${{ secrets.FIREBASE_PROJECT_ID }}
+
+    # Run Instrumentation Tests in Firebase Test Lab
+    - name: Run Instrumentation Tests in Firebase Test Lab
+      run: gcloud firebase test android run --type instrumentation --app ${{ env.module_java }}/build/outputs/apk/debug/example_java-debug.apk --test ${{ env.module_java }}/build/outputs/apk/androidTest/debug/example_java-debug-androidTest.apk --device model=Nexus6,version=25,locale=en,orientation=portrait
+
+
+    #############################
+    # Prepare Source Code       #
+    #############################
     # Prepare source code archive for module_java (without build folder)
     - name: Prepare source code archive for module_java
       run: tar --exclude='build' -zcvf source_code_java_example.tar.gz ${{ env.module_java }}
@@ -55,6 +78,10 @@ jobs:
     - name: Prepare source code archive for module_kotlin
       run: tar --exclude='build' -zcvf source_code_kotlin_example.tar.gz ${{ env.module_kotlin }}
 
+
+    #############################
+    # Upload Artifacts          #
+    #############################
     # Upload APK Artifact for for module_java
     - name: Upload APK Debug for Java
       uses: actions/upload-artifact@v3
