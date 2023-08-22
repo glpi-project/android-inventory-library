@@ -56,7 +56,7 @@ jobs:
 
   upload_artifact:
     runs-on: ubuntu-latest
-    needs: [build-archive, build-archive]
+    needs: [build-archive, build-apk]
     steps:
     # Upload APK Artifact for for module_java
     - name: Upload APK Debug for Java
