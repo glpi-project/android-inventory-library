@@ -1,5 +1,10 @@
 name: GLPI Android Inventory Library CI
 
+env:
+  # The name of the main module repository
+  module_java: example_java
+  module_kotlin: example_kotlin
+
 on:
   pull_request:
     branches: [ "develop" ]
@@ -18,7 +23,26 @@ jobs:
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
+    # Build project
     - name: Build with Gradle
       run: ./gradlew build
-    - name: Create debug apk
-      run: ./gradlew assembleDebug assembleAndroidTest
+    # Create APK Debug for java module
+    - name: Build apk debug project (APK)
+      run: ./gradlew assembleDebug
+    # Create APK Release for kotlin module
+    - name: Build apk release project (APK)
+      run: ./gradlew assemble
+
+    # Upload Artifact Build for example_java
+    - name: Upload APK Debug - ${{ env.example_java }}
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ env.example_java }} - APK(s) debug generated
+        path: ${{ env.example_java }}/build/outputs/apk/debug/
+
+    # Upload Artifact Build for example_java
+    - name: Upload APK Debug - ${{ env.example_kotlin }}
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ env.example_kotlin }} - APK(s) debug generated
+        path: ${{ env.example_kotlin }}/build/outputs/apk/debug/
