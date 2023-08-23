@@ -1,0 +1,9 @@
+changelog:
+  categories:
+    - title: Features
+      labels:
+        - feat
+        - feature
+    - title: Bug Fixes
+      labels:
+        - fix
