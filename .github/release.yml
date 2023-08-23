@@ -1,7 +1,4 @@
 changelog:
-  exclude:
-    authors:
-      - '*'
   categories:
     - title: Features
       labels:
