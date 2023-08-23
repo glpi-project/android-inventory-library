@@ -23,35 +23,15 @@ jobs:
         distribution: 'temurin'
         cache: gradle
 
-    ##############################
-    # Prepare / Build project    #
-    ##############################
+    ##############################################
+    # Prepare / Build project APK / AAR / JAR    #
+    ##############################################
     # Grant execute permission for gradlew
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     # Build app
     - name: Build with Gradle
       run: ./gradlew build
-
-
-    #############################
-    # Create APK / AAR / JAR    #
-    #############################
-    # Create APK Debug
-    - name: Build Debug APK
-      run: ./gradlew assembleDebug
-
-    # Create APK Release
-    - name: Build Release APK
-      run: ./gradlew assemble
-
-    # Create APK For Firebase Instrumentation Tests
-    - name: Build Debug Test APK (for Firebase Test Lab)
-      run: ./gradlew assembleDebugAndroidTest
-
-    # Create AAR and JAR package
-    - name: Build JAR and AAR package
-      run: ./gradlew :inventory:build
 
 
     ################################################################################################

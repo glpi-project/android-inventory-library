@@ -25,9 +25,9 @@ jobs:
         distribution: 'temurin'
         cache: gradle
 
-    ##############################
-    # Prepare / Build project    #
-    ##############################
+    ##############################################
+    # Prepare / Build project APK / AAR / JAR    #
+    ##############################################
     # Grant execute permission for gradlew
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
@@ -35,18 +35,9 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew build
 
-
-    #############################
-    # Create APK / AAR / JAR    #
-    #############################
-    # Create APK Release
-    - name: Build Release APK
-      run: ./gradlew assemble
-
-    # Create AAR and JAR package
-    - name: Build JAR and AAR package
-      run: ./gradlew :inventory:build
-
+    #####################
+    # Prepare release   #
+    #####################
     - name: Release
       uses: softprops/action-gh-release@v1
       if: startsWith(github.ref, 'refs/tags/')
