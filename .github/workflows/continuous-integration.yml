@@ -6,11 +6,10 @@ env:
   module_inventory: inventory
 
 on:
-  push:
+  pull_request:
     branches:
       - "master"
       - "develop"
-  pull_request:
 
 jobs:
   build:
