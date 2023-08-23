@@ -1,0 +1,61 @@
+name: "GLPI Android Inventory Library Release"
+
+env:
+  module_java: example_java
+  module_kotlin: example_kotlin
+  module_inventory: inventory
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: "Extract tag name"
+      run: |
+        echo "tag_name=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+    - uses: actions/checkout@v3
+    - name: set up JDK 11
+      uses: actions/setup-java@v3
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+        cache: gradle
+
+    ##############################
+    # Prepare / Build project    #
+    ##############################
+    # Grant execute permission for gradlew
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+    # Build app
+    - name: Build with Gradle
+      run: ./gradlew build
+
+
+    #############################
+    # Create APK / AAR / JAR    #
+    #############################
+    # Create APK Release
+    - name: Build Release APK
+      run: ./gradlew assemble
+
+    # Create AAR and JAR package
+    - name: Build JAR and AAR package
+      run: ./gradlew :inventory:build
+
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        name : Inventory Engine v${{ env.tag_name }}
+        draft : true
+        generate_release_notes : true
+        files: |
+          ${{ env.module_java }}/build/outputs/apk/release/${{ env.module_java }}-release-unsigned.apk
+          ${{ env.module_kotlin }}/build/outputs/apk/release/${{ env.module_kotlin }}-release-unsigned.apk
+          ${{ env.module_inventory }}/build/outputs/aar/${{ env.module_inventory }}-release.aar
+          ${{ env.module_inventory }}/build/libs/${{ env.module_inventory }}-sources.jar
