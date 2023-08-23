@@ -10,8 +10,7 @@ on:
     branches:
       - "master"
       - "develop"
-  tags-ignore:
-    - skip-ci
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -24,6 +23,7 @@ jobs:
         distribution: 'temurin'
         cache: gradle
 
+
     ##############################################
     # Prepare / Build project APK / AAR / JAR    #
     ##############################################
@@ -33,7 +33,9 @@ jobs:
     # Build app
     - name: Build with Gradle
       run: ./gradlew build
-
+    # Create APK For Firebase Instrumentation Tests
+    - name: Build Debug Test APK (for Firebase Test Lab)
+      run: ./gradlew assembleDebugAndroidTest
 
     ################################################################################################
     # Run Firebase Test Lab                                                                        #
