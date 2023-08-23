@@ -1,0 +1,19 @@
+changelog:
+  exclude:
+    authors:
+      - '*'
+  categories:
+    - title: Features
+      labels:
+        - feat
+        - feature
+        - build
+        - ci
+    - title: Bug Fixes
+      labels:
+        - fix
+        - bug
+        - hotfix
+    - title: Other Changes
+      labels:
+        - "*"
