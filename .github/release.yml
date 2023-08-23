@@ -2,12 +2,12 @@ changelog:
   categories:
     - title: Features
       labels:
-        - feat
-        - feature
-        - build
-        - ci
-    - title: Bug Fixes
+        - '*'
+      exclude:
+        labels:
+          - fix
+          - bug
+    - title: BugFixes
       labels:
         - fix
         - bug
-        - hotfix
