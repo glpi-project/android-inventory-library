@@ -2,18 +2,17 @@
 
 ![Flyve MDM banner](https://user-images.githubusercontent.com/663460/26935464-54267e9c-4c6c-11e7-86df-8cfa6658133e.png)
 
-[![License](https://img.shields.io/github/license/flyve-mdm/android-inventory-library.svg?&label=License)](https://github.com/flyve-mdm/android-inventory-library/blob/master/LICENSE.md)
-[![Follow twitter](https://img.shields.io/twitter/follow/FlyveMDM.svg?style=social&label=Twitter&style=flat-square)](https://twitter.com/FlyveMDM)
-[![Telegram Group](https://img.shields.io/badge/Telegram-Group-blue.svg)](https://t.me/flyvemdm)
+[![License](https://img.shields.io/github/license/glpi-project/android-inventory-library.svg?&label=License)](https://github.com/glpi-project/android-inventory-library/blob/develop/LICENSE.md)
+[![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
+[![Follow twitter](https://img.shields.io/twitter/follow/Teclib.svg?style=social&label=Twitter&style=flat-square)](https://twitter.com/teclib)
+[![Telegram Group](https://img.shields.io/badge/Telegram-Group-blue.svg)](https://t.me/glpien)
 [![Project Status: Active](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
-[![IRC Chat](https://img.shields.io/badge/IRC-%23flyvemdm-green.svg)](http://webchat.freenode.net/?channels=flyve-mdm)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
-[![Greenkeeper badge](https://badges.greenkeeper.io/flyve-mdm/android-inventory-library.svg)](https://greenkeeper.io/)
-[![GitHub release](https://img.shields.io/github/release/flyve-mdm/android-inventory-library.svg)](https://github.com/flyve-mdm/android-inventory-library/releases)
-[![Bintray Jcenter](https://img.shields.io/bintray/v/flyve-mdm/teclib-repository/android-inventory-library)](https://bintray.com/flyve-mdm/teclib-repository/android-inventory-library/)
-Flyve MDM allows your company to maintain control of all mobile devices, whilst providing comprehensive protection and enhanced security for sensitive corporate data, via a centralized management console.
+[![Greenkeeper badge](https://img.shields.io/badge/Greenkeeper-enabled-4c1.svg?colorA=555&style=flat)](https://greenkeeper.io)
+[![GitHub release](https://img.shields.io/github/release/glpi-project/android-inventory-library.svg)](https://github.com/glpi-project/android-inventory-library/releases)
+[![GitHub build](https://img.shields.io/circleci/build/github/glpi-project/android-inventory-library.svg)](https://circleci.com/gh/glpi-project/android-inventory-library/)
 
-To get started, check out [Flyve MDM Website](https://flyve-mdm.com/)!
+GLPI Android Inventory Library is an android inventory library written in Java
 
 ## Table of contents
 * [Synopsis](#synopsis)
@@ -29,10 +28,10 @@ To get started, check out [Flyve MDM Website](https://flyve-mdm.com/)!
 
 ## Synopsis
 
-The Inventory Library for Android collects a complete inventory of your Android devices. It allows you to export your inventory in a beautiful XML or JSON as protocol compatible with FusionInventory for GLPI.
+The Inventory Library for Android collects a complete inventory of your Android devices. It allows you to export your inventory in a beautiful XML or JSON as protocol compatible GLPI Native Inventory.
 
-You can find more information about the Inventory Protocol here:
-<http://fusioninventory.org/documentation/dev/spec/protocol/inventory.html>
+You can find more information about the GLPI Native Inventory Protocol here:
+<https://github.com/glpi-project/inventory_format>
 
 ### Data collected
 
@@ -58,35 +57,17 @@ You can find more information about the Inventory Protocol here:
 - Battery
 - Controllers
 
-Visit our [website](http://flyve.org/android-inventory-library/) for every element specification.
 
-## Build Status
+### Data type
 
-| **LTS** | **Bleeding Edge** |
-|:---:|:---:|
-| [![Build Status](https://circleci.com/gh/flyve-mdm/android-inventory-library/tree/master.svg?style=svg)](https://circleci.com/gh/flyve-mdm/android-inventory-library/tree/master) | [![Build Status](https://circleci.com/gh/flyve-mdm/android-inventory-library/tree/develop.svg?style=svg)](https://circleci.com/gh/flyve-mdm/android-inventory-library/tree/develop) |
+Now you can choose (from the server information) whether this inventory should create a ```Phone``` or a ```Computer``` on GLPI
+
 
 ## Installation
 
-Download the latest JAR, grab via Maven, insert on `build.gradle` at app level or use Apache Ivy.
-
-### Gradle app
-
-```groovy
-implementation 'org.flyve:inventory:1.3.0@aar'
-```
+Download the latest JAR or AAR and include it in your Android project as an external library
 
 
-
-### Apache Ivy
-
-```
-<dependency org='org.flyve' name='inventory' rev='1.3.0'>
-  <artifact name='inventory' ext='pom' ></artifact>
-</dependency>
-```
-
-You can also find us on [**Bintray repository**](https://bintray.com/flyve-mdm/inventory/android-inventory-library).
 
 ## Code Example
 
@@ -117,20 +98,16 @@ val inventoryTask = InventoryTask(this@MainActivity, "Agent_v1.0", object : Inve
 inventoryTask.execute()
 ```
 
-## Documentation
-
-We maintain a detailed documentation of the project on the website, check the [How-tos](http://flyve.org/android-inventory-library/howtos/) and [Development](http://flyve.org/android-inventory-library/) section.
-
 ## Versioning
 
-In order to provide transparency on our release cycle and to maintain backward compatibility, Flyve MDM is maintained under [the Semantic Versioning guidelines](http://semver.org/). We are committed to following and complying with the rules, the best we can.
+In order to provide transparency on our release cycle and to maintain backward compatibility, GLPI Android Inventory Library is maintained under [the Semantic Versioning guidelines](http://semver.org/). We are committed to following and complying with the rules, the best we can.
 
-See [the tags section of our GitHub project](http://github.com/flyve-mdm/android-inventory-library/tags) for changelogs for each release version of Flyve MDM. Release announcement posts on [the official Teclib' blog](http://www.teclib-edition.com/en/communities/blog-posts/) contain summaries of the most noteworthy changes made in each release.
+See [the tags section of our GitHub project](https://github.com/glpi-project/android-inventory-library/tags) for changelogs for each release version of Flyve MDM. Release announcement posts on [the official Teclib' blog](http://www.teclib-edition.com/en/communities/blog-posts/) contain summaries of the most noteworthy changes made in each release.
 
 ## Contribute
 
 Want to file a bug, contribute some code, or improve documentation? Excellent! Read up on our
-guidelines for [contributing](./CONTRIBUTING.md) and then check out one of our issues in the [Issues Dashboard](https://github.com/flyve-mdm/android-inventory-library/issues).
+guidelines for [contributing](./CONTRIBUTING.md) and then check out one of our issues in the [Issues Dashboard](https://github.com/glpi-project/android-inventory-library/issues).
 
 ## Contact
 
