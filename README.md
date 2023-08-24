@@ -57,12 +57,6 @@ You can find more information about the GLPI Native Inventory Protocol here:
 - Battery
 - Controllers
 
-
-### Data type
-
-Now you can choose (from the server information) whether this inventory should create a ```Phone``` or a ```Computer``` on GLPI
-
-
 ## Installation
 
 Download the latest JAR or AAR and include it in your Android project as an external library
