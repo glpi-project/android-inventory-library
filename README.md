@@ -1,6 +1,6 @@
 # Inventory Library for Android
 
-![Flyve MDM banner](https://user-images.githubusercontent.com/663460/26935464-54267e9c-4c6c-11e7-86df-8cfa6658133e.png)
+![GLPI Android Inventory banner](https://github.com/glpi-project/android-inventory-library/assets/7335054/7d82c661-bb74-40dd-ac1f-8f42f0e8542b)
 
 [![License](https://img.shields.io/github/license/glpi-project/android-inventory-library.svg?&label=License)](https://github.com/glpi-project/android-inventory-library/blob/develop/LICENSE.md)
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
