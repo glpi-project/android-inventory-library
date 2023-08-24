@@ -103,17 +103,13 @@ See [the tags section of our GitHub project](https://github.com/glpi-project/and
 Want to file a bug, contribute some code, or improve documentation? Excellent! Read up on our
 guidelines for [contributing](./CONTRIBUTING.md) and then check out one of our issues in the [Issues Dashboard](https://github.com/glpi-project/android-inventory-library/issues).
 
-## Contact
+## GLPI Network - Professional support
 
-For notices about major changes and general discussion of Flyve MDM development, subscribe to the [/r/FlyveMDM](http://www.reddit.com/r/FlyveMDM) subreddit.
-You can also chat with us via IRC in [#flyve-mdm on freenode](http://webchat.freenode.net/?channels=flyve-mdm) or [@flyvemdm on Telegram](https://t.me/flyvemdm).
-Ping me @rafaelje in the IRC chatroom if you get stuck.
+You want to report a bug (and get a fix quickly) or do you need a guarantee for Android Inventory Library?
 
-## Professional Services
+You can subscribe to our professional support GLPI Network [here](https://services.glpi-network.com).
 
-The Flyve MDM and GLPI Network services are available through our [Partner's Network](http://www.teclib-edition.com/en/partners/). We provide special training, bug fixes with editor subscription, contributions for new features, and more.
-
-Obtain a personalized service experience, associated with benefits and opportunities.
+This subscription includes a guarantee through a service level contract between your company and our team in charge of GLPI development (core, supported plugins and GLPI Agent) as well as exclusive features and services.
 
 ## Copying
 
