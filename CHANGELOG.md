@@ -30,6 +30,7 @@
 * **readme:** update professional support ([4ed1579b](https://github.com/glpi-project/android-inventory-library/commit/4ed1579b))
 * **release:** fix generated ChangeLog ([864f9076](https://github.com/glpi-project/android-inventory-library/commit/864f9076))
 * **release:** fix release script ([3ea11e39](https://github.com/glpi-project/android-inventory-library/commit/3ea11e39))
+* **release:** merge develop branch to master ([563fe4c4](https://github.com/glpi-project/android-inventory-library/commit/563fe4c4))
 * **release:** merge develop branch to master ([69e1842b](https://github.com/glpi-project/android-inventory-library/commit/69e1842b))
 * **test:** fix method args ([2c2a5eac](https://github.com/glpi-project/android-inventory-library/commit/2c2a5eac))
 * **xml:** remove all cdata ([b9702042](https://github.com/glpi-project/android-inventory-library/commit/b9702042))
