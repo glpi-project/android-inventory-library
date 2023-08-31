@@ -78,6 +78,8 @@ class ConventionalChangelog
          return Semver::isSemVer($tag);
       });
 
+
+
       $startVersion = $a;
       $endVersion = $b;
       $prefix = 'v';
@@ -87,6 +89,7 @@ class ConventionalChangelog
       if (substr($endVersion, 0, strlen($prefix)) == $prefix) {
          $endVersion = substr($endVersion, strlen($prefix));
       }
+
 
       $tags = array_filter($tags, function ($version) use ($startVersion, $endVersion) {
          $prefix = 'v';
@@ -120,17 +123,19 @@ class ConventionalChangelog
          $startRef = $endRef;
       }
 
+      $log = array_merge($log, self::buildLogOneBump($startRef, null , $with_head));
+
       return $log;
    }
 
    public static function buildLogOneBump($a, $b, $with_head = true) {
       $tag = $a;
-      if (!Git::tagExists($b)) {
+      /*if (!Git::tagExists($b)) {
          // $b is not a tag, try to find a matching one
          if ($tag = Git::getTagOfCommit($b) === false) {
             $tag = 'Unreleased';
          }
-      }
+      }*/
 
       // get remote
       $remotes = Git::getRemotes();
@@ -330,10 +335,18 @@ class Git
    }
 
    public static function getLog($a, $b = 'HEAD') {
-      exec("git log --oneline $a..$b", $output, $retCode);
-      if ($retCode != '0') {
-         // An error occured
-         throw new Exception("Unable to get log from the repository");
+      if ($a === null) {
+         exec("git log --oneline $b", $output, $retCode);
+         if ($retCode != '0') {
+            // An error occured
+            throw new Exception("Unable to get log from the repository");
+         }
+      } else {
+         exec("git log --oneline $a..$b", $output, $retCode);
+         if ($retCode != '0') {
+            // An error occured
+            throw new Exception("Unable to get log from the repository");
+         }
       }
 
       return $output;
