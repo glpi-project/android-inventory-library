@@ -30,6 +30,7 @@
 * **lib:** Skip software if name not available ([269e04af](https://github.com/glpi-project/android-inventory-library/commit/269e04af))
 * **readme:** fix readme ([ff49a067](https://github.com/glpi-project/android-inventory-library/commit/ff49a067))
 * **readme:** update professional support ([4ed1579b](https://github.com/glpi-project/android-inventory-library/commit/4ed1579b))
+* **release:** fix release script ([3ea11e39](https://github.com/glpi-project/android-inventory-library/commit/3ea11e39))
 * **test:** fix method args ([2c2a5eac](https://github.com/glpi-project/android-inventory-library/commit/2c2a5eac))
 * **xml:** remove all cdata ([b9702042](https://github.com/glpi-project/android-inventory-library/commit/b9702042))
 
