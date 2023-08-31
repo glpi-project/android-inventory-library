@@ -123,7 +123,9 @@ class ConventionalChangelog
          $startRef = $endRef;
       }
 
-      $log = array_merge($log, self::buildLogOneBump($startRef, null , $with_head));
+      if ($with_head) {
+         $log = array_merge($log, self::buildLogOneBump($startRef, null , $with_head));
+      }
 
       return $log;
    }
@@ -177,7 +179,7 @@ class ConventionalChangelog
          $compare .= Git::getCurrentBranch();
       }
 
-      if ($with_head) {
+      if ($with_head && $tag !== 'HEAD') {
         $log[] = '<a name="' . $tag . '"></a>';
         $log[] = '## [' . $tag . '](' . $compare . ') (' . $tagDate . ')';
       }
