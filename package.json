@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "dot-prop": "^8.0.2",
-    "follow-redirects": "^1.14",
+    "follow-redirects": "^1.15",
     "got": "^13",
     "http-cache-semantics": "^4.1.1",
     "https-proxy-agent": "^7.0.1",
