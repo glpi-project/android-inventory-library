@@ -2,7 +2,7 @@
  *  LICENSE
  *
  *  This file is part of Flyve MDM Inventory Library for Android.
- * 
+ *
  *  Inventory Library for Android is a subproject of Flyve MDM.
  *  Flyve MDM is a mobile device management software.
  *
@@ -17,20 +17,25 @@
  *  GNU General Public License for more details.
  *  ---------------------------------------------------------------------
  *  @copyright Copyright © 2018 Teclib. All rights reserved.
- *  @license   GPLv3 https://www.gnu.org/licenses/gpl-3.0.html
- *  @link      https://github.com/flyve-mdm/android-inventory-library
- *  @link      https://flyve-mdm.com
- *  @link      http://flyve.org/android-inventory-library
+ *  @license GPLv3 https://www.gnu.org/licenses/gpl-3.0.html
+ *  @link https://github.com/flyve-mdm/android-inventory-library
+ *  @link https://flyve-mdm.com
+ *  @link http://flyve.org/android-inventory-library
  *  ---------------------------------------------------------------------
  */
 
 package org.flyve.inventory.categories;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
+
+import androidx.core.app.ActivityCompat;
 
 import org.flyve.inventory.CommonErrorType;
 import org.flyve.inventory.InventoryLog;
@@ -55,14 +60,14 @@ public class Modems extends Categories {
      *
      *  from: https://stackoverflow.com/questions/285793/what-is-a-serialversionuid-and-why-should-i-use-it
      */
-	private static final long serialVersionUID = 6791259866128400637L;
+    private static final long serialVersionUID = 6791259866128400637L;
     private final Context context;
 
     /**
      * This constructor trigger get all the information about Controllers
      * @param xCtx Context where this class work
      */
-	public Modems(Context xCtx) {
+    public Modems(Context xCtx) {
         super(xCtx);
         context = xCtx;
 
@@ -70,8 +75,8 @@ public class Modems extends Categories {
             ArrayList<String> imeiList;
             imeiList = getIMEI();
 
-            for (String imei :imeiList) {
-                if(imei != null && !imei.equalsIgnoreCase("N/A")){
+            for (String imei : imeiList) {
+                if (imei != null && !imei.equalsIgnoreCase("N/A")) {
                     Category c = new Category("MODEMS", "modems");
                     c.put("IMEI", new CategoryValue(imei, "IMEI", "imei"));
                     this.add(c);
@@ -87,6 +92,7 @@ public class Modems extends Categories {
      * Get the imei
      * @return list of the IMEI to Simcard
      */
+    @SuppressLint("MissingPermission")
     public ArrayList<String> getIMEI() {
         ArrayList<String> imeiList = new ArrayList<>();
         try {
@@ -94,19 +100,24 @@ public class Modems extends Categories {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
                 SubscriptionManager subscriptionManager = (SubscriptionManager) context.getSystemService(Context.TELEPHONY_SUBSCRIPTION_SERVICE);
                 assert subscriptionManager != null;
-                List<SubscriptionInfo> multipleSim = subscriptionManager.getActiveSubscriptionInfoList();
-                if (multipleSim != null && multipleSim.size() > 0) {
-                    for (int i = 0; i < multipleSim.size(); i++) {
-                        if (telephonyManager != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                            if(telephonyManager.getDeviceId(i) != null){
-                                imeiList.add(telephonyManager.getDeviceId(i));
-                            }
+                if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
+                    List<SubscriptionInfo> multipleSim = subscriptionManager.getActiveSubscriptionInfoList();
+                    if (multipleSim != null && multipleSim.size() > 0) {
+                        for (int i = 0; i < multipleSim.size(); i++) {
+                            if (telephonyManager != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                if(telephonyManager.getDeviceId(i) != null){
+                                    imeiList.add(telephonyManager.getDeviceId(i));
+                                }
 
+                            }
                         }
+                    } else {
+                        imeiList.add("N/A");
                     }
                 } else {
                     imeiList.add("N/A");
                 }
+
             } else {
                 String imei = telephonyManager.getDeviceId();
                 imeiList.add(imei != null ? imei : "N/A");

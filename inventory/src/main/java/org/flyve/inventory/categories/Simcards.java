@@ -2,7 +2,7 @@
  *  LICENSE
  *
  *  This file is part of Flyve MDM Inventory Library for Android.
- * 
+ *
  *  Inventory Library for Android is a subproject of Flyve MDM.
  *  Flyve MDM is a mobile device management software.
  *
@@ -17,19 +17,24 @@
  *  GNU General Public License for more details.
  *  ---------------------------------------------------------------------
  *  @copyright Copyright © 2018 Teclib. All rights reserved.
- *  @license   GPLv3 https://www.gnu.org/licenses/gpl-3.0.html
- *  @link      https://github.com/flyve-mdm/android-inventory-library
- *  @link      https://flyve-mdm.com
- *  @link      http://flyve.org/android-inventory-library
+ *  @license GPLv3 https://www.gnu.org/licenses/gpl-3.0.html
+ *  @link https://github.com/flyve-mdm/android-inventory-library
+ *  @link https://flyve-mdm.com
+ *  @link http://flyve.org/android-inventory-library
  *  ---------------------------------------------------------------------
  */
 
 package org.flyve.inventory.categories;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
+
+import androidx.core.app.ActivityCompat;
 
 import org.flyve.inventory.CommonErrorType;
 import org.flyve.inventory.InventoryLog;
@@ -150,7 +155,9 @@ public class Simcards extends Categories {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP_MR1) {
                 SubscriptionManager subscriptionManager = (SubscriptionManager) xCtx.getSystemService(Context.TELEPHONY_SUBSCRIPTION_SERVICE);
                 assert subscriptionManager != null;
-                return subscriptionManager.getActiveSubscriptionInfoList();
+                if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
+                    return subscriptionManager.getActiveSubscriptionInfoList();
+                }
             }
         } catch (Exception ex) {
             InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.SIM_CARDS_MULTIPLE, ex.getMessage()));
@@ -228,6 +235,7 @@ public class Simcards extends Categories {
      * Get the serial number of the Sim
      * @return string the serial number
      */
+    @SuppressLint("MissingPermission")
     public String getSerial() {
         String value = "N/A";
         try {
@@ -284,7 +292,11 @@ public class Simcards extends Categories {
     public String getLineNumber() {
         String value = "N/A";
         try {
-            value = mTM.getLine1Number();
+            if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED
+                    && ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_NUMBERS) == PackageManager.PERMISSION_GRANTED
+                    && ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
+                value = mTM.getLine1Number();
+            }
         } catch (Exception ex) {
             InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.SIM_CARDS_LINE_NUMBER, ex.getMessage()));
         }
@@ -295,6 +307,7 @@ public class Simcards extends Categories {
      * Get the subscriber ID
      * @return string the unique subscriber ID
      */
+    @SuppressLint("MissingPermission")
     public String getSubscriberId() {
         String value = "N/A";
         try {

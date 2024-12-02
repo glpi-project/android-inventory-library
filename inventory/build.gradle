@@ -1,14 +1,11 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion '29.0.3'
+    compileSdk 34
 
     defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 30
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion 21
+        targetSdkVersion 34
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -22,6 +19,10 @@ android {
             testCoverageEnabled true
         }
     }
+
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 configurations {
@@ -30,6 +31,17 @@ configurations {
 
 
 dependencies {
+
+    constraints {
+        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.0") {
+            because("kotlin-stdlib-jdk7 is now a part of kotlin-stdlib")
+        }
+        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.0") {
+            because("kotlin-stdlib-jdk8 is now a part of kotlin-stdlib")
+        }
+    }
+
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     androidTestImplementation('androidx.test.espresso:espresso-core:3.3.0', {
@@ -53,77 +65,3 @@ Properties properties = new Properties()
 if(project.rootProject.file('local.properties').exists()) {
     properties.load(project.rootProject.file('local.properties').newDataInputStream())
 }
-
-ext {
-    bintrayRepo = 'teclib-repository'
-    bintrayName = 'android-inventory-library'
-    bintrayUserOrg = "flyve-mdm"
-
-    publishedGroupId = 'org.flyve'
-    libraryName = 'inventory'
-    artifact = 'inventory'
-
-    task sourcesJar(type: Jar) {
-        from android.sourceSets.main.java.srcDirs
-        classifier = 'sources'
-    }
-
-    task javadoc(type: Javadoc) {
-        doFirst {
-            configurations.implementation
-                    .filter { it.name.endsWith('.aar') }
-                    .each { aar ->
-                        copy {
-                            from zipTree(aar)
-                            include "**/classes.jar"
-                            into "$buildDir/tmp/aarsToJars/${aar.name.replace('.aar', '')}/"
-                        }
-                    }
-        }
-
-        configurations.implementation.setCanBeResolved(true)
-        source = android.sourceSets.main.java.srcDirs
-        classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-        classpath += configurations.implementation
-        classpath += fileTree(dir: "$buildDir/tmp/aarsToJars/")
-
-        if (!project.hasProperty("customDestination")) {
-            customDestination = "development"
-        }
-
-        println "Destination for javadoc is "+customDestination
-        destinationDir = file("../"+customDestination)
-        failOnError true
-    }
-
-
-
-    task javadocJar(type: Jar, dependsOn: javadoc) {
-        classifier = 'javadoc'
-        from javadoc.destinationDir
-    }
-
-    artifacts {
-        archives javadocJar
-        archives sourcesJar
-    }
-
-
-    libraryDescription = 'Inventory client library written in Java for developing applications on Android'
-
-    siteUrl = 'https://github.com/flyve-mdm/android-inventory-library'
-    gitUrl = 'https://github.com/flyve-mdm/android-inventory-library.git'
-
-    libraryVersion = properties.getProperty("version")
-
-    developerId = 'ivans51'
-    developerName = 'Ivan Del Pino'
-    developerEmail = 'idelpino@teclib.com'
-
-    licenseName = 'GNU GENERAL PUBLIC LICENSE, Version 3.0'
-    licenseUrl = 'https://www.gnu.org/licenses/gpl-3.0.html'
-    allLicenses = ["GPL-3.0"]
-}
-
-apply from: 'bintray.gradle'
-apply from: 'install.gradle'

@@ -1,5 +1,5 @@
 {
     "require": {
-        "consolidation/robo": "^3"
+        "consolidation/robo": "^4"
     }
 }
