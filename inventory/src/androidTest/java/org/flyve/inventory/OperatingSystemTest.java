@@ -59,6 +59,13 @@ public class OperatingSystemTest {
     @Test
     public void getCurrentTimezoneOffset() {
         assertNotEquals("", new OperatingSystem(appContext).getCurrentTimezoneOffset());
+
+        OperatingSystem operatingSystem = new OperatingSystem(appContext);
+        String timezoneOffset = operatingSystem.getCurrentTimezoneOffset();
+
+        assertNotNull("Timezone offset should not be null", timezoneOffset);
+        assertNotEquals("Timezone offset should not be empty", "", timezoneOffset);
+        assertTrue("Timezone offset should match the format [+/-]HHMM", timezoneOffset.matches("[+-]\\d{4}"));
     }
 
     @Test
