@@ -37,13 +37,11 @@ import android.widget.RadioButton
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import kotlinx.android.synthetic.main.activity_main.*
 import org.flyve.inventory.InventoryTask
 
 class MainActivity : AppCompatActivity() {
 
     val LOG = "inventory.example"
-
 
     fun showDialogShare(context: Context) {
         val builder = AlertDialog.Builder(this)
@@ -71,9 +69,9 @@ class MainActivity : AppCompatActivity() {
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_main)
         permission()
-
 
         val btnShare = findViewById<Button>(R.id.btnShare)
         btnShare.setOnClickListener { showDialogShare(applicationContext) }
@@ -81,7 +79,8 @@ class MainActivity : AppCompatActivity() {
         val btnComputer = findViewById<RadioButton>(R.id.radioButton_computer)
         btnComputer.isChecked = true
 
-        textHello.setOnClickListener({ generateTask(btnComputer) })
+        var btnRun = findViewById<Button>(R.id.btnRun)
+        btnRun.setOnClickListener({ generateTask(btnComputer) })
 
         btnShare.visibility = View.INVISIBLE
     }
@@ -121,6 +120,7 @@ class MainActivity : AppCompatActivity() {
                     Log.d(LOG, data)
                 }
                 //show btn share
+                val btnShare = findViewById<Button>(R.id.btnShare)
                 btnShare.visibility = View.VISIBLE
             }
 

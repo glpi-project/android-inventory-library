@@ -2,7 +2,7 @@
  *  LICENSE
  *
  *  This file is part of Flyve MDM Inventory Library for Android.
- * 
+ *
  *  Inventory Library for Android is a subproject of Flyve MDM.
  *  Flyve MDM is a mobile device management software.
  *
@@ -17,19 +17,23 @@
  *  GNU General Public License for more details.
  *  ---------------------------------------------------------------------
  *  @copyright Copyright © 2018 Teclib. All rights reserved.
- *  @license   GPLv3 https://www.gnu.org/licenses/gpl-3.0.html
- *  @link      https://github.com/flyve-mdm/android-inventory-library
- *  @link      https://flyve-mdm.com
- *  @link      http://flyve.org/android-inventory-library
+ *  @license GPLv3 https://www.gnu.org/licenses/gpl-3.0.html
+ *  @link https://github.com/flyve-mdm/android-inventory-library
+ *  @link https://flyve-mdm.com
+ *  @link http://flyve.org/android-inventory-library
  *  ---------------------------------------------------------------------
  */
 
 package org.flyve.inventory.categories;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.telephony.PhoneStateListener;
 import android.telephony.ServiceState;
 import android.telephony.TelephonyManager;
+
+import androidx.core.app.ActivityCompat;
 
 import org.flyve.inventory.CommonErrorType;
 import org.flyve.inventory.InventoryLog;
@@ -63,9 +67,9 @@ public class PhoneStatus extends Categories {
         // AsyncTask we got a Thread inside other Thread
         try {
 
-        final Category c = new Category("PHONE_STATUS", "phoneStatus");
+            final Category c = new Category("PHONE_STATUS", "phoneStatus");
 
-        TelephonyManager telMng = (TelephonyManager)xCtx.getSystemService(Context.TELEPHONY_SERVICE);
+            TelephonyManager telMng = (TelephonyManager) xCtx.getSystemService(Context.TELEPHONY_SERVICE);
             telMng.listen(new PhoneStateListener() {
                 @Override
                 public void onServiceStateChanged(ServiceState serviceState) {
@@ -91,10 +95,13 @@ public class PhoneStatus extends Categories {
                     }
 
                     c.put("STATE", new CategoryValue(phoneState, "STATE", "state"));
-                    c.put("OPERATOR_ALPHA", new CategoryValue(serviceState.getOperatorAlphaLong(), "OPERATOR_ALPHA", "operatorAlpha"));
-                    c.put("OPERATOR_NUMERIC", new CategoryValue(serviceState.getOperatorNumeric(), "OPERATOR_NUMERIC", "operatorNumeric"));
+
+                    //c.put("OPERATOR_ALPHA", new CategoryValue(serviceState.getOperatorAlphaLong(), "OPERATOR_ALPHA", "operatorAlpha"));
+                    //c.put("OPERATOR_NUMERIC", new CategoryValue(serviceState.getOperatorNumeric(), "OPERATOR_NUMERIC", "operatorNumeric"));
+
                     c.put("ROAMING", new CategoryValue(Boolean.valueOf(serviceState.getRoaming()).toString(), "ROAMING", "roaming"));
                     c.put("NETWORK_SELECTION", new CategoryValue(serviceState.getIsManualSelection() ? "NETWORK_SELECTION" : "AUTO", "NETWORK_SELECTION", "networkSelection"));
+
 
                     PhoneStatus.this.add(c);
                 }

@@ -225,8 +225,8 @@ public class Bios extends Categories {
 	 * Get the System serial number
 	 * @return string with the serial number
 	 */
-	@SuppressLint("HardwareIds")
-	public String getSystemSerialNumber() {
+	@SuppressLint("MissingPermission")
+    public String getSystemSerialNumber() {
 		String systemSerialNumber = "Unknown";
 		try {
 			//Try to get the serial by reading /proc/cpuinfo

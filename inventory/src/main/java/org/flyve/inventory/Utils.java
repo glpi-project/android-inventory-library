@@ -26,6 +26,7 @@
 
 package org.flyve.inventory;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -163,6 +164,7 @@ public class Utils {
      * @throws FlyveException Exception
      */
 
+    @SuppressLint("MissingPermission")
     protected static String createJSON(Context context, ArrayList<Categories> categories, String appVersion,
                                        boolean isPrivate, String tag, String asset_itemtype) throws FlyveException {
         try {
