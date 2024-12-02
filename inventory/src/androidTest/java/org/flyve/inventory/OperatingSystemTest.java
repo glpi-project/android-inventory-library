@@ -34,6 +34,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 
 @RunWith(AndroidJUnit4.class)
@@ -59,6 +61,13 @@ public class OperatingSystemTest {
     @Test
     public void getCurrentTimezoneOffset() {
         assertNotEquals("", new OperatingSystem(appContext).getCurrentTimezoneOffset());
+
+        OperatingSystem operatingSystem = new OperatingSystem(appContext);
+        String timezoneOffset = operatingSystem.getCurrentTimezoneOffset();
+
+        assertNotNull("Timezone offset should not be null", timezoneOffset);
+        assertNotEquals("Timezone offset should not be empty", "", timezoneOffset);
+        assertTrue("Timezone offset should match the format [+/-]HHMM", timezoneOffset.matches("[+-]\\d{4}"));
     }
 
     @Test
