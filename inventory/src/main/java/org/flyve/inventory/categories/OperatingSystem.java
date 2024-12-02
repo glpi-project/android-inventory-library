@@ -239,11 +239,10 @@ public class OperatingSystem extends Categories {
             Calendar cal = GregorianCalendar.getInstance(tz);
             int offsetInMillis = tz.getOffset(cal.getTimeInMillis());
 
-            int abs = Math.abs(offsetInMillis / 3600000);
-            int abs1 = Math.abs((offsetInMillis / 60000) % 60);
-            /*String offset = String.format(Locale.getDefault(), "%02d:%02d", abs, abs1);*/
-            String offset = abs + "" + abs1;
-            offset = (offsetInMillis >= 0 ? "+" : "-") + offset;
+            int hours = Math.abs(offsetInMillis / 3600000);  // Heures
+            int minutes = Math.abs((offsetInMillis / 60000) % 60);  // Minutes
+
+            String offset = String.format("%s%02d%02d", (offsetInMillis >= 0 ? "+" : "-"), hours, minutes);
 
             value = offset;
         } catch (Exception ex) {
