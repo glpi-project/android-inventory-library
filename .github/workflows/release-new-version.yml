@@ -39,10 +39,10 @@ jobs:
     - name: Extract Previous Tag Name
       run: echo "previous_tag_name=$(git tag --sort=taggerdate | tail -1)" >> $GITHUB_ENV
 
-    - name: Set Up JDK 11
+    - name: Set Up JDK 21
       uses: actions/setup-java@v3
       with:
-        java-version: '11'
+        java-version: '21'
         distribution: 'temurin'
         cache: gradle
 
