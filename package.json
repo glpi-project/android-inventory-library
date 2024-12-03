@@ -23,11 +23,5 @@
   "bugs": {
     "url": "https://github.com/flyve-mdm/android-inventory-library/issues"
   },
-  "homepage": "https://github.com/flyve-mdm/android-inventory-library#readme",
-  "devDependencies": {
-    "conventional-github-releaser": "^3.1.2",
-    "gh-pages": "^6.0.0",
-    "node-github-release": "^0.2.1",
-    "standard-version": "^9.5.0"
-  }
+  "homepage": "https://github.com/flyve-mdm/android-inventory-library#readme"
 }
