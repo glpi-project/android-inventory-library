@@ -29,18 +29,5 @@
     "gh-pages": "^6.0.0",
     "node-github-release": "^0.2.1",
     "standard-version": "^9.5.0"
-  },
-  "dependencies": {
-    "dot-prop": "^8.0.2",
-    "follow-redirects": "^1.14",
-    "got": "^13",
-    "http-cache-semantics": "^4.1.1",
-    "https-proxy-agent": "^7.0.1",
-    "lodash": "^4.17.21",
-    "lodash.merge": "^4.6.2",
-    "lodash.template": "^4.5.0",
-    "semver": "^7",
-    "semver-regex": "^4.0.3",
-    "trim-newlines": "^5.0.0"
   }
 }
