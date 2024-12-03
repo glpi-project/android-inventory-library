@@ -53,8 +53,11 @@ jobs:
     - name: Grant Execute Permission For Gradlew
       run: chmod +x gradlew
     # Build app
-    - name: Build project APK / AAR / JAR
+    - name: Build for run tests or static analysis
       run: ./gradlew build
+    - name: Build project APK / AAR / JAR
+      run: ./gradlew assemble
+
 
     #####################
     # Prepare release   #
