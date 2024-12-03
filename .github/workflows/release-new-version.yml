@@ -20,6 +20,11 @@ jobs:
         ref: develop
         fetch-depth: 0 #To Fetch All Tags and Branches
 
+    - name: Setup PHP with PECL extension
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.2'
+
     - name: Install Dependencies
       uses: php-actions/composer@v6
       with:
