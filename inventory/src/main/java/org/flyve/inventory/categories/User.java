@@ -112,22 +112,7 @@ public class User extends Categories {
     public String getUserName() {
         String userName = "N/A";
         try {
-            if (Build.VERSION.SDK_INT >= 17) {
-                UserManager userMgr = (UserManager) context.getSystemService(Context.USER_SERVICE);
-                if (userMgr != null) {
-                    try {
-                        // validate permission exception
-                        userName = userMgr.getUserName();
-                    } catch (Exception ex) {
-                        InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.USER_NAME, ex.getMessage()));
-                        userName = Build.USER;
-                    }
-                } else {
-                    userName = Build.USER;
-                }
-            } else {
-                userName = Build.USER;
-            }
+            userName = Build.USER;
         } catch (Exception ex) {
             InventoryLog.e(InventoryLog.getMessage(context, CommonErrorType.USER_NAME, ex.getMessage()));
         }
