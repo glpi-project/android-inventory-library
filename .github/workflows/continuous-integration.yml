@@ -8,8 +8,7 @@ env:
 on:
   pull_request:
     branches:
-      - "master"
-      - "develop"
+      - "main"
 
 jobs:
   build:
@@ -22,7 +21,6 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: gradle
-
 
     ##############################################
     # Prepare / Build project APK / AAR / JAR    #
@@ -98,10 +96,3 @@ jobs:
       with:
         name: Inventory-Library-Debug-AAR
         path: ${{ env.module_inventory }}/build/outputs/aar/${{ env.module_inventory }}-debug.aar
-
-    # Upload JAR for inventory module
-    - name: Upload JAR for inventory module
-      uses: actions/upload-artifact@v3
-      with:
-        name: Inventory-Library-Debug-AAR
-        path: ${{ env.module_inventory }}/build/libs/${{ env.module_inventory }}-sources.jar
