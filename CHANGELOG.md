@@ -8,7 +8,13 @@
 
 - **OperatingSystem:** correct `<OFFSET>` to use 4 digits
 - **User:** prevent error with `android.permission.QUERY_USERS` (only for sys app)
-
+- **Repo:** update `CHANGELOG.md`.
+- **Repo:** update `README.md`.
+- **Build:** remove useless `composer`.
+- **Build:** remove useless dependencies.
+- **Repo:** update `CONTRIBUTING.md`.
+- **Build:** remove useless `gem` dependencies.
+- **Repo:** update `package.json`.
 
 ### Features
 
@@ -17,6 +23,7 @@
 - **Test:** Migrate test to `androidx.test:runner`
 - **Core:** Bump `gradle` to 8.1.1
 - **Core:** Bump `kotlin` to 1.6.0
+- **Build:** update GitHub Actions.
 
 
 ## [1.6.0](https://github.com/glpi-project/android-inventory-library/compare/1.5.0..1.6.0) (2023-08-31)
