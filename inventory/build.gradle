@@ -17,13 +17,15 @@ android {
         }
         debug {
             minifyEnabled false
-            testCoverageEnabled true
+            enableUnitTestCoverage true
+            enableAndroidTestCoverage true
         }
     }
 
     buildFeatures {
         viewBinding true
     }
+    namespace 'org.flyve.inventory'
 }
 
 configurations {
@@ -37,8 +39,7 @@ dependencies {
     androidTestImplementation('androidx.test.espresso:espresso-core:3.3.0', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    testImplementation 'junit:junit:4.12'
-    testImplementation 'androidx.test:runner:1.3.0'
+    testImplementation 'androidx.test:runner:1.6.2' // Or latest version
     testImplementation 'androidx.test:core:1.3.0'
 
     implementation 'com.orhanobut:logger:2.2.0'

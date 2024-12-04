@@ -28,8 +28,8 @@ package org.flyve.inventory;
 
 import android.content.Context;
 
-import androidx.test.InstrumentationRegistry;
-import androidx.test.runner.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner;
 
 import org.flyve.inventory.categories.Battery;
 import org.junit.Test;
@@ -37,10 +37,10 @@ import org.junit.runner.RunWith;
 
 import static org.junit.Assert.assertNotEquals;
 
-@RunWith(AndroidJUnit4.class)
+@RunWith(AndroidJUnit4ClassRunner.class)  
 public class BatteryTest {
 
-    Context appContext = InstrumentationRegistry.getTargetContext();
+    Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
     @Test
     public void getTechnology() {

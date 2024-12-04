@@ -28,7 +28,6 @@ package org.flyve.inventory;
 
 import android.content.Context;
 import android.os.Environment;
-import androidx.test.InstrumentationRegistry;
 
 import org.flyve.inventory.categories.Drives;
 
@@ -38,9 +37,11 @@ import java.io.File;
 
 import static org.junit.Assert.assertNotEquals;
 
-    public class DrivesTest {
+import androidx.test.platform.app.InstrumentationRegistry;
 
-    Context appContext = InstrumentationRegistry.getTargetContext();
+public class DrivesTest {
+
+    Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
     File froot = Environment.getRootDirectory();
     File fexternal = Environment.getExternalStorageDirectory();
