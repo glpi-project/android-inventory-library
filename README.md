@@ -59,9 +59,7 @@ You can find more information about the GLPI Native Inventory Protocol here:
 
 ## Installation
 
-Download the latest JAR or AAR and include it in your Android project as an external library
-
-
+Download the latest AAR and include it in your Android project as an external library
 
 ## Code Example
 
@@ -92,28 +90,29 @@ val inventoryTask = InventoryTask(this@MainActivity, "Agent_v1.0", object : Inve
 inventoryTask.execute()
 ```
 
-## Versioning
 
-In order to provide transparency on our release cycle and to maintain backward compatibility, GLPI Android Inventory Library is maintained under [the Semantic Versioning guidelines](http://semver.org/). We are committed to following and complying with the rules, the best we can.
+## Contact
 
-See [the tags section of our GitHub project](https://github.com/glpi-project/android-inventory-library/tags) for changelogs for each release version of Flyve MDM. Release announcement posts on [the official Teclib' blog](http://www.teclib-edition.com/en/communities/blog-posts/) contain summaries of the most noteworthy changes made in each release.
+For notices about major changes and general discussion of fields, subscribe to the [/r/glpi](https://www.reddit.com/r/glpi/) subreddit.
+You can also chat with us via [@glpi on Telegram](https://t.me/glpien).
+
+## Professional Services
+
+![GLPI Network](./docs/glpi_network.png "GLPI network")
+
+The GLPI Network services are available through our [Partner's Network](http://www.teclib-edition.com/en/partners/).
+We provide special training, bug fixes with editor subscription, contributions for new features, and more.
+
+Obtain a personalized service experience, associated with benefits and opportunities.
 
 ## Contribute
 
-Want to file a bug, contribute some code, or improve documentation? Excellent! Read up on our
-guidelines for [contributing](./CONTRIBUTING.md) and then check out one of our issues in the [Issues Dashboard](https://github.com/glpi-project/android-inventory-library/issues).
-
-## GLPI Network - Professional support
-
-You want to report a bug (and get a fix quickly) or do you need a guarantee for Android Inventory Library?
-
-You can subscribe to our professional support GLPI Network [here](https://services.glpi-network.com).
-
-This subscription includes a guarantee through a service level contract between your company and our team in charge of GLPI development (core, supported plugins and GLPI Agent) as well as exclusive features and services.
+* Open a ticket for each bug so it can be discussed
+* Follow [development guidelines](http://glpi-developer-documentation.readthedocs.io/en/latest/plugins/index.html)
+* Refer to [GitFlow](http://git-flow.readthedocs.io/) process for branching
+* Work on a new branch on your own fork
+* Open a PR that will be reviewed by a developer
 
 ## Copying
 
-* **Name**: [Flyve MDM](https://flyve-mdm.com/) is a registered trademark of [Teclib'](http://www.teclib-edition.com/en/).
-* **Code**: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License ([GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html)).
-* **Documentation**: released under Attribution 4.0 International ([CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)).
+* **Code**: you can redistribute it and/or modify it under the terms of the GNU General Public License ([GPL-2.0](https://www.gnu.org/licenses/gpl-2.0.en.html)).
