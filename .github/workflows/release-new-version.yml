@@ -55,8 +55,6 @@ jobs:
     # Build app
     - name: Build for run tests or static analysis
       run: ./gradlew build
-    - name: Build project APK / AAR / JAR
-      run: ./gradlew assemble
 
 
     #####################
@@ -106,10 +104,6 @@ jobs:
     - name: "Rename ${{ env.module_inventory }} AAR"
       run: mv ${{ env.module_inventory }}/build/outputs/aar/${{ env.module_inventory }}-release.aar ${{ env.module_inventory }}/build/outputs/aar/${{ env.module_inventory }}-release-v${{ env.tag_name }}.aar
 
-    - name: "Rename ${{ env.module_inventory }} JAR"
-      run: mv ${{ env.module_inventory }}/build/libs/${{ env.module_inventory }}-sources.jar ${{ env.module_inventory }}/build/libs/${{ env.module_inventory }}-sources-v${{ env.tag_name }}.jar
-
-
     - name: Create Release
       uses: softprops/action-gh-release@v1
       if: startsWith(github.ref, 'refs/tags/')
@@ -121,4 +115,3 @@ jobs:
           ${{ env.module_java }}/build/outputs/apk/release/${{ env.module_java }}-v${{ env.tag_name }}.apk
           ${{ env.module_kotlin }}/build/outputs/apk/release/${{ env.module_kotlin }}-v${{ env.tag_name }}.apk
           ${{ env.module_inventory }}/build/outputs/aar/${{ env.module_inventory }}-release-v${{ env.tag_name }}.aar
-          ${{ env.module_inventory }}/build/libs/${{ env.module_inventory }}-sources-v${{ env.tag_name }}.jar
