@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 
 android {
     compileSdk 34
+    namespace = "org.flyve.example_kotlin"
 
     defaultConfig {
         applicationId "org.flyve.example_kotlin"

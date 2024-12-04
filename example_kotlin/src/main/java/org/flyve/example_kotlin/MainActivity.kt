@@ -50,16 +50,16 @@ class MainActivity : AppCompatActivity() {
         //list of items
         val items = context.resources.getStringArray(R.array.export_list)
         builder.setSingleChoiceItems(items, 0
-        ) { dialog, which -> type[0] = which }
+        ) { _, which -> type[0] = which }
         val positiveText = context.getString(android.R.string.ok)
         builder.setPositiveButton(positiveText
-        ) { dialog, which ->
+        ) { _, _ ->
             // positive button logic
             InventoryTask(this@MainActivity, this@MainActivity.LOG, false).shareInventory(type[0])
         }
         val negativeText = context.getString(android.R.string.cancel)
         builder.setNegativeButton(negativeText
-        ) { dialog, which ->
+        ) { _, _ ->
             // negative button logic
         }
         val dialog = builder.create()

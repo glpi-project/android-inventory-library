@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdk 34
-
+    namespace = "org.flyve.example_java"
 
     defaultConfig {
         applicationId "org.flyve.example_java"

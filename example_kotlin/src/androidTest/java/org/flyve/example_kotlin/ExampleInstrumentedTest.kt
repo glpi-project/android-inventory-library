@@ -25,7 +25,7 @@
  */
 
 package org.flyve.example_kotlin
-import androidx.test.InstrumentationRegistry
+import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.runner.AndroidJUnit4
 import org.junit.Assert.*
 import org.junit.Test
@@ -41,7 +41,7 @@ class ExampleInstrumentedTest {
     @Test
     fun useAppContext() {
         // Context of the app under test.
-        val appContext = InstrumentationRegistry.getTargetContext()
-        assertEquals("org.flyve.example_kotlin", appContext.packageName)
+        val context= androidx.test.platform.app.InstrumentationRegistry.getInstrumentation().targetContext
+        assertEquals("org.flyve.example_kotlin", context.packageName)
     }
 }
