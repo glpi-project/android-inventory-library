@@ -1,5 +1,6 @@
 plugins {
     id 'com.android.library'
+    id 'maven-publish'
 }
 
 android {
@@ -28,6 +29,12 @@ android {
         viewBinding true
     }
     namespace 'org.flyve.inventory'
+
+    publishing {
+        singleVariant('release') {
+            withSourcesJar()
+        }
+    }
 }
 
 configurations {
@@ -55,6 +62,21 @@ dependencies {
     javadocDeps 'com.android.support:multidex:2.0.1'
 }
 
+
+afterEvaluate {
+    def packageJson = new groovy.json.JsonSlurper().parse(rootProject.file('package.json'))
+
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+                groupId    = project.group ?: 'com.github.glpi-project'
+                artifactId = 'android-inventory-library'
+                version    = project.version ?: packageJson.version
+            }
+        }
+    }
+}
 
 Properties properties = new Properties()
 if(project.rootProject.file('local.properties').exists()) {
