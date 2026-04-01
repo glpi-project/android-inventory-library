@@ -85,14 +85,14 @@ jobs:
 
     # Upload APK for Kotlin version
     - name: Upload APK Debug for Kotlin
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: Kotlin-Debug-APK
         path: ${{ env.module_kotlin }}/build/outputs/apk/debug/${{ env.module_kotlin }}-debug.apk
 
     # Upload Debug AAR for inventory module
     - name: Upload Debug AAR for Inventory Library
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: Inventory-Library-Debug-AAR
         path: ${{ env.module_inventory }}/build/outputs/aar/${{ env.module_inventory }}-debug.aar
