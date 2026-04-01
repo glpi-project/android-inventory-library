@@ -65,7 +65,6 @@ jobs:
     # cactus  Xiaomi Redmi 6A         SDK 27
     - name: Run Instrumentation Tests in Firebase Test Lab
       run: |
-        gcloud firebase test android run --type instrumentation --app ${{ env.module_java }}/build/outputs/apk/debug/example_java-debug.apk --test ${{ env.module_java }}/build/outputs/apk/androidTest/debug/example_java-debug-androidTest.apk --device model=Nexus6,version=25,locale=en,orientation=portrait
         gcloud firebase test android run --type instrumentation --app ${{ env.module_java }}/build/outputs/apk/debug/example_java-debug.apk --test ${{ env.module_java }}/build/outputs/apk/androidTest/debug/example_java-debug-androidTest.apk --device model=e1q,version=34,locale=en,orientation=portrait
         gcloud firebase test android run --type instrumentation --app ${{ env.module_java }}/build/outputs/apk/debug/example_java-debug.apk --test ${{ env.module_java }}/build/outputs/apk/androidTest/debug/example_java-debug-androidTest.apk --device model=dm3q,version=33,locale=en,orientation=portrait
         gcloud firebase test android run --type instrumentation --app ${{ env.module_java }}/build/outputs/apk/debug/example_java-debug.apk --test ${{ env.module_java }}/build/outputs/apk/androidTest/debug/example_java-debug-androidTest.apk --device model=bluejay,version=32,locale=en,orientation=portrait
